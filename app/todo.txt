@@ -1,0 +1,15 @@
+[ ] Add i18n
+  https://i18n.nuxtjs.org/docs/getting-started/usage
+[ ] Replace "Downloads" page with "Goods"
+  [ ] Lotus Vase
+  [ ] lotusd
+  [ ] Lotus GPU Miner
+  [ ] LixiLotus
+[ ] Move Ecosystem to single page separated into sections
+[ ] Add Privacy Policy
+[ ] FAQ
+  [ ] Anchor tags
+    - https://dev.to/adjoawadee/anchor-tags-with-scroll-effect-in-nuxt-3-285n
+[ ] Finish Roadmap page
+[X] Downloads: Link to existing Google download links
+[X] Stewardship: Add Core Values
