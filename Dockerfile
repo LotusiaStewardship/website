@@ -1,7 +1,7 @@
-FROM node:14-alpine3.14 AS websitebuild
+FROM node:18 AS websitebuild
 
 # "development" needed for build, otherwise vuetify throws an error
-ENV NODE_ENV=development
+#ENV NODE_ENV=development
 
 # can be passed to nuxt
 # ENV APISSL=0
@@ -12,19 +12,20 @@ ENV NODE_ENV=development
 # install nuxt dependencies and build static dist folder
 RUN mkdir -p /website
 WORKDIR /website
-ADD app .
+ADD new .
 RUN yarn && yarn generate
 
-# Build docs stage
-RUN mkdir -p /docs
-WORKDIR /docs
-ADD docs .
-RUN yarn && yarn generate
+## Build docs stage
+#RUN mkdir -p /docs
+#WORKDIR /docs
+#ADD docs .
+#RUN yarn && yarn generate
 
 # Hosting Layer
 FROM nginx
-COPY --from=websitebuild /website/dist/ /usr/share/nginx/website/html
-COPY --from=websitebuild /docs/dist/ /usr/share/nginx/docs/html
+COPY --from=websitebuild /website/.output/public/ /usr/share/nginx/website/html
+#COPY --from=websitebuild /docs/dist/ /usr/share/nginx/docs/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+ENTRYPOINT ["nginx"]

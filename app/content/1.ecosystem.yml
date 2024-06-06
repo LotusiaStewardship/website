@@ -1,0 +1,80 @@
+title: Ecosystem
+description: Lotusia is a vibrant and aligned Ecosystem consisting of a Stewardship, Treasury, and Citizenry
+navigation.icon: i-heroicons-user-group-solid
+to: /ecosystem
+hero:
+  title: The Ecosystem
+  description: Lotusia is a vibrant and aligned Ecosystem consisting of a Stewardship, Treasury, and Citizenry
+  image:
+    dark: /img/ecosystem_diagram_dark.png
+    light: /img/ecosystem_diagram_light.png
+sections:
+  - headline: The Stewardship
+    title: The Turtles
+    description: The path to prosperity is forged by the Stewardship, comprised of the Turtles that are bound to a strict set of Core Values and Duties. The Turtles are the highly-aligned core leadership with a proven track record of dedication. While Citizens are free to come and go, Turtles are steadfast.
+    align: right
+    quotes:
+      - author: Shammah Chancellor
+        title: President Turtle - Lead Architect and COO
+        text: Lotus is not to be an investment, but our investments in each other will generate more Lotus.
+        avatar: '/img/shammah_chancellor.jpeg'
+      - author: Sean Ballard
+        title: Priest Turtle - Relations and Outreach Strategist
+        text: Free men do not ask permission to build the solutions society needs.
+        avatar: '/img/sean_ballard.jpeg'
+      - author: Matthew Urgero
+        title: Faithful Turtle - Architect and Operations
+        text: Don't hoard tokens; hoard and foster human relationships. Lotus is a multi-generational project.
+        avatar: '/img/matthew_urgero.jpeg'
+    subsections:
+      - title: Core Values
+        description: Aligning the Stewardship is impossible without strict adherence to guiding principles.
+        columns: 2
+        align: left
+        image: /img/ecosystem_1.jpeg
+        features:
+          - name: Truth
+            description: Question all things, including all authorities, and especially our own beliefs, so that the Truth remains at the forefront of our collective consciousness.
+          - name: Integrity
+            description: Maintain private and public accountability and responsibility for our thoughts, decisions, vocalizations, actions, and all of the subsequent outcomes of them.
+          - name: Leadership
+            description: Demonstrate effective Leadership through patience, understanding, and working towards the Common Good.
+          - name: Pragmatism
+            description: Remain vigilant against dogmatic attachment to the status quo; if something is unequivocally broken, find a solution and fix it.
+      - title: Duties
+        description: Fostering Ecosystem growth is of paramount interest to the Stewardship and their Duties are performed specifically for this purpose.
+        columns: 2
+        align: right
+        features:
+          - name: Public Goods
+            description: Develop, release, and maintain key software and infrastructure as the technological foundation of the Ecosystem
+          - name: Apportionment
+            description: Distribute Stewardship funds among new projects, rewards programs, and other public engagements to facilitate currency circulation and Ecosystem growth
+          - name: Governance
+            description: Review current economic conditions, enact changes to Economic Consensus, review applications for project funding, and induct new Turtles into the Stewardship
+          - name: Relations
+            description: Provide transparency reports on a regular basis to the Ecosystem, provide productive commentary on current events, and encourage general participation from the Ecosystem at large
+  - headline: The Treasury
+    title: The Miners
+    description: Collectively forming the Treasury branch of the Lotusia Ecosystem, the Miners are the crux of the economy, responsible for Issuance of new Lotus, Economic Consensus, and Stewardship Funding. Unlike other Treasury institutions, the Miners of the Treasury are distributed worldwide.
+    align: left
+    features: 
+      - name: Blockchain
+        description: Miners run Lotus blockchain software on their computers to establish the Lotus network and maintain the distributed public ledger. The Lotus blockchain software is a Public Good provided by the Stewardship.
+      - name: Proof-of-Work
+        description: Powerful computers are used to convert electricity into Lotus currency. The cryptographic proof of this electricity conversion is distributed to other Miners and validated to ensure no one Miner can counterfeit Lotus.
+      - name: Consensus
+        description: Through Proof-of-Work, the Miners signal their compliance with the economic policy enacted by the Stewardship, thus establishing Consensus within the Treasury and the Ecosystem as a whole.
+      - name: Funding
+        description: As new Lotus is issued, the Treasury provides 50% of the new Lotus to the Stewardship directly. The distributed public ledger maintained by the Treasury is transparent and fully auditable.
+  - headline: The Citizenry
+    title: The Value of the Ecosystem
+    description: The Citizenry is the heart of the Ecosystem, comprised of every human that gives their time and attention to the Ecosystem. It is the Citizenry that fosters the true value of the Ecosystem, engaging within and without, with reciprocity.
+    align: right
+    features:
+      - name: Welcoming
+        description: Those that wish to become Citizens are never denied
+      - name: Giving
+        description: Lotusia could not exist nor function without the culture of Giving fostered by its Citizenry
+      - name: Growth Through Understanding
+        description: A society of growth, Lotusia prioritizes Understanding as its modus operandi, as there can be no Growth without Understanding

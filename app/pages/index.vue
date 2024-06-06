@@ -1,102 +1,68 @@
-<template>
-  <div>
-    <div class="main-wrap">
-      <div class="container-wrap">
-        <section id="home">
-          <banner />
-        </section>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-import Banner from '~/components/Banner/Banner'
-import brand from '~/static/text/brand'
-
-export default {
-  components: {
-    Banner
-  },
-  layout: 'landing',
-  head() {
-    return {
-      title: brand.lotus.name + ' - Givelotus',
-      meta: [
-        { property: 'author', content: 'givelotus.org' },
-        {
-          name: 'description',
-          content: this.$t('lotusLanding.banner_subtitle')
-        },
-        {
-          property: 'og:description',
-          content: this.$t('lotusLanding.banner_subtitle')
-        },
-        {
-          property: 'og:title',
-          content: 'Lotus - ' + this.$t('lotusLanding.banner_title')
-        }
-      ]
-    }
-  },
-  computed: {
-    isTablet() {
-      return (
-        this.$mq === 'mdDown' || this.$mq === 'smDown' || this.$mq === 'xsDown'
-      ) // eslint-disable-line
-    },
-    isMobile() {
-      return this.$mq === 'smDown' || this.$mq === 'xsDown'
-    }
-  }
+<script setup lang="ts">
+const { data: page } = await useAsyncData('index', () => queryContent('/').findOne())
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
+
+useSeoMeta({
+  title: page.value.title,
+  ogTitle: page.value.title,
+  description: page.value.description,
+  ogDescription: page.value.description,
+  ogImage: '/img/turtles_hero.jpeg',
+})
 </script>
 
-<style scoped lang="scss">
-@import '~/assets/styles';
+<template>
+  <ULandingHero
+    :title="page.hero.title"
+    :description="page.description"
+    :links="page.hero.links"
+    orientation="horizontal"
+  >
+    <template #default>
+      <NuxtImg
+        :src="page.hero.image"
+        style="border-radius: 15%;"
+      />
+    </template>
+  </ULandingHero>
 
-@function section-margin($margin) {
-  @return $margin * 20;
+  <ULandingSection
+    v-for="(section, i) in page.sections"
+    :key="i"
+    :title="section.title"
+    :description="section.description"
+    :align="section.align"
+    :features="section.features"
+    :links="section.links"
+  >
+    <NuxtImg 
+      :src="`/img/turtles_${(i + 1)}.jpeg`"
+      style="border-radius: 15%;"
+    />
+  </ULandingSection>
+
+  <ULandingCTA
+    :title="page.cta.title"
+    :description="page.cta.description"
+    :links="page.hero.links"
+    :card="false"
+  />
+</template>
+
+<style scoped>
+.landing-grid {
+  background-size: 100px 100px;
+  background-image:
+    linear-gradient(to right, rgb(var(--color-gray-200)) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-gray-200)) 1px, transparent 1px);
 }
-.main-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  @include palette-text-primary;
-  .theme--dark & {
-    background-color: $dark-background-default;
-  }
-  .theme--light & {
-    background-color: $light-background-paper;
-  }
-}
-.space-bottom {
-  margin-bottom: section-margin($spacing1);
-  @include breakpoints-down(sm) {
-    margin-bottom: section-margin(6px);
-  }
-}
-.space-bottom-testi {
-  @include breakpoints-up(md) {
-    margin-bottom: section-margin($spacing1);
-  }
-}
-.space-bottom-short {
-  margin-bottom: section-margin($spacing1 / 2);
-}
-.space-top {
-  margin-top: section-margin($spacing1);
-  @include breakpoints-down(sm) {
-    margin-top: section-margin(6px);
-  }
-}
-.space-top-short {
-  margin-top: section-margin($spacing1 / 2);
-}
-.container-wrap {
-  margin-top: -40px;
-  > section {
-    position: relative;
+.dark {
+  .landing-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--color-gray-800)) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--color-gray-800)) 1px, transparent 1px);
   }
 }
 </style>
