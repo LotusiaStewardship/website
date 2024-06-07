@@ -27,5 +27,3 @@ COPY --from=websitebuild /website/.output/public/ /usr/share/nginx/website/html
 #COPY --from=websitebuild /docs/dist/ /usr/share/nginx/docs/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-ENTRYPOINT ["nginx"]
