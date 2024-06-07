@@ -12,7 +12,7 @@ FROM node:18 AS websitebuild
 # install nuxt dependencies and build static dist folder
 RUN mkdir -p /website
 WORKDIR /website
-ADD new .
+ADD app .
 RUN yarn && yarn generate
 
 ## Build docs stage
@@ -27,5 +27,3 @@ COPY --from=websitebuild /website/.output/public/ /usr/share/nginx/website/html
 #COPY --from=websitebuild /docs/dist/ /usr/share/nginx/docs/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-ENTRYPOINT ["nginx"]
