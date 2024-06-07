@@ -12,7 +12,7 @@ FROM node:18 AS websitebuild
 # install nuxt dependencies and build static dist folder
 RUN mkdir -p /website
 WORKDIR /website
-ADD new .
+ADD app .
 RUN yarn && yarn generate
 
 ## Build docs stage
