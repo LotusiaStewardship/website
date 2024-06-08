@@ -398,12 +398,12 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-3.0.3.tgz"
   integrity sha512-KEPNw4+WW5AVEIyzC80rTbWEUatTW2lXpN8+8ILC8PiPeWPjwUzrPZDIOZ2wwqDmeqOYTdSGyL3+vE5GC3FB3Q==
 
-"@egoist/tailwindcss-icons@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.npmjs.org/@egoist/tailwindcss-icons/-/tailwindcss-icons-1.7.4.tgz"
-  integrity sha512-883qx0sqeNb8km7os0w8K6UYue88dbgTWwyEUwW74Bgz0H7t+m7PMIIEvSQ4JqHwA823Qd5ciz+NoTBWKaMYfg==
+"@egoist/tailwindcss-icons@^1.8.0":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@egoist/tailwindcss-icons/-/tailwindcss-icons-1.8.1.tgz#bd47cdd5fc490760561a0bb3d8ea0ff275369405"
+  integrity sha512-hqZeASrhT6BOeaBHYDPB0yBH/zgMKqmm7y2Rsq0c4iRnNVv1RWEiXMBMJB38JsDMTHME450FKa/wvdaIhED+Iw==
   dependencies:
-    "@iconify/utils" "^2.1.20"
+    "@iconify/utils" "^2.1.24"
 
 "@es-joy/jsdoccomment@~0.42.0":
   version "0.42.0"
@@ -610,10 +610,10 @@
   resolved "https://registry.npmjs.org/@headlessui/tailwindcss/-/tailwindcss-0.2.0.tgz"
   integrity sha512-fpL830Fln1SykOCboExsWr3JIVeQKieLJ3XytLe/tt1A0XzqUthOftDmjcCYLW62w7mQI7wXcoPXr3tZ9QfGxw==
 
-"@headlessui/vue@^1.7.19":
-  version "1.7.21"
-  resolved "https://registry.npmjs.org/@headlessui/vue/-/vue-1.7.21.tgz"
-  integrity sha512-95cPFP5X9luB8/+smPENFv0ruaotT6epFnqK9EKldX2YpNkYM/qkN44oFoqQo+higlCAxDK5Pkg2E3FuD1Anyg==
+"@headlessui/vue@^1.7.21":
+  version "1.7.22"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.22.tgz#8d55a3a670c3d48beb660b7c47a7a8ff76caacfe"
+  integrity sha512-Hoffjoolq1rY+LOfJ+B/OvkhuBXXBFgd8oBlN+l1TApma2dB0En0ucFZrwQtb33SmcCqd32EQd0y07oziXWNYg==
   dependencies:
     "@tanstack/vue-virtual" "^3.0.0-beta.60"
 
@@ -655,7 +655,7 @@
   dependencies:
     "@iconify/types" "*"
 
-"@iconify-json/heroicons@^1.1.20":
+"@iconify-json/heroicons@^1.1.20", "@iconify-json/heroicons@^1.1.21":
   version "1.1.21"
   resolved "https://registry.npmjs.org/@iconify-json/heroicons/-/heroicons-1.1.21.tgz"
   integrity sha512-A+3L4KN+TjH3V8fQ2N2dkOOnLLxMgMBzO8RDT0P9YL+YzvLMIbe/lkDLSB8NB8x0DKWmkvTimoo1l4DKMwi7Zg==
@@ -709,10 +709,23 @@
   resolved "https://registry.npmjs.org/@iconify/types/-/types-2.0.0.tgz"
   integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
 
-"@iconify/utils@^2.1.20", "@iconify/utils@^2.1.23":
+"@iconify/utils@^2.1.23":
   version "2.1.23"
   resolved "https://registry.npmjs.org/@iconify/utils/-/utils-2.1.23.tgz"
   integrity sha512-YGNbHKM5tyDvdWZ92y2mIkrfvm5Fvhe6WJSkWu7vvOFhMtYDP0casZpoRz0XEHZCrYsR4stdGT3cZ52yp5qZdQ==
+  dependencies:
+    "@antfu/install-pkg" "^0.1.1"
+    "@antfu/utils" "^0.7.7"
+    "@iconify/types" "^2.0.0"
+    debug "^4.3.4"
+    kolorist "^1.8.0"
+    local-pkg "^0.5.0"
+    mlly "^1.6.1"
+
+"@iconify/utils@^2.1.24":
+  version "2.1.24"
+  resolved "https://registry.yarnpkg.com/@iconify/utils/-/utils-2.1.24.tgz#a9ac378eaccd654e5d6890e35a0104ba62b38386"
+  integrity sha512-H8r2KpL5uKyrkb3z9/3HD/22JcxqW3BJyjEWZhX2T7DehnYVZthEap1cNsEl/UtCDC3TlpNmwiPX8wg3y8E4dg==
   dependencies:
     "@antfu/install-pkg" "^0.1.1"
     "@antfu/utils" "^0.7.7"
@@ -972,7 +985,7 @@
 
 "@nuxt/content@^2.12.1":
   version "2.12.1"
-  resolved "https://registry.npmjs.org/@nuxt/content/-/content-2.12.1.tgz"
+  resolved "https://registry.yarnpkg.com/@nuxt/content/-/content-2.12.1.tgz#9657b89cb04b34534b245c1c8d4f3d2ccddd999a"
   integrity sha512-xW4xjyYm6zqglb17Tu0J+rpKUV1PF9zp6SLu1lopylFnerdyImtce84206HT6Zd/DJgivKtoW4dyyJn0ZaSqCQ==
   dependencies:
     "@nuxt/kit" "^3.10.3"
@@ -1260,20 +1273,20 @@
     rc9 "^2.1.2"
     std-env "^3.7.0"
 
-"@nuxt/ui-pro@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@nuxt/ui-pro/-/ui-pro-1.1.0.tgz"
-  integrity sha512-c8x8VDmnMYPognKq/V203UMK7JiZwmP+Vx5YIY74Y1DB+PS2alFGKXENy8rVZxx3HCA0b0WuwzACZ5405kv7yQ==
+"@nuxt/ui-pro@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@nuxt/ui-pro/-/ui-pro-1.2.0.tgz#012b4385dd4a9f6798ee3c0aff43f38901f04c97"
+  integrity sha512-lWcCijOqf/5xqjK2vN3e828fzxvun2JgFRgc4q+iG6hn/L2WRvuBAikV4KuAe4NjQGz3J8xT2XzWqs7vitisCw==
   dependencies:
-    "@nuxt/ui" "^2.15.0"
+    "@nuxt/ui" "^2.16.0"
     "@vueuse/core" "^10.9.0"
     defu "^6.1.4"
     git-url-parse "^14.0.0"
     ofetch "^1.3.4"
     parse-git-config "^3.0.0"
     pathe "^1.1.2"
-    pkg-types "^1.0.3"
-    tailwind-merge "^2.2.2"
+    pkg-types "^1.1.0"
+    tailwind-merge "^2.3.0"
     vue3-smooth-dnd "^0.0.6"
 
 "@nuxt/ui-templates@^1.3.2":
@@ -1281,23 +1294,23 @@
   resolved "https://registry.npmjs.org/@nuxt/ui-templates/-/ui-templates-1.3.3.tgz"
   integrity sha512-3BG5doAREcD50dbKyXgmjD4b1GzY8CUy3T41jMhHZXNDdaNwOd31IBq+D6dV00OSrDVhzrTVj0IxsUsnMyHvIQ==
 
-"@nuxt/ui@^2.15.0":
-  version "2.15.2"
-  resolved "https://registry.npmjs.org/@nuxt/ui/-/ui-2.15.2.tgz"
-  integrity sha512-3NxFcC0KN4bdTePNKKEVp4tj2BgeuGlucnnOFLVYSdhw60xU0LpFq9wDGeP7BBUl622xF9FnPNiXW5/6RS4i6w==
+"@nuxt/ui@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@nuxt/ui/-/ui-2.16.0.tgz#8415d977b4a70fe26a11575de355a38a83473eec"
+  integrity sha512-yHBZjFaN8/Zst+jTv+DfZS2Ep6UhgKlXL3/b6OX1ICwij3Yw7E4qVNCE9f1SO8DUaLigLURUYYoHG6kLb1qyBg==
   dependencies:
-    "@egoist/tailwindcss-icons" "^1.7.4"
+    "@egoist/tailwindcss-icons" "^1.8.0"
     "@headlessui/tailwindcss" "^0.2.0"
-    "@headlessui/vue" "^1.7.19"
-    "@iconify-json/heroicons" "^1.1.20"
+    "@headlessui/vue" "^1.7.21"
+    "@iconify-json/heroicons" "^1.1.21"
     "@nuxt/kit" "^3.11.2"
-    "@nuxtjs/color-mode" "^3.4.0"
-    "@nuxtjs/tailwindcss" "^6.11.4"
+    "@nuxtjs/color-mode" "^3.4.1"
+    "@nuxtjs/tailwindcss" "^6.12.0"
     "@popperjs/core" "^2.11.8"
     "@tailwindcss/aspect-ratio" "^0.4.2"
     "@tailwindcss/container-queries" "^0.1.1"
     "@tailwindcss/forms" "^0.5.7"
-    "@tailwindcss/typography" "^0.5.12"
+    "@tailwindcss/typography" "^0.5.13"
     "@vueuse/core" "^10.9.0"
     "@vueuse/integrations" "^10.9.0"
     "@vueuse/math" "^10.9.0"
@@ -1307,7 +1320,7 @@
     ohash "^1.1.3"
     pathe "^1.1.2"
     scule "^1.3.0"
-    tailwind-merge "^2.2.2"
+    tailwind-merge "^2.3.0"
     tailwindcss "^3.4.3"
 
 "@nuxt/vite-builder@3.11.2":
@@ -1365,7 +1378,7 @@
     ufo "^1.5.3"
     untyped "^1.4.2"
 
-"@nuxtjs/color-mode@^3.4.0":
+"@nuxtjs/color-mode@^3.4.0", "@nuxtjs/color-mode@^3.4.1":
   version "3.4.1"
   resolved "https://registry.npmjs.org/@nuxtjs/color-mode/-/color-mode-3.4.1.tgz"
   integrity sha512-vZgJqDstxInGw3RGSWbLoCLXtU1mvh1LLeuEA/X3a++DYA4ifwSbNoiSiOyb9qZHFEwz1Xr99H71sXV4IhOaEg==
@@ -1416,9 +1429,9 @@
     unist-util-visit "^5.0.0"
     unwasm "^0.3.7"
 
-"@nuxtjs/tailwindcss@^6.11.4":
+"@nuxtjs/tailwindcss@^6.12.0":
   version "6.12.0"
-  resolved "https://registry.npmjs.org/@nuxtjs/tailwindcss/-/tailwindcss-6.12.0.tgz"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-6.12.0.tgz#cb0ecaafd30c2773d98e175d32f411357ef210aa"
   integrity sha512-vXvEq8z177TQcx0tc10mw3O6T9WeN0iTL8hIKGDfidmr+HKReexJU01aPgHefFrCu4LJB70egYFYnywzB9lMyQ==
   dependencies:
     "@nuxt/kit" "^3.11.2"
@@ -2065,9 +2078,9 @@
   dependencies:
     mini-svg-data-uri "^1.2.3"
 
-"@tailwindcss/typography@^0.5.12":
+"@tailwindcss/typography@^0.5.13":
   version "0.5.13"
-  resolved "https://registry.npmjs.org/@tailwindcss/typography/-/typography-0.5.13.tgz"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.13.tgz#cd788a4fa4d0ca2506e242d512f377b22c1f7932"
   integrity sha512-ADGcJ8dX21dVVHIwTRgzrcunY6YY9uSlAHHGVKvkA+vLc5qLwEszvKts40lx7z0qc4clpjclwLeK5rVCV2P/uw==
   dependencies:
     lodash.castarray "^4.4.0"
@@ -9285,9 +9298,9 @@ tailwind-config-viewer@^2.0.1:
     portfinder "^1.0.26"
     replace-in-file "^6.1.0"
 
-tailwind-merge@^2.2.2:
+tailwind-merge@^2.3.0:
   version "2.3.0"
-  resolved "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-2.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-2.3.0.tgz#27d2134fd00a1f77eca22bcaafdd67055917d286"
   integrity sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==
   dependencies:
     "@babel/runtime" "^7.24.1"
