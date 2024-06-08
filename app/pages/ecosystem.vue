@@ -36,7 +36,7 @@ useSeoMeta({
       :features="section.features"
     >
       <UPageGrid v-if="section.quotes"
-      :ui="{ wrapper: `xl:grid-cols-1` }"
+      :ui="{ wrapper: `xl:grid-cols-3` }"
       >
         <ULandingTestimonial v-for="(quote, k) in section.quotes"
           :key="k"

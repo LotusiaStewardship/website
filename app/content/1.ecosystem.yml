@@ -12,7 +12,7 @@ sections:
   - headline: The Stewardship
     title: The Turtles
     description: The path to prosperity is forged by the Stewardship, comprised of the Turtles that are bound to a strict set of Core Values and Duties. The Turtles are the highly-aligned core leadership with a proven track record of dedication. While Citizens are free to come and go, Turtles are steadfast.
-    align: right
+    align: center
     quotes:
       - author: Shammah Chancellor
         title: President Turtle - Lead Architect and COO
@@ -64,12 +64,12 @@ sections:
       - name: Proof-of-Work
         description: Powerful computers are used to convert electricity into Lotus currency. The cryptographic proof of this electricity conversion is distributed to other Miners and validated to ensure no one Miner can counterfeit Lotus.
       - name: Consensus
-        description: Through Proof-of-Work, the Miners signal their compliance with the economic policy enacted by the Stewardship, thus establishing Consensus within the Treasury and the Ecosystem as a whole.
+        description: Through Proof-of-Work, the Miners signal their alignment and satisfaction with the Stewardship, thus establishing Consensus within the Treasury and for the Ecosystem as a whole.
       - name: Funding
         description: As new Lotus is issued, the Treasury provides 50% of the new Lotus to the Stewardship directly. The distributed public ledger maintained by the Treasury is transparent and fully auditable.
   - headline: The Citizenry
     title: The Value of the Ecosystem
-    description: The Citizenry is the heart of the Ecosystem, comprised of every human that gives their time and attention to the Ecosystem. It is the Citizenry that fosters the true value of the Ecosystem, engaging within and without, with reciprocity.
+    description: The Citizenry is the heart of the Ecosystem, comprised of every human that has given or received Lotus. It is the Citizenry that is the true value of the Ecosystem. By living the principles of Lotusia by example as often as possible, the Citizenry bolsters the value of themselves and all others.
     align: right
     features:
       - name: Welcoming
