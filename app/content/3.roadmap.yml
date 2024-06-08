@@ -1,10 +1,13 @@
 title: Roadmap
-description: The path to prosperity, forged by the Stewardship
+description: The path to prosperity, forged by the Lotusia Stewardship
+ogTitle: Roadmap - Lotusia
+ogImage: /img/roadmap_0.jpg
 to: /roadmap
 navigation.icon: i-heroicons-presentation-chart-line-solid
 hero:
   title: Roadmap
   description: Outlined below are the Stewardship's goals for the current Epoch. Previous Epochs are shown further down the page.
+  image: /img/roadmap_0.jpg
 sections:
   - title: Judges Epoch
     headline: Summer 2024 - Winter 2024

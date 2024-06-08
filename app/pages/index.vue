@@ -9,7 +9,7 @@ useSeoMeta({
   ogTitle: page.value.title,
   description: page.value.description,
   ogDescription: page.value.description,
-  ogImage: '/img/turtles_hero.jpeg',
+  ogImage: page.value.hero.image,
 })
 </script>
 

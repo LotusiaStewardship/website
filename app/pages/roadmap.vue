@@ -3,11 +3,13 @@ const { data: page } = await useAsyncData('roadmap', () => queryContent('/roadma
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
+
 useSeoMeta({
-  title: page.value.title,
-  ogTitle: page.value.title,
+  title: page.value.ogTitle,
+  ogTitle: page.value.ogTitle,
   description: page.value.description,
-  ogDescription: page.value.description
+  ogDescription: page.value.description,
+  ogImage: page.value.hero.ogImage,
 })
 
 const newStatusObject = (
@@ -38,7 +40,6 @@ const cardStyling = {
   }
   
 }
-
 
 </script>
 <template>
