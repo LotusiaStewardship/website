@@ -15,7 +15,8 @@ useSeoMeta({
   title: page.value.ogTitle,
   ogTitle: page.value.ogTitle,
   description: page.value.ogDescription,
-  ogDescription: page.value.ogDescription
+  ogDescription: page.value.ogDescription,
+  ogImage: page.value.ogImage
 })
 
 /*
