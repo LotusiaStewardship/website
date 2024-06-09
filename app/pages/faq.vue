@@ -5,10 +5,11 @@ if (!page.value) {
 }
 
 useSeoMeta({
-  title: page.value.title,
-  ogTitle: page.value.title,
+  title: page.value.ogTitle,
+  ogTitle: page.value.ogTitle,
   description: page.value.description,
-  ogDescription: page.value.description
+  ogDescription: page.value.description,
+  ogImage: page.value.ogImage
 })
 
 function createLinkHash(question: string) {

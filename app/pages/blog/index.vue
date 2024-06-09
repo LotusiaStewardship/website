@@ -12,17 +12,20 @@ const { data: posts } = await useAsyncData('posts', () => queryContent<BlogPost>
   .find())
 
 useSeoMeta({
-  title: page.value.title,
-  ogTitle: page.value.title,
-  description: page.value.description,
-  ogDescription: page.value.description
+  title: page.value.ogTitle,
+  ogTitle: page.value.ogTitle,
+  description: page.value.ogDescription,
+  ogDescription: page.value.ogDescription,
+  ogImage: page.value.ogImage
 })
 
+/*
 defineOgImage({
   component: 'Saas',
   title: page.value.title,
   description: page.value.description
 })
+*/
 </script>
 
 <template>

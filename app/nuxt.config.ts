@@ -40,9 +40,4 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/css/main.css'],
-  devServer: {
-    host: '172.16.2.20',
-    port: 3000,
-    url: 'https://givelotus.maff1989.dev'
-  }
 })

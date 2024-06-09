@@ -33,14 +33,14 @@ if (post.value.image?.src) {
     ogImage: joinURL(site.url, post.value.image.src),
     twitterImage: joinURL(site.url, post.value.image.src)
   })
-} else {
+}/* else {
   defineOgImage({
     component: 'Saas',
     title,
     description,
     headline: 'Blog'
   })
-}
+}*/
 </script>
 
 <template>

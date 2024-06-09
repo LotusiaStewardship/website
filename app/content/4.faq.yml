@@ -1,6 +1,8 @@
 title: FAQ
 navigation.icon: i-heroicons-question-mark-circle-solid
 description: Lotusia, explained
+ogTitle: FAQ - Lotusia
+ogImage: /img/faq_0.jpg
 links:
   - label: Technical Docs
     to: https://docs.givelotus.org
