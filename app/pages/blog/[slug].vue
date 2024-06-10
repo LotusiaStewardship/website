@@ -9,12 +9,19 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContent('/blog')
+const { data: posts } = await useAsyncData(`${route.path}-surround`, () => queryContent('/blog')
   .where({ _extension: 'md' })
   .without(['body', 'excerpt'])
-  .sort({ date: -1 })
-  .findSurround(withoutTrailingSlash(route.path))
+  .find()
 , { default: () => [] })
+
+const postIndex = posts.value.findIndex((_post) => {
+  return post.value._id == _post._id
+})
+const surround = [
+  posts.value[postIndex - 1] || null,
+  posts.value[postIndex + 1] || null
+]
 
 const title = post.value.head?.title || post.value.title
 const description = post.value.head?.description || post.value.description
@@ -84,10 +91,10 @@ if (post.value.image?.src) {
           v-if="post && post.body"
           :value="post"
         />
-
-        <hr v-if="surround?.length">
-
-        <UContentSurround :surround="surround" />
+        <template v-if="surround?.length">
+          <hr />
+          <UContentSurround :surround="surround" />
+        </template>
       </UPageBody>
 
       <template #right>
