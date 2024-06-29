@@ -4,6 +4,10 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+import { parsePageLinks } from '~/util/functions';
+const config = useRuntimeConfig()
+const urls = config.public.url
+
 useSeoMeta({
   title: page.value.ogTitle,
   ogTitle: page.value.ogTitle,
@@ -86,7 +90,7 @@ const cardStyling = {
                 />
                 <UPageLinks
                   active
-                  :links="card.links"
+                  :links="parsePageLinks(card.links, urls)"
                   :ui="{ wrapper: 'mt-4', container: 'lg:space-y-3' }"
                 />
               </template>

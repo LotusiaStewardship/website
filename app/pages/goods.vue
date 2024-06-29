@@ -4,6 +4,11 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+import type { GoodsPageLink } from '~/util/types'
+import { parsePageLinks } from '~/util/functions';
+const config = useRuntimeConfig()
+const urls = config.public.url
+
 useSeoMeta({
   title: page.value.ogTitle,
   ogTitle: page.value.ogTitle,
@@ -29,7 +34,7 @@ useSeoMeta({
       />
       <UPageBody>
         <UPageGrid>
-          <UPageCard v-for="(link, j) in section.links"
+          <UPageCard v-for="(link, j) in parsePageLinks(section.links, urls) as GoodsPageLink[]"
             :key="j"
             :icon="link.icon"
             :title="link.label"
