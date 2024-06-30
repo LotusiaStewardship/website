@@ -12,15 +12,15 @@ sections:
     version: "7.3.3"
     links:
       - label: Windows
-        to: https://github.com/LotusiaStewardship/lotusd/releases/download/v7.3.3/lotus-7.3.3-win64-setup-unsigned.exe
+        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-win64-setup-unsigned.exe
         icon: i-mdi-microsoft-windows
         type: EXE Installer (.exe)
       - label: MacOS
-        to: https://github.com/LotusiaStewardship/lotusd/releases/download/v7.3.3/lotus-7.3.3-osx-unsigned.dmg
+        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-osx-unsigned.dmg
         icon: i-mdi-apple
         type: DMG Image (.dmg)
       - label: Linux
-        to: https://github.com/LotusiaStewardship/lotusd/releases/download/v7.3.3/lotus-7.3.3-x86_64-linux-gnu.tar.gz
+        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-x86_64-linux-gnu.tar.gz
         icon: i-mdi-linux
         type: TAR archive (.tar.gz)
   - title: Prosperity Software - Lotus Vase

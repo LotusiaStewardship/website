@@ -4,6 +4,10 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+import { parsePageLinks } from '~/util/functions';
+const config = useRuntimeConfig()
+const urls = config.public.url
+
 useSeoMeta({
   title: page.value.title,
   ogTitle: page.value.title,
@@ -17,7 +21,7 @@ useSeoMeta({
   <ULandingHero
     :title="page.hero.title"
     :description="page.description"
-    :links="page.hero.links"
+    :links="parsePageLinks(page.hero.links, urls)"
     orientation="horizontal"
   >
     <template #default>
@@ -35,7 +39,7 @@ useSeoMeta({
     :description="section.description"
     :align="section.align"
     :features="section.features"
-    :links="section.links"
+    :links="parsePageLinks(section.links, urls)"
   >
     <NuxtImg 
       :src="`/img/turtles_${(i + 1)}.jpeg`"
@@ -46,7 +50,7 @@ useSeoMeta({
   <ULandingCTA
     :title="page.cta.title"
     :description="page.cta.description"
-    :links="page.hero.links"
+    :links="parsePageLinks(page.hero.links, urls)"
     :card="false"
   />
 </template>

@@ -66,7 +66,7 @@ sections:
             complete: true
         links:
           - label: See the code
-            to: https://github.com/LotusiaStewardship/website
+            to: github/website
             target: _blank
             active: true
       - title: Network Upgrade for Judges Epoch
@@ -84,7 +84,7 @@ sections:
             to: /goods
             active: true
           - label: See what's new
-            to: https://github.com/LotusiaStewardship/lotusd/releases/tag/v7.3.3
+            to: github/lotusd/releases/tag/v7.3.3
             target: _blank
             active: true
   #- title: Ruth Epoch

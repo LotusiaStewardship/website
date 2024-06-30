@@ -4,6 +4,10 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+import { parsePageLinks } from '~/util/functions';
+const config = useRuntimeConfig()
+const urls = config.public.url
+
 useSeoMeta({
   title: page.value.ogTitle,
   ogTitle: page.value.ogTitle,
@@ -24,7 +28,7 @@ function createLinkHash(question: string) {
     <UPageHero
       :title="page.title"
       :description="page.description"
-      :links="page.links"
+      :links="parsePageLinks(page.links, urls)"
       align="center"
     />
     <UPage>
@@ -55,7 +59,7 @@ function createLinkHash(question: string) {
             </span>
           </div>
           <UPageLinks v-if="question.links"
-            :links="question.links"
+            :links="parsePageLinks(question.links, urls)"
           />
         </div>
       </UPageBody>
@@ -63,7 +67,7 @@ function createLinkHash(question: string) {
     <ULandingCTA
       :title="page.cta.title"
       :description="page.cta.description"
-      :links="page.cta.links"
+      :links="parsePageLinks(page.cta.links, urls)"
       :card="false"
       :ui="{ body: { padding: false }}"
       class="mb-24 sm:mb-32"

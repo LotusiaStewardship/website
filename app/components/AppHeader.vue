@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { NavItem } from '@nuxt/content/dist/runtime/types'
 
+const config = useRuntimeConfig()
 const navigation = inject<Ref<NavItem[]>>('navigation', ref([]))
 
 const links = [{
@@ -23,11 +24,11 @@ const links = [{
   children:[
     {
       label: 'Docs',
-      to: 'https://docs.givelotus.org',
+      to: config.public.url.docs,
       target: '_blank'
     }, {
       label: 'Block Explorer',
-      to: 'https://explorer.givelotus.org',
+      to: config.public.url.explorer,
       target: '_blank'
     }
   ]
@@ -49,7 +50,7 @@ const links = [{
 
     <template #right>
       <UButton
-        to="https://t.me/givelotus"
+        :to="config.public.url.telegram"
         target="_blank"
         icon="i-simple-icons-telegram"
         size="sm"
@@ -57,7 +58,7 @@ const links = [{
         variant="ghost"
       />
       <UButton
-        to="https://github.com/LotusiaStewardship"
+        :to="config.public.url.github"
         target="_blank"
         icon="i-simple-icons-github"
         size="sm"

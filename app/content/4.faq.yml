@@ -5,7 +5,7 @@ ogTitle: FAQ - Lotusia
 ogImage: /img/faq_0.jpg
 links:
   - label: Technical Docs
-    to: https://docs.givelotus.org
+    to: docs
     target: _blank
     icon: i-heroicons-arrow-top-right-on-square
     color: gray
@@ -17,7 +17,7 @@ questions:
     answer: The best way to get Lotus is to be given Lotus. If you join our Telegram community and engage with others, you will be given Lotus. You can also get Lotus by becoming a Miner for the Treasury.
     links:
       - label: Mining Guide
-        to: https://docs.givelotus.org/guides/mining
+        to: docs/guides/mining
         target: _blank
   - text: Can I buy Lotus from an exchange?
     answer: Currently, only the Exbitron exchange lists the Lotus ($XPI) / $USDT trade pair. The Stewardship has no plans to request additional exchange listings directly. However, as adoption and demand of the Lotus currency grows, it is inevitable that exchanges will begin listing Lotus.
@@ -26,7 +26,7 @@ questions:
     answer: The first block of the Lotus blockchain was mined on June 21, 2021 at 3:31 UTC
     links:
       - label: Block Details
-        to: https://explorer.givelotus.org/block/00000000090ac785b348fc296a84ec2e45ee5fed25419a8557d868152c880049
+        to: explorer/block/00000000090ac785b348fc296a84ec2e45ee5fed25419a8557d868152c880049
         target: _blank
   - text: Is there a Lotus whitepaper?
     answer: Yes, it is under active development. It will be linked on the home page in the near future.
@@ -38,7 +38,7 @@ questions:
     answer: Mrs. Turtle is our gracious Telegram bot. She helps our Telegram community give Lotus to each other. Join our Telegram group and we will have her give you some Lotus!
     links:
       - label: Source Code
-        to: https://github.com/givelotus/lotus-bot
+        to: github/lotus-bot
         target: _blank
   - text: How is the Stewardship funding transparent?
     answer: The Lotus blockchain is a distributed public ledger. The ledger contains a record of every change made by the Treasury, including every Lotus issued to the Stewardship as funding. By running the lotusd software, anybody can verify every detail of funding received and spent by the Stewardship.
@@ -102,7 +102,7 @@ cta:
   links:
     - label: Telegram
       icon: i-simple-icons-telegram
-      to: 'https://t.me/givelotus'
+      to: telegram
       target: _blank
       size: xl
       color: purple

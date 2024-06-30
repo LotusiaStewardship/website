@@ -1,5 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      url: {
+        explorer: 'https://explorer.lotusia.org',
+        docs: 'https://docs.givelotus.org',
+        github: 'https://github.com/LotusiaStewardship',
+        telegram: 'https://t.me/givelotus',
+      }
+    }
+  },
   extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],
   modules: [
     '@nuxt/content',
