@@ -22,7 +22,7 @@ RUN yarn && yarn generate
 #RUN yarn && yarn generate
 
 # Hosting Layer
-FROM nginx
+FROM nginx:1.21
 COPY --from=websitebuild /website/.output/public/ /usr/share/nginx/website/html
 #COPY --from=websitebuild /docs/dist/ /usr/share/nginx/docs/html
 
