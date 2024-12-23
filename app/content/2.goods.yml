@@ -8,19 +8,19 @@ navigation.icon: i-mdi-fountain
 sections:
   - title: Blockchain software - lotusd / Lotus QT
     description: Lotus Blockchain software - Maintains a full copy of the Treasury's ledger. ** REQUIRED FOR MINERS
-    headline: "Judges - 7th Epoch of the Lotus Network"
-    version: "7.3.3"
+    headline: "Ruth - 8th Epoch of the Lotus Network"
+    version: "8.3.3"
     links:
       - label: Windows
-        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-win64-setup-unsigned.exe
+        to: github/lotusd/releases/download/v8.3.3-hotfix/lotus-8.3.3-win64-setup-unsigned.exe
         icon: i-mdi-microsoft-windows
         type: EXE Installer (.exe)
       - label: MacOS
-        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-osx-unsigned.dmg
+        to: github/lotusd/releases/download/v8.3.3-hotfix/lotus-8.3.3-osx-unsigned.dmg
         icon: i-mdi-apple
         type: DMG Image (.dmg)
       - label: Linux
-        to: github/lotusd/releases/download/v7.3.3/lotus-7.3.3-x86_64-linux-gnu.tar.gz
+        to: github/lotusd/releases/download/v8.3.3-hotfix/lotus-8.3.3-x86_64-linux-gnu.tar.gz
         icon: i-mdi-linux
         type: TAR archive (.tar.gz)
   - title: Prosperity Software - Lotus Vase
