@@ -1,11 +1,18 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('goods', () => queryContent('/goods').findOne())
+import type { GoodsPageLink } from '~/util/types'
+import { parsePageLinks } from '~/util/functions'
+
+const { data: page } = await useAsyncData('goods', () =>
+  queryContent('/goods').findOne(),
+)
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true,
+  })
 }
 
-import type { GoodsPageLink } from '~/util/types'
-import { parsePageLinks } from '~/util/functions';
 const config = useRuntimeConfig()
 const urls = config.public.url
 
@@ -14,9 +21,10 @@ useSeoMeta({
   ogTitle: page.value.ogTitle,
   description: page.value.description,
   ogDescription: page.value.description,
-  ogImage: page.value.ogImage
+  ogImage: page.value.ogImage,
 })
 </script>
+
 <template>
   <UContainer>
     <UPageHero
@@ -24,9 +32,7 @@ useSeoMeta({
       :description="page.description"
       align="center"
     />
-    <UPage v-for="(section, i) in page.sections"
-      :key="i"
-    >
+    <UPage v-for="(section, i) in page.sections" :key="i">
       <UPageHeader
         :headline="section.headline"
         :title="section.title"
@@ -34,7 +40,8 @@ useSeoMeta({
       />
       <UPageBody>
         <UPageGrid>
-          <UPageCard v-for="(link, j) in parsePageLinks(section.links, urls) as GoodsPageLink[]"
+          <UPageCard
+            v-for="(link, j) in parsePageLinks(section.links, urls) as GoodsPageLink[]"
             :key="j"
             :icon="link.icon"
             :title="link.label"
