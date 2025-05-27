@@ -15,10 +15,10 @@ sections:
     description: The path to prosperity is forged by the Stewardship, comprised of the Turtles that are bound to a strict set of Core Values and Duties. The Turtles are the highly-aligned core leadership with a proven track record of dedication. While Citizens are free to come and go, Turtles are steadfast.
     align: center
     quotes:
-      - author: Shammah Chancellor
-        title: President Turtle - Lead Architect and COO
-        text: Lotus is not to be an investment, but our investments in each other will generate more Lotus.
-        avatar: '/img/shammah_chancellor.jpeg'
+      - author: Alexandre Guillioud
+        title: Hash Turtle - Blockchain Architect
+        text: I like to burn electricity for Lotus because I like to burn Lotus.
+        avatar: '/img/alexandre_guillioud.jpeg'
       - author: Sean Ballard
         title: Priest Turtle - Relations and Outreach Strategist
         text: Free men do not ask permission to build the solutions society needs.
@@ -59,7 +59,7 @@ sections:
     title: The Miners
     description: Collectively forming the Treasury branch of the Lotusia Ecosystem, the Miners are the crux of the economy, responsible for Issuance of new Lotus, Economic Consensus, and Stewardship Funding. Unlike other Treasury institutions, the Miners of the Treasury are distributed worldwide.
     align: left
-    features: 
+    features:
       - name: Blockchain
         description: Miners run Lotus blockchain software on their computers to establish the Lotus network and maintain the distributed public ledger. The Lotus blockchain software is a Public Good provided by the Stewardship.
       - name: Proof-of-Work
