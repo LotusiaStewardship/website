@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { parsePageLinks } from '~/util/functions'
+
 const { data: page } = await useAsyncData('roadmap', () => queryContent('/roadmap').findOne())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-import { parsePageLinks } from '~/util/functions';
 const config = useRuntimeConfig()
 const urls = config.public.url
 
@@ -13,7 +14,7 @@ useSeoMeta({
   ogTitle: page.value.ogTitle,
   description: page.value.description,
   ogDescription: page.value.description,
-  ogImage: page.value.hero.ogImage,
+  ogImage: page.value.hero.ogImage
 })
 
 const newStatusObject = (
@@ -42,10 +43,9 @@ const cardStyling = {
       'text-primary'
     )
   }
-  
 }
-
 </script>
+
 <template>
   <UContainer>
     <UPageHero
@@ -53,16 +53,15 @@ const cardStyling = {
       :description="page.hero.description"
       align="center"
     />
-    <UPage v-for="(section, i) in page.sections"
-      :key="i"
-    >
+    <UPage v-for="(section, i) in page.sections" :key="i">
       <UPageHeader
         :headline="section.headline"
         :title="section.title"
       />
       <UPageBody>
         <UPageGrid>
-          <UPageCard v-for="(card, j) in section.cards"
+          <UPageCard
+            v-for="(card, j) in section.cards"
             :key="j"
             :title="card.title"
             :description="card.description"
@@ -77,15 +76,16 @@ const cardStyling = {
             <UPageBody
               :ui="{ wrapper: 'mt-2 pb-0' }"
             >
-            <template #default>
-                <UCheckbox v-for="(item, k) in card.checklist"
+              <template #default>
+                <UCheckbox
+                  v-for="(item, k) in card.checklist"
                   :key="k"
                   disabled
                   :label="item.label"
-                  :modelValue="item.complete"
+                  :model-value="item.complete"
                   :ui="{
                     wrapper: ((k + 1) == card.checklist.length ? 'mt-4 mb-0': 'mt-4 mb-4'),
-                    base: 'disabled:opacity-100'
+                    base: 'disabled:opacity-100 disabled:cursor-default'
                   }"
                 />
                 <UPageLinks
