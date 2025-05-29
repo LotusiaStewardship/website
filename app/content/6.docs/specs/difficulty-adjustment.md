@@ -1,6 +1,6 @@
 ---
 title: ASERT Difficulty Adjustment Algorithm (aserti3-2d)
-menuTitle: "Difficulty Adjustment Algorithm"
+menuTitle: 'Difficulty Adjustment Algorithm'
 category: General
 position: 2.3
 date: 2020-08-17
@@ -52,13 +52,13 @@ an ASERT algorithm performed best across criteria that included:
 
 ### Terms and conventions
 
-* Fork block: The first block mined according to the new consensus rules.
-* Anchor block: The parent of the fork block.
-
+- Fork block: The first block mined according to the new consensus rules.
+- Anchor block: The parent of the fork block.
 
 ### Requirements
 
 #### Target computation
+
 The current block's target bits are calculated by the following algorithm.
 
 The aserti3-2d algorithm can be described by the following formula:
@@ -89,7 +89,6 @@ arithmetic and a cubic polynomial approximation to the 2^x term.
 The 'target' values used as input and output are the compact representations
 of actual 256-bit integer targets as specified for the 'nBits' field in the
 block header.
-
 
 Python-code, uses Python 3 syntax:
 
@@ -140,36 +139,35 @@ def next_target_aserti3_2d(
 ```
 
 Note 1: The reference implementations make use of signed integer arithmetic.
-        Alternative implementations may use strictly unsigned integer
-        arithmetic.
+Alternative implementations may use strictly unsigned integer
+arithmetic.
 
 Note 2: All implementations should strictly avoid use of floating point
-        arithmetic in the computation of the exponent.
+arithmetic in the computation of the exponent.
 
 Note 3: In the calculation of the exponent, truncating integer division [7, 10]
-        must be used, as indicated by the `//` division operator (`int.__floordiv__`).
+must be used, as indicated by the `//` division operator (`int.__floordiv__`).
 
 Note 5: The convenience functions `bits_to_target()` and `target_to_bits()`
-        are assumed to be available for conversion between compact 'nBits'
-        and unsigned 256-bit integer representations of targets.
-        Examples of such functions are available in the C++ and Python3
-        reference implementations.
+are assumed to be available for conversion between compact 'nBits'
+and unsigned 256-bit integer representations of targets.
+Examples of such functions are available in the C++ and Python3
+reference implementations.
 
 Note 6: If a limited-width integer type is used for `current_target`, then the `<<`
-        operator may cause an overflow exception or silent discarding of
-        most-significant bits.
-        Implementations must detect and handle such cases to correctly emulate
-        the behaviour of an unlimited-width calculation. Note that if the result
-        at this point would exceed `radix * max_target` then `max_bits` may be returned
-        immediately.
+operator may cause an overflow exception or silent discarding of
+most-significant bits.
+Implementations must detect and handle such cases to correctly emulate
+the behaviour of an unlimited-width calculation. Note that if the result
+at this point would exceed `radix * max_target` then `max_bits` may be returned
+immediately.
 
 Note 7: The polynomial approximation that computes `factor` must be performed
-        with 64 bit unsigned integer arithmetic or better.  It *will*
-        overflow a signed 64 bit integer.  Since exponent is signed, it may be
-        necessary to cast it to unsigned 64 bit integer. In languages like
-        Java where long is always signed, an unsigned shift `>>> 48` must be
-        used to divide by 2^48.
-
+with 64 bit unsigned integer arithmetic or better. It _will_
+overflow a signed 64 bit integer. Since exponent is signed, it may be
+necessary to cast it to unsigned 64 bit integer. In languages like
+Java where long is always signed, an unsigned shift `>>> 48` must be
+used to divide by 2^48.
 
 #### Activation
 
@@ -186,26 +184,24 @@ will be used as the anchor block for subsequent ASERT calculations.
 This corresponds to the last block mined under the pre-ASERT DAA rules.
 
 Note 1: The anchor block is the block whose height and target
-        (nBits) are used as the 'absolute' basis for ASERT's
-        scheduled target. The timestamp (nTime) of the anchor block's
-        *parent* is used.
+(nBits) are used as the 'absolute' basis for ASERT's
+scheduled target. The timestamp (nTime) of the anchor block's
+_parent_ is used.
 
 Note 2: The height, timestamp, and nBits of this block are not known ahead of
-        the upgrade. Implementations MUST dynamically determine it across the
-        upgrade. Once the network upgrade has been consolidated by
-        sufficient chain work or a checkpoint, implementations can simply
-        hard-code the known height, nBits and associated (parent) timestamp
-        this anchor block. Implementations MAY also hard-code other equivalent
-        representations, such as an nBits value and a time offset from the
-        genesis block.
-
+the upgrade. Implementations MUST dynamically determine it across the
+upgrade. Once the network upgrade has been consolidated by
+sufficient chain work or a checkpoint, implementations can simply
+hard-code the known height, nBits and associated (parent) timestamp
+this anchor block. Implementations MAY also hard-code other equivalent
+representations, such as an nBits value and a time offset from the
+genesis block.
 
 #### REQ-ASERT-TESTNET-DIFF-RESET (testnet difficulty reset)
 
 On testnet, an additional rule will be included: Any block with a timestamp
 that is more than 1200 seconds after its parent's timestamp must use an
 nBits value of `max_bits` (`0x1d00ffff`).
-
 
 ## Rationale and commentary on requirements / design decisions
 
@@ -270,7 +266,7 @@ nBits value of `max_bits` (`0x1d00ffff`).
    hashrate should be about `sqrt(1 / 288) * 600` seconds, or 35.3 seconds. Our
    chosen approximation method is able to achieve precision of 3 seconds in most
    circumstances, limited in two places by 16-bit operations:
-       `172800 sec / 65536 = 2.6367 sec`
+   `172800 sec / 65536 = 2.6367 sec`
    Our worst-case precision is 8 seconds, and is limited by the worst-case
    15-bit precision of the nBits value. This 8 second worst-case is not within
    the scope of this work to address, as it would require a change to the block
@@ -293,7 +289,7 @@ nBits value of `max_bits` (`0x1d00ffff`).
    higher precision was easy, we chose to aim for INL that would be comparable
    to or less than the typical drift that can be caused by one block. Out of
    a 2-day half-life window, one block's variance comprises:
-       `600 / 172800 = 0.347%`
+   `600 / 172800 = 0.347%`
    Our cubic approximation's INL performance is better than 0.013%,[14] which
    exceeds that requirement by a comfortable margin.
 
@@ -325,7 +321,6 @@ nBits value of `max_bits` (`0x1d00ffff`).
    - the '3' refers to the cubic approximation of the exponential
    - the '2d' refers to the 2-day (172800 second) halflife
 
-
 ## Implementation advice
 
 Implementations must not make any rounding errors during their calculations.
@@ -336,12 +331,11 @@ Implementations which use signed integers and use bit-shifting must ensure
 that the bit-shifting is arithmetic.
 
 Note 1: In C++ compilers, right shifting negative signed integers
-        is formally unspecified behavior until C++20 when it
-        will become standard [5]. In practice, C/C++ compilers
-        commonly implement arithmetic bit shifting for signed
-        numbers. Implementers are advised to verify good behavior
-        through compile-time assertions or unit tests.
-
+is formally unspecified behavior until C++20 when it
+will become standard [5]. In practice, C/C++ compilers
+commonly implement arithmetic bit shifting for signed
+numbers. Implementers are advised to verify good behavior
+through compile-time assertions or unit tests.
 
 ## Reference implementations
 
@@ -349,18 +343,16 @@ Note 1: In C++ compilers, right shifting negative signed integers
 - Python3 code (see contrib/testgen/validate_nbits_aserti3_2d.py): <https://gitlab.com/bitcoin-cash-node/bitcoin-cash-node/-/merge_requests/692>
 - Java code: <https://github.com/pokkst/asert-java>
 
-
 ## Test vectors
 
 Test vectors suitable for validating further implementations of the aserti3-2d
 algorithm are available at:
 
-  <https://gitlab.com/bitcoin-cash-node/bchn-sw/qa-assets/-/tree/master/test_vectors/aserti3-2d>
+<https://gitlab.com/bitcoin-cash-node/bchn-sw/qa-assets/-/tree/master/test_vectors/aserti3-2d>
 
 and alternatively at:
 
-  <https://download.bitcoincashnode.org/misc/data/asert/test_vectors>
-
+<https://download.bitcoincashnode.org/misc/data/asert/test_vectors>
 
 ## Acknowledgements
 
@@ -383,14 +375,13 @@ valuable suggestions for improvement:
 - John Nieri (emergent_reasons)
 - Tom Zander
 
-
 ## References
 
 [1] "[Static difficulty adjustments, with absolutely scheduled exponentially rising targets (DA-ASERT) -- v2](http://toom.im/files/da-asert.pdf)", Mark B. Lundeberg, July 31, 2020
 
 [2] "[BCH upgrade proposal: Use ASERT as the new DAA](https://read.cash/@jtoomim/bch-upgrade-proposal-use-asert-as-the-new-daa-1d875696)", Jonathan Toomim, 8 July 2020
 
-[3] [Bitcoin Cash November 15, 2020 Upgrade Specification](2020-11-15-upgrade.md).
+[3] [Bitcoin Cash November 15, 2020 Upgrade Specification](/docs/specs/bitcoin-cash/2020-11-15-upgrade.md).
 
 [4] <https://en.wikipedia.org/wiki/Arithmetic_shift>
 
@@ -415,7 +406,6 @@ valuable suggestions for improvement:
 [14] <http://toom.im/bch/aserti3_approx_error.html>
 
 [15] <https://github.com/zawy12/difficulty-algorithms/issues/62#issuecomment-646187957>
-
 
 ## License
 
