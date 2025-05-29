@@ -5,8 +5,7 @@ ogTitle: FAQ - Lotusia
 ogImage: /img/faq_0.jpg
 links:
   - label: Technical Docs
-    to: docs
-    target: _blank
+    to: /docs
     icon: i-heroicons-arrow-top-right-on-square
     color: gray
     trailing: true
@@ -33,7 +32,7 @@ questions:
   - text: What is the 6-month upgrade schedule?
     answer: The Lotus blockchain undergoes a scheduled upgrade twice per calendar year, beginning every Summer and Winter solstice. These upgrades are coordinated by the Stewardship through changes to the open-source software. Once the Treasury and Citizenry are in consensus with the proposed changes, the changes are then adopted and become the new consensus for the Ecosystem.
   - text: What determines consensus in the Lotusia Ecosystem?
-    answer: Contrary to the existing model of representative government, the Stewardship is unable to enforce compliance with any rules that they propose for the Ecosystem. Compliance with the Stewardship's proposed rules is completely voluntary and consentual. The Treasury signals consent by upgrading their software and continuing to issue new Lotus, and the Citizenry signals consent by continuing to engage in the Ecosystem. 
+    answer: Contrary to the existing model of representative government, the Stewardship is unable to enforce compliance with any rules that they propose for the Ecosystem. Compliance with the Stewardship's proposed rules is completely voluntary and consentual. The Treasury signals consent by upgrading their software and continuing to issue new Lotus, and the Citizenry signals consent by continuing to engage in the Ecosystem.
   - text: Who is Mrs. Turtle?
     answer: Mrs. Turtle is our gracious Telegram bot. She helps our Telegram community give Lotus to each other. Join our Telegram group and we will have her give you some Lotus!
     links:
@@ -62,38 +61,45 @@ questions:
   - text: How does Lotus compare to a fiat currency like the U.S. Dollar?
     answer: There are some similarities between Lotus and the U.S. Dollar, however there are several key differences that are outlined below.
     table:
-      columns: [
-        { key: 'trait', label: '' },
-        { key: 'xpi', label: 'Lotus' },
-        { key: 'usd', label: 'U.S. Dollar' }
-      ]
-      rows: [{
-          id: 1,
-          trait: 'Issuance',
-          xpi: 'Proof-of-Work / Electricity',
-          usd: 'Debt'
-        }, {
-          id: 2,
-          trait: 'Inflation',
-          xpi: 'Based on Ecosystem demand',
-          usd: 'Whatever Congress decides'
-        }, {
-          id: 3,
-          trait: 'Distribution',
-          xpi: 'Public works, volunteerism, charity',
-          usd: 'Public works, welfare programs, war, surveillance'
-        }, {
-          id: 4,
-          trait: 'Redemption',
-          xpi: 'Voluntary destructive use',
-          usd: 'Compulsory taxation'
-        }, {
-          id: 5,
-          trait: 'Enforcement',
-          xpi: 'Blockchain consensus',
-          usd: 'Police / Military force'
-          
-        }]
+      columns:
+        [
+          { key: 'trait', label: '' },
+          { key: 'xpi', label: 'Lotus' },
+          { key: 'usd', label: 'U.S. Dollar' },
+        ]
+      rows:
+        [
+          {
+            id: 1,
+            trait: 'Issuance',
+            xpi: 'Proof-of-Work / Electricity',
+            usd: 'Debt',
+          },
+          {
+            id: 2,
+            trait: 'Inflation',
+            xpi: 'Based on Ecosystem demand',
+            usd: 'Whatever Congress decides',
+          },
+          {
+            id: 3,
+            trait: 'Distribution',
+            xpi: 'Public works, volunteerism, charity',
+            usd: 'Public works, welfare programs, war, surveillance',
+          },
+          {
+            id: 4,
+            trait: 'Redemption',
+            xpi: 'Voluntary destructive use',
+            usd: 'Compulsory taxation',
+          },
+          {
+            id: 5,
+            trait: 'Enforcement',
+            xpi: 'Blockchain consensus',
+            usd: 'Police / Military force',
+          },
+        ]
   - text: What is "voluntary destructive use" and how does it work?
     answer: The term describes a mechanism by which Lotus can be removed permanently from circulation without requiring any compulsory tax policy. Some public goods that enable public social interaction are provided by the Stewardship and require Lotus currency to be destroyed in order to interact. For example, a public ad board requires any Citizen of Lotusia to destroy a desired amount of their Lotus currency in order to post an ad that will be broadcasted across the Ecosystem.
 cta:
