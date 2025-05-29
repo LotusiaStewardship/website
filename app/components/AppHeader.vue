@@ -4,35 +4,42 @@ import type { NavItem } from '@nuxt/content/dist/runtime/types'
 const config = useRuntimeConfig()
 const navigation = inject<Ref<NavItem[]>>('navigation', ref([]))
 
-const links = [{
-  label: 'Ecosystem',
-  to: '/ecosystem'
-}, {
-  label: 'Public Goods',
-  to: '/goods'
-}, {
-  label: 'Roadmap',
-  to: '/roadmap'
-}, {
-  label: 'FAQ',
-  to: '/faq'
-}, {
-  label: 'Blog',
-  to: '/blog'
-}, {
-  label: 'More',
-  children:[
-    {
-      label: 'Docs',
-      to: config.public.url.docs,
-      target: '_blank'
-    }, {
-      label: 'Block Explorer',
-      to: config.public.url.explorer,
-      target: '_blank'
-    }
-  ]
-}]
+const links = [
+  {
+    label: 'Ecosystem',
+    to: '/ecosystem',
+  },
+  {
+    label: 'Public Goods',
+    to: '/goods',
+  },
+  {
+    label: 'Roadmap',
+    to: '/roadmap',
+  },
+  {
+    label: 'FAQ',
+    to: '/faq',
+  },
+  {
+    label: 'Docs',
+    to: '/docs',
+  },
+  {
+    label: 'More',
+    children: [
+      {
+        label: 'Blog',
+        to: '/blog',
+      },
+      {
+        label: 'Block Explorer',
+        to: config.public.url.explorer,
+        target: '_blank',
+      },
+    ],
+  },
+]
 </script>
 
 <template>
@@ -42,10 +49,7 @@ const links = [{
     </template>
 
     <template #panel>
-      <UNavigationTree
-        :links="mapContentNavigation(navigation)"
-        default-open
-      />
+      <UNavigationTree :links="mapContentNavigation(navigation)" default-open />
     </template>
 
     <template #right>

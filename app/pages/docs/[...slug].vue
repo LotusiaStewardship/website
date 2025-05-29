@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { withoutTrailingSlash } from 'ufo'
+import type { NavItem } from '@nuxt/content/types'
 
 const route = useRoute()
 
-const { data: page } = await useAsyncData(route.path, () => queryContent(route.path).findOne())
+const { data: page } = await useAsyncData(route.path, () =>
+  queryContent(route.path).findOne()
+)
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true
+  })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContent('/docs')
-  .where({ _extension: 'md', navigation: { $ne: false } })
-  .only(['title', 'description', '_path'])
-  .findSurround(withoutTrailingSlash(route.path))
-, { default: () => [] })
+const { data: navigation } = await useAsyncData(
+  `${route.path}-navigationTree`,
+  () => fetchContentNavigation(queryContent('/docs').find()),
+  { default: () => [] }
+)
+const navigationTree = computed(() =>
+  navigation.value.filter((item: NavItem) => item._path === '/docs')
+)
 
 useSeoMeta({
   title: page.value.title,
@@ -31,30 +40,32 @@ const headline = computed(() => findPageHeadline(page.value!))
 </script>
 
 <template>
-  <UPage v-if="page">
-    <UPageHeader
-      :title="page.title"
-      :description="page.description"
-      :links="page.links"
-      :headline="headline"
-    />
-
-    <UPageBody prose>
-      <ContentRenderer
-        v-if="page.body"
-        :value="page"
+  <UContainer>
+    <UPage v-if="page">
+      <UPageHeader
+        :title="page.title"
+        :links="page.links"
+        :headline="headline"
       />
 
-      <hr v-if="surround?.length">
+      <template #left>
+        <UPageBody>
+          <UNavigationTree
+            :level="1"
+            :links="mapContentNavigation(navigationTree[0].children)"
+            :multiple="false"
+            :default-open="true"
+          />
+        </UPageBody>
+      </template>
 
-      <UContentSurround :surround="surround" />
-    </UPageBody>
+      <UPageBody prose>
+        <ContentRenderer v-if="page.body" :value="page" />
+      </UPageBody>
 
-    <template
-      v-if="page.toc !== false"
-      #right
-    >
-      <UContentToc :links="page.body?.toc?.links" />
-    </template>
-  </UPage>
+      <template v-if="page.toc !== false" #right>
+        <UContentToc title="On this page" :links="page.body?.toc?.links" />
+      </template>
+    </UPage>
+  </UContainer>
 </template>
