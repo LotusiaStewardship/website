@@ -16,7 +16,7 @@ questions:
     answer: The best way to get Lotus is to be given Lotus. If you join our Telegram community and engage with others, you will be given Lotus. You can also get Lotus by becoming a Miner for the Treasury.
     links:
       - label: Mining Guide
-        to: docs/guides/mining
+        to: https://burnlotus.org/#guide
         target: _blank
   - text: Can I buy Lotus from an exchange?
     answer: Currently, only the Exbitron exchange lists the Lotus ($XPI) / $USDT trade pair. The Stewardship has no plans to request additional exchange listings directly. However, as adoption and demand of the Lotus currency grows, it is inevitable that exchanges will begin listing Lotus.
