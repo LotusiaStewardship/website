@@ -133,8 +133,8 @@ useSeoMeta({
   title: `${profileId} on ${platformFormatted}`,
   description: `View ${profileId}'s reputation on Lotusia Social`,
   ogTitle: `${profileId} on ${platformFormatted}`,
-  ogDescription: `Lotusia Social is a platform for tracking and analyzing social media profiles.`,
-  // ogImage: 'https://lotusia.com/og-image.png',
+  ogDescription: `View ${profileId}'s reputation on Lotusia Social`,
+  ogImage: avatarSrc.value,
   ogUrl: `https://lotusia.org/social/${platform}/${profileId}`
 })
 </script>
