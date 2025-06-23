@@ -137,10 +137,10 @@ useSeoMeta({
   twitterCard: 'summary',
   twitterTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
   twitterDescription: `View ${profileId}'s social reputation details on Lotusia`,
-  twitterImage: rawAvatarUrl ?? undefined,
+  twitterImage: rawAvatarUrl,
   ogTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
   ogDescription: `View ${profileId}'s social reputation details on Lotusia`,
-  ogImage: rawAvatarUrl ?? undefined,
+  ogImage: rawAvatarUrl,
   ogUrl: `https://lotusia.org/social/${platform}/${profileId}`
 })
 </script>
