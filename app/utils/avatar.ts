@@ -175,7 +175,8 @@ const resizeAndCompressImage = async (
  */
 export const getProfileAvatar = async (
   platform: string,
-  profileId: string
+  profileId: string,
+  rawUrl: boolean = false
 ): Promise<string | null> => {
   // Default avatar to use when no avatar is found
   const defaultAvatar = '/images/default-avatar.svg'
@@ -193,6 +194,9 @@ export const getProfileAvatar = async (
       // First try: Use unavatar.io service
       try {
         const twitterImageUrl = getTwitterProfileImageUrl(profileId)
+        if (rawUrl) {
+          return twitterImageUrl
+        }
         try {
           const resizedImage = await resizeAndCompressImage(twitterImageUrl)
           return resizedImage
@@ -212,6 +216,9 @@ export const getProfileAvatar = async (
       // Second try: Use Gravatar as fallback
       try {
         const fallbackUrl = getFallbackAvatarUrl(profileId)
+        if (rawUrl) {
+          return fallbackUrl
+        }
         try {
           const resizedGravatar = await resizeAndCompressImage(fallbackUrl)
           return resizedGravatar

@@ -134,9 +134,7 @@ useSeoMeta({
   description: `View ${profileId}'s social reputation details on Lotusia`,
   ogTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
   ogDescription: `View ${profileId}'s social reputation details on Lotusia`,
-  ogImage: {
-    url: avatarSrc.value
-  },
+  ogImage: await getProfileAvatar(platform, profileId, true) ?? undefined,
   ogUrl: `https://lotusia.org/social/${platform}/${profileId}`
 })
 </script>
