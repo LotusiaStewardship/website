@@ -130,10 +130,10 @@ onMounted(async () => {
  * SEO meta
  */
 useSeoMeta({
-  title: `${profileId} on ${platformFormatted}`,
-  description: `View ${profileId}'s reputation on Lotusia Social`,
-  ogTitle: `${profileId} on ${platformFormatted}`,
-  ogDescription: `View ${profileId}'s reputation on Lotusia Social`,
+  title: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
+  description: `View ${profileId}'s social reputation details on Lotusia`,
+  ogTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
+  ogDescription: `View ${profileId}'s social reputation details on Lotusia`,
   ogImage: avatarSrc.value,
   ogUrl: `https://lotusia.org/social/${platform}/${profileId}`
 })
