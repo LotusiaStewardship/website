@@ -185,9 +185,9 @@ export const getProfileAvatar = async (
   const initials = getProfileInitials(profileId)
 
   // Skip external image loading if we're not in a browser
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
-    return getFallbackAvatarUrl(profileId)
-  }
+  // if (typeof window === 'undefined' || typeof document === 'undefined') {
+  //   return getFallbackAvatarUrl(profileId)
+  // }
 
   try {
     if (platform.toLowerCase() === 'twitter') {
