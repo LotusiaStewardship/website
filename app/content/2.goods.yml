@@ -9,18 +9,18 @@ sections:
   - title: Blockchain software - lotusd / Lotus QT
     description: Lotus Blockchain software - Maintains a full copy of the Treasury's ledger. ** REQUIRED FOR MINERS
     headline: '1st Samuel - 9th Epoch of the Lotus Network'
-    version: '9.4.1'
+    version: '9.4.2'
     links:
       - label: Windows
-        to: github/lotusd/releases/download/v9.4.1/lotus-9.4.1-win64-setup-unsigned.exe
+        to: github/lotusd/releases/download/v9.4.2/lotus-9.4.2-win64-setup-unsigned.exe
         icon: i-mdi-microsoft-windows
         type: EXE Installer (.exe)
       - label: MacOS
-        to: github/lotusd/releases/download/v9.4.1/lotus-9.4.1-osx-unsigned.dmg
+        to: github/lotusd/releases/download/v9.4.2/lotus-9.4.2-osx-unsigned.dmg
         icon: i-mdi-apple
         type: DMG Image (.dmg)
       - label: Linux
-        to: github/lotusd/releases/download/v9.4.1/lotus-9.4.1-x86_64-linux-gnu.tar.gz
+        to: github/lotusd/releases/download/v9.4.2/lotus-9.4.2-x86_64-linux-gnu.tar.gz
         icon: i-mdi-linux
         type: TAR archive (.tar.gz)
   - title: Prosperity Software - Lotus Vase
