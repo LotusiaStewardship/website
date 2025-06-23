@@ -4,7 +4,6 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-import { parsePageLinks } from '~/util/functions';
 const config = useRuntimeConfig()
 const urls = config.public.url
 

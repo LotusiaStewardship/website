@@ -7,49 +7,57 @@ const navigation = inject<Ref<NavItem[]>>('navigation', ref([]))
 const links = [
   {
     label: 'Ecosystem',
-    to: '/ecosystem',
+    to: '/ecosystem'
   },
   {
     label: 'Public Goods',
-    to: '/goods',
+    to: '/goods'
   },
   {
     label: 'Roadmap',
-    to: '/roadmap',
+    to: '/roadmap'
   },
   {
     label: 'FAQ',
-    to: '/faq',
+    to: '/faq'
   },
   {
     label: 'Docs',
-    to: '/docs',
+    to: '/docs'
   },
   {
     label: 'More',
     children: [
       {
         label: 'Blog',
-        to: '/blog',
+        to: '/blog'
       },
       {
         label: 'Block Explorer',
         to: config.public.url.explorer,
-        target: '_blank',
-      },
-    ],
-  },
+        target: '_blank'
+      }
+    ]
+  }
 ]
 </script>
 
 <template>
   <UHeader :links="links">
-    <template #logo class="items-center">
-      <NuxtImg src="/img/logo.png" class="xs:scale-85 md:scale-100" />
+    <template #logo>
+      <div class="items-center">
+        <NuxtImg
+          src="/img/logo.png"
+          class="xs:scale-85 md:scale-100"
+        />
+      </div>
     </template>
 
     <template #panel>
-      <UNavigationTree :links="mapContentNavigation(navigation)" default-open />
+      <UNavigationTree
+        :links="mapContentNavigation(navigation)"
+        default-open
+      />
     </template>
 
     <template #right>

@@ -1,12 +1,23 @@
+import typescriptPlugin from '@rollup/plugin-typescript'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  vite: {
+    build: {
+      rollupOptions: {
+        // external: ['rank-lib'],
+        plugins: [typescriptPlugin()]
+      },
+      target: 'es2022'
+    }
+  },
   runtimeConfig: {
     public: {
       url: {
         explorer: 'https://explorer.lotusia.org',
         docs: 'https://docs.givelotus.org',
         github: 'https://github.com/LotusiaStewardship',
-        telegram: 'https://t.me/givelotus',
+        telegram: 'https://t.me/givelotus'
       }
     }
   },
@@ -18,8 +29,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     '@nuxthq/studio',
-    '@vueuse/nuxt',
-    'nuxt-og-image'
+    '@vueuse/nuxt'
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
@@ -30,7 +40,7 @@ export default defineNuxtConfig({
     }
   },
   ui: {
-    icons: ['heroicons', 'simple-icons', 'mdi']
+    icons: ['flag', 'heroicons', 'mdi', 'fluent-emoji-high-contrast', 'simple-icons']
   },
   routeRules: {
     '/api/search.json': { prerender: true }
@@ -49,5 +59,5 @@ export default defineNuxtConfig({
       }
     }
   },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css']
 })

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { GoodsPageLink } from '~/util/types'
-import { parsePageLinks } from '~/util/functions'
 
 const { data: page } = await useAsyncData('goods', () =>
   queryContent('/goods').findOne(),

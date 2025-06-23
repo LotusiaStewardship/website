@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { parsePageLinks } from '~/util/functions'
+import { parsePageLinks } from '~/utils/functions'
 
 const { data: page } = await useAsyncData('roadmap', () => queryContent('/roadmap').findOne())
 if (!page.value) {
@@ -53,7 +53,10 @@ const cardStyling = {
       :description="page.hero.description"
       align="center"
     />
-    <UPage v-for="(section, i) in page.sections" :key="i">
+    <UPage
+      v-for="(section, i) in page.sections"
+      :key="i"
+    >
       <UPageHeader
         :headline="section.headline"
         :title="section.title"
