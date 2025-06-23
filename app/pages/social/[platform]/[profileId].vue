@@ -126,15 +126,21 @@ onMounted(async () => {
   }
 })
 
+const rawAvatarUrl = await getProfileAvatar(platform, profileId, true)
+
 /**
  * SEO meta
  */
 useSeoMeta({
   title: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
   description: `View ${profileId}'s social reputation details on Lotusia`,
+  twitterCard: 'summary',
+  twitterTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
+  twitterDescription: `View ${profileId}'s social reputation details on Lotusia`,
+  twitterImage: rawAvatarUrl ?? undefined,
   ogTitle: `${profileId} on ${platformFormatted} (${voteRatio} Positive)`,
   ogDescription: `View ${profileId}'s social reputation details on Lotusia`,
-  ogImage: await getProfileAvatar(platform, profileId, true) ?? undefined,
+  ogImage: rawAvatarUrl ?? undefined,
   ogUrl: `https://lotusia.org/social/${platform}/${profileId}`
 })
 </script>
