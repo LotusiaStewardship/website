@@ -25,14 +25,15 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const pageNum = Number(page) || 0
+  const pageNum = Number(page) || 1
   const pageSizeNum = Number(pageSize) || 10
 
   const utxos = await getUtxos(scriptType, scriptPayload)
   const history = await getTxHistoryPage(
     scriptType,
     scriptPayload,
-    pageNum,
+    // Chronik tx history page is 0-indexed, but we want to show the user a 1-indexed page
+    pageNum > 0 ? pageNum - 1 : 0,
     pageSizeNum > EXPLORER_TABLE_MAX_ROWS ? EXPLORER_TABLE_MAX_ROWS : pageSizeNum
   )
 
@@ -43,14 +44,18 @@ export default defineEventHandler(async (event) => {
   // find the address last seen time
   // use latest block time if available, otherwise use the most recent tx firstSeen time
   const lastSeenTx = history.txs[0]
-  const lastSeen = lastSeenTx.block
-    ? lastSeenTx.block.timestamp
-    : lastSeenTx.timeFirstSeen
+  let lastSeen: string | null = null
+  if (lastSeenTx) {
+    // most recent tx will have a more recent block timestamp
+    // if no block timestamp, use the firstSeen time (mempool time)
+    lastSeen = lastSeenTx.block?.timestamp ?? lastSeenTx.timeFirstSeen
+  }
   const txs = history.txs.map(tx => ({
     ...tx,
     sumBurnedSats: getSumBurnedSats(tx).toString()
   }))
-
+  console.log('history.txs', history.txs)
+  console.log('txs', txs)
   return {
     balance,
     lastSeen,
