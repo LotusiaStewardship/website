@@ -46,6 +46,10 @@ const txHistoryTableColumns = [
 ]
 /** The number of transactions in the address history (not computed) */
 const totalPossibleTransactions = data.value.history.txs.length * data.value.history.numPages
+/** Use last-seen of first async data set, as this will be the most recent */
+const lastSeen = data.value.lastSeen
+/** The balance of the address */
+const balance = data.value.balance
 /**
  * Vue refs
  */
@@ -108,12 +112,12 @@ useSeoMeta({
               icon="i-fluent-emoji-high-contrast-lotus"
             >
               <template #title>
-                <ExplorerAmountXPI :sats="data.balance" />
+                <ExplorerAmountXPI :sats="balance" />
               </template>
             </UDashboardCard>
             <UDashboardCard
-              v-if="data.lastSeen"
-              :title="formatTimestamp(data.lastSeen)"
+              v-if="lastSeen"
+              :title="formatTimestamp(lastSeen)"
               description="Last Seen"
               icon="i-mdi-clock-outline"
             />
