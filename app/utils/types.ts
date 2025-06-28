@@ -13,38 +13,6 @@ export type GoodsPage = {
 
 export namespace Lotusia {
   export namespace Network {
-    export type MiningInfo = {
-      blocks: number
-      difficulty: string
-      networkhashps: number
-      pooledtx: number
-      chain: keyof typeof Name | null
-      warnings: string
-    }
-
-    export type NetworkInfo = {
-      subversion: string
-      localrelay: boolean
-      connections: number
-      connections_in: number
-      warnings: string
-    }
-
-    export type PeerInfo = {
-      addr: string
-      servicesnames: string[]
-      subver: string
-      sycned_headers: number
-      synced_blocks: number
-      geoip?: GeoIPData
-    }
-
-    export type TxOutSetInfo = {
-      height: number
-      bestblock: string
-      transactions: number
-      txoutset: number
-    }
 
     export type Name = 'main' | 'test'
 

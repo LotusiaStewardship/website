@@ -17,33 +17,28 @@ useSeoMeta({
   ogDescription: 'Explore the Lotusia blockchain and ecosystem'
 })
 
-type NetworkOverview = {
-  mininginfo: Lotusia.Network.MiningInfo
-  peerinfo: Lotusia.Network.PeerInfo[]
-  txoutsetinfo: Lotusia.Network.TxOutSetInfo
-}
 /**
  * Functions
  */
-/** Declare functions for Node API */
-const { getMiningInfo, getPeerInfo } = useNodeApi()
-const { getBlock } = useChronikApi()
 /** Primary function to refresh the network overview */
 const refreshNetworkOverview = async () => {
   // set reactive values after all the data is fetched
-  const mininginfo = await getMiningInfo()
-  const peerinfo = await getPeerInfo()
-  const newBlock = await getBlock(mininginfo.blocks)
-  networkOverview.value.mininginfo = mininginfo
-  networkOverview.value.peerinfo = peerinfo
-  block.value = newBlock
+  const overview = await $fetch('/api/explorer/overview')
+  const block = await $fetch(`/api/explorer/block/${overview.mininginfo.blocks}`)
+  networkOverview.value = overview
+  blockchainTip.value = block
 }
 /**
  * Async data
  */
-const { data: networkOverview } = await useAsyncData('networkOverview', async () => ({ mininginfo: await getMiningInfo(), peerinfo: await getPeerInfo() } as NetworkOverview))
-const { data: peerinfo } = await useAsyncData('peerinfo', async () => await $fetch('/api/explorer/peer-info'))
-const { data: block } = await useAsyncData('block', async () => await getBlock(networkOverview.value.mininginfo.blocks))
+const { data: networkOverview } = await useAsyncData(
+  'networkOverview',
+  async () => $fetch('/api/explorer/overview')
+)
+const { data: blockchainTip } = await useAsyncData(
+  'blockchainTip',
+  async () => $fetch(`/api/explorer/block/${networkOverview.value.mininginfo.blocks}`)
+)
 /**
  * Constants
  */
@@ -63,8 +58,8 @@ const refreshInterval = ref<NodeJS.Timeout | null>(null)
  */
 /** The average block time (previous 6 blocks) */
 const averageBlockTime = computed(() => {
-  const latestBlockTime = Number(block.value.blockInfo.timestamp)
-  const medianBlockTime = Number(block.value.blockDetails.medianTimestamp)
+  const latestBlockTime = Number(blockchainTip.value.blockInfo.timestamp)
+  const medianBlockTime = Number(blockchainTip.value.blockDetails.medianTimestamp)
   return toMinifiedTime((latestBlockTime - medianBlockTime) / 6)
 })
 const networkPendingTransactions = computed(() =>
@@ -175,7 +170,7 @@ onMounted(async () => {
             </p>
           </template>
           <UTable
-            :rows="peerinfo"
+            :rows="networkOverview.peerinfo"
             :columns="peerinfoTableColumns"
           >
             <template #country-data="{ row }">

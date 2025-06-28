@@ -4,6 +4,13 @@ export const NODE_GEOIP_URL = 'https://api.sefinek.net/api/v2/geoip'
 export const RANK_API_URL = 'https://rank.lotusia.org/api/v1'
 // export const RANK_API_URL = 'http://172.16.2.20:10655/api/v1'
 
+export const LotusRPC = {
+  address: '172.16.11.101',
+  port: 10604,
+  user: 'lotus',
+  password: 'lotus'
+}
+
 export const PlatformURL = {
   twitter: {
     root: 'https://x.com',

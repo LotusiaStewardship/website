@@ -1,13 +1,14 @@
 import { NODE_GEOIP_URL } from '~/utils/constants'
-import type { GeoIPResponse, Lotusia } from '~/utils/types'
-import { useNodeApi } from '~/composables/useNodeApi'
+import { useNodeRpc } from '~/composables/useNodeRpc'
+import type { GeoIPResponse } from '~/utils/types'
+import type * as RPC from '~/utils/rpc'
 
-const { getPeerInfo } = useNodeApi()
+const { getPeerInfo, getMiningInfo } = useNodeRpc()
 const runtimeCache = new Map<string, GeoIPResponse>()
 
 export default defineEventHandler(async () => {
   const peerInfo = await getPeerInfo()
-  const peers: Lotusia.Network.PeerInfo[] = []
+  const peers: RPC.PeerInfo[] = []
   for (const peer of peerInfo) {
     // only match IPv4 addresses
     if (!peer.addr.match(/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)) {
@@ -28,7 +29,7 @@ export default defineEventHandler(async () => {
     }
     const response = await fetch(`${NODE_GEOIP_URL}/${ip}`)
     const json = await response.json() as GeoIPResponse
-    console.log('GeoIP response for IP', ip, json)
+    // console.log('GeoIP response for IP', ip, json)
     if (json.success) {
       runtimeCache.set(ip, json)
       peers.push({
@@ -38,5 +39,9 @@ export default defineEventHandler(async () => {
       })
     }
   }
-  return peers
+  const miningInfo = await getMiningInfo()
+  return {
+    mininginfo: miningInfo,
+    peerinfo: peers
+  }
 })
