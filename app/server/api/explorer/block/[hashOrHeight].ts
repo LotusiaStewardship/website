@@ -11,7 +11,7 @@ type ExplorerBlock = Block & {
 const { getBlock } = useChronikApi()
 
 export default defineEventHandler(async (event) => {
-  const t0 = performance.now()
+  // const t0 = performance.now()
   const hashOrHeight = getRouterParam(event, 'hashOrHeight')
   if (!hashOrHeight) {
     throw createError({
@@ -43,8 +43,8 @@ export default defineEventHandler(async (event) => {
     }
     block.txs = txs
 
-    const t1 = (performance.now() - t0).toFixed(3)
-    console.log(`Block ${hashOrHeight} took ${t1}ms`)
+    // const t1 = (performance.now() - t0).toFixed(3)
+    // console.log(`Block ${hashOrHeight} took ${t1}ms`)
 
     return {
       ...block,
