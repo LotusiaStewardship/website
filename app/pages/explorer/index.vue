@@ -6,7 +6,7 @@ definePageMeta({
   title: 'Overview',
   description: 'Explore the Lotusia blockchain and ecosystem',
   keywords: ['explorer', 'blockchain', 'lotus'],
-  ogTitle: 'Explorer',
+  ogTitle: 'Overview | Lotusia Explorer',
   ogDescription: 'Explore the Lotusia blockchain and ecosystem'
 })
 
@@ -178,6 +178,7 @@ onMounted(async () => {
                 :name="`i-flag-${row.geoip.country.toLowerCase()}-4x3`"
                 class="w-4 h-4"
               />
+              {{ row.geoip.country }}
             </template>
             <template #addr-data="{ row }">
               <span class="font-semibold">{{ row.addr }}</span>
