@@ -23,12 +23,16 @@ export const PlatformURL = {
   }
 }
 
-/** Minerfund addresses controlled by the Lotusian Stewardship */
-export const STEWARDSHIP_MINERFUND = {
-  judges: 'lotus_16PSJMaps9sQg7aBQgyY1RdHb2fZYdmWhQPbgus75',
-  ruth: 'lotus_16PSJPi88MtH34Ti3dZza4MFRF9XUVd3fKc6Ec3TV',
-  firstSamuel: 'lotus_16PSJKi4ucDByLHn3mTQaBijiNZmczAdALVDGS53V'
+export const Addresses = {
+  communityFund: 'lotus_16PSJLgY94X7B863uGMgurEjxiXyqhetkKT84F52Z',
+  /** Minerfund addresses controlled by the Lotusian Stewardship */
+  Stewardship: {
+    judges: 'lotus_16PSJMaps9sQg7aBQgyY1RdHb2fZYdmWhQPbgus75',
+    ruth: 'lotus_16PSJPi88MtH34Ti3dZza4MFRF9XUVd3fKc6Ec3TV',
+    firstSamuel: 'lotus_16PSJKi4ucDByLHn3mTQaBijiNZmczAdALVDGS53V'
+  }
 }
+
 
 export const EXPLORER_TABLE_MAX_ROWS = 40
 
@@ -40,14 +44,4 @@ export enum PlatformIcon {
   youtube = 'i-mdi-youtube-circle',
   tiktok = 'i-mdi-tiktok-circle',
   instagram = 'i-mdi-instagram-circle'
-}
-
-export const TwitterURL = {
-  root: 'https://x.com',
-  profile(profileId: string) {
-    return `${this.root}/${profileId}`
-  },
-  post(profileId: string, postId: string) {
-    return `${this.root}/${profileId}/status/${postId}`
-  }
 }
