@@ -1,7 +1,6 @@
 /**
  * Utility functions for handling user avatars
  */
-import type { ScriptChunkPlatformUTF8 } from 'rank-lib'
 
 /**
  * Get Twitter/X profile image URL through unavatar.io

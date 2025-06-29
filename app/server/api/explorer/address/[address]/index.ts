@@ -3,7 +3,7 @@ import { getChronikScriptType, getScriptPayload } from '~/utils/chronik'
 import { getSumBurnedSats } from '~/utils/transaction'
 import { EXPLORER_TABLE_MAX_ROWS } from '~/utils/constants'
 
-const { getUtxos, getTxHistoryPage } = useChronikApi()
+const { getTxHistoryPage } = useChronikApi()
 
 export default defineEventHandler(async (event) => {
   const address = getRouterParam(event, 'address')
@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
   const pageNum = Number(page) || 1
   const pageSizeNum = Number(pageSize) || 10
 
-  const utxos = await getUtxos(scriptType, scriptPayload)
   const history = await getTxHistoryPage(
     scriptType,
     scriptPayload,
@@ -37,27 +36,19 @@ export default defineEventHandler(async (event) => {
     pageSizeNum > EXPLORER_TABLE_MAX_ROWS ? EXPLORER_TABLE_MAX_ROWS : pageSizeNum
   )
 
-  // map each tx's outputs to calculate sumBurnedSats for the tx
-  const balance = utxos
-    .reduce((acc, utxo) => acc + Number(utxo.value), 0)
-    .toString()
   // find the address last seen time
   // use latest block time if available, otherwise use the most recent tx firstSeen time
   const lastSeenTx = history.txs[0]
   let lastSeen: string | null = null
   if (lastSeenTx) {
-    // most recent tx will have a more recent block timestamp
-    // if no block timestamp, use the firstSeen time (mempool time)
     lastSeen = lastSeenTx.block?.timestamp ?? lastSeenTx.timeFirstSeen
   }
   const txs = history.txs.map(tx => ({
     ...tx,
     sumBurnedSats: getSumBurnedSats(tx).toString()
   }))
-  console.log('history.txs', history.txs)
-  console.log('txs', txs)
+
   return {
-    balance,
     lastSeen,
     // TODO: Add this back when we have a way to calculate the total burned sats for an address
     // numBurnedSats: txs.reduce((acc, tx) => acc + BigInt(tx.sumBurnedSats), BigInt(0)).toString(),

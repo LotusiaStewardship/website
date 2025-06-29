@@ -31,6 +31,11 @@ const { data } = await useAsyncData(
     watch: [page, rowsPerPage]
   }
 )
+/** The balance of the address */
+const { data: balance } = await useAsyncData(
+  `balance-${address}`,
+  () => $fetch(`/api/explorer/address/${address}/balance`)
+)
 
 /**
  * Constants
@@ -48,8 +53,6 @@ const txHistoryTableColumns = [
 const totalPossibleTransactions = data.value.history.txs.length * data.value.history.numPages
 /** Use last-seen of first async data set, as this will be the most recent */
 const lastSeen = data.value.lastSeen
-/** The balance of the address */
-const balance = data.value.balance
 /**
  * Vue refs
  */
@@ -71,11 +74,10 @@ const paginatedTxs = computed(() => {
 /**
  * SEO meta
  */
-const title = shallowRef(`Address ${address}`)
 useSeoMeta({
-  title,
+  title: `Address ${address}`,
   description: `Detailed information about address ${address}`,
-  ogTitle: title,
+  ogTitle: `Address ${address}`,
   ogDescription: `Detailed information about address ${address}`
 })
 </script>

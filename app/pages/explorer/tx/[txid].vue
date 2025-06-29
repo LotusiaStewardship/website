@@ -27,27 +27,20 @@ const txBlockHash = tx.value.block?.hash ?? null
 const txBlockTimestamp = tx.value.block?.timestamp
 // const txBlockConfirmations = tx.value.block?.height ? (blockchainInfo.value.tipHeight - tx.value.block.height) + 1 : null
 const txFirstSeen = formatTimestamp(Number(tx.value.timeFirstSeen) || txBlockTimestamp)
-
-/**
- * Vue computed properties
- */
-const txType = computed(() => {
-  if (tx.value.isCoinbase) {
-    return 'Coinbase'
-  }
-  if (tx.value.outputs.some(output => output.rankOutput)) {
-    return 'RANK'
-  }
-  return 'Regular'
-})
+let txType: string = 'Regular'
+if (tx.value.isCoinbase) {
+  txType = 'Coinbase'
+}
+if (tx.value.outputs.some(output => output.rankOutput)) {
+  txType = 'RANK'
+}
 /**
  * SEO meta
  */
-const title = shallowRef(`Transaction ${txid}`)
 useSeoMeta({
-  title,
+  title: `Transaction ${txid}`,
   description: `Detailed information about transaction ${txid}`,
-  ogTitle: title,
+  ogTitle: `Transaction ${txid}`,
   ogDescription: `Detailed information about transaction ${txid}`
 })
 </script>

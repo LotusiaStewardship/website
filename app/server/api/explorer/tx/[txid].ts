@@ -37,6 +37,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const blockchainInfo = await getBlockchainInfo()
+  const confirmations = tx.block
+    ? blockchainInfo.tipHeight - tx.block.height + 1
+    : -1
+
   const txInputs = tx.inputs.map((input: TxInput) => {
     if (!input.outputScript) {
       return input
@@ -50,13 +55,15 @@ export default defineEventHandler(async (event) => {
       address
     } as ExplorerTxInput
   })
+
+  let sumBurnedSats = 0
   const txOutputs = tx.outputs.map((output: TxOutput) => {
     const scriptBuf = Buffer.from(output.outputScript, 'hex')
     const script = bitcore.Script.fromBuffer(scriptBuf)
     // OP_RETURN outputs
     if (script.isDataOut()) {
       // TODO: we can add more LOKAD checks here
-
+      sumBurnedSats += Number(output.value)
       // process the rank output
       const rank = new RankScriptProcessor(scriptBuf)
       const rankOutput = rank.processRankOutput()
@@ -80,24 +87,11 @@ export default defineEventHandler(async (event) => {
     return output
   })
 
-  const blockchainInfo = await getBlockchainInfo()
-  const confirmations = tx.block
-    ? blockchainInfo.tipHeight - tx.block.height + 1
-    : -1
-
   return {
     ...tx,
     confirmations,
     inputs: txInputs,
     outputs: txOutputs,
-    sumBurnedSats: tx.outputs
-      .reduce((acc, output) => {
-        const script = bitcore.Script.fromHex(output.outputScript)
-        if (script.isDataOut()) {
-          return acc + Number(output.value)
-        }
-        return acc
-      }, 0)
-      .toString()
+    sumBurnedSats: sumBurnedSats.toString()
   } as ExplorerTx
 })

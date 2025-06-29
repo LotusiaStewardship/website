@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ScriptChunkPlatformUTF8 } from 'rank-lib'
+import type { ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
 import { PlatformIcon, PlatformURL } from '~/utils/constants'
 
 const { avatarCache, preloadAvatars } = useAvatars()

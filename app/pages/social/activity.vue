@@ -125,7 +125,7 @@ useSeoMeta({
             </NuxtLink>
           </template>
           <template #timestamp-data="{ row }">
-            {{ formatTimestamp(row.firstSeen ?? row.timestamp) }}
+            {{ formatTimestamp(Number(row.firstSeen) > 0 ? row.firstSeen : row.timestamp) }}
           </template>
           <template #profileId-data="{ row }">
             <SocialProfileLink
