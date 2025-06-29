@@ -1,11 +1,11 @@
-import type {
-  ScriptChunkPlatformUTF8,
-  ScriptChunkSentimentUTF8
-} from 'rank-lib'
 import type { PageLink } from '@nuxt/ui-pro/types'
 import type { PublicRuntimeConfig } from 'nuxt/schema'
-import { TwitterURL } from './constants'
-import type { GeoIPResponse } from './types'
+import { PlatformURL } from './constants'
+import type {
+  GeoIPResponse,
+  ScriptChunkPlatformUTF8,
+  ScriptChunkSentimentUTF8
+} from './types'
 
 export function parsePageLinks(
   links: PageLink[],
@@ -285,12 +285,7 @@ export function toExternalPostUrl(
   profileId: string,
   postId: string
 ) {
-  switch (platform) {
-    case 'twitter':
-      return TwitterURL.post(profileId, postId)
-    default:
-      return ''
-  }
+  return PlatformURL[platform].post(profileId, postId)
 }
 
 export const toMinifiedStatCount = (
