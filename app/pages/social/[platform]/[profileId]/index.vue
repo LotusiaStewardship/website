@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ScriptChunkPlatformUTF8 } from 'rank-lib'
+import type { ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
 import { PlatformIcon, PlatformURL } from '~/utils/constants'
 import { toPercentColor, truncateTxid, formatTimestamp, toUppercaseFirstLetter, toMinifiedPercent, toMinifiedStatCount, getTrendColor } from '~/utils/functions'
 
