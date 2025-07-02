@@ -302,7 +302,7 @@ const RPC = {
    * @param {string} hash - Block hash
    * @returns {Promise<Block>} Block information
    */
-  getBlock: async (hash: string): Promise<Block> => sendRPCRequest('getblock', [hash]),
+  getBlock: async (hash: string): Promise<BlockInfo> => sendRPCRequest('getblock', [hash]),
 
   /**
    * RPC command - `getrawtransaction`
