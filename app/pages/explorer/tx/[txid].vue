@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatTimestamp, truncateTxid, truncateBlockHash, truncateAddress } from '~/utils/functions'
+import { formatTimestamp, truncateTxid, truncateBlockHash, truncateAddress, toUppercaseFirstLetter, getSentimentColor } from '~/utils/functions'
 
 definePageMeta({
   layout: 'explorer',
@@ -271,12 +271,12 @@ useSeoMeta({
                       <ExplorerAmountXPI :sats="output.value" />
                       <UBadge
                         v-if="output.rankOutput"
-                        :color="output.rankOutput.sentiment == 'positive' ? 'green' : 'red'"
+                        :color="getSentimentColor(output.rankOutput.sentiment)"
                         variant="subtle"
                         size="xs"
                         class="ml-1"
                       >
-                        {{ output.rankOutput.sentiment == 'positive' ? 'Positive' : 'Negative' }}
+                        {{ toUppercaseFirstLetter(output.rankOutput.sentiment) }}
                       </UBadge>
                     </div>
                     <span class="text-sm">

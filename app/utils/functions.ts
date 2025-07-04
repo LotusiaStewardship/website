@@ -238,8 +238,19 @@ export function toMinifiedTime(seconds: number | string) {
 }
 
 // Determine trend color based on ranking change
-export function getTrendColor(change: number) {
+export function getRankingColor(change: number) {
   return change > 0 ? 'green' : change < 0 ? 'red' : 'gray'
+}
+
+export function getSentimentColor(sentiment: ScriptChunkSentimentUTF8) {
+  switch (sentiment) {
+    case 'positive':
+      return 'green'
+    case 'negative':
+      return 'red'
+    case 'neutral':
+      return 'gray'
+  }
 }
 
 export function calculateRate(

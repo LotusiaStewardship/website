@@ -155,6 +155,16 @@ useSeoMeta({
               />
               {{ toMinifiedStatCount(row.sats) }} XPI
             </span>
+            <span
+              v-else-if="row.sentiment === 'neutral'"
+              class="text-gray-500 dark:text-gray-400 flex items-center"
+            >
+              <UIcon
+                name="i-heroicons-minus-circle"
+                class="mr-1"
+              />
+              {{ toMinifiedStatCount(row.sats) }} XPI
+            </span>
           </template>
           <template #postId-data="{ row }">
             <NuxtLink
