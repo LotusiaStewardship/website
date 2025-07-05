@@ -48,12 +48,12 @@ useSeoMeta({
             <!-- Profiles section -->
             <div class="grid lg:grid-cols-2 gap-8">
               <SocialTrendingTopProfiles />
-              <SocialTrendingLowestProfiles />
+              <SocialTrendingTopPosts />
             </div>
 
             <!-- Posts section -->
             <div class="grid lg:grid-cols-2 gap-8">
-              <SocialTrendingTopPosts />
+              <SocialTrendingLowestProfiles />
               <SocialTrendingLowestPosts />
             </div>
           </div>
