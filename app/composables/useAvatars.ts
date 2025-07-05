@@ -39,11 +39,11 @@ export function useAvatars() {
 
     try {
       const avatarUrl = await getProfileAvatar(platform, profileId)
-      if (avatarUrl) {
-        // Cache the result
-        avatarCache.value[cacheKey] = avatarUrl
+      if (!avatarUrl) {
+        throw new Error(`No avatar URL found for ${platform}:${profileId}`)
       }
-
+      // Cache the result
+      avatarCache.value[cacheKey] = avatarUrl
       loadingAvatars.value[cacheKey] = false
 
       return {
