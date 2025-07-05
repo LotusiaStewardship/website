@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
 import { PlatformIcon, PlatformURL } from '~/utils/constants'
-import { toPercentColor, truncateTxid, formatTimestamp, toUppercaseFirstLetter, toMinifiedPercent, toMinifiedStatCount, getTrendColor } from '~/utils/functions'
+import { toPercentColor, truncateTxid, formatTimestamp, toUppercaseFirstLetter, toMinifiedPercent, toMinifiedStatCount, getRankingColor } from '~/utils/functions'
 
 definePageMeta({
   layout: 'explorer'
@@ -255,7 +255,7 @@ useSeoMeta({
                 </NuxtLink>
               </template>
               <template #ranking-data="{ row }">
-                <span :class="getTrendColor(row.ranking)">
+                <span :class="getRankingColor(row.ranking)">
                   {{ toMinifiedStatCount(row.ranking) }} XPI
                 </span>
               </template>
@@ -342,6 +342,12 @@ useSeoMeta({
                 <span
                   v-else-if="row.sentiment === 'negative'"
                   class="text-red-500 dark:text-red-400"
+                >
+                  {{ toUppercaseFirstLetter(row.sentiment) }}
+                </span>
+                <span
+                  v-else-if="row.sentiment === 'neutral'"
+                  class="text-gray-500 dark:text-gray-400"
                 >
                   {{ toUppercaseFirstLetter(row.sentiment) }}
                 </span>

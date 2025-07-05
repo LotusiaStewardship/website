@@ -1,4 +1,4 @@
-import type { ScriptChunkPlatformUTF8 } from 'rank-lib'
+import type { ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
 import { useRankApi } from '~/composables/useRankApi'
 
 const { getProfilePosts } = useRankApi()

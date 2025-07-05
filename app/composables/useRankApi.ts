@@ -19,7 +19,7 @@ type ProfileData = IndexedRanking & {
 }
 
 type VoteActivity = {
-  votes: RankTransactionAPI
+  votes: RankTransactionAPI[]
   numPages: number
 }
 
@@ -30,8 +30,14 @@ type RankTransactionAPI = {
   scriptPayload: string
   txid: string
   sentiment: ScriptChunkSentimentUTF8
+  firstSeen: string // bigint to string
   timestamp: string // bigint to string
   sats: string // bigint to string
+}
+
+type ProfileVoteActivity = {
+  votes: ProfileRankTransactionAPI[]
+  numPages: number
 }
 
 type ProfileRankTransactionAPI = {
@@ -49,9 +55,11 @@ type ProfileRankTransactionAPI = {
  */
 type ProfilesAPI = {
   profiles: Array<{
-    platform: ScriptChunkPlatformUTF8
     id: string
-    ranking: number
+    platform: string
+    ranking: string
+    satsPositive: string
+    satsNegative: string
     votesPositive: number
     votesNegative: number
   }>
@@ -115,41 +123,33 @@ export const useRankApi = () => {
   }
 
   const getTopRankedProfiles = async (
-    timespan?: Timespan
+    timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/profiles/top-ranked${
-      timespan ? `/${timespan}` : ''
-    }`
+    const url = `${RANK_API_URL}/stats/profiles/top-ranked/${timespan}`
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
 
   const getLowestRankedProfiles = async (
-    timespan?: Timespan
+    timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/profiles/lowest-ranked${
-      timespan ? `/${timespan}` : ''
-    }`
+    const url = `${RANK_API_URL}/stats/profiles/lowest-ranked/${timespan}`
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
 
   const getTopRankedPosts = async (
-    timespan?: Timespan
+    timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/posts/top-ranked${
-      timespan ? `/${timespan}` : ''
-    }`
+    const url = `${RANK_API_URL}/stats/posts/top-ranked/${timespan}`
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
 
   const getLowestRankedPosts = async (
-    timespan?: Timespan
+    timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/posts/lowest-ranked${
-      timespan ? `/${timespan}` : ''
-    }`
+    const url = `${RANK_API_URL}/stats/posts/lowest-ranked/${timespan}`
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
@@ -168,13 +168,10 @@ export const useRankApi = () => {
     profileId: string,
     page: number = 1,
     pageSize: number = 10
-  ): Promise<{ votes: ProfileRankTransactionAPI[], numPages: number }> => {
+  ): Promise<ProfileVoteActivity> => {
     const url = `${RANK_API_URL}/txs/${platform}/${profileId}/${page}/${pageSize}`
     const response = await fetch(url)
-    return (await response.json()) as {
-      votes: ProfileRankTransactionAPI[]
-      numPages: number
-    }
+    return (await response.json()) as ProfileVoteActivity
   }
 
   const getPostRanking = async (
