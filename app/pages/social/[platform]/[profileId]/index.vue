@@ -327,7 +327,7 @@ useSeoMeta({
                 </NuxtLink>
               </template>
               <template #timestamp-data="{ row }">
-                {{ formatTimestamp(row.timestamp) }}
+                {{ formatTimestamp(row.timestamp ?? row.firstSeen) }}
               </template>
               <template #burned-data="{ row }">
                 <ExplorerAmountXPI :sats="row.sats" />
