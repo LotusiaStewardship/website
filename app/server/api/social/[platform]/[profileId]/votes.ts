@@ -1,17 +1,34 @@
+import { PLATFORMS, type ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
 import { useRankApi } from '~/composables/useRankApi'
 
 const { getProfileRankTransactions } = useRankApi()
 
 export default defineEventHandler(async (event) => {
-  const { platform, profileId } = getRouterParams(event)
+  const { platform: platformParam, profileId } = getRouterParams(event)
+  const platform = platformParam as ScriptChunkPlatformUTF8
+
+  if (!platform || !profileId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid platform or profileId'
+    })
+  }
+
+  if (PLATFORMS[platform] === undefined) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid platform'
+    })
+  }
+
   const { page, pageSize } = getQuery(event)
-  const pageNum = Number(page) || 1
-  const pageSizeNum = Number(pageSize) || 10
-  const response = await getProfileRankTransactions(
+  const pageNumber = Number(page) || 1
+  const pageSizeNumber = Number(pageSize) || 10
+
+  return await getProfileRankTransactions(
     platform,
     profileId,
-    pageNum,
-    pageSizeNum
+    pageNumber,
+    pageSizeNumber
   )
-  return response
 })

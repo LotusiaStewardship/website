@@ -3,10 +3,10 @@ import type { WalletSummaryResult } from '~/types'
 import { toMinifiedStatCount } from '~/utils/functions'
 
 // Update toggle to include quarterly view
-const timeFrame = ref<'week' | 'month' | 'quarter'>('week')
+const timeFrame = shallowRef<'week' | 'month' | 'quarter'>('week')
 
 // Replace useAsyncData with direct data fetching
-const isLoading = ref(false)
+const isLoading = shallowRef(false)
 const summaryData = ref<WalletSummaryResult>({
   totalVotes: 0,
   totalUpvotes: 0,
@@ -77,7 +77,7 @@ watch(
 )
 
 const formatNumber = new Intl.NumberFormat('en').format
-const formatLotus = (value: number) => `${toMinifiedStatCount(value)} Lotus`
+const formatLotus = (value: number) => `${toMinifiedStatCount(value)} XPI`
 </script>
 
 <template>
@@ -172,9 +172,7 @@ const formatLotus = (value: number) => `${toMinifiedStatCount(value)} Lotus`
             </div>
             <div class="flex gap-6">
               <div>
-                <p
-                  class="text-xl text-green-600 dark:text-green-400 font-medium"
-                >
+                <p class="text-xl text-green-600 dark:text-green-400 font-medium">
                   {{ formatNumber(summaryData.totalUpvotes) }}
                 </p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">

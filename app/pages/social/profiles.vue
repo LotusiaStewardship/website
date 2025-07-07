@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { PlatformIcon } from '~/utils/constants'
 import { toPercentColor, toMinifiedPercent } from '~/utils/functions'
 
 definePageMeta({
@@ -23,7 +22,6 @@ const { data } = await useAsyncData(
     watch: [page, rowsPerPage]
   }
 )
-console.log(data.value)
 
 /**
  * Constants

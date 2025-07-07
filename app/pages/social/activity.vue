@@ -40,7 +40,7 @@ const refreshVoteActivity = async () => {
  */
 const voteActivityTableColumns = [
   { key: 'txid', label: 'Transaction ID' },
-  { key: 'timestamp', label: 'Timestamp' },
+  { key: 'firstSeen', label: 'First Seen' },
   { key: 'profileId', label: 'Profile' },
   { key: 'vote', label: 'Vote' },
   { key: 'postId', label: 'Post ID' }
@@ -124,8 +124,8 @@ useSeoMeta({
               {{ truncateTxid(row.txid) }}
             </NuxtLink>
           </template>
-          <template #timestamp-data="{ row }">
-            {{ formatTimestamp(Number(row.firstSeen) > 0 ? row.firstSeen : row.timestamp) }}
+          <template #firstSeen-data="{ row }">
+            {{ formatTimestamp(row.firstSeen) }}
           </template>
           <template #profileId-data="{ row }">
             <SocialProfileLink

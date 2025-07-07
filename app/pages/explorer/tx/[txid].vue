@@ -26,7 +26,7 @@ const numOutputs = tx.value.outputs.length
 const txBlockHash = tx.value.block?.hash ?? null
 const txBlockTimestamp = tx.value.block?.timestamp
 // const txBlockConfirmations = tx.value.block?.height ? (blockchainInfo.value.tipHeight - tx.value.block.height) + 1 : null
-const txFirstSeen = formatTimestamp(Number(tx.value.timeFirstSeen) || txBlockTimestamp)
+const txFirstSeen = formatTimestamp(tx.value.timeFirstSeen)
 let txType: string = 'Regular'
 if (tx.value.isCoinbase) {
   txType = 'Coinbase'

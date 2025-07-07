@@ -56,7 +56,7 @@ type ProfileRankTransactionAPI = {
 type ProfilesAPI = {
   profiles: Array<{
     id: string
-    platform: string
+    platform: ScriptChunkPlatformUTF8
     ranking: string
     satsPositive: string
     satsNegative: string
@@ -155,7 +155,7 @@ export const useRankApi = () => {
   }
 
   const getProfileRanking = async (
-    platform: string,
+    platform: ScriptChunkPlatformUTF8,
     profileId: string
   ): Promise<ProfileData> => {
     const url = `${RANK_API_URL}/${platform}/${profileId}`
@@ -164,7 +164,7 @@ export const useRankApi = () => {
   }
 
   const getProfileRankTransactions = async (
-    platform: string,
+    platform: ScriptChunkPlatformUTF8,
     profileId: string,
     page: number = 1,
     pageSize: number = 10

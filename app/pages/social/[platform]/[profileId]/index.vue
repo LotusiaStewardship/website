@@ -15,8 +15,6 @@ const route = useRoute()
 const platform = route.params.platform as ScriptChunkPlatformUTF8
 const profileId = route.params.profileId as string
 
-console.log(platform, profileId)
-
 // Use API to fetch profile data
 const { getAvatar } = useAvatars()
 /**
@@ -27,8 +25,8 @@ const { data: profileData } = await useAsyncData(
   () => $fetch(`/api/social/${platform}/${profileId}`)
 )
 // Posts pagination
-const postsPage = ref(1)
-const postsRowsPerPage = ref(10)
+const postsPage = shallowRef(1)
+const postsRowsPerPage = shallowRef(10)
 const { data: postsData } = await useAsyncData(
   `postsData-${platform}-${profileId}`,
   () => $fetch(`/api/social/${platform}/${profileId}/posts`, {
@@ -42,8 +40,8 @@ const { data: postsData } = await useAsyncData(
   }
 )
 // Vote history pagination
-const historyPage = ref(1)
-const historyRowsPerPage = ref(10)
+const historyPage = shallowRef(1)
+const historyRowsPerPage = shallowRef(10)
 const { data: rankData } = await useAsyncData(
   `rankData-${platform}-${profileId}`,
   () => $fetch(`/api/social/${platform}/${profileId}/votes`, {
@@ -62,12 +60,16 @@ const { data: rankData } = await useAsyncData(
 /**
  * Constants
  */
+/** The external profile URL */
+const profileUrl = PlatformURL[platform].profile(profileId)
+/** The table columns for the posts table */
 const postsTableColumns = [
   { key: 'id', label: 'Post ID' },
   { key: 'ranking', label: 'Total Ranking' },
   { key: 'satsPositive', label: 'Total Positive' },
   { key: 'satsNegative', label: 'Total Negative' }
 ]
+/** The table columns for the vote history table */
 const historyTableColumns = [
   { key: 'txid', label: 'Transaction ID' },
   { key: 'timestamp', label: 'Timestamp' },
@@ -108,14 +110,10 @@ const paginatedRankTransactions = computed(() => {
     return tx
   })
 })
-/** The external profile URL */
-const profileUrl = computed(() => {
-  return PlatformURL[platform].profile(profileId)
-})
 /**
  * Vue lifecycle hooks
  */
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     const avatarData = await getAvatar(platform, profileId)
     avatarSrc.value = avatarData.src
@@ -327,7 +325,7 @@ useSeoMeta({
                 </NuxtLink>
               </template>
               <template #timestamp-data="{ row }">
-                {{ formatTimestamp(row.timestamp) }}
+                {{ formatTimestamp(row.timestamp ?? row.firstSeen) }}
               </template>
               <template #burned-data="{ row }">
                 <ExplorerAmountXPI :sats="row.sats" />
