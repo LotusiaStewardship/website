@@ -168,6 +168,7 @@ useSeoMeta({
           </template>
           <template #postId-data="{ row }">
             <NuxtLink
+              v-if="row.postId"
               class="text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300"
               :to="PlatformURL[row.platform].post(row.profileId, row.postId)"
               target="_blank"
@@ -181,6 +182,9 @@ useSeoMeta({
                 />
               </div>
             </NuxtLink>
+            <span v-else>
+              Profile RANK vote
+            </span>
           </template>
         </UTable>
 
