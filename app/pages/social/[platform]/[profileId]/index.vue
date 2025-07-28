@@ -208,7 +208,7 @@ useSeoMeta({
               </template>
             </UDashboardCard>
             <UDashboardCard
-              :title="profileData.uniqueVoters.toLocaleString()"
+              :title="profileData.voters.length.toLocaleString()"
               description="Unique Voters"
               icon="i-heroicons-user-group"
             />

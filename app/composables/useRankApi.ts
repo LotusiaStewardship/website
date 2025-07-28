@@ -14,8 +14,15 @@ import type {
 } from '~/types'
 import { RANK_API_URL } from '~/utils/constants'
 
+type VoterDetails = {
+  ranking: string
+  votesPositive: number
+  votesNegative: number
+  votesNeutral: number
+}
+
 type ProfileData = IndexedRanking & {
-  uniqueVoters: number
+  voters: VoterDetails[]
 }
 
 type VoteActivity = {
