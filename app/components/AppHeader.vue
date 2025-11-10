@@ -10,8 +10,8 @@ const links = [
     to: '/ecosystem'
   },
   {
-    label: 'Public Goods',
-    to: '/goods'
+    label: 'Tools',
+    to: '/tools'
   },
   {
     label: 'Roadmap',

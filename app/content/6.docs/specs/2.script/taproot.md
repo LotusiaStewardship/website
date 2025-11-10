@@ -39,23 +39,24 @@ OP_SCRIPTTYPE OP_1 <33-byte commitment> [<32-byte state>]
 - **32-byte state** (optional): When present, pushed onto stack before executing script path spend
 
 **Size**:
-
 - Without state: 36 bytes total (3-byte intro + 33-byte commitment)
 - With state: 69 bytes total (3-byte intro + 33-byte commitment + 1-byte push + 32-byte state)
 
 ### Differences from BIP341
 
-1. **Commitment Format**:
+1. **Commitment Format**: 
    - Lotus: 33-byte compressed public key (0x02/0x03 prefix + 32-byte x-coordinate)
    - BIP341: 32-byte x-only public key (x-coordinate only, parity in control block)
+   
 2. **Control Block Parity Encoding**:
    - Lotus: Parity bit indicates internal pubkey's Y-coordinate (used to reconstruct 33-byte key)
    - BIP341: Parity bit indicates commitment pubkey's Y-coordinate
+   
 3. **Optional State**: Lotus supports an optional 32-byte state parameter (not in BIP341)
 
 4. **Script Identifier**: Uses `OP_SCRIPTTYPE` (0x62) to mark Taproot outputs
 
-5. **Signature Requirements**:
+5. **Signature Requirements**: 
    - Lotus: SIGHASH_LOTUS required for key path spending
    - BIP341: Default sighash used
 
@@ -127,7 +128,6 @@ Reveal and execute one of the committed scripts from the Merkle tree.
 - **Bytes 33+**: Merkle proof nodes (32 bytes each, up to 128 nodes maximum)
 
 **Control Block Size**:
-
 - Minimum: 33 bytes (1 control + 32 x-coordinate, for leaf with no siblings)
 - Maximum: 4,129 bytes (33 + 128 × 32, for deeply nested leaf)
 - Must be exactly: 33 + (32 × n) bytes where n is the number of proof nodes
@@ -355,19 +355,16 @@ Each example includes:
 Taproot key path spending has strict signature requirements enforced at the consensus level:
 
 **Signature Type**:
-
 - **MUST** be 64-byte Schnorr signature (without sighash byte)
 - **MUST NOT** be ECDSA (explicitly forbidden)
 - Total 65 bytes when sighash byte appended
 
 **Sighash Type**:
-
 - **MUST** include `SIGHASH_LOTUS` (0x60) flag
 - Typically combined with base type: `SIGHASH_ALL | SIGHASH_LOTUS = 0x61`
 - Cannot use `SIGHASH_LOTUS` alone (must have base type like `SIGHASH_ALL`)
 
 **Verification**:
-
 - Signature checked via `CPubKey::VerifySchnorr()` (64-byte signature)
 - Automatically selected based on signature length (64 bytes = Schnorr, else ECDSA)
 - Enforcement: `CheckTransactionSignatureEncoding()` validates signature type
@@ -379,13 +376,11 @@ Taproot key path spending has strict signature requirements enforced at the cons
 Script path spending has more flexible signature requirements:
 
 **Signature Type**:
-
 - Can use Schnorr (64 bytes) or ECDSA (DER-encoded, typically 70-72 bytes)
 - Script determines which type(s) to accept
 - No consensus-level restriction on signature type
 
 **Sighash Type**:
-
 - SIGHASH_LOTUS recommended but not required
 - Can use SIGHASH_FORKID without SIGHASH_LOTUS
 - Must comply with SCRIPT_ENABLE_SIGHASH_FORKID flag
@@ -533,11 +528,11 @@ The lotusd implementation uses `VerifyTaprootSpend()` to handle both key path an
 When stack contains exactly one element:
 
 1. **Extract**: Signature from stack, commitment pubkey from scriptPubKey
-2. **Validate Signature Encoding**:
+2. **Validate Signature Encoding**: 
    - Must be exactly 64 bytes (Schnorr signature body)
    - Plus 1 byte sighash type = 65 bytes total
    - ECDSA forbidden (error: `TAPROOT_KEY_SPEND_MUST_USE_SCHNORR_SIG`)
-3. **Validate Sighash**:
+3. **Validate Sighash**: 
    - Must include SIGHASH_LOTUS flag
    - Error if missing: `TAPROOT_KEY_SPEND_MUST_USE_LOTUS_SIGHASH`
 4. **Verify Pubkey Encoding**: Commitment must be valid 33-byte compressed pubkey
@@ -549,26 +544,22 @@ When stack contains exactly one element:
 When stack contains two or more elements:
 
 1. **Extract Components**:
-
    - Control block: Last stack element (`stacktop(-1)`)
    - Script: Second-to-last element (`stacktop(-2)`)
    - Arguments: Remaining stack elements (for script execution)
 
 2. **Validate Control Block Size**:
-
    - Minimum: 33 bytes (TAPROOT_CONTROL_BASE_SIZE)
    - Maximum: 4,129 bytes (TAPROOT_CONTROL_MAX_SIZE)
    - Must be: 33 + (32 × n) where n ≤ 128
    - Error if invalid: `TAPROOT_WRONG_CONTROL_SIZE`
 
 3. **Validate Leaf Version**:
-
    - Extract: `leaf_version = control_block[0] & TAPROOT_LEAF_MASK` (0xfe)
    - Must equal: 0xc0 (TAPROOT_LEAF_TAPSCRIPT)
    - Error if not: `TAPROOT_LEAF_VERSION_NOT_SUPPORTED`
 
 4. **Verify Commitment** (VerifyTaprootCommitment):
-
    - Extract parity: `parity = control_block[0] & 0x01`
    - Extract x-coordinate: `x_coord = control_block[1:33]`
    - Reconstruct internal pubkey: `prefix = (parity == 1) ? 0x03 : 0x02`
@@ -588,14 +579,12 @@ When stack contains two or more elements:
    - Error if mismatch: `TAPROOT_VERIFY_COMMITMENT_FAILED`
 
 5. **Prepare Stack**:
-
    - Pop control block and script from stack
    - If scriptPubKey has state (size == 69 bytes):
      - Extract state: bytes [37:69]
      - Push state onto stack
 
 6. **Execute Script**:
-
    - Run revealed script with prepared stack
    - Script must complete successfully
    - Top stack element must be truthy (cast to bool == true)
@@ -624,7 +613,7 @@ When stack contains two or more elements:
 ### Constants
 
 - `TAPROOT_LEAF_TAPSCRIPT`: 0xc0 (192) - Only supported leaf version
-- `TAPROOT_LEAF_MASK`: 0xfe (254) - Mask to extract leaf version from control byte
+- `TAPROOT_LEAF_MASK`: 0xfe (254) - Mask to extract leaf version from control byte  
 - `TAPROOT_SCRIPTTYPE`: OP_1 = 0x51 (81) - Version byte in scriptPubKey
 - `OP_SCRIPTTYPE`: 0x62 (98) - Taproot marker in scriptPubKey
 - `ADDRESS_TYPE_BYTE`: 2 - XAddress type for Taproot addresses
@@ -642,7 +631,7 @@ When stack contains two or more elements:
 
 - **Script size**: 10,000 bytes (consensus limit per script)
 - **Tree depth**: Maximum 128 proof nodes (TAPROOT_CONTROL_MAX_NODE_COUNT)
-- **Control block**:
+- **Control block**: 
   - Minimum: 33 bytes (leaf with no siblings)
   - Maximum: 4,129 bytes (33 + 128 × 32)
   - Formula: 33 + (32 × n) where n ≤ 128
@@ -661,19 +650,16 @@ When stack contains two or more elements:
 ### Implementation References
 
 **Consensus Implementation (lotusd)**:
-
 - `src/script/taproot.h` - Constants and function declarations
 - `src/script/taproot.cpp` - Core Taproot verification logic
 - `src/script/interpreter.cpp` - `VerifyTaprootSpend()` (lines 2074-2156)
 - `src/script/sigencoding.cpp` - Signature encoding validation
 
 **Library Implementation**:
-
-- [lotus-lib](https://github.com/LotusiaStewardship/lotus-lib) - TypeScript/JavaScript Taproot support
+- [lotus-lib](https://github.com/LogosFoundation/lotus-lib) - TypeScript/JavaScript Taproot support
 - `lib/bitcore/taproot.ts` - Complete Taproot implementation
 
 **Bitcoin BIPs (Reference Only)**:
-
 - [BIP340: Schnorr Signatures](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki)
 - [BIP341: Taproot](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki) - Note: Lotus differs in key areas
 - [BIP342: Tapscript](https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki)

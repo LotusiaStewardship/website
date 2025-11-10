@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { parsePageLinks } from '~/utils/functions'
+
 const { data: page } = await useAsyncData('faq', () => queryContent('/faq').findOne())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
@@ -19,9 +21,10 @@ function createLinkHash(question: string) {
   return question
     .toLowerCase()
     .replace(/\s/, '-')
-    .replace(/[^a-zA-Z0-9]/g, '');
+    .replace(/[^a-zA-Z0-9]/g, '')
 }
 </script>
+
 <template>
   <UContainer>
     <UPageHero
@@ -32,16 +35,18 @@ function createLinkHash(question: string) {
     />
     <UPage>
       <UPageBody>
-        <div v-for="(question, index) in page.questions"
+        <div
+          v-for="(question, index) in page.questions"
           :key="index"
           class="pb-16"
         >
           <div class="question-text">
             {{ question.text }}
           </div>
-          <div 
+          <div
             class="py-2 flex flex-wrap gap-x-3 gap-y-1.5"
-          > {{ question.answer }}
+          >
+            {{ question.answer }}
           </div>
           <div v-if="question.table">
             <UTable
@@ -49,7 +54,8 @@ function createLinkHash(question: string) {
               :rows="question.table.rows"
             />
           </div>
-          <div v-if="question.note"
+          <div
+            v-if="question.note"
             class="question-note pb-2 flex flex-wrap gap-x-3 gap-y-1.5 items-center"
           >
             <span>
@@ -57,7 +63,8 @@ function createLinkHash(question: string) {
               &nbsp;{{ question.note }}
             </span>
           </div>
-          <UPageLinks v-if="question.links"
+          <UPageLinks
+            v-if="question.links"
             :links="parsePageLinks(question.links, urls)"
           />
         </div>
@@ -68,12 +75,12 @@ function createLinkHash(question: string) {
       :description="page.cta.description"
       :links="parsePageLinks(page.cta.links, urls)"
       :card="false"
-      :ui="{ body: { padding: false }}"
+      :ui="{ body: { padding: false } }"
       class="mb-24 sm:mb-32"
     />
   </UContainer>
-
 </template>
+
 <style scoped>
 .question-text {
   font-weight: bold;

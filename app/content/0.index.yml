@@ -1,9 +1,9 @@
 title: Welcome to Lotusia
-description: Lotusia was founded to foster human relationships, build reciprocal culture, and bolster societal value production online and offline
+description: Lotusia builds applications that empower humans to reconnect in a world overrun with bots and algorithms
 navigation: false
 hero:
-  title: Restoring Humanity to Society
-  image: "/img/turtles_hero.jpeg"
+  title: Powering the Human Resurgence
+  image: '/img/turtles_hero.jpeg'
   links:
     - label: Get Started
       icon: i-heroicons-chevron-right-16-solid
@@ -17,83 +17,45 @@ hero:
       icon: i-heroicons-information-circle
       trailing: true
 sections:
-  - title: What Is Lotus?
-    description: The Lotusia economy is denominated in the Lotus currency. Lotus combines the best qualities of the modern monetary system and the new generation of digital cryptocurrencies. The result is an ethical currency that is economically viable.
+  - title: The Algorithm Works for You Now
+    description: Algorithms aren't the problem—who controls them is. When corporations run the algorithm, they optimize for profit and engagement. When real people with Lotus run it, the algorithm surfaces what the community actually values. Burn Lotus to boost content. Earn influence by holding Lotus. Shape what gets seen.
     align: right
     features:
-      - name: Debt-free
-        description: Lotus is issued through Proof-of-Work mining (electricity)
-        icon: i-heroicons-cog
-      - name: Inflationary
-        description: No arbitrary issuance cap (unlike Bitcoin), therefore no reason to hoard it
-        icon: i-heroicons-arrow-trending-up-solid
-      - name: Abundant
-        description: Issuance of new Lotus is adjusted to demand of the Lotusia economy
-        icon: i-heroicons-sun-solid
-      - name: Stabilizing
-        description: Lotus is removed from circulation through voluntary destructive use to stabilize volatility
-        icon: i-heroicons-scale
-  - title: The Power of Giving
-    description: Reciprocity is the core of all human relationships, whether personal or professional. In many cultures, the lotus flower is a powerful symbol of creation, strength, and resiliency. When you reciprocate to others by giving Lotus, you are giving them a priceless and powerful symbol that represents the value of your relationship with them.
+      - name: Community-Controlled
+        description: The algorithm serves the people who hold Lotus, not advertisers
+        icon: i-heroicons-heart-solid
+      - name: Transparent by Design
+        description: Every vote lives on the blockchain—see exactly how content ranks
+        icon: i-heroicons-shield-check-solid
+      - name: Real Moderation
+        description: People with skin in the game moderate content, not faceless committees
+        icon: i-heroicons-sparkles-solid
+  - title: Your Lotus, Your Voice
+    description: Hold Lotus, gain influence. It's that simple. Whether you mine it, earn it, or get gifted some—your stake in the network gives you a say in how things run. No boardrooms, no shareholders, no VC firms calling the shots.
     align: left
     features:
-      - name: "\"I tell you, use worldly wealth to gain friends for yourselves, so that when it is gone, you will be welcomed into eternal dwellings.\""
-        description: "Luke 16:9"
-        icon: i-heroicons-book-open-solid
-      - name: "\"Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal. For where your treasure is, there your heart will be also.\""
-        description: "Matthew 6:19-21"
-        icon: i-heroicons-book-open-solid
-  - title: Ecosystem Alignment
-    description: Societies of the world are suffering from high levels of corruption and poverty due to the misaligned incentives of their governing bodies and banking systems. With the Lotus blockchain, the Stewardship is directly funded voluntarily through the currency issuance mechanism, and they are thus incentivized to increase the prosperity of the Ecosystem.
+      - name: Burn to Decide
+        description: Holding Lotus gives you potential—burning it shapes the algorithm. Every burn is a vote that determines what rises.
+        icon: i-heroicons-fire-solid
+      - name: Fully Transparent
+        description: Every transaction, every decision—all recorded on the blockchain
+        icon: i-heroicons-eye-solid
+      - name: No Gatekeepers
+        description: Access the network from anywhere, no permission needed
+        icon: i-heroicons-globe-alt-solid
+      - name: Earn Your Voice
+        description: Get Lotus through mining, community participation, or contribution
+        icon: i-heroicons-trophy-solid
+  - title: Simple Tools, Big Impact
+    description: Start with our Chrome extension—vote on content by burning Lotus, making what matters rise to the top. Or grab BigVase on your phone to manage your wallet, join governance discussions, and find the good stuff. Both are free. Both are yours.
     align: right
     features:
-      - name: Value proposition
-        description: The Stewardship must propose its plan to produce value for Lotusia prior to receiving funding
-        icon: i-heroicons-document-check-solid
-      - name: Funding transparency
-        description: Currency issued to and spent by the Stewardship is untamperable public record
-        icon: i-heroicons-magnifying-glass
-      - name: Voluntary association
-        description: The Citizenry can dismiss the existing Stewardship and immediately elect a new Stewardship if desired
-        icon: i-heroicons-rectangle-group-solid
-  - title: Technology for Prosperity
-    description: Social media began as a means of connecting people across the Internet, but has evolved to serve the interest of advertising conglomerates. The Lotusia Stewardship is revamping their flagship mobile wallet, Lotus Vase, to reboot social media and refocus society's attention on building value with each other, rather than scrolling through endless feeds of useless and destructive information.
-    align: left
-    features:
-      - name: Incentivize positive social engagement
-        description: Citizens that give their time and attention to onboard new Citizens are rewarded with more Lotus
-        icon: i-heroicons-signal-solid
-      - name: Reward continued engagement
-        description: The Stewardship will regularly give Lotus to Citizens that continue to engage with and produce value for the Ecosystem
-        icon: i-heroicons-bell-alert-solid
-      - name: "\"For to the one who has, more will be given, and he will have an abundance, but from the one who has not, even what he has will be taken away.\""
-        description: "Matthew 13:12"
-        icon: i-heroicons-book-open-solid
-  - title: Worldwide Impact
-    description: The Lotus blockchain, due to its interconnected digital nature, is lightning fast and unhindered by borders or other physicalities, allowing Lotusia to spread across the planet. The blockchain also provides the Ecosystem with unbounded capabilities.
-    align: right
-    features:
-      - name: Permissionless
-        description: Everyone is free to join and leave the network at will and give Lotus to anybody, anywhere, at any time
-        icon: i-heroicons-share
-      - name: Versatile
-        description: The programmable nature of the blockchain provides extensive capabilities to meet future demands for trade and other social interactions
-        icon: i-heroicons-cube-transparent
-      - name: Adaptable
-        description: A 6-month regular upgrade schedule of the blockchain software ensures the performance and functionality remains in lockstep with the growth and demand of the Ecosystem
-        icon: i-heroicons-cog
-      - name: Scalable
-        description: The Lotus blockchain is based on Bitcoin ABC software, making it highly scalable
-        icon: i-heroicons-globe-alt
-    links:
-      - label: What is Bitcoin ABC?
-        to: https://bitcoinabc.org
-        target: _blank
-        color: gray
-        icon: i-heroicons-arrow-top-right-on-square
-        trailing: true
-        size: sm
-        class: ml-8
+      - name: Chrome Extension
+        description: Vote with your wallet—burn Lotus to amplify what deserves attention
+        icon: i-heroicons-computer-desktop-solid
+      - name: BigVase Mobile App
+        description: Your pocket-sized gateway to the Lotusia ecosystem
+        icon: i-heroicons-device-phone-mobile-solid
 cta:
-  title: Society Needs Humanity
-  description: It takes all of us making small, positive changes in our daily interactions with others to truly make a lasting impact on society. It is our vision to bring people together and use the Lotus currency to account for the value we see in each other.
+  title: Take Back the Algorithm
+  description: Join a community where real people—not corporations—decide what matters. Get started with Lotus today.
