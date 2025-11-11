@@ -66,6 +66,7 @@ const metadata = {
 
 const metadataJSON = JSON.stringify(metadata)
 const metadataHash = Hash.sha256(Buffer.from(metadataJSON))
+// metadataHash is 32 bytes and will be used as the state parameter
 
 // metadataHash goes into the 32-byte state parameter
 ```
@@ -79,16 +80,19 @@ const metadataHash = Hash.sha256(Buffer.from(metadataJSON))
 ```typescript
 import {
   PrivateKey,
-  buildPayToTaproot,
-  tweakPublicKey,
+  buildKeyPathTaproot,
   Hash,
   Transaction,
   Output,
   Script,
+  UnspentOutput,
 } from 'lotus-lib'
 
 // Generate creator's key
 const creatorKey = new PrivateKey()
+
+console.log('Creator public key:', creatorKey.publicKey.toString())
+console.log('Creator address:', creatorKey.toAddress().toString())
 
 // NFT metadata
 const nftMetadata = {
@@ -103,46 +107,56 @@ const nftMetadata = {
   creator: creatorKey.toAddress().toString(),
 }
 
-// Hash the metadata
+// Hash the metadata (this becomes the 32-byte state parameter)
 const metadataJSON = JSON.stringify(nftMetadata)
-const metadataHash = Hash.sha256(Buffer.from(metadataJSON))
+const metadataHash = Hash.sha256(Buffer.from(metadataJSON, 'utf8'))
 
-console.log('Metadata hash:', metadataHash.toString('hex'))
-console.log('Metadata size:', metadataJSON.length, 'bytes (off-chain)')
+console.log('Metadata hash (state):', metadataHash.toString('hex'))
+console.log('Metadata size:', metadataJSON.length, 'bytes (stored off-chain)')
+console.log('State parameter:', metadataHash.length, 'bytes (on-chain)')
 
-// Create Taproot commitment with state
-const merkleRoot = Buffer.alloc(32) // Key-only, no scripts
-const commitment = tweakPublicKey(creatorKey.publicKey, merkleRoot)
-const nftScript = buildPayToTaproot(commitment, metadataHash)
+// Create Taproot output WITH state parameter for NFT
+// buildKeyPathTaproot accepts an optional state parameter (32 bytes)
+const nftScript = buildKeyPathTaproot(creatorKey.publicKey, metadataHash)
 
-console.log('NFT script size:', nftScript.toBuffer().length) // 69 bytes
-console.log('NFT address:', nftScript.toAddress().toString())
+console.log('NFT script size:', nftScript.toBuffer().length, 'bytes') // 69 bytes (36 + 33 for state)
+console.log('NFT script:', nftScript.toString())
+console.log('NFT address:', nftScript.toAddress()?.toString())
+
+// Create dummy UTXO for funding
+const fundingUtxo = {
+  txId: 'c'.repeat(64),
+  outputIndex: 0,
+  script: Script.buildPublicKeyHashOut(creatorKey.publicKey),
+  satoshis: 10000,
+  address: creatorKey.toAddress(),
+}
 
 // Mint NFT transaction
 const mintTx = new Transaction()
-mintTx.addInput(/* creator's UTXO */)
-
-// Create NFT output with metadata state
-mintTx.addOutput(
-  new Output({
-    script: nftScript,
-    satoshis: 1000, // Minimal value (0.001 XPI)
-  }),
-)
-
-// Change
-mintTx.addOutput(
-  new Output({
-    script: Script.buildPublicKeyHashOut(creatorKey.toAddress()),
-    satoshis: 999000, // Change
-  }),
-)
-
-mintTx.sign(creatorKey)
+  .from(new UnspentOutput(fundingUtxo))
+  .addOutput(
+    new Output({
+      script: nftScript,
+      satoshis: 1000, // Minimal value (0.001 XPI)
+    }),
+  )
+  .change(creatorKey.toAddress())
+  .sign(creatorKey)
 
 console.log('NFT minted!')
 console.log('Transaction ID:', mintTx.id)
+console.log('Outputs:', mintTx.outputs.length)
+console.log('  Output 0: NFT (1,000 sats, 69-byte script with state)')
+console.log('  Output 1: Change')
 ```
+
+**Important Notes on State Parameter**:
+
+- The state parameter is **automatically pushed onto the script stack** before execution in script path spending
+- For key path spending, the state is stored but not used (just metadata commitment)
+- The state must be exactly 32 bytes (use Hash.sha256() to create it)
+- When spending via script path, the revealed script can access the state from the stack
 
 ---
 
@@ -188,6 +202,60 @@ console.log('Transaction ID:', mintTx.id)
 
 ---
 
+## NFTs with Smart Contracts (Script Path + State)
+
+For advanced NFTs with royalties, trading logic, or other smart contracts, use script paths with the state parameter:
+
+```typescript
+import {
+  PrivateKey,
+  Script,
+  Opcode,
+  buildScriptPathTaproot,
+  TapNode,
+  Hash,
+} from 'lotus-lib'
+
+// NFT metadata (stored off-chain, hash on-chain)
+const nftMetadata = {
+  name: 'Smart NFT #001',
+  royaltyAddress: 'lotus_...',
+  royaltyPercent: 5,
+}
+const metadataHash = Hash.sha256(Buffer.from(JSON.stringify(nftMetadata)))
+
+// Create a script that enforces royalty payments
+// This script can access the state (metadata hash) from the stack
+const royaltyScript = new Script()
+  // State will be on stack: [32-byte metadata hash]
+  // Script can verify metadata hash matches expected value
+  .add(creatorKey.publicKey.toBuffer())
+  .add(Opcode.OP_CHECKSIG)
+
+const scriptTree: TapNode = { script: royaltyScript }
+
+// Build Taproot with script path AND state parameter
+const nftResult = buildScriptPathTaproot(
+  creatorKey.publicKey,
+  scriptTree,
+  metadataHash, // State parameter!
+)
+
+console.log('Smart NFT created:')
+console.log('  Script size:', nftResult.script.toBuffer().length, 'bytes') // 69 bytes
+console.log('  Has state:', nftResult.script.toBuffer().length === 69)
+console.log('  Number of leaves:', nftResult.leaves.length)
+```
+
+**How State Works in Script Path Spending**:
+
+1. When spending via script path, `verifyTaprootSpend()` automatically pushes the state onto the stack
+2. The revealed script executes with the state already on the stack
+3. The script can use the state for verification (e.g., checking metadata hash)
+4. Reference: `lotusd/src/script/interpreter.cpp` lines 2136-2140
+
+---
+
 ## Transferring NFTs
 
 ### Simple Transfer (Key Path)
@@ -195,7 +263,7 @@ console.log('Transaction ID:', mintTx.id)
 ```typescript
 import { Transaction, TaprootInput, Output, Signature } from 'lotus-lib'
 
-// Transfer NFT to new owner
+// Transfer NFT to new owner (key path - state not used, just carried along)
 const transferTx = new Transaction()
 
 // Input: Current NFT UTXO

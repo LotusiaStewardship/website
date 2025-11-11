@@ -71,14 +71,17 @@ const scriptTree = {
   right: { script: refundScript },
 }
 
-const { script: htlcScript } = buildScriptPathTaproot(
-  senderKey.publicKey,
-  scriptTree,
-)
+const {
+  script: htlcScript,
+  merkleRoot,
+  leaves,
+} = buildScriptPathTaproot(senderKey.publicKey, scriptTree)
 
 console.log('HTLC address:', htlcScript.toAddress().toString())
 console.log('Secret hash:', secretHash.toString('hex'))
 console.log('Refund height:', refundHeight)
+console.log('Merkle root:', merkleRoot.toString('hex'))
+console.log('Number of spending paths:', leaves.length)
 ```
 
 ---

@@ -28,19 +28,22 @@ import { PrivateKey, buildKeyPathTaproot } from 'lotus-lib'
 const privateKey = new PrivateKey()
 const internalPubKey = privateKey.publicKey
 
+console.log('Internal public key:', internalPubKey.toString())
+
 // Build Taproot script (automatically tweaks with empty merkle root)
 const taprootScript = buildKeyPathTaproot(internalPubKey)
 
 // Create address
-const address = taprootScript.toAddress()
-console.log('Taproot address:', address.toString())
-// Output: lotus_XKrg3EtwKTM1HLFvycnfUTnkQEBCfas85MZkVjNMbJYBEomjhkQu4rt
+const taprootAddress = taprootScript.toAddress()
+console.log('Taproot address:', taprootAddress?.toString())
 
+console.log('Taproot script:', taprootScript.toString())
 console.log('Script hex:', taprootScript.toBuffer().toString('hex'))
-// Output: 62512102ec64c2bab67dd21f864bdc68bcc2339f0b86c380534ea8066a1e0b958b873966
-
 console.log('Script size:', taprootScript.toBuffer().length, 'bytes')
 // Output: 36 bytes
+
+console.log('Is P2TR:', taprootScript.isPayToTaproot())
+// Output: true
 ```
 
 **Script Breakdown**:
@@ -55,46 +58,44 @@ console.log('Script size:', taprootScript.toBuffer().length, 'bytes')
 ## Spending from Single-Key Taproot
 
 ```typescript
-import {
-  Transaction,
-  TaprootInput,
-  Output,
-  Script,
-  Signature,
-  Address,
-} from 'lotus-lib'
+import { Transaction, TaprootInput, Output, Script, Signature } from 'lotus-lib'
 
 // Create transaction
 const tx = new Transaction()
 
+// Simulate a UTXO with Taproot output
+const taprootUtxo = {
+  txId: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  outputIndex: 0,
+  script: taprootScript,
+  satoshis: 100000,
+}
+
 // Add Taproot input (from previous funding transaction)
 tx.addInput(
   new TaprootInput({
-    prevTxId: Buffer.from(
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'hex',
-    ),
-    outputIndex: 0,
+    prevTxId: Buffer.from(taprootUtxo.txId, 'hex'),
+    outputIndex: taprootUtxo.outputIndex,
     output: new Output({
-      script: taprootScript,
-      satoshis: 100000,
+      script: taprootUtxo.script,
+      satoshis: taprootUtxo.satoshis,
     }),
     script: new Script(),
   }),
 )
 
-// Add output
-const destinationAddress = Address.fromString('lotus_...')
+// Add output (sending to a regular P2PKH address)
 tx.addOutput(
   new Output({
-    script: Script.buildPublicKeyHashOut(destinationAddress),
+    script: Script.buildPublicKeyHashOut(privateKey.toAddress()),
     satoshis: 95000, // 5,000 sat fee
   }),
 )
 
-// Sign with Schnorr + SIGHASH_LOTUS (automatically tweaks the key)
+// Sign with SIGHASH_LOTUS + Schnorr (REQUIRED for Taproot key path)
 tx.sign(privateKey, Signature.SIGHASH_ALL | Signature.SIGHASH_LOTUS, 'schnorr')
 
+console.log('Transaction created!')
 console.log('Transaction ID:', tx.id)
 console.log('Transaction hex:', tx.serialize())
 console.log('Is fully signed:', tx.isFullySigned())
@@ -328,9 +329,9 @@ function generatePaymentAddress(orderId: string): string {
 import { PrivateKey, buildKeyPathTaproot, Networks } from 'lotus-lib'
 
 // Use regtest network
-const privateKey = new PrivateKey(undefined, Networks.regtest)
+const privateKey = new PrivateKey(undefined, 'regtest')
 const taprootScript = buildKeyPathTaproot(privateKey.publicKey)
-const address = taprootScript.toAddress()
+const address = taprootScript.toAddress('regtest')
 
 console.log('Regtest address:', address.toString())
 // Example: lotus_RKrg3...
@@ -339,8 +340,8 @@ console.log('Regtest address:', address.toString())
 ### Testnet Example
 
 ```typescript
-const privateKey = new PrivateKey(undefined, Networks.testnet)
-const address = buildKeyPathTaproot(privateKey.publicKey).toAddress()
+const privateKey = new PrivateKey(undefined, 'testnet')
+const address = buildKeyPathTaproot(privateKey.publicKey).toAddress('testnet')
 
 console.log('Testnet address:', address.toString())
 // Example: lotus_TKrg3...

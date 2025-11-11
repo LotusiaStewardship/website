@@ -51,106 +51,151 @@ import {
   Script,
   Opcode,
   buildScriptPathTaproot,
-  Output,
+  TapNode,
+  Address,
 } from 'lotus-lib'
 
-// Create keys
+// Create keys for commenter and moderator
 const commenterKey = new PrivateKey()
 const moderatorKey = new PrivateKey()
-const emergencyKey1 = new PrivateKey()
-const emergencyKey2 = new PrivateKey()
 
-const refundHeight = 105040 // current + 5,040 blocks (~1 week)
+const currentHeight = 1000000
+const refundHeight = currentHeight + 5040 // ~1 week at 2 min/block
 
-// Script 1: Full refund after 1 week
+console.log('Commenter public key:', commenterKey.publicKey.toString())
+console.log('Moderator public key:', moderatorKey.publicKey.toString())
+console.log('Refund height:', refundHeight)
+
+// Path 1: Commenter reclaims after refund delay (no penalty)
 const refundScript = new Script()
-  .add(refundHeight)
+  .add(Buffer.from(refundHeight.toString(16).padStart(6, '0'), 'hex'))
   .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
   .add(Opcode.OP_DROP)
   .add(commenterKey.publicKey.toBuffer())
   .add(Opcode.OP_CHECKSIG)
 
-// Script 2: Penalty (moderator can spend immediately, splits 50/50)
+console.log('Path 1: Commenter Refund (after', 5040, 'blocks)')
+console.log('  Script:', refundScript.toASM())
+
+// Path 2: Moderator penalty (immediate, partial return to commenter)
 const penaltyScript = new Script()
   .add(moderatorKey.publicKey.toBuffer())
   .add(Opcode.OP_CHECKSIG)
 
-// Script 3: Emergency 2-of-2 recovery
+console.log('Path 2: Moderator Penalty (immediate)')
+console.log('  Script:', penaltyScript.toASM())
+
+// Path 3: Multi-sig emergency recovery
 const emergencyScript = new Script()
-  .add(Opcode.OP_2)
-  .add(emergencyKey1.publicKey.toBuffer())
-  .add(emergencyKey2.publicKey.toBuffer())
-  .add(Opcode.OP_2)
+  .add(Opcode.OP_2) // Require 2 signatures
+  .add(commenterKey.publicKey.toBuffer())
+  .add(moderatorKey.publicKey.toBuffer())
+  .add(Opcode.OP_2) // Out of 2 keys
   .add(Opcode.OP_CHECKMULTISIG)
 
-// Build script tree
-const scriptTree = {
-  left: { script: refundScript.toBuffer() },
+console.log('Path 3: Emergency Recovery (2-of-2 multisig)')
+console.log('  Script:', emergencyScript.toASM())
+
+// Build script tree with 3 spending paths
+const scriptTree: TapNode = {
+  left: { script: refundScript },
   right: {
-    left: { script: penaltyScript.toBuffer() },
-    right: { script: emergencyScript.toBuffer() },
+    left: { script: penaltyScript },
+    right: { script: emergencyScript },
   },
 }
 
-const { script: stakeScript, leaves } = buildScriptPathTaproot(
-  commenterKey.publicKey,
-  scriptTree,
+const tapResult = buildScriptPathTaproot(commenterKey.publicKey, scriptTree)
+
+// Create Taproot address for comment stake
+const taprootAddress = Address.fromTaprootCommitment(
+  tapResult.commitment,
+  'livenet',
 )
 
-console.log('Comment stake address:', stakeScript.toAddress().toString())
-console.log('Number of spending paths:', leaves.length) // 3
+console.log('Comment stake address:', taprootAddress.toString())
+console.log('XAddress:', taprootAddress.toXAddress())
+console.log('Merkle root:', tapResult.merkleRoot.toString('hex'))
+console.log('Number of leaves:', tapResult.leaves.length) // 3
 ```
 
 **Creating the Comment Transaction**:
 
 ```typescript
-import { Transaction, Output, Script, toScriptRNKC } from 'lotus-lib'
+import { Transaction, Output, Script, UnspentOutput } from 'lotus-lib'
 
 // Create RNKC output (minimum 1 XPI burned)
-const rnkcScripts = toScriptRNKC(
-  'twitter', // platform
-  'mycommentuser', // your profile ID
-  'targetprofile123', // profile being replied to
-  '1983154469287481398', // post being replied to
-  'This is my legitimate comment text here...', // comment content
-)
+// Note: toScriptRNKC would be imported from the RANK module
+function toScriptRNKC(params: {
+  platform: string
+  profileId: string
+  postId?: string
+  comment: string
+}): Buffer[] {
+  // Simplified RNKC scripts for demonstration
+  const metadata = Buffer.from(
+    '6a04524e4b43' + // OP_RETURN + 'RNKC'
+      '0001' + // platform
+      Buffer.from(params.profileId, 'utf8').toString('hex'),
+    'hex',
+  )
+  const commentData = Buffer.from(
+    '6a4c' + // OP_RETURN + OP_PUSHDATA1
+      params.comment.length.toString(16).padStart(2, '0') +
+      Buffer.from(params.comment, 'utf8').toString('hex'),
+    'hex',
+  )
+  return [metadata, commentData]
+}
 
+const rnkcScripts = toScriptRNKC({
+  platform: 'twitter',
+  profileId: 'elonmusk',
+  postId: '1234567890123456',
+  comment: 'Great post! This is a legitimate comment with real value.',
+})
+
+// Create dummy UTXO for funding
+const dummyUtxo = {
+  txId: 'b'.repeat(64),
+  outputIndex: 0,
+  script: Script.buildPublicKeyHashOut(commenterKey.publicKey),
+  satoshis: 100000,
+  address: commenterKey.toAddress(),
+}
+
+// Create comment transaction with Taproot stake
 const commentTx = new Transaction()
-commentTx.addInput(/* commenter's UTXO */)
+  .from(new UnspentOutput(dummyUtxo))
+  .addOutput(
+    new Output({
+      script: Script.fromBuffer(rnkcScripts[0]),
+      satoshis: 0, // RNKC metadata (OP_RETURN)
+    }),
+  )
+  .addOutput(
+    new Output({
+      script: Script.fromBuffer(rnkcScripts[1]),
+      satoshis: 0, // Comment data (OP_RETURN)
+    }),
+  )
+  .to(taprootAddress, 50000) // 0.05 XPI stake
+  .change(commenterKey.toAddress())
+  .sign(commenterKey)
 
-// Output 0: RNKC metadata (MUST be >= 1 XPI, this is your initial upvote)
-commentTx.addOutput(
-  new Output({
-    script: Script.fromBuffer(rnkcScripts[0]),
-    satoshis: 1000000, // 1 XPI burned (initial ranking)
-  }),
+console.log('Comment transaction created!')
+console.log('  TX ID:', commentTx.id)
+console.log('  Inputs:', commentTx.inputs.length)
+console.log('  Outputs:', commentTx.outputs.length)
+console.log('    Output 0: OP_RETURN (RNKC metadata, 0 sats)')
+console.log('    Output 1: OP_RETURN (comment data, 0 sats)')
+console.log('    Output 2: Taproot stake (', 50000, 'sats)')
+console.log(
+  '    Output 3: Change (',
+  commentTx.outputs[3]?.satoshis || 0,
+  'sats)',
 )
-
-// Output 1: Comment text (OP_RETURN, 0 sats)
-commentTx.addOutput(
-  new Output({
-    script: Script.fromBuffer(rnkcScripts[1]),
-    satoshis: 0,
-  }),
-)
-
-// Output 2: Taproot stake (refundable after 1 week)
-commentTx.addOutput(
-  new Output({
-    script: stakeScript,
-    satoshis: 50000, // 0.05 XPI stake
-  }),
-)
-
-// Output 3: Change
-commentTx.addOutput(
-  new Output({
-    script: Script.buildPublicKeyHashOut(commenterAddress),
-    satoshis: 98949000, // Remainder
-  }),
-)
-
-commentTx.sign(commenterKey)
+console.log('  Fully signed:', commentTx.isFullySigned())
 ```
 
 ---

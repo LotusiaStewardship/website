@@ -33,39 +33,65 @@ Commitment (internal_pubkey = aggregated key)
 
 ---
 
-## Implementation
+## Implementation with MuSig2
+
+### Step 1: Create MuSig2 Aggregated Key
 
 ```typescript
 import {
   PrivateKey,
-  PublicKey,
+  buildMuSigTaprootKey,
+  buildMuSigTaprootKeyWithScripts,
   Script,
   Opcode,
-  buildScriptPathTaproot,
 } from 'lotus-lib'
 
 // Generate 5 board member keys
-const boardKeys = Array.from({ length: 5 }, () => new PrivateKey().publicKey)
+const boardMembers = Array.from({ length: 5 }, () => new PrivateKey())
+const boardKeys = boardMembers.map(m => m.publicKey)
 
-// For demonstration, use first key as aggregated (in production, use MuSig2)
-const internalKey = boardKeys[0]
+// Create MuSig2 aggregated Taproot key (for key path spending)
+// This creates an n-of-n multi-signature where all signers must cooperate
+const musig2Result = buildMuSigTaprootKey(boardKeys)
 
-// Build 3-of-5 multisig script
+console.log(
+  'Aggregated internal key:',
+  musig2Result.aggregatedPubKey.toString(),
+)
+console.log('Taproot commitment:', musig2Result.commitment.toString())
+console.log('Script size:', musig2Result.script.toBuffer().length, 'bytes') // 36 bytes
+console.log(
+  'Organization address:',
+  musig2Result.script.toAddress()?.toString(),
+)
+```
+
+### Step 2: Add Script Tree Fallback
+
+For organizations that need threshold signatures (e.g., 3-of-5) or recovery options, add a script tree:
+
+```typescript
+// Sort keys for canonical multisig
+const sortedKeys = [...boardKeys].sort((a, b) =>
+  Buffer.compare(a.toBuffer(), b.toBuffer()),
+)
+
+// Build 3-of-5 multisig script (fallback if MuSig2 coordination fails)
 const multisigScript = new Script()
   .add(Opcode.OP_3)
-  .add(boardKeys[0].toBuffer())
-  .add(boardKeys[1].toBuffer())
-  .add(boardKeys[2].toBuffer())
-  .add(boardKeys[3].toBuffer())
-  .add(boardKeys[4].toBuffer())
+  .add(sortedKeys[0].toBuffer())
+  .add(sortedKeys[1].toBuffer())
+  .add(sortedKeys[2].toBuffer())
+  .add(sortedKeys[3].toBuffer())
+  .add(sortedKeys[4].toBuffer())
   .add(Opcode.OP_5)
   .add(Opcode.OP_CHECKMULTISIG)
 
 // Build recovery script (30 days timelock)
-const recoveryKey = new PrivateKey().publicKey
+const recoveryKey = boardMembers[0].publicKey // Emergency recovery key
 const recoveryHeight = 21600 // ~30 days
 const recoveryScript = new Script()
-  .add(recoveryHeight)
+  .add(Buffer.from(recoveryHeight.toString(16).padStart(6, '0'), 'hex'))
   .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
   .add(Opcode.OP_DROP)
   .add(recoveryKey.toBuffer())
@@ -77,13 +103,19 @@ const scriptTree = {
   right: { script: recoveryScript },
 }
 
-const { script: taprootScript, merkleRoot } = buildScriptPathTaproot(
-  internalKey,
-  scriptTree,
-)
+// Build MuSig2 Taproot with script tree
+const tapResult = buildMuSigTaprootKeyWithScripts(boardKeys, {
+  type: 'branch',
+  left: { type: 'leaf', script: multisigScript },
+  right: { type: 'leaf', script: recoveryScript },
+})
 
-console.log('Organization address:', taprootScript.toAddress().toString())
-console.log('Merkle root:', merkleRoot.toString('hex'))
+console.log(
+  'Organization address with fallbacks:',
+  tapResult.script.toAddress()?.toString(),
+)
+console.log('Merkle root:', tapResult.merkleRoot.toString('hex'))
+console.log('Number of leaves:', tapResult.leaves.length)
 ```
 
 ---
@@ -204,7 +236,7 @@ When MuSig2 coordination fails, reveal and execute the 3-of-5 multisig script:
 
 ---
 
-## MuSig2 Overview
+## MuSig2 Signing Process
 
 MuSig2 is a multi-signature scheme that creates a single aggregated signature from multiple signers.
 
@@ -212,16 +244,112 @@ MuSig2 is a multi-signature scheme that creates a single aggregated signature fr
 
 - Single 64-byte Schnorr signature (vs 3×72 = 216 bytes for ECDSA)
 - Indistinguishable from single-sig on-chain
-- Maximum privacy
+- Maximum privacy (5-of-5 looks identical to 1-of-1)
 
-**Process**:
+### Signing a Transaction with MuSig2
 
-1. All signers generate nonces
-2. Nonces are shared and aggregated
-3. Each signer creates partial signature
-4. Partial signatures are aggregated into final signature
+```typescript
+import {
+  Transaction,
+  Output,
+  Script,
+  musigNonceGen,
+  musigNonceAgg,
+  signTaprootKeyPathWithMuSig2,
+  musigSigAgg,
+  Schnorr,
+} from 'lotus-lib'
 
-**Note**: Full MuSig2 implementation is complex. For production use, consider specialized libraries or coordinate offline.
+// Assume we have the musig2Result from buildMuSigTaprootKey()
+// and a transaction to sign
+
+// Create spending transaction
+const tx = new Transaction()
+  .from({
+    txId: fundingTxId,
+    outputIndex: 0,
+    script: musig2Result.script,
+    satoshis: 1000000,
+    keyAggContext: musig2Result.keyAggContext,
+    mySignerIndex: 0, // Each signer has their own index
+  })
+  .addOutput(
+    new Output({
+      script: Script.fromAddress(recipientAddress),
+      satoshis: 950000, // 50,000 sat fee
+    }),
+  )
+
+// Get sighash for input 0
+const sighashBuffer = tx.getMuSig2Sighash(0)
+
+// Round 1: Nonce Generation (each signer does this)
+const aliceNonce = musigNonceGen(
+  boardMembers[0],
+  musig2Result.aggregatedPubKey,
+  sighashBuffer,
+)
+const bobNonce = musigNonceGen(
+  boardMembers[1],
+  musig2Result.aggregatedPubKey,
+  sighashBuffer,
+)
+// ... (repeat for all signers)
+
+// Aggregate nonces (coordinator does this)
+const aggNonce = musigNonceAgg([
+  aliceNonce.publicNonces,
+  bobNonce.publicNonces /* ... */,
+])
+
+// Round 2: Partial Signatures (each signer creates their partial signature)
+const alicePartial = signTaprootKeyPathWithMuSig2(
+  aliceNonce,
+  boardMembers[0],
+  musig2Result.keyAggContext,
+  0, // Alice's signer index
+  aggNonce,
+  sighashBuffer,
+  musig2Result.tweak, // Use the tweak from buildMuSigTaprootKey!
+)
+
+const bobPartial = signTaprootKeyPathWithMuSig2(
+  bobNonce,
+  boardMembers[1],
+  musig2Result.keyAggContext,
+  1, // Bob's signer index
+  aggNonce,
+  sighashBuffer,
+  musig2Result.tweak,
+)
+
+// ... (repeat for all signers)
+
+// Aggregate partial signatures into final signature (coordinator does this)
+const finalSignature = musigSigAgg(
+  [alicePartial, bobPartial /* ... */],
+  aggNonce,
+  sighashBuffer,
+  musig2Result.commitment, // Use commitment for aggregation!
+)
+
+// Verify the final signature
+const verified = Schnorr.verify(
+  sighashBuffer,
+  finalSignature,
+  musig2Result.commitment,
+  'big',
+)
+
+console.log('Signature valid:', verified)
+```
+
+**Critical Security Notes**:
+
+- **NEVER reuse nonces** - Generate fresh nonces for each signing session
+- Each signer should verify they have the correct aggregated nonce before creating partial signatures
+- Signers should validate partial signatures from others before broadcasting
+- Store the `keyAggContext` securely for future spending
 
 ---
 

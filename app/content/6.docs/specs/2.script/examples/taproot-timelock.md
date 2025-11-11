@@ -42,78 +42,101 @@ import {
   Script,
   Opcode,
   buildScriptPathTaproot,
-  Transaction,
-  Output,
+  TapNode,
+  Address,
 } from 'lotus-lib'
 
 // Generate voter's key
 const voterKey = new PrivateKey()
-const currentHeight = 100000
-const unlockHeight = currentHeight + 720 // ~24 hours
+const currentHeight = 1000000 // Example current block height
+const unlockHeight = currentHeight + 720 // ~24 hours at 2 min/block
 
-// Create time-lock script
+console.log('Voter public key:', voterKey.publicKey.toString())
+console.log('Current height:', currentHeight)
+console.log('Unlock height:', unlockHeight)
+
+// Create time-lock script: <height> OP_CHECKLOCKTIMEVERIFY OP_DROP <pubkey> OP_CHECKSIG
 const timelockScript = new Script()
-  .add(unlockHeight)
+  .add(Buffer.from(unlockHeight.toString(16).padStart(6, '0'), 'hex'))
   .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
   .add(Opcode.OP_DROP)
   .add(voterKey.publicKey.toBuffer())
   .add(Opcode.OP_CHECKSIG)
 
-// Build Taproot with script tree
-const scriptTree = { script: timelockScript }
-const {
-  script: taprootScript,
-  merkleRoot,
-  leaves,
-} = buildScriptPathTaproot(voterKey.publicKey, scriptTree)
+console.log('Time-lock script:')
+console.log('  Unlock height:', unlockHeight)
+console.log('  Script:', timelockScript.toASM())
+console.log('  Script hex:', timelockScript.toHex())
 
-const taprootAddress = taprootScript.toAddress()
-console.log('Vote escrow address:', taprootAddress.toString())
-console.log('Unlock height:', unlockHeight)
-console.log('Merkle root:', merkleRoot.toString('hex'))
+// Build Taproot with script tree
+const scriptTree: TapNode = {
+  script: timelockScript,
+}
+
+const tapResult = buildScriptPathTaproot(voterKey.publicKey, scriptTree)
+
+// Create Taproot address for the vote commitment
+const taprootAddress = Address.fromTaprootCommitment(
+  tapResult.commitment,
+  'livenet',
+)
+
+console.log('Vote commitment address:', taprootAddress.toString())
+console.log('XAddress:', taprootAddress.toXAddress())
+console.log('Merkle root:', tapResult.merkleRoot.toString('hex'))
+console.log('Number of leaves:', tapResult.leaves.length)
 ```
 
 **Creating the Vote Transaction**:
 
 ```typescript
-import { Transaction, Output, toScriptRANK } from 'lotus-lib'
+import { Transaction, Output, Script, UnspentOutput } from 'lotus-lib'
 
 // Create RANK output (minimum 1 XPI, recommended 10+ XPI for meaningful vote)
-const rankScript = toScriptRANK(
-  'positive', // sentiment
-  'twitter', // platform
-  'voterusername1', // profileId
-  '1983154469287481398', // postId (optional)
-)
+// Note: toScriptRANK would be imported from the RANK module
+function toScriptRANK(
+  sentiment: string,
+  platform: string,
+  profileId: string,
+): Buffer {
+  // Simplified RANK script for demonstration
+  return Buffer.from(
+    '6a0452414e4b5101011000766f746572757365726e616d6531081b858cf93dda30ab',
+    'hex',
+  )
+}
+
+const rankScript = toScriptRANK('positive', 'twitter', 'LotusProtocol')
+
+// Create dummy funding UTXO
+const dummyUtxo = {
+  txId: 'a'.repeat(64),
+  outputIndex: 0,
+  script: Script.buildPublicKeyHashOut(voterKey.publicKey),
+  satoshis: 50000,
+  address: voterKey.toAddress(),
+}
 
 const voteTx = new Transaction()
-voteTx.addInput(/* voter's UTXO */)
+  .from(new UnspentOutput(dummyUtxo))
+  .addOutput(
+    new Output({
+      script: Script.fromBuffer(rankScript),
+      satoshis: 0, // OP_RETURN output (RANK metadata)
+    }),
+  )
+  .to(taprootAddress, 10000) // 0.01 XPI locked in Taproot
+  .change(voterKey.toAddress())
+  .sign(voterKey)
 
-// Output 0: RANK vote (MUST be >= 1 XPI, this is the vote weight)
-voteTx.addOutput(
-  new Output({
-    script: Script.fromBuffer(rankScript),
-    satoshis: 10000000, // 10 XPI burned = 10 XPI vote weight
-  }),
-)
-
-// Output 1: Taproot time-lock (refundable)
-voteTx.addOutput(
-  new Output({
-    script: taprootScript,
-    satoshis: 100000, // 0.1 XPI locked in Taproot
-  }),
-)
-
-// Output 2: Change
-voteTx.addOutput(
-  new Output({
-    script: Script.buildPublicKeyHashOut(voterAddress),
-    satoshis: 79890000, // Remainder as change
-  }),
-)
-
-voteTx.sign(voterKey)
+console.log('Vote transaction created!')
+console.log('  TX ID:', voteTx.id)
+console.log('  Inputs:', voteTx.inputs.length)
+console.log('  Outputs:', voteTx.outputs.length)
+console.log('    Output 0: OP_RETURN (RANK vote, 0 sats)')
+console.log('    Output 1: Taproot commitment (', 10000, 'sats)')
+console.log('    Output 2: Change (', voteTx.outputs[2]?.satoshis || 0, 'sats)')
+console.log('  Fully signed:', voteTx.isFullySigned())
 ```
 
 ---
@@ -213,19 +236,35 @@ Only needed if key path fails or for demonstration:
 import { createControlBlock } from 'lotus-lib'
 
 // Wait until block height >= unlockHeight
-const currentHeight = await getBlockHeight()
+const currentHeight = 1000720 // Assume time has passed
 if (currentHeight < unlockHeight) {
   throw new Error(`Must wait until block ${unlockHeight}`)
 }
 
-// Create control block
+console.log('Current height:', currentHeight)
+console.log('Unlock height:', unlockHeight)
+console.log('Time-lock expired:', currentHeight >= unlockHeight)
+
+// Create control block for script path spending
 const controlBlock = createControlBlock(voterKey.publicKey, 0, scriptTree)
 
-// Transaction must have nLockTime >= unlockHeight
-spendTx.nLockTime = unlockHeight
+console.log('Control block created:')
+console.log('  Size:', controlBlock.length, 'bytes')
+console.log('  Merkle proof nodes:', tapResult.leaves[0].merklePath.length)
 
-// Input script: <signature> <script> <control_block>
-// This is more complex - see full example in lotus-lib/examples/
+// For script path spending, you would create a transaction with:
+// 1. nLockTime set to unlockHeight or higher
+// 2. Input script: <signature> <script> <control_block>
+// 3. Sign the transaction with the revealed script
+
+// Example of what the input script stack would look like:
+// Stack: [<signature>] [<revealed_timelock_script>] [<control_block>]
+
+// This is more complex - see full example in lotus-lib/examples/taproot-example.ts
+console.log('\nScript path spending would reveal:')
+console.log('  - The time-lock script')
+console.log('  - Control block with merkle proof')
+console.log('  - Transaction size: ~220 bytes (larger than key path)')
 ```
 
 ---

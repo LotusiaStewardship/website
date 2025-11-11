@@ -69,12 +69,15 @@ const scriptTree = {
   },
 }
 
-const { script: vaultScript } = buildScriptPathTaproot(
-  hotWalletKey.publicKey,
-  scriptTree,
-)
+const {
+  script: vaultScript,
+  merkleRoot,
+  leaves,
+} = buildScriptPathTaproot(hotWalletKey.publicKey, scriptTree)
 
 console.log('Vault address:', vaultScript.toAddress().toString())
+console.log('Merkle root:', merkleRoot.toString('hex'))
+console.log('Number of leaves:', leaves.length)
 ```
 
 ---
