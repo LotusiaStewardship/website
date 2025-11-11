@@ -1227,7 +1227,7 @@ When stack contains two or more elements:
 
 **Library Implementation**:
 
-- [lotus-lib](https://github.com/LogosFoundation/lotus-lib) - TypeScript/JavaScript Taproot support
+- [lotus-lib](https://github.com/LotusiaStewardship/lotus-lib) - TypeScript/JavaScript Taproot support
 - `lib/bitcore/taproot.ts` - Complete Taproot implementation
 
 **Bitcoin BIPs (Reference Only)**:
