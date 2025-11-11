@@ -1,0 +1,133 @@
+title: Tools for Prosperity
+description: Explore the tools that are available to the Lotusia ecosystem
+ogTitle: Tools for Prosperity - Lotusia
+ogDescription: Access the Lotusia Ecosystem
+ogImage: /img/tools_0.jpg
+to: /tools
+navigation.icon: i-mdi-fountain
+hero:
+  title: Tools for Prosperity
+  description: Explore the tools that are available to the Lotusia ecosystem
+  image: /img/tools_0.jpg
+sections:
+  - title: Blockchain software - lotusd / Lotus QT
+    description: The core Lotus blockchain software—your gateway to the network. Runs a full, secure copy of the Treasury ledger, enabling you to participate in mining, validate transactions, and help secure the entire ecosystem. (Required for all miners.)
+    headline: 'Winter Solstice 2025 - 10th Epoch of the Lotus Network'
+    version: '10.4.9'
+    align: right
+    images:
+      - src: /img/LotusQT_0.png
+      - src: /img/LotusQT_1.png
+    features:
+      - name: Full Node & Mining
+        description: Complete validating node with SHA-256d mining and GPU acceleration
+        icon: i-heroicons-cube-solid
+      - name: RPC & REST APIs
+        description: JSON-RPC and REST interfaces for blockchain queries and transaction broadcasting
+        icon: i-heroicons-code-bracket-solid
+      - name: Advanced Scripts
+        description: Taproot, MuSig2, SwapSig, and custom script types with signature verification
+        icon: i-heroicons-document-text-solid
+      - name: P2P Infrastructure
+        description: Mempool management, block propagation, and consensus rule enforcement
+        icon: i-heroicons-server-stack-solid
+    links:
+      - label: Windows
+        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-win64-setup-unsigned.exe
+        icon: i-mdi-microsoft-windows
+        type: EXE Installer (.exe)
+      - label: MacOS
+        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-osx-unsigned.dmg
+        icon: i-mdi-apple
+        type: DMG Image (.dmg)
+      - label: Linux
+        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-x86_64-linux-gnu.tar.gz
+        icon: i-mdi-linux
+        type: TAR archive (.tar.gz)
+      - label: Source Code
+        to: github/lotusd
+        icon: i-mdi-github
+        target: _blank
+  - title: Lotus Developer SDK
+    description: A comprehensive TypeScript library for building applications and integrating with the Lotus blockchain ecosystem.
+    version: '0.1.0'
+    align: left
+    images:
+      - src: /img/lotus-lib_3.jpeg
+    features:
+      - name: Everything You Need to Build
+        description: Bitcoin-compatible transactions, HD wallets with mnemonic phrases, MuSig2 multi-signatures, Taproot addresses, and powerful cryptographic primitives—all the building blocks for serious blockchain development
+        icon: i-heroicons-cube-solid
+      - name: Privacy & Reputation Built In
+        description: Ship privacy-first features with SwapSig transaction mixing, build trust systems with on-chain RANK reputation, and connect users worldwide with battle-tested P2P networking
+        icon: i-heroicons-puzzle-piece-solid
+      - name: From Idea to Launch
+        description: Whether you're building a wallet, a social app with reputation scoring, or privacy-focused dApps, this SDK has you covered with production-ready TypeScript modules and real-world examples
+        icon: i-heroicons-code-bracket-solid
+    links:
+      - label: GitHub Repository
+        to: https://github.com/LotusiaStewardship/lotus-lib
+        target: _blank
+        icon: i-mdi-github
+        type: Source Code
+      - label: Documentation
+        to: https://github.com/LotusiaStewardship/lotus-lib#readme
+        target: _blank
+        icon: i-heroicons-book-open
+        type: README & Docs
+  - title: Lotusia Chrome Extension
+    description: A decentralized, community-moderated reputation system for social media, powered by Lotus.
+    align: right
+    images:
+      - src: /img/extension_1.jpeg
+    features:
+      - name: Rank Content with Lotus
+        description: Burn Lotus to upvote or downvote social media posts using the RANK protocol
+        icon: i-heroicons-hand-thumb-up-solid
+      - name: See Community Ratings
+        description: View how the community has ranked content before you engage
+        icon: i-heroicons-chart-bar-solid
+      - name: Tip Creators Directly
+        description: Give Lotus to content creators and friends from your browser
+        icon: i-heroicons-paper-airplane-solid
+      - name: Build Your Influence
+        description: Quality contributions build your reputation in the community
+        icon: i-heroicons-star-solid
+    links:
+      - label: Chrome Web Store
+        version: '1.2.1-beta'
+        to: https://chromewebstore.google.com/detail/lotusia/bbdehfckfcaablnndggpliihmfmflcbh
+        target: _blank
+        icon: i-mdi-google-chrome
+        type: Chrome Extension
+  - title: BigVase Mobile Wallet
+    description: Your personal Lotus wallet for iPhone and Android. Give, receive, and manage your Lotus on the go with a wallet you control—no middleman required.
+    align: left
+    images:
+      - src: /img/bigvase_1.jpeg
+    features:
+      - name: Your Keys, Your Lotus
+        description: Non-custodial wallet where you control your funds with backup phrases
+        icon: i-heroicons-key-solid
+      - name: Give & Receive Easily
+        description: Give Lotus to friends or receive Lotus with simple QR codes and contact lists
+        icon: i-heroicons-qr-code-solid
+      - name: Track Your Balance
+        description: See your Lotus balance and transaction history at a glance
+        icon: i-heroicons-chart-bar-solid
+      - name: Works Everywhere
+        description: Available on both Android and iPhone
+        icon: i-heroicons-device-phone-mobile-solid
+    links:
+      - label: Android
+        version: Available Now
+        to: https://play.google.com/store/apps/details?id=com.soleilvert.lotuswallet
+        target: _blank
+        icon: i-mdi-android
+        type: Play Store
+      - label: iOS
+        version: Available Now
+        to: https://apps.apple.com/us/app/bigvase/id6751052174
+        target: _blank
+        icon: i-mdi-apple
+        type: App Store

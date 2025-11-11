@@ -1,15 +1,26 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('ecosystem', () => queryContent('/ecosystem').findOne())
+import { parsePageLinks } from '~/utils/functions'
+
+const { data: page } = await useAsyncData('tools', () =>
+  queryContent('/tools').findOne()
+)
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true
+  })
 }
+
+const config = useRuntimeConfig()
+const urls = config.public.url
 
 useSeoMeta({
   title: page.value.ogTitle,
   ogTitle: page.value.ogTitle,
   description: page.value.description,
   ogDescription: page.value.description,
-  ogImage: page.value.hero.image.light
+  ogImage: page.value.ogImage
 })
 </script>
 
@@ -22,7 +33,7 @@ useSeoMeta({
     >
       <template #default>
         <NuxtImg
-          :src="page.hero.image.light"
+          :src="page.hero.image"
           style="border-radius: 15%;"
         />
       </template>
@@ -35,24 +46,21 @@ useSeoMeta({
       :description="section.description"
       :align="section.align"
       :features="section.features"
+      :links="parsePageLinks(section.links, urls)"
     >
       <UPageGrid
-        v-if="section.quotes"
-        :ui="{ wrapper: `sm:grid-cols-1 xl:grid-cols-1` }"
+        v-if="section.images"
+        :ui="{ wrapper: `sm:grid-cols-1 xl:grid-cols-1 py-0` }"
       >
-        <ULandingTestimonial
-          v-for="(quote, k) in section.quotes"
-          :key="k"
-          :quote="quote.text"
-          :author="{ name: quote.author, description: quote.title, avatar: { src: quote.avatar } }"
-          class="break-inside-avoid bg-gray-100/50 dark:bg-gray-800/50"
-        />
+        <template #default>
+          <NuxtImg
+            v-for="image in section.images"
+            :key="image.src"
+            :src="image.src"
+            style="border-radius: 15%;"
+          />
+        </template>
       </UPageGrid>
-      <NuxtImg
-        v-else
-        :src="`/img/ecosystem_${(i + 1)}_0.jpg`"
-        style="border-radius: 15%;"
-      />
     </ULandingSection>
   </UContainer>
 </template>

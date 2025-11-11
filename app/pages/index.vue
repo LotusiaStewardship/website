@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { parsePageLinks } from '~/utils/functions'
+
 const { data: page } = await useAsyncData('index', () => queryContent('/').findOne())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
@@ -12,46 +14,48 @@ useSeoMeta({
   ogTitle: page.value.title,
   description: page.value.description,
   ogDescription: page.value.description,
-  ogImage: page.value.hero.image,
+  ogImage: page.value.hero.image
 })
 </script>
 
 <template>
-  <ULandingHero
-    :title="page.hero.title"
-    :description="page.description"
-    :links="parsePageLinks(page.hero.links, urls)"
-    orientation="horizontal"
-  >
-    <template #default>
+  <UContainer>
+    <ULandingHero
+      :title="page.hero.title"
+      :description="page.description"
+      :links="parsePageLinks(page.hero.links, urls)"
+      orientation="horizontal"
+    >
+      <template #default>
+        <NuxtImg
+          :src="page.hero.image"
+          style="border-radius: 15%;"
+        />
+      </template>
+    </ULandingHero>
+
+    <ULandingSection
+      v-for="(section, i) in page.sections"
+      :key="i"
+      :title="section.title"
+      :description="section.description"
+      :align="section.align"
+      :features="section.features"
+      :links="parsePageLinks(section.links, urls)"
+    >
       <NuxtImg
-        :src="page.hero.image"
+        :src="`/img/turtles_${(i + 1)}.jpeg`"
         style="border-radius: 15%;"
       />
-    </template>
-  </ULandingHero>
+    </ULandingSection>
 
-  <ULandingSection
-    v-for="(section, i) in page.sections"
-    :key="i"
-    :title="section.title"
-    :description="section.description"
-    :align="section.align"
-    :features="section.features"
-    :links="parsePageLinks(section.links, urls)"
-  >
-    <NuxtImg 
-      :src="`/img/turtles_${(i + 1)}.jpeg`"
-      style="border-radius: 15%;"
+    <ULandingCTA
+      :title="page.cta.title"
+      :description="page.cta.description"
+      :links="parsePageLinks(page.hero.links, urls)"
+      :card="false"
     />
-  </ULandingSection>
-
-  <ULandingCTA
-    :title="page.cta.title"
-    :description="page.cta.description"
-    :links="parsePageLinks(page.hero.links, urls)"
-    :card="false"
-  />
+  </UContainer>
 </template>
 
 <style scoped>

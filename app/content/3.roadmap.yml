@@ -9,11 +9,11 @@ hero:
   description: Outlined below are the Stewardship's goals for the current and upcoming Epoch. Previous Epochs are shown further down the page.
   image: /img/roadmap_0.jpg
 sections:
-  - title: 1st Samuel Epoch (Upcoming)
+  - title: 1st Samuel Epoch (Current)
     headline: Summer 2025 - Winter 2025
     cards:
       - title: Lotusia Chrome Extension
-        description: A Chrome extension that allows users to interact with the Lotusia ecosystem
+        description: Chrome extension to implement a decentralized, community-moderated reputation system for social media, powered by Lotus
         status: ongoing
         checklist:
           - label: Add support for additional platforms
@@ -32,7 +32,7 @@ sections:
             complete: false
       - title: More to come...
         description: "As of May 28 2025, we're working on a lot of exciting things, and will update the Roadmap as we approach the 1st Samuel Epoch. Stay tuned for more updates!"
-  - title: Ruth Epoch (Current)
+  - title: Ruth Epoch
     headline: Winter 2024 - Summer 2025
     cards:
       - title: Lotus Mining Pool
@@ -88,14 +88,19 @@ sections:
             active: true
       - title: Lotus/Solana Bridge
         description: A liquidity bridge between the Lotus and Solana blockchains
-        status: ongoing
+        status: complete
         checklist:
           - label: Build backend bridge
-            complete: false
+            complete: true
           - label: Publish Lotus $XPI bridge address
-            complete: false
+            complete: true
           - label: Ensure bridge is secure and functional
-            complete: false
+            complete: true
+        links:
+          - label: Try it out!
+            to: https://wxpi.lotusia.org
+            target: _blank
+            active: true
   - title: Judges Epoch
     headline: Summer 2024 - Winter 2024
     cards:
