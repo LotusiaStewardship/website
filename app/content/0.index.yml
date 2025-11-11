@@ -7,7 +7,7 @@ hero:
   links:
     - label: Get Started
       icon: i-heroicons-chevron-right-16-solid
-      to: '/goods'
+      to: '/tools'
       size: xl
       color: purple
       trailing: true
