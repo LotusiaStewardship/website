@@ -25,7 +25,8 @@
     "bitcore-lib-xpi": "file:submodules/bitcore-lib-xpi",
     "chronik-client": "0.19.0",
     "date-fns": "4.1.0",
-    "nuxt": "^3.17.5"
+    "nuxt": "^3.17.5",
+    "nuxt-seo-utils": "7.0.18"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",

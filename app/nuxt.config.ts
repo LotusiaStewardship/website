@@ -29,7 +29,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     '@nuxthq/studio',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    'nuxt-site-config'
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
