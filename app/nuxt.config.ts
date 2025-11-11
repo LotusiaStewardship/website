@@ -1,16 +1,5 @@
-import typescriptPlugin from '@rollup/plugin-typescript'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  vite: {
-    build: {
-      rollupOptions: {
-        // external: ['rank-lib'],
-        plugins: [typescriptPlugin()]
-      },
-      target: 'es2022'
-    }
-  },
   runtimeConfig: {
     public: {
       url: {
@@ -23,10 +12,10 @@ export default defineNuxtConfig({
   },
   extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],
   modules: [
+    '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/ui',
     '@nuxt/fonts',
     '@nuxthq/studio',
     '@vueuse/nuxt',
@@ -37,11 +26,17 @@ export default defineNuxtConfig({
     'components:extend': (components) => {
       const globals = components.filter(c => ['UButton'].includes(c.pascalName))
 
-      globals.forEach(c => c.global = true)
+      globals.forEach(c => (c.global = true))
     }
   },
   ui: {
-    icons: ['flag', 'heroicons', 'mdi', 'fluent-emoji-high-contrast', 'simple-icons']
+    icons: [
+      'flag',
+      'heroicons',
+      'mdi',
+      'fluent-emoji-high-contrast',
+      'simple-icons'
+    ]
   },
   routeRules: {
     '/api/search.json': { prerender: true }
