@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { withoutTrailingSlash, joinURL } from 'ufo'
+import { joinURL } from 'ufo'
 import type { BlogPost } from '~/types'
 
 const route = useRoute()
+const site = useSiteConfig()
 
 const { data: post } = await useAsyncData(route.path, () => queryContent<BlogPost>(route.path).findOne())
 if (!post.value) {
@@ -30,12 +31,14 @@ useSeoMeta({
   title,
   ogTitle: title,
   description,
-  ogDescription: description
+  ogDescription: description,
+  // twitter
+  twitterCard: 'summary',
+  twitterTitle: title,
+  twitterDescription: description
 })
 
 if (post.value.image?.src) {
-  const site = useSiteConfig()
-
   useSeoMeta({
     ogImage: joinURL(site.url, post.value.image.src),
     twitterImage: joinURL(site.url, post.value.image.src)
@@ -47,7 +50,7 @@ if (post.value.image?.src) {
     description,
     headline: 'Blog'
   })
-}*/
+} */
 </script>
 
 <template>
@@ -62,7 +65,11 @@ if (post.value.image?.src) {
           variant="subtle"
         />
         <span class="text-gray-500 dark:text-gray-400">&middot;</span>
-        <time class="text-gray-500 dark:text-gray-400">{{ new Date(post.date).toLocaleDateString('en', { year: 'numeric', month: 'short', day: 'numeric' }) }}</time>
+        <time class="text-gray-500 dark:text-gray-400">{{ new Date(post.date).toLocaleDateString('en', {
+          year:
+            'numeric',
+          month: 'short',
+          day: 'numeric' }) }}</time>
       </template>
 
       <div class="flex flex-wrap items-center gap-3 mt-4">
@@ -92,7 +99,7 @@ if (post.value.image?.src) {
           :value="post"
         />
         <template v-if="surround?.length">
-          <hr />
+          <hr>
           <UContentSurround :surround="surround" />
         </template>
       </UPageBody>
