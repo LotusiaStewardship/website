@@ -1,5 +1,5 @@
+import { Bitcore } from 'lotus-sdk'
 import { useChronikApi } from '@/composables/useChronikApi'
-import { getChronikScriptType, getScriptPayload } from '~/utils/chronik'
 
 const { getUtxos } = useChronikApi()
 
@@ -13,8 +13,9 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const scriptType = getChronikScriptType(address)
-  const scriptPayload = getScriptPayload(address)
+  const script = Bitcore.Script.fromAddress(address)
+  const scriptType = script.getType()
+  const scriptPayload = script.getData().toString('hex')
   if (!scriptType || !scriptPayload) {
     throw createError({
       statusCode: 400,

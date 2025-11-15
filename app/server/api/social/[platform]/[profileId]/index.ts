@@ -1,4 +1,4 @@
-import { PLATFORMS, type ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
+import { PlatformConfiguration, type ScriptChunkPlatformUTF8 } from 'lotus-sdk'
 import { useRankApi } from '~/composables/useRankApi'
 
 const { getProfileRanking } = useRankApi()
@@ -14,15 +14,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  if (PLATFORMS[platform] === undefined) {
+  if (PlatformConfiguration.get(platform) === undefined) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid platform'
     })
   }
 
-  return await getProfileRanking(
-    platform,
-    profileId
-  )
+  return await getProfileRanking(platform, profileId)
 })

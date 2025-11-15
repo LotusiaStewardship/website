@@ -1,9 +1,9 @@
 import type {
   ScriptChunkPlatformUTF8,
-  IndexedPostRanking,
-  IndexedRanking,
+  ProfileAPI,
+  PostAPI,
   ScriptChunkSentimentUTF8
-} from '~/submodules/rank-lib'
+} from 'lotus-sdk'
 import type {
   APIResponse,
   WalletActivity,
@@ -21,7 +21,7 @@ type VoterDetails = {
   votesNeutral: number
 }
 
-type ProfileData = IndexedRanking & {
+type ProfileData = ProfileAPI & {
   voters: VoterDetails[]
 }
 
@@ -185,10 +185,10 @@ export const useRankApi = () => {
     platform: ScriptChunkPlatformUTF8,
     profileId: string,
     postId: string
-  ): Promise<IndexedPostRanking> => {
+  ): Promise<PostAPI> => {
     const url = `${RANK_API_URL}/${platform}/${profileId}/${postId}`
     const response = await fetch(url)
-    return (await response.json()) as IndexedPostRanking
+    return (await response.json()) as PostAPI
   }
 
   const getWalletActivity = async (

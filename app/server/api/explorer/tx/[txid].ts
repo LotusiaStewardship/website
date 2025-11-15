@@ -1,6 +1,5 @@
-import bitcore from 'bitcore-lib-xpi'
+import { Bitcore, ScriptProcessor, type TransactionOutputRANK } from 'lotus-sdk'
 import type { Tx, TxInput, TxOutput } from 'chronik-client'
-import { type RankOutput, RankScriptProcessor } from '~/submodules/rank-lib'
 import { useChronikApi } from '@/composables/useChronikApi'
 
 const { getBlockchainInfo, getTransaction } = useChronikApi()
@@ -11,7 +10,7 @@ type ExplorerTxInput = TxInput & {
 
 type ExplorerTxOutput = TxOutput & {
   address?: string
-  rankOutput?: RankOutput
+  rankOutput?: TransactionOutputRANK
 }
 
 type ExplorerTx = Tx & {
@@ -46,10 +45,13 @@ export default defineEventHandler(async (event) => {
     if (!input.outputScript) {
       return input
     }
-    const script = bitcore.Script.fromHex(input.outputScript)
+    const script = Bitcore.Script.fromHex(input.outputScript)
     const address = script.isPublicKeyHashOut() || script.isScriptHashOut()
-      ? script.toAddress().toXAddress()
+      ? script.toAddress()?.toXAddress()
       : null
+    if (!address) {
+      return input
+    }
     return {
       ...input,
       address
@@ -59,14 +61,14 @@ export default defineEventHandler(async (event) => {
   let sumBurnedSats = 0
   const txOutputs = tx.outputs.map((output: TxOutput) => {
     const scriptBuf = Buffer.from(output.outputScript, 'hex')
-    const script = bitcore.Script.fromBuffer(scriptBuf)
+    const script = Bitcore.Script.fromBuffer(scriptBuf)
     // OP_RETURN outputs
     if (script.isDataOut()) {
       // TODO: we can add more LOKAD checks here
       sumBurnedSats += Number(output.value)
       // process the rank output
-      const rank = new RankScriptProcessor(scriptBuf)
-      const rankOutput = rank.processRankOutput()
+      const rank = new ScriptProcessor(scriptBuf)
+      const rankOutput = rank.processScriptRANK()
       if (rankOutput) {
         return {
           ...output,
@@ -76,7 +78,10 @@ export default defineEventHandler(async (event) => {
     }
     // P2PKH/P2SH outputs
     if (script.isPublicKeyHashOut() || script.isScriptHashOut()) {
-      const address = script.toAddress().toXAddress()
+      const address = script.toAddress()?.toXAddress()
+      if (!address) {
+        return output
+      }
       return {
         ...output,
         address
