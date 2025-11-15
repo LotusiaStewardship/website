@@ -22,17 +22,18 @@
     "@nuxt/ui-pro": "^1.2.0",
     "@unovis/vue": "^1.5.2",
     "@vueuse/nuxt": "^10.9.0",
-    "bitcore-lib-xpi": "file:submodules/bitcore-lib-xpi",
     "chronik-client": "0.19.0",
     "date-fns": "4.1.0",
+    "lotus-sdk": "^0.1.1",
     "nuxt": "^3.17.5",
     "nuxt-site-config": "3.2.11"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "^0.3.9",
+    "@nuxt/types": "^2.18.1",
+    "@nuxt/typescript-build": "^3.0.2",
     "@nuxthq/studio": "^1.0.13",
-    "@rollup/plugin-typescript": "^12.1.3",
     "eslint": "^9.1.1",
     "vue-tsc": "^2.0.14"
   }

@@ -1,4 +1,4 @@
-import type { Address, HDPrivateKey, PrivateKey } from 'bitcore-lib-xpi'
+import type { Bitcore } from 'lotus-sdk'
 
 enum BIP44CoinType {
   default = 10605,
@@ -19,8 +19,8 @@ const BIP44 = {
  */
 const getDerivedSigningKey = (
   cointype: keyof typeof BIP44CoinType,
-  hdPrivKey: HDPrivateKey
-): PrivateKey => {
+  hdPrivKey: Bitcore.HDPrivateKey
+): Bitcore.PrivateKey => {
   try {
     return hdPrivKey
       .deriveChild(BIP44.purpose, true)
@@ -38,7 +38,7 @@ const getDerivedSigningKey = (
  * @param signingKey - The `PrivateKey` to get the address for
  * @returns The Bitcore `Address`
  */
-const getAddressFromSigningKey = (signingKey: PrivateKey): Address => {
+const getAddressFromSigningKey = (signingKey: Bitcore.PrivateKey): Bitcore.Address => {
   try {
     return signingKey.toAddress()
   } catch (e: any) {
