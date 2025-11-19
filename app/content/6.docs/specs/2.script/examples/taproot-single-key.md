@@ -22,7 +22,7 @@ The most common Taproot use case: a single key controls the output with no alter
 ## Creating a Single-Key Taproot Address
 
 ```typescript
-import { PrivateKey, buildKeyPathTaproot } from 'lotus-lib'
+import { PrivateKey, buildKeyPathTaproot } from 'lotus-sdk'
 
 // Generate internal private key
 const privateKey = new PrivateKey()
@@ -58,7 +58,7 @@ console.log('Is P2TR:', taprootScript.isPayToTaproot())
 ## Spending from Single-Key Taproot
 
 ```typescript
-import { Transaction, TaprootInput, Output, Script, Signature } from 'lotus-lib'
+import { Transaction, TaprootInput, Output, Script, Signature } from 'lotus-sdk'
 
 // Create transaction
 const tx = new Transaction()
@@ -326,7 +326,7 @@ function generatePaymentAddress(orderId: string): string {
 ### Regtest Example
 
 ```typescript
-import { PrivateKey, buildKeyPathTaproot, Networks } from 'lotus-lib'
+import { PrivateKey, buildKeyPathTaproot, Networks } from 'lotus-sdk'
 
 // Use regtest network
 const privateKey = new PrivateKey(undefined, 'regtest')
@@ -334,7 +334,7 @@ const taprootScript = buildKeyPathTaproot(privateKey.publicKey)
 const address = taprootScript.toAddress('regtest')
 
 console.log('Regtest address:', address.toString())
-// Example: lotus_RKrg3...
+// Example: lotusR...
 ```
 
 ### Testnet Example
@@ -344,7 +344,7 @@ const privateKey = new PrivateKey(undefined, 'testnet')
 const address = buildKeyPathTaproot(privateKey.publicKey).toAddress('testnet')
 
 console.log('Testnet address:', address.toString())
-// Example: lotus_TKrg3...
+// Example: lotusT...
 ```
 
 ---

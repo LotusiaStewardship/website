@@ -36,7 +36,7 @@ Commitment
 ## Implementation
 
 ```typescript
-import { PrivateKey, Script, Opcode, buildScriptPathTaproot } from 'lotus-lib'
+import { PrivateKey, Script, Opcode, buildScriptPathTaproot } from 'lotus-sdk'
 
 // Create keys
 const hotWalletKey = new PrivateKey()
@@ -475,7 +475,7 @@ const exchangeVault = buildEnterpriseVault({
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-lib'
+import { Networks } from 'lotus-sdk'
 
 // Create test vault
 const testHot = new PrivateKey(undefined, Networks.regtest)

@@ -53,7 +53,7 @@ import {
   buildScriptPathTaproot,
   TapNode,
   Address,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Create keys for commenter and moderator
 const commenterKey = new PrivateKey()
@@ -122,7 +122,7 @@ console.log('Number of leaves:', tapResult.leaves.length) // 3
 **Creating the Comment Transaction**:
 
 ```typescript
-import { Transaction, Output, Script, UnspentOutput } from 'lotus-lib'
+import { Transaction, Output, Script, UnspentOutput } from 'lotus-sdk'
 
 // Create RNKC output (minimum 1 XPI burned)
 // Note: toScriptRNKC would be imported from the RANK module
@@ -529,7 +529,7 @@ When moderator penalizes:
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-lib'
+import { Networks } from 'lotus-sdk'
 
 // Setup test environment
 const testCommenter = new PrivateKey(undefined, Networks.regtest)

@@ -67,7 +67,7 @@ Lotus Taproot differs from Bitcoin's implementation in critical ways:
    - Lotus: SIGHASH_LOTUS (0x60) required for key path spending
    - Bitcoin: Default sighash types
 6. **Address Format**:
-   - Lotus: XAddress format with type byte 2 (e.g., `lotus_XKrg3...`)
+   - Lotus: XAddress format with type byte 2 (e.g., `lotus_J...`)
    - Bitcoin: Bech32m format (e.g., `bc1p...`)
 
 **Compatibility**: Lotus and Bitcoin Taproot implementations are **completely incompatible**. Do not attempt to use Bitcoin Taproot tools or addresses with Lotus.
@@ -78,12 +78,12 @@ Lotus Taproot differs from Bitcoin's implementation in critical ways:
 
 Taproot addresses use XAddress encoding with type byte `2`:
 
-**Format**: `lotus_X<base58_payload>`
+**Format**: `lotus_J<base58_payload>`
 
 **Example**:
 
 ```
-lotus_XKrg3GedBgR9iMusKuMw5Dq4f3PHK2bL67PcDWh1MAG9vshR6y5zsUc
+lotus_JHMEcuQ6SyDcJKsSJVd6cZRSVZ8NqWZNMwAX8RDirNEazCfEgFp
 ```
 
 **Encoding**:
@@ -207,7 +207,7 @@ For key-only outputs (no scripts), the `merkle_root` is 32 zero bytes.
 **For Single Signer**:
 
 ```typescript
-import { PrivateKey, tweakPrivateKey, Transaction } from 'lotus-lib'
+import { PrivateKey, tweakPrivateKey, Transaction } from 'lotus-sdk'
 
 // 1. Start with internal private key
 const internalPrivKey = new PrivateKey()
@@ -235,7 +235,7 @@ import {
   musigNonceAgg,
   signTaprootKeyPathWithMuSig2,
   musigSigAgg,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // 1. Aggregate public keys
 const result = buildMuSigTaprootKey([alice.publicKey, bob.publicKey])
@@ -732,7 +732,7 @@ This algorithm is implemented in lotusd's `TaggedHash()` function (src/hash.h) a
 **Implementation**:
 
 ```typescript
-import { Hash } from 'lotus-lib'
+import { Hash } from 'lotus-sdk'
 
 function taggedHash(tag: string, data: Buffer): Buffer {
   const tagHash = Hash.sha256(Buffer.from(tag, 'utf8'))
@@ -768,7 +768,7 @@ Where:
 **Example**:
 
 ```typescript
-import { PrivateKey, tweakPublicKey, tweakPrivateKey } from 'lotus-lib'
+import { PrivateKey, tweakPublicKey, tweakPrivateKey } from 'lotus-sdk'
 
 const privateKey = new PrivateKey()
 const internalPubKey = privateKey.publicKey
@@ -829,7 +829,7 @@ Root = leaf_hash(script)
 **Building a Tree**:
 
 ```typescript
-import { Script, Opcode, buildScriptPathTaproot, TapNode } from 'lotus-lib'
+import { Script, Opcode, buildScriptPathTaproot, TapNode } from 'lotus-sdk'
 
 // Create scripts
 const script1 = new Script().add(pubkey1).add(Opcode.OP_CHECKSIG)
@@ -869,7 +869,7 @@ Taproot enables various advanced use cases by combining privacy, efficiency, and
 
 Each example includes:
 
-- Complete TypeScript/JavaScript code using lotus-lib
+- Complete TypeScript/JavaScript code using lotus-sdk
 - Real transaction formats (hex and JSON)
 - Script breakdowns and size comparisons
 - Security considerations
@@ -959,7 +959,7 @@ Script path spending has more flexible signature requirements:
 ### Example
 
 ```typescript
-import { Transaction, Signature, PrivateKey } from 'lotus-lib'
+import { Transaction, Signature, PrivateKey } from 'lotus-sdk'
 
 const tx = new Transaction()
 // ... add inputs and outputs ...
@@ -997,7 +997,7 @@ The optional 32-byte state parameter enables stateful smart contracts by includi
 **Example**:
 
 ```typescript
-import { buildPayToTaproot, PublicKey } from 'lotus-lib'
+import { buildPayToTaproot, PublicKey } from 'lotus-sdk'
 
 const commitment = tweakedPubKey
 const state = Buffer.from('0'.repeat(64), 'hex') // 32-byte state
@@ -1037,7 +1037,7 @@ When Taproot is re-enabled:
 
 ### Implementation Status
 
-Full Taproot support is available in lotus-lib including:
+Full Taproot support is available in lotus-sdk including:
 
 - Complete address support (Legacy + XAddress)
 - Transaction creation and signing
@@ -1048,7 +1048,7 @@ Full Taproot support is available in lotus-lib including:
 **Getting Started**:
 
 ```bash
-npm install lotus-lib
+npm install lotus-sdk
 ```
 
 ```typescript
@@ -1058,7 +1058,7 @@ import {
   Transaction,
   TaprootInput,
   Signature,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Generate key
 const privateKey = new PrivateKey()
@@ -1068,7 +1068,7 @@ const taprootScript = buildKeyPathTaproot(privateKey.publicKey)
 const address = taprootScript.toAddress()
 
 console.log('Taproot address:', address.toString())
-// Example: lotus_XKrg3EtwKTM1HLFvycnfUTnkQEBCfas85MZkVjNMbJYBEomjhkQu4rt
+// Example: lotus_JHMEcuQ6SyDcJKsSJVd6cZRSVZ8NqWZNMwAX8RDirNEazCfEgFp
 ```
 
 ---
@@ -1227,7 +1227,7 @@ When stack contains two or more elements:
 
 **Library Implementation**:
 
-- [lotus-lib](https://github.com/LotusiaStewardship/lotus-lib) - TypeScript/JavaScript Taproot support
+- [lotus-sdk](https://github.com/LotusiaStewardship/lotus-sdk) - TypeScript/JavaScript Taproot support
 - `lib/bitcore/taproot.ts` - Complete Taproot implementation
 
 **Bitcoin BIPs (Reference Only)**:
