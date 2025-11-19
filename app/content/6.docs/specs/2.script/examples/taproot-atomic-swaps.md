@@ -38,7 +38,7 @@ import {
   Opcode,
   Hash,
   buildScriptPathTaproot,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Generate secret and hash
 const secret = Buffer.from(
@@ -505,7 +505,7 @@ const defiSwap = buildConditionalSwap({
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-lib'
+import { Networks } from 'lotus-sdk'
 
 // Setup test swap
 const testAlice = new PrivateKey(undefined, Networks.regtest)

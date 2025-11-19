@@ -44,7 +44,7 @@ import {
   buildScriptPathTaproot,
   TapNode,
   Address,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Generate voter's key
 const voterKey = new PrivateKey()
@@ -90,7 +90,7 @@ console.log('Number of leaves:', tapResult.leaves.length)
 **Creating the Vote Transaction**:
 
 ```typescript
-import { Transaction, Output, Script, UnspentOutput } from 'lotus-lib'
+import { Transaction, Output, Script, UnspentOutput } from 'lotus-sdk'
 
 // Create RANK output (minimum 1 XPI, recommended 10+ XPI for meaningful vote)
 // Note: toScriptRANK would be imported from the RANK module
@@ -233,7 +233,7 @@ console.log('Key path spend size:', spendTx.serialize().length / 2, 'bytes')
 Only needed if key path fails or for demonstration:
 
 ```typescript
-import { createControlBlock } from 'lotus-lib'
+import { createControlBlock } from 'lotus-sdk'
 
 // Wait until block height >= unlockHeight
 const currentHeight = 1000720 // Assume time has passed
@@ -260,7 +260,7 @@ console.log('  Merkle proof nodes:', tapResult.leaves[0].merklePath.length)
 // Example of what the input script stack would look like:
 // Stack: [<signature>] [<revealed_timelock_script>] [<control_block>]
 
-// This is more complex - see full example in lotus-lib/examples/taproot-example.ts
+// This is more complex - see full example in lotus-sdk/examples/taproot-example.ts
 console.log('\nScript path spending would reveal:')
 console.log('  - The time-lock script')
 console.log('  - Control block with merkle proof')

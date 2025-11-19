@@ -44,7 +44,7 @@ import {
   buildMuSigTaprootKeyWithScripts,
   Script,
   Opcode,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Generate 5 board member keys
 const boardMembers = Array.from({ length: 5 }, () => new PrivateKey())
@@ -258,7 +258,7 @@ import {
   signTaprootKeyPathWithMuSig2,
   musigSigAgg,
   Schnorr,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Assume we have the musig2Result from buildMuSigTaprootKey()
 // and a transaction to sign
@@ -522,7 +522,7 @@ const tree = {
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-lib'
+import { Networks } from 'lotus-sdk'
 
 // Generate test keys
 const testKeys = Array.from(
@@ -537,7 +537,7 @@ const { script } = buildScriptPathTaproot(testKeys[0], {
 })
 
 console.log('Test address:', script.toAddress().toString())
-// Example: lotus_RKrg3...
+// Example: lotusR...
 ```
 
 ---

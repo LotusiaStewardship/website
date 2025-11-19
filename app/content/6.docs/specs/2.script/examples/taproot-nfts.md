@@ -86,7 +86,7 @@ import {
   Output,
   Script,
   UnspentOutput,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Generate creator's key
 const creatorKey = new PrivateKey()
@@ -214,7 +214,7 @@ import {
   buildScriptPathTaproot,
   TapNode,
   Hash,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // NFT metadata (stored off-chain, hash on-chain)
 const nftMetadata = {
@@ -261,7 +261,7 @@ console.log('  Number of leaves:', nftResult.leaves.length)
 ### Simple Transfer (Key Path)
 
 ```typescript
-import { Transaction, TaprootInput, Output, Signature } from 'lotus-lib'
+import { Transaction, TaprootInput, Output, Signature } from 'lotus-sdk'
 
 // Transfer NFT to new owner (key path - state not used, just carried along)
 const transferTx = new Transaction()
@@ -337,7 +337,7 @@ console.log('New owner address:', newNFTScript.toAddress().toString())
 Use script tree to enable secure trading:
 
 ```typescript
-import { Script, Opcode, buildScriptPathTaproot } from 'lotus-lib'
+import { Script, Opcode, buildScriptPathTaproot } from 'lotus-sdk'
 
 const sellerKey = new PrivateKey()
 const buyerKey = new PrivateKey()
@@ -435,7 +435,7 @@ console.log('Trading NFT address:', tradingNFT.toAddress().toString())
 ### Minting a Collection
 
 ```typescript
-import { Hash } from 'lotus-lib'
+import { Hash } from 'lotus-sdk'
 
 // Collection metadata
 const collectionInfo = {
@@ -514,7 +514,7 @@ console.log(`Minted ${nfts.length} NFTs`)
 ### Listing NFT for Sale
 
 ```typescript
-import { buildScriptPathTaproot, Script, Opcode } from 'lotus-lib'
+import { buildScriptPathTaproot, Script, Opcode } from 'lotus-sdk'
 
 const ownerKey = new PrivateKey()
 const salePrice = 5000000 // 5 XPI
@@ -600,7 +600,7 @@ console.log('Sale price: 5 XPI')
 ### Time-Limited NFT Access
 
 ```typescript
-import { buildScriptPathTaproot, Script, Opcode } from 'lotus-lib'
+import { buildScriptPathTaproot, Script, Opcode } from 'lotus-sdk'
 
 const ownerKey = new PrivateKey()
 const renterKey = new PrivateKey()
@@ -698,7 +698,7 @@ console.log('NFT provenance verified:', isLegitimate)
 ### Verifying NFT Authenticity
 
 ```typescript
-import { extractTaprootState, Script, Hash } from 'lotus-lib'
+import { extractTaprootState, Script, Hash } from 'lotus-sdk'
 
 // Given an NFT transaction
 const nftTxScript = Script.fromBuffer(nftScriptHex)
@@ -972,7 +972,7 @@ function updateNFT(newAttributes: any) {
 ### Regtest Example
 
 ```typescript
-import { Networks, Hash } from 'lotus-lib'
+import { Networks, Hash } from 'lotus-sdk'
 
 // Create test NFT on regtest
 const testKey = new PrivateKey(undefined, Networks.regtest)
@@ -987,7 +987,7 @@ const testCommitment = tweakPublicKey(testKey.publicKey, Buffer.alloc(32))
 const testNFT = buildPayToTaproot(testCommitment, testHash)
 
 console.log('Test NFT address:', testNFT.toAddress().toString())
-// Example: lotus_RKrg3...
+// Example: lotusR...
 
 // Verify state extraction
 const extractedState = extractTaprootState(testNFT)

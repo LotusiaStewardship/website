@@ -172,7 +172,7 @@ import {
   Opcode,
   buildScriptPathTaproot,
   Transaction,
-} from 'lotus-lib'
+} from 'lotus-sdk'
 
 // Channel participants
 const alice = new PrivateKey()
@@ -412,7 +412,7 @@ streamChannel.cooperativeClose()
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-lib'
+import { Networks } from 'lotus-sdk'
 
 // Create test channel
 const testAlice = new PrivateKey(undefined, Networks.regtest)
