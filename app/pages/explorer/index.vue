@@ -175,7 +175,7 @@ onMounted(async () => {
           >
             <template #country-data="{ row }">
               <UIcon
-                :name="`i-flag-${row.geoip.country.toLowerCase()}-4x3`"
+                :name="`i-flag-${row.geoip.country?.toLowerCase() ?? 'unknown'}-4x3`"
                 class="w-4 h-4"
               />
               {{ row.geoip.country }}
