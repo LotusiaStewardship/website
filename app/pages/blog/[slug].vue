@@ -90,6 +90,14 @@ if (post.value.image?.src) {
           {{ author.name }}
         </UButton>
       </div>
+
+      <NuxtImg
+        :src="post.image.src"
+        :alt="post.image.alt ?? post.title"
+        class="w-full md:w-1/2 h-auto object-cover mt-6"
+        loading="eager"
+        format="webp"
+      />
     </UPageHeader>
 
     <UPage>
