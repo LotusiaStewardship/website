@@ -10,8 +10,13 @@ export const LotusRPC = {
   password: process.env.NUXT_LOTUS_RPC_PASSWORD
 }
 
+// Used for correct address display based on configured network
 export const Network: 'mainnet' | 'testnet'
   = process.env.NUXT_LOTUS_RPC_PORT === '11604' ? 'testnet' : 'mainnet'
+
+// Used to filter addresses in API requests
+export const NetworkCharacter: '_' | 'T'
+  = process.env.NUXT_LOTUS_RPC_PORT === '11604' ? 'T' : '_'
 
 export const PlatformURL = {
   twitter: {

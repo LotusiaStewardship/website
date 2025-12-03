@@ -1,6 +1,8 @@
-import { Bitcore, ScriptProcessor, type TransactionOutputRANK } from 'lotus-sdk'
+import { Bitcore } from 'lotus-sdk'
+import { ScriptProcessor, type TransactionOutputRANK } from 'lotus-sdk/lib/rank'
 import type { Tx, TxInput, TxOutput } from 'chronik-client'
 import { useChronikApi } from '@/composables/useChronikApi'
+import { getAddressFromScript } from '@/utils/address'
 
 const { getBlockchainInfo, getTransaction } = useChronikApi()
 
@@ -46,16 +48,20 @@ export default defineEventHandler(async (event) => {
       return input
     }
     const script = Bitcore.Script.fromHex(input.outputScript)
-    const address = script.isPublicKeyHashOut() || script.isScriptHashOut()
-      ? script.toAddress()?.toXAddress()
-      : null
-    if (!address) {
-      return input
+
+    // P2PKH/P2TR/P2SH outputs
+    if (script.isPayToPublicKeyHash() || script.isPayToScriptHash() || script.isPayToTaproot()) {
+      const address = getAddressFromScript(script).toXAddress()
+      if (!address) {
+        return input
+      }
+      return {
+        ...input,
+        address
+      } as ExplorerTxInput
     }
-    return {
-      ...input,
-      address
-    } as ExplorerTxInput
+    // return the input as is
+    return input
   })
 
   let sumBurnedSats = 0
@@ -76,9 +82,9 @@ export default defineEventHandler(async (event) => {
         } as ExplorerTxOutput
       }
     }
-    // P2PKH/P2SH outputs
-    if (script.isPublicKeyHashOut() || script.isScriptHashOut()) {
-      const address = script.toAddress()?.toXAddress()
+    // P2PKH/P2TR/P2SH outputs
+    if (script.isPayToPublicKeyHash() || script.isPayToScriptHash() || script.isPayToTaproot()) {
+      const address = getAddressFromScript(script).toXAddress()
       if (!address) {
         return output
       }
