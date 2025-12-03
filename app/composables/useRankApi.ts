@@ -1,9 +1,8 @@
+import type { ProfileAPI, PostAPI } from 'lotus-sdk'
 import type {
   ScriptChunkPlatformUTF8,
-  ProfileAPI,
-  PostAPI,
   ScriptChunkSentimentUTF8
-} from 'lotus-sdk'
+} from 'lotus-sdk/lib/rank'
 import type {
   APIResponse,
   WalletActivity,
@@ -445,12 +444,12 @@ export const useRankApi = () => {
   }
 
   // Search for profiles across platforms
-  const searchProfiles = async (query: string): Promise<IndexedRanking[]> => {
+  const searchProfiles = async (query: string): Promise<ProfileAPI[]> => {
     if (!query || query.trim().length < 2) return []
     const url = `${RANK_API_URL}/search/profile/${query}`
     try {
       const response = await fetch(url)
-      return (await response.json()) as IndexedRanking[]
+      return (await response.json()) as ProfileAPI[]
     } catch (error) {
       console.error('Error searching profiles:', error)
       return []
