@@ -8,6 +8,18 @@ export default defineNuxtConfig({
         github: 'https://github.com/LotusiaStewardship',
         telegram: 'https://t.me/givelotus'
       }
+    },
+    // Lotus API configuration
+    url: {
+      chronik: process.env.NUXT_URL_CHRONIK,
+      rank: process.env.NUXT_URL_RANK
+    },
+    // Lotus JSON-RPC configuration
+    rpc: {
+      host: process.env.NUXT_LOTUS_RPC_HOST,
+      port: process.env.NUXT_LOTUS_RPC_PORT,
+      user: process.env.NUXT_LOTUS_RPC_USER,
+      password: process.env.NUXT_LOTUS_RPC_PASSWORD
     }
   },
   extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],

@@ -1,14 +1,17 @@
-export const CHRONIK_API_URL = 'http://172.16.11.102:7123'
+export const CHRONIK_API_URL = process.env.NUXT_URL_CHRONIK
+export const RANK_API_URL = process.env.NUXT_URL_RANK
 // export const NODE_API_URL = 'https://explorer.lotusia.org/api'
 export const NODE_GEOIP_URL = 'https://api.sefinek.net/api/v2/geoip'
-export const RANK_API_URL = 'https://rank.lotusia.org/api/v1'
 
 export const LotusRPC = {
-  address: '172.16.11.101',
-  port: 10604,
-  user: 'lotus',
-  password: 'lotus'
+  address: process.env.NUXT_LOTUS_RPC_HOST,
+  port: process.env.NUXT_LOTUS_RPC_PORT,
+  user: process.env.NUXT_LOTUS_RPC_USER,
+  password: process.env.NUXT_LOTUS_RPC_PASSWORD
 }
+
+export const Network: 'mainnet' | 'testnet'
+  = process.env.NUXT_LOTUS_RPC_PORT === '11604' ? 'testnet' : 'mainnet'
 
 export const PlatformURL = {
   twitter: {
@@ -30,6 +33,7 @@ export const Addresses = {
     judges: 'lotus_16PSJMaps9sQg7aBQgyY1RdHb2fZYdmWhQPbgus75',
     ruth: 'lotus_16PSJPi88MtH34Ti3dZza4MFRF9XUVd3fKc6Ec3TV',
     firstSamuel: 'lotus_16PSJKi4ucDByLHn3mTQaBijiNZmczAdALVDGS53V'
+    // TODO: add secondSamuel address array
   }
 }
 
