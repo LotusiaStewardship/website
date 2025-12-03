@@ -1,7 +1,11 @@
 import { Bitcore } from 'lotus-sdk'
 import { useChronikApi } from '@/composables/useChronikApi'
 import { getSumBurnedSats } from '~/utils/transaction'
-import { EXPLORER_TABLE_MAX_ROWS } from '~/utils/constants'
+import {
+  EXPLORER_TABLE_MAX_ROWS,
+  NetworkCharacter,
+  Network
+} from '~/utils/constants'
 
 const { getTxHistoryPage } = useChronikApi()
 
@@ -13,6 +17,15 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Missing address'
+    })
+  }
+
+  // Enforce proper address format depending on the network type
+  const networkChar = address.split('lotus')[1].slice(0, 1)
+  if (networkChar !== NetworkCharacter) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: `Address is not a ${Network} address`
     })
   }
 
@@ -34,7 +47,9 @@ export default defineEventHandler(async (event) => {
     scriptPayload,
     // Chronik tx history page is 0-indexed, but we want to show the user a 1-indexed page
     pageNum > 0 ? pageNum - 1 : 0,
-    pageSizeNum > EXPLORER_TABLE_MAX_ROWS ? EXPLORER_TABLE_MAX_ROWS : pageSizeNum
+    pageSizeNum > EXPLORER_TABLE_MAX_ROWS
+      ? EXPLORER_TABLE_MAX_ROWS
+      : pageSizeNum
   )
 
   // find the address last seen time

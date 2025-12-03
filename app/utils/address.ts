@@ -1,4 +1,5 @@
 import { Bitcore } from 'lotus-sdk'
+import { Network } from './constants'
 
 /**
  * Get the address from a script
@@ -16,8 +17,8 @@ const getAddressFromScript = (
   if (script.isDataOut()) {
     return null
   }
-  // P2PKH and P2SH outputs are addresses
-  return Bitcore.Address.fromScript(script, Bitcore.Networks.mainnet)
+  // P2PKH, P2TR, and P2SH outputs are addresses
+  return script.toAddress(Network)
 }
 
 export { getAddressFromScript }

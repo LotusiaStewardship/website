@@ -1,4 +1,4 @@
-import { PlatformConfiguration, type ScriptChunkPlatformUTF8 } from 'lotus-sdk'
+import { PlatformConfiguration, type ScriptChunkPlatformUTF8 } from 'lotus-sdk/lib/rank'
 import { useRankApi } from '~/composables/useRankApi'
 
 const { getProfileRankTransactions } = useRankApi()
