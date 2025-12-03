@@ -24,7 +24,7 @@
     "@vueuse/nuxt": "^10.9.0",
     "chronik-client": "0.19.0",
     "date-fns": "4.1.0",
-    "lotus-sdk": "^0.1.1",
+    "lotus-sdk": "0.1.17",
     "nuxt": "^3.17.5",
     "nuxt-site-config": "3.2.11"
   },
