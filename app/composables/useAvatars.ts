@@ -1,4 +1,4 @@
-import type { ScriptChunkPlatformUTF8 } from '~/submodules/rank-lib'
+import type { ScriptChunkPlatformUTF8 } from 'lotus-sdk/lib/rank'
 import {
   getProfileAvatar,
   getProfileInitials,
