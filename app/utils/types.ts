@@ -13,7 +13,6 @@ export type GoodsPage = {
 
 export namespace Lotusia {
   export namespace Network {
-
     export type Name = 'main' | 'test'
 
     export const Name = {
@@ -33,11 +32,9 @@ export namespace Lotusia {
 
 export type { Tx, Block, TxInput, TxOutput } from 'chronik-client'
 export type {
-  IndexedPostRanking,
-  IndexedRanking,
   ScriptChunkSentimentUTF8,
   ScriptChunkPlatformUTF8
-} from '~/submodules/rank-lib'
+} from 'lotus-sdk/lib/rank'
 
 export type GeoIPData = {
   country: string
