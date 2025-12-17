@@ -254,7 +254,9 @@ const sendRPCRequest = async (method: string, params: any[]) => {
     body: JSON.stringify({ method, params }),
     credentials: 'include',
     headers: new Headers({
-      Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString('base64')}`
+      Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString(
+        'base64'
+      )}`
     })
   })
   const json = await response.json()
@@ -269,59 +271,68 @@ const RPC = {
    * RPC command - `getmininginfo`
    * @returns {Promise<MiningInfo>} Raw mining information
    */
-  getMiningInfo: async (): Promise<MiningInfo> => sendRPCRequest('getmininginfo', []),
+  getMiningInfo: async (): Promise<MiningInfo> =>
+    sendRPCRequest('getmininginfo', []),
 
   /**
    * RPC command - `getpeerinfo`
    * @returns {Promise<PeerInfo[]>} Array of peer connection information
    */
-  getPeerInfo: async (): Promise<PeerInfo[]> => sendRPCRequest('getpeerinfo', []),
+  getPeerInfo: async (): Promise<PeerInfo[]> =>
+    sendRPCRequest('getpeerinfo', []),
 
   /**
    * RPC command - `getblockcount`
    * @returns {Promise<number>} Current block count
    */
-  getBlockCount: async (): Promise<number> => sendRPCRequest('getblockcount', []),
+  getBlockCount: async (): Promise<number> =>
+    sendRPCRequest('getblockcount', []),
 
   /**
    * RPC command - `getblockhash`
    * @param {number} height - Block height
    * @returns {Promise<string>} Block hash for the given height
    */
-  getBlockHash: async (height: number): Promise<string> => sendRPCRequest('getblockhash', [height]),
+  getBlockHash: async (height: number): Promise<string> =>
+    sendRPCRequest('getblockhash', [height]),
 
   /**
    * RPC command - `getblockstats`
    * @param {string} hash - Block hash
    * @returns {Promise<BlockStats>} Block statistics
    */
-  getBlockStats: async (hash: string): Promise<BlockStats> => sendRPCRequest('getblockstats', [hash]),
+  getBlockStats: async (hash: string): Promise<BlockStats> =>
+    sendRPCRequest('getblockstats', [hash]),
 
   /**
    * RPC command - `getblock`
    * @param {string} hash - Block hash
    * @returns {Promise<Block>} Block information
    */
-  getBlock: async (hash: string): Promise<BlockInfo> => sendRPCRequest('getblock', [hash]),
+  getBlock: async (hash: string): Promise<BlockInfo> =>
+    sendRPCRequest('getblock', [hash]),
 
   /**
    * RPC command - `getrawtransaction`
    * @param {string} txid - Transaction ID
    * @returns {Promise<RawTransaction>} Raw transaction information
    */
-  getRawTransaction: async (txid: string): Promise<RawTransaction> => sendRPCRequest('getrawtransaction', [txid, true]),
+  getRawTransaction: async (txid: string): Promise<RawTransaction> =>
+    sendRPCRequest('getrawtransaction', [txid, true]),
 
   /**
    * RPC command - `getrawmempool`
    * @returns {Promise<string[]>} Array of transaction IDs in mempool
    */
-  getRawMemPool: async (): Promise<string[]> => sendRPCRequest('getrawmempool', []),
+  getRawMemPool: async (): Promise<string[]> =>
+    sendRPCRequest('getrawmempool', []),
 
   /**
    * RPC command - `getmempoolinfo`
    * @returns {Promise<MempoolInfo>} Mempool information
    */
-  getMempoolInfo: async (): Promise<MempoolInfo> => sendRPCRequest('getmempoolinfo', [])
+  getMempoolInfo: async (): Promise<MempoolInfo> =>
+    sendRPCRequest('getmempoolinfo', [])
 }
 
 export default RPC
