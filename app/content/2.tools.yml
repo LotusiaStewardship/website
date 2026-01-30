@@ -1,17 +1,17 @@
-title: Tools for Prosperity
-description: Explore the tools that are available to the Lotusia ecosystem
-ogTitle: Tools for Prosperity - Lotusia
+title: Public Goods
+description: Open-source software and infrastructure produced by the Lotusia Stewardship
+ogTitle: Public Goods - Lotusia
 ogDescription: Access the Lotusia Ecosystem
 ogImage: /img/tools_0.jpg
 to: /tools
 navigation.icon: i-mdi-fountain
 hero:
-  title: Tools for Prosperity
-  description: Explore the tools that are available to the Lotusia ecosystem
+  title: Public Goods
+  description: Open-source software and infrastructure produced by the Lotusia Stewardship for the benefit of the ecosystem
   image: /img/tools_0.jpg
 sections:
-  - title: Blockchain software - lotusd / Lotus QT
-    description: The core Lotus blockchain software—your gateway to the network. Runs a full, secure copy of the Treasury ledger, enabling you to participate in mining, validate transactions, and help secure the entire ecosystem. (Required for all miners.)
+  - title: Core Blockchain Software
+    description: The Stewardship maintains lotusd and Lotus-QT, the reference implementation of the Lotus blockchain protocol. This software validates transactions, maintains the distributed ledger, and enables anyone to participate in network consensus through mining.
     headline: 'Winter Solstice 2025 - 10th Epoch of the Lotus Network'
     version: '10.4.9'
     align: right
@@ -48,8 +48,8 @@ sections:
         to: github/lotusd
         icon: i-mdi-github
         target: _blank
-  - title: Lotus Developer SDK
-    description: A comprehensive TypeScript library for building applications and integrating with the Lotus blockchain ecosystem.
+  - title: Developer SDK
+    description: A TypeScript library developed by the Stewardship for building applications that integrate with the Lotus blockchain. Includes support for transactions, wallets, MuSig2 multi-signatures, Taproot addresses, and other cryptographic primitives.
     version: '0.1.0'
     align: left
     images:
@@ -75,8 +75,8 @@ sections:
         target: _blank
         icon: i-heroicons-book-open
         type: README & Docs
-  - title: Lotusia Chrome Extension
-    description: A decentralized, community-moderated reputation system for social media, powered by Lotus.
+  - title: Browser Extension
+    description: A reference implementation of the RANK protocol, developed by the Stewardship as a Chrome extension. Demonstrates how decentralized reputation systems can be built on top of the Lotus blockchain.
     align: right
     images:
       - src: /img/extension_1.jpeg
@@ -100,8 +100,8 @@ sections:
         target: _blank
         icon: i-mdi-google-chrome
         type: Chrome Extension
-  - title: BigVase Mobile Wallet
-    description: Your personal Lotus wallet for iPhone and Android. Give, receive, and manage your Lotus on the go with a wallet you control—no middleman required.
+  - title: Mobile Wallet Reference Implementation
+    description: BigVase is a reference implementation of a non-custodial Lotus wallet, developed by the Stewardship to demonstrate best practices for mobile wallet development on the Lotus blockchain.
     align: left
     images:
       - src: /img/bigvase_1.jpeg
