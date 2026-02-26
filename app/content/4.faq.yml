@@ -102,6 +102,196 @@ questions:
         ]
   - text: What is "voluntary destructive use" and how does it work?
     answer: The term describes a mechanism by which Lotus can be removed permanently from circulation without requiring any compulsory tax policy. Some public goods that enable public social interaction are provided by the Stewardship and require Lotus currency to be destroyed in order to interact. For example, a public ad board requires any Citizen of Lotusia to destroy a desired amount of their Lotus currency in order to post an ad that will be broadcasted across the Ecosystem.
+technical:
+  title: Technical Specifications
+  description: Detailed network parameters for developers and institutional integrators
+  questions:
+    - text: What are the technical specifications of the Lotus blockchain?
+      answer: The Lotus blockchain is a Bitcoin ABC fork with several unique characteristics. It uses a 2-minute block time with ASERT difficulty adjustment, supports 32 MB blocks, and implements a difficulty-based subsidy system where each block issues 260 XPI split 50/50 between miners and the Stewardship. For detailed network parameters, see the technical tables below.
+      note: Technical specifications are organized by category in the tables below.
+    - text: What is the genesis block of the Lotus blockchain?
+      answer: See the Genesis Block table for complete technical details.
+    - text: What address formats does Lotus support?
+      answer: Lotus supports multiple address formats for compatibility. The native format uses "lotus_16PSJ..." base58 encoding. It also supports legacy Bitcoin-style addresses and CashAddr format. All formats are interoperable on the same blockchain. See the Address Formats table for specific prefix values.
+    - text: Does Lotus support Taproot?
+      answer: Yes, Lotus implements Taproot with modifications specific to the Lotus protocol. Unlike Bitcoin's 32-byte x-only public keys, Lotus uses 33-byte compressed keys. It also introduces SIGHASH_LOTUS (0x60) as a signature hash algorithm and OP_SCRIPTTYPE (0x62) for script type identification. See the Script & Cryptography table for implementation details.
+    - text: How does the 6-month upgrade schedule work technically?
+      answer: Protocol upgrades are scheduled around the summer and winter solstices and are named after books of the Bible. Each upgrade has a Unix timestamp activation time hardcoded in the consensus rules. Recent upgrades include Joshua (June 2024), Judges (June 2024), Ruth (December 2024), First Samuel (June 2025), Second Samuel (December 2025), and First Kings (June 2026).
+  sections:
+    - title: Network Configuration
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            { id: 1, parameter: 'P2P Port (Mainnet)', value: '10605' },
+            { id: 2, parameter: 'RPC Port (Mainnet)', value: '10604' },
+            { id: 3, parameter: 'Tor Port (Mainnet)', value: '10606' },
+            { id: 4, parameter: 'Protocol Version', value: '70016' },
+            { id: 5, parameter: 'Minimum Peer Protocol', value: '31800' },
+            { id: 6, parameter: 'Network Magic', value: '0xec 0xe7 0xef 0xf3' },
+            { id: 7, parameter: 'DNS Seed', value: 'seed.lotusia.org' },
+          ]
+    - title: Blockchain Parameters
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            {
+              id: 1,
+              parameter: 'Block Time Target',
+              value: '2 minutes (120 seconds)',
+            },
+            {
+              id: 2,
+              parameter: 'Difficulty Algorithm',
+              value: 'ASERT (aserti32d)',
+            },
+            {
+              id: 3,
+              parameter: 'DAA Half-Life',
+              value: '2 days (172,800 seconds)',
+            },
+            { id: 4, parameter: 'Block Size Limit', value: '32 MB' },
+            {
+              id: 5,
+              parameter: 'Transaction Size',
+              value: '100 bytes min, 1 MB max',
+            },
+            { id: 6, parameter: 'Coinbase Maturity', value: '100 blocks' },
+            {
+              id: 7,
+              parameter: 'Miner Confirmation Window',
+              value: '2,016 blocks',
+            },
+          ]
+    - title: Monetary Policy
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            {
+              id: 1,
+              parameter: 'Base Unit',
+              value: '1 XPI = 1,000,000 satoshis',
+            },
+            {
+              id: 2,
+              parameter: 'Block Subsidy',
+              value: '260 XPI (difficulty-based)',
+            },
+            {
+              id: 3,
+              parameter: 'Subsidy Distribution',
+              value: '50% miner, 50% Stewardship',
+            },
+            {
+              id: 4,
+              parameter: 'Supply Model',
+              value: 'Dynamic (no hard cap)',
+            },
+            {
+              id: 5,
+              parameter: 'Sanity Check Limit',
+              value: '2.1 billion XPI',
+            },
+          ]
+    - title: Address Formats
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            {
+              id: 1,
+              parameter: 'Native Format',
+              value: 'lotus_16PSJ... (base32)',
+            },
+            { id: 2, parameter: 'P2PKH Prefix', value: '0x00' },
+            { id: 3, parameter: 'P2SH Prefix', value: '0x05' },
+            { id: 4, parameter: 'WIF Private Key', value: '0x80' },
+            {
+              id: 5,
+              parameter: 'CashAddr Prefix',
+              value: 'bitcoincash / ecash',
+            },
+          ]
+    - title: Script & Cryptography
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            {
+              id: 1,
+              parameter: 'Taproot Support',
+              value: 'Yes (Lotus-modified)',
+            },
+            {
+              id: 2,
+              parameter: 'Signature Algorithm',
+              value: 'ECDSA + Schnorr',
+            },
+            { id: 3, parameter: 'SIGHASH_LOTUS', value: '0x60' },
+            { id: 4, parameter: 'SIGHASH_FORKID', value: '0x40 (BIP143)' },
+            { id: 5, parameter: 'OP_SCRIPTTYPE', value: '0x62' },
+            { id: 6, parameter: 'Max Script Size', value: '10,000 bytes' },
+            { id: 7, parameter: 'Max Sigchecks per TX', value: '3,000' },
+            {
+              id: 8,
+              parameter: 'Taproot Key Format',
+              value: '33-byte compressed',
+            },
+          ]
+    - title: Genesis Block
+      table:
+        columns:
+          [
+            { key: 'parameter', label: 'Specification' },
+            { key: 'value', label: 'Configuration' },
+          ]
+        rows:
+          [
+            {
+              id: 1,
+              parameter: 'Block Hash',
+              value: '000000000abc0cde58ee7e919d3d4de183e6844add1fd5d14b4eac89d958f470',
+            },
+            {
+              id: 2,
+              parameter: 'Timestamp',
+              value: 'June 21, 2021 03:31:00 UTC',
+            },
+            { id: 3, parameter: 'Unix Time', value: '1624246260' },
+            { id: 4, parameter: 'Block Size', value: '379 bytes' },
+            {
+              id: 5,
+              parameter: 'Genesis Message',
+              value: 'John 1:1 In the beginning was the Logos',
+            },
+            {
+              id: 6,
+              parameter: 'Coinbase Prefix',
+              value: '0x6c6f676f73 (logos)',
+            },
+          ]
 cta:
   title: Still have questions?
   description: Join us in our Telegram group! We are happy to answer all of your questions.

@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { PlatformURL } from '~/utils/constants'
 import { formatTimestamp, toMinifiedStatCount, truncateTxid } from '~/utils/functions'
-
-definePageMeta({
-  layout: 'explorer',
-  title: 'Latest Activity',
-  description: 'Latest voter activity for all profiles across all platforms',
-  icon: 'i-mdi-chart-line'
-})
 /** The current page of the table */
 const page = shallowRef(1)
 /** The number of rows per page of the table */
@@ -71,6 +64,12 @@ onBeforeMount(() => {
   refreshInterval.value = setInterval(refreshVoteActivity, 5_000)
 })
 
+definePageMeta({
+  layout: 'explorer',
+  title: 'Latest Activity',
+  description: 'Latest voter activity for all profiles across all platforms',
+  icon: 'i-mdi-chart-line'
+})
 /**
  * SEO meta
  */
@@ -82,13 +81,14 @@ useSeoMeta({
   ogImage: 'https://lotusia.com/og-image.png',
   ogUrl: 'https://lotusia.org/social/activity'
 })
+const route = useRoute()
 </script>
 
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
       <ExplorerNavbar
-        :title="$route.meta.title"
+        :title="route.meta.title"
         :actions="[]"
       />
       <ExplorerSearch />

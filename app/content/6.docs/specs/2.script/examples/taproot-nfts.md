@@ -48,7 +48,7 @@ interface NFTMetadata {
   name: string
   description: string
   image: string // IPFS CID or URL
-  attributes?: { trait_type: string; value: string }[]
+  attributes?: { trait_type: string; value: string | number }[]
   collection?: string
   creator?: string
 }
@@ -61,6 +61,7 @@ const metadata = {
   attributes: [
     { trait_type: 'Rarity', value: 'Legendary' },
     { trait_type: 'Series', value: 'Genesis' },
+    { trait_type: 'Level', value: 100 }, // Number values supported
   ],
 }
 
@@ -78,18 +79,10 @@ const metadataHash = Hash.sha256(Buffer.from(metadataJSON))
 ### Minting a Single NFT
 
 ```typescript
-import {
-  PrivateKey,
-  buildKeyPathTaproot,
-  Hash,
-  Transaction,
-  Output,
-  Script,
-  UnspentOutput,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate creator's key
-const creatorKey = new PrivateKey()
+const creatorKey = new Bitcore.PrivateKey()
 
 console.log('Creator public key:', creatorKey.publicKey.toString())
 console.log('Creator address:', creatorKey.toAddress().toString())
@@ -109,35 +102,51 @@ const nftMetadata = {
 
 // Hash the metadata (this becomes the 32-byte state parameter)
 const metadataJSON = JSON.stringify(nftMetadata)
-const metadataHash = Hash.sha256(Buffer.from(metadataJSON, 'utf8'))
+const metadataHash = Bitcore.Hash.sha256(Buffer.from(metadataJSON, 'utf8'))
 
 console.log('Metadata hash (state):', metadataHash.toString('hex'))
 console.log('Metadata size:', metadataJSON.length, 'bytes (stored off-chain)')
 console.log('State parameter:', metadataHash.length, 'bytes (on-chain)')
 
-// Create Taproot output WITH state parameter for NFT
-// buildKeyPathTaproot accepts an optional state parameter (32 bytes)
-const nftScript = buildKeyPathTaproot(creatorKey.publicKey, metadataHash)
+// Create metadata validation script
+// Script: OP_HASH160 <metadata_hash> OP_EQUALVERIFY OP_CHECKSIG
+const metadataScript = new Bitcore.Script()
+  .add(Bitcore.Opcode.OP_HASH160)
+  .add(metadataHash)
+  .add(Bitcore.Opcode.OP_EQUALVERIFY)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
-console.log('NFT script size:', nftScript.toBuffer().length, 'bytes') // 69 bytes (36 + 33 for state)
-console.log('NFT script:', nftScript.toString())
-console.log('NFT address:', nftScript.toAddress()?.toString())
+// Create script tree with metadata validation
+const scriptTree = {
+  script: metadataScript,
+}
+
+// Create NFT with script-path spending and state validation
+const nftResult = Bitcore.buildScriptPathTaproot(
+  creatorKey.publicKey,
+  scriptTree,
+  metadataHash, // State parameter for metadata validation
+)
+
+console.log('NFT script size:', nftResult.script.toBuffer().length, 'bytes') // 69 bytes (36 + 33 for state)
+console.log('NFT script:', nftResult.script.toString())
+console.log('NFT address:', nftResult.script.toAddress()?.toString())
 
 // Create dummy UTXO for funding
 const fundingUtxo = {
   txId: 'c'.repeat(64),
   outputIndex: 0,
-  script: Script.buildPublicKeyHashOut(creatorKey.publicKey),
+  script: Bitcore.Script.buildPublicKeyHashOut(creatorKey.publicKey),
   satoshis: 10000,
   address: creatorKey.toAddress(),
 }
 
 // Mint NFT transaction
-const mintTx = new Transaction()
-  .from(new UnspentOutput(fundingUtxo))
+const mintTx = new Bitcore.Transaction()
+  .from(new Bitcore.UnspentOutput(fundingUtxo))
   .addOutput(
-    new Output({
-      script: nftScript,
+    new Bitcore.Output({
+      script: nftResult.script,
       satoshis: 1000, // Minimal value (0.001 XPI)
     }),
   )
@@ -154,9 +163,10 @@ console.log('  Output 1: Change')
 **Important Notes on State Parameter**:
 
 - The state parameter is **automatically pushed onto the script stack** before execution in script path spending
-- For key path spending, the state is stored but not used (just metadata commitment)
+- **All NFTs must use script-path spending** to validate metadata on-chain
 - The state must be exactly 32 bytes (use Hash.sha256() to create it)
-- When spending via script path, the revealed script can access the state from the stack
+- When spending via script path, the revealed script validates the metadata hash from the stack
+- **Key-path spending is NOT supported for NFTs** as it provides no metadata validation
 
 ---
 
@@ -207,14 +217,7 @@ console.log('  Output 1: Change')
 For advanced NFTs with royalties, trading logic, or other smart contracts, use script paths with the state parameter:
 
 ```typescript
-import {
-  PrivateKey,
-  Script,
-  Opcode,
-  buildScriptPathTaproot,
-  TapNode,
-  Hash,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // NFT metadata (stored off-chain, hash on-chain)
 const nftMetadata = {
@@ -222,20 +225,22 @@ const nftMetadata = {
   royaltyAddress: 'lotus_...',
   royaltyPercent: 5,
 }
-const metadataHash = Hash.sha256(Buffer.from(JSON.stringify(nftMetadata)))
+const metadataHash = Bitcore.Hash.sha256(
+  Buffer.from(JSON.stringify(nftMetadata)),
+)
 
 // Create a script that enforces royalty payments
 // This script can access the state (metadata hash) from the stack
-const royaltyScript = new Script()
+const royaltyScript = new Bitcore.Script()
   // State will be on stack: [32-byte metadata hash]
   // Script can verify metadata hash matches expected value
   .add(creatorKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
-const scriptTree: TapNode = { script: royaltyScript }
+const scriptTree = { script: royaltyScript }
 
 // Build Taproot with script path AND state parameter
-const nftResult = buildScriptPathTaproot(
+const nftResult = Bitcore.buildScriptPathTaproot(
   creatorKey.publicKey,
   scriptTree,
   metadataHash, // State parameter!
@@ -258,49 +263,65 @@ console.log('  Number of leaves:', nftResult.leaves.length)
 
 ## Transferring NFTs
 
-### Simple Transfer (Key Path)
+### Script-Path Transfer (Metadata Validation)
 
 ```typescript
-import { Transaction, TaprootInput, Output, Signature } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
-// Transfer NFT to new owner (key path - state not used, just carried along)
-const transferTx = new Transaction()
+// Transfer NFT to new owner (script path - metadata validation required)
+const transferTx = new Bitcore.Transaction()
 
 // Input: Current NFT UTXO
 transferTx.addInput(
-  new TaprootInput({
+  new Bitcore.TaprootInput({
     prevTxId: Buffer.from(mintTxId, 'hex'),
     outputIndex: 0,
-    output: new Output({
-      script: nftScript,
+    output: new Bitcore.Output({
+      script: nftResult.script,
       satoshis: 1000,
     }),
-    script: new Script(),
+    script: new Bitcore.Script(),
   }),
 )
 
+// Create control block for script-path spending
+const controlBlock = Bitcore.createControlBlock(
+  creatorKey.publicKey,
+  0, // leaf index (metadata validation script)
+  nftResult.tree,
+)
+
 // Create new NFT output for recipient (same metadata state)
-const recipientKey = new PrivateKey()
-const newCommitment = tweakPublicKey(recipientKey.publicKey, merkleRoot)
-const newNFTScript = buildPayToTaproot(newCommitment, metadataHash) // Same state!
+const recipientKey = new Bitcore.PrivateKey()
+const newNFTResult = Bitcore.buildScriptPathTaproot(
+  recipientKey.publicKey,
+  nftResult.tree,
+  metadataHash, // Same state!
+)
 
 // Output: NFT to new owner
 transferTx.addOutput(
-  new Output({
-    script: newNFTScript,
+  new Bitcore.Output({
+    script: newNFTResult.script,
     satoshis: 1000, // Same value
   }),
 )
 
+// Add script and control block to input stack
+transferTx.inputs[0].setScriptStack([
+  metadataScript, // Script to execute
+  controlBlock, // Control block for verification
+])
+
 // Sign with current owner's key
 transferTx.sign(
   creatorKey,
-  Signature.SIGHASH_ALL | Signature.SIGHASH_LOTUS,
+  Bitcore.Signature.SIGHASH_ALL | Bitcore.Signature.SIGHASH_LOTUS,
   'schnorr',
 )
 
 console.log('NFT transferred!')
-console.log('New owner address:', newNFTScript.toAddress().toString())
+console.log('New owner address:', newNFTResult.script.toAddress().toString())
 ```
 
 **Transfer Transaction** (JSON):
@@ -337,34 +358,34 @@ console.log('New owner address:', newNFTScript.toAddress().toString())
 Use script tree to enable secure trading:
 
 ```typescript
-import { Script, Opcode, buildScriptPathTaproot } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
-const sellerKey = new PrivateKey()
-const buyerKey = new PrivateKey()
-const escrowKey = new PrivateKey()
+const sellerKey = new Bitcore.PrivateKey()
+const buyerKey = new Bitcore.PrivateKey()
+const escrowKey = new Bitcore.PrivateKey()
 const salePrice = 10000000 // 10 XPI
 
 // Script 1: Buyer pays seller directly (cooperative)
-const saleScript = new Script()
-  .add(Opcode.OP_2)
+const saleScript = new Bitcore.Script()
+  .add(Bitcore.Opcode.OP_2)
   .add(sellerKey.publicKey.toBuffer())
   .add(buyerKey.publicKey.toBuffer())
-  .add(Opcode.OP_2)
-  .add(Opcode.OP_CHECKMULTISIG)
+  .add(Bitcore.Opcode.OP_2)
+  .add(Bitcore.Opcode.OP_CHECKMULTISIG)
 
 // Script 2: Escrow resolution
-const escrowScript = new Script()
+const escrowScript = new Bitcore.Script()
   .add(escrowKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Script 3: Refund after timeout
 const refundHeight = currentHeight + 1440 // ~48 hours
-const refundScript = new Script()
+const refundScript = new Bitcore.Script()
   .add(refundHeight)
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(sellerKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Build trading NFT with escrow protection
 const tradingTree = {
@@ -375,7 +396,7 @@ const tradingTree = {
   },
 }
 
-const { script: tradingNFT } = buildScriptPathTaproot(
+const { script: tradingNFT } = Bitcore.buildScriptPathTaproot(
   sellerKey.publicKey,
   tradingTree,
   metadataHash, // NFT metadata in state
@@ -435,7 +456,7 @@ console.log('Trading NFT address:', tradingNFT.toAddress().toString())
 ### Minting a Collection
 
 ```typescript
-import { Hash } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Collection metadata
 const collectionInfo = {
@@ -446,7 +467,9 @@ const collectionInfo = {
   royalty: 5, // 5% royalty
 }
 
-const collectionHash = Hash.sha256(Buffer.from(JSON.stringify(collectionInfo)))
+const collectionHash = Bitcore.Hash.sha256(
+  Buffer.from(JSON.stringify(collectionInfo)),
+)
 
 // Mint NFTs in batch
 const nfts = []
@@ -464,11 +487,11 @@ for (let i = 1; i <= 100; i++) {
     collection: collectionHash.toString('hex'),
     nft: nftMetadata,
   }
-  const nftHash = Hash.sha256(Buffer.from(JSON.stringify(combinedData)))
+  const nftHash = Bitcore.Hash.sha256(Buffer.from(JSON.stringify(combinedData)))
 
   // Create NFT with state
-  const commitment = tweakPublicKey(creatorKey.publicKey, merkleRoot)
-  const nftScript = buildPayToTaproot(commitment, nftHash)
+  const commitment = Bitcore.tweakPublicKey(creatorKey.publicKey, merkleRoot)
+  const nftScript = Bitcore.buildPayToTaproot(commitment, nftHash)
 
   nfts.push({
     tokenId: i,
@@ -514,29 +537,29 @@ console.log(`Minted ${nfts.length} NFTs`)
 ### Listing NFT for Sale
 
 ```typescript
-import { buildScriptPathTaproot, Script, Opcode } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
-const ownerKey = new PrivateKey()
+const ownerKey = new Bitcore.PrivateKey()
 const salePrice = 5000000 // 5 XPI
 
 // Script 1: Sale (anyone can buy by paying sale price)
 // Note: Requires OP_CHECKTEMPLATEVERIFY for proper covenant
 // This is simplified - full implementation needs additional opcodes
-const saleScript = new Script()
+const saleScript = new Bitcore.Script()
   .add(ownerKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Script 2: Owner can cancel listing
-const cancelScript = new Script()
+const cancelScript = new Bitcore.Script()
   .add(ownerKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 const listingTree = {
   left: { script: saleScript },
   right: { script: cancelScript },
 }
 
-const { script: listedNFT } = buildScriptPathTaproot(
+const { script: listedNFT } = Bitcore.buildScriptPathTaproot(
   ownerKey.publicKey,
   listingTree,
   metadataHash, // NFT state
@@ -600,35 +623,35 @@ console.log('Sale price: 5 XPI')
 ### Time-Limited NFT Access
 
 ```typescript
-import { buildScriptPathTaproot, Script, Opcode } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
-const ownerKey = new PrivateKey()
-const renterKey = new PrivateKey()
+const ownerKey = new Bitcore.PrivateKey()
+const renterKey = new Bitcore.PrivateKey()
 const rentalEnd = currentHeight + 2160 // ~3 days
 const rentalPrice = 100000 // 0.1 XPI
 
 // Script 1: Renter can use until rental expires
-const rentalScript = new Script()
+const rentalScript = new Bitcore.Script()
   .add(rentalEnd)
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(renterKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Script 2: Owner reclaims after expiry
-const reclaimScript = new Script()
+const reclaimScript = new Bitcore.Script()
   .add(rentalEnd)
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(ownerKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 const rentalTree = {
   left: { script: rentalScript },
   right: { script: reclaimScript },
 }
 
-const { script: rentalNFT } = buildScriptPathTaproot(
+const { script: rentalNFT } = Bitcore.buildScriptPathTaproot(
   ownerKey.publicKey,
   rentalTree,
   metadataHash, // Same NFT metadata
@@ -698,13 +721,13 @@ console.log('NFT provenance verified:', isLegitimate)
 ### Verifying NFT Authenticity
 
 ```typescript
-import { extractTaprootState, Script, Hash } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Given an NFT transaction
-const nftTxScript = Script.fromBuffer(nftScriptHex)
+const nftTxScript = Bitcore.Script.fromBuffer(nftScriptHex)
 
 // Extract the 32-byte state
-const stateHash = extractTaprootState(nftTxScript)
+const stateHash = Bitcore.extractTaprootState(nftTxScript)
 
 if (!stateHash) {
   console.error('No state found - not a valid NFT')
@@ -717,7 +740,7 @@ console.log('NFT metadata hash:', stateHash.toString('hex'))
 const metadata = await fetchMetadata('ipfs://Qm...')
 
 // Verify hash matches
-const computedHash = Hash.sha256(Buffer.from(JSON.stringify(metadata)))
+const computedHash = Bitcore.Hash.sha256(Buffer.from(JSON.stringify(metadata)))
 const isValid = computedHash.equals(stateHash)
 
 console.log('Metadata valid:', isValid)
@@ -905,13 +928,15 @@ function verifyNFT(txid: string, outputIndex: number): boolean {
 Use script tree to enable controlled updates:
 
 ```typescript
+import { Bitcore } from 'xpi-ts'
+
 // NFT with update capability
-const updateScript = new Script()
+const updateScript = new Bitcore.Script()
   .add(creatorKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 // Creator can spend and create new NFT with updated state
 
-const burnScript = new Script().add(Opcode.OP_RETURN)
+const burnScript = new Bitcore.Script().add(Bitcore.Opcode.OP_RETURN)
 // Anyone can burn NFT (for redemption, etc.)
 
 const dynamicTree = {
@@ -921,9 +946,11 @@ const dynamicTree = {
 
 // Initial NFT state
 let currentMetadata = { level: 1, experience: 0, items: [] }
-let currentHash = Hash.sha256(Buffer.from(JSON.stringify(currentMetadata)))
+let currentHash = Bitcore.Hash.sha256(
+  Buffer.from(JSON.stringify(currentMetadata)),
+)
 
-const { script: dynamicNFT } = buildScriptPathTaproot(
+const { script: dynamicNFT } = Bitcore.buildScriptPathTaproot(
   creatorKey.publicKey,
   dynamicTree,
   currentHash,
@@ -932,10 +959,12 @@ const { script: dynamicNFT } = buildScriptPathTaproot(
 // Update NFT (level up, gain items, etc.)
 function updateNFT(newAttributes: any) {
   const updatedMetadata = { ...currentMetadata, ...newAttributes }
-  const newHash = Hash.sha256(Buffer.from(JSON.stringify(updatedMetadata)))
+  const newHash = Bitcore.Hash.sha256(
+    Buffer.from(JSON.stringify(updatedMetadata)),
+  )
 
   // Create new NFT output with updated state
-  const updated = buildScriptPathTaproot(
+  const updated = Bitcore.buildScriptPathTaproot(
     creatorKey.publicKey,
     dynamicTree,
     newHash, // New state!
@@ -949,11 +978,11 @@ function updateNFT(newAttributes: any) {
 
 ## Size and Cost Analysis
 
-| NFT Type                  | Script Size | Cost            | Privacy            |
-| ------------------------- | ----------- | --------------- | ------------------ |
-| Simple NFT (key-only)     | 69 bytes    | 1,000 sats      | High               |
-| Trading NFT (with escrow) | 69 bytes    | 1,000 sats      | High (if key path) |
-| Collection NFT            | 69 bytes    | 1,000 sats each | High               |
+| NFT Type                   | Script Size | Cost            | Privacy |
+| -------------------------- | ----------- | --------------- | ------- |
+| Standard NFT (script-path) | 69 bytes    | 1,000 sats      | Medium  |
+| Trading NFT (with escrow)  | 69 bytes    | 1,000 sats      | Medium  |
+| Collection NFT             | 69 bytes    | 1,000 sats each | Medium  |
 
 **Comparison with Other Methods**:
 
@@ -972,25 +1001,28 @@ function updateNFT(newAttributes: any) {
 ### Regtest Example
 
 ```typescript
-import { Networks, Hash } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Create test NFT on regtest
-const testKey = new PrivateKey(undefined, Networks.regtest)
+const testKey = new Bitcore.PrivateKey(undefined, 'regtest')
 const testMetadata = {
   name: 'Test NFT',
   description: 'Testing Taproot NFTs',
   image: 'ipfs://QmTest...',
 }
 
-const testHash = Hash.sha256(Buffer.from(JSON.stringify(testMetadata)))
-const testCommitment = tweakPublicKey(testKey.publicKey, Buffer.alloc(32))
-const testNFT = buildPayToTaproot(testCommitment, testHash)
+const testHash = Bitcore.Hash.sha256(Buffer.from(JSON.stringify(testMetadata)))
+const testCommitment = Bitcore.tweakPublicKey(
+  testKey.publicKey,
+  Buffer.alloc(32),
+)
+const testNFT = Bitcore.buildPayToTaproot(testCommitment, testHash)
 
 console.log('Test NFT address:', testNFT.toAddress().toString())
 // Example: lotusR...
 
 // Verify state extraction
-const extractedState = extractTaprootState(testNFT)
+const extractedState = Bitcore.extractTaprootState(testNFT)
 console.log('State matches:', extractedState.equals(testHash))
 ```
 
@@ -1060,7 +1092,7 @@ function validateTransfer(inputScript: Script, outputScript: Script): boolean {
 
 - ✅ Compact on-chain storage (69 bytes)
 - ✅ Provable metadata commitments
-- ✅ Privacy via key path transfers
+- ✅ On-chain metadata validation
 - ✅ Flexible trading mechanisms
 - ✅ Low minting cost (~1,000 sats per NFT)
 - ✅ Collection support
@@ -1069,9 +1101,10 @@ function validateTransfer(inputScript: Script, outputScript: Script): boolean {
 **Trade-offs**:
 
 - Requires off-chain metadata storage
-- State parameter is visible (not fully private)
+- State parameter is visible on-chain
 - Need to maintain metadata availability
 - More complex than simple token transfers
+- Script-path spending required for all NFTs
 
 **When to Use**:
 
@@ -1086,7 +1119,7 @@ function validateTransfer(inputScript: Script, outputScript: Script): boolean {
 - Fully on-chain metadata needed (use OP_RETURN)
 - Fungible tokens (use different protocol)
 - Frequently changing metadata (state is immutable per output)
-- Privacy is critical (state is visible on-chain)
+- Maximum privacy required (state is visible on-chain)
 
 ---
 

@@ -38,21 +38,15 @@ Commitment (internal_pubkey = aggregated key)
 ### Step 1: Create MuSig2 Aggregated Key
 
 ```typescript
-import {
-  PrivateKey,
-  buildMuSigTaprootKey,
-  buildMuSigTaprootKeyWithScripts,
-  Script,
-  Opcode,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate 5 board member keys
-const boardMembers = Array.from({ length: 5 }, () => new PrivateKey())
+const boardMembers = Array.from({ length: 5 }, () => new Bitcore.PrivateKey())
 const boardKeys = boardMembers.map(m => m.publicKey)
 
 // Create MuSig2 aggregated Taproot key (for key path spending)
 // This creates an n-of-n multi-signature where all signers must cooperate
-const musig2Result = buildMuSigTaprootKey(boardKeys)
+const musig2Result = Bitcore.buildMuSigTaprootKey(boardKeys)
 
 console.log(
   'Aggregated internal key:',
@@ -71,31 +65,33 @@ console.log(
 For organizations that need threshold signatures (e.g., 3-of-5) or recovery options, add a script tree:
 
 ```typescript
+import { Bitcore } from 'xpi-ts'
+
 // Sort keys for canonical multisig
 const sortedKeys = [...boardKeys].sort((a, b) =>
   Buffer.compare(a.toBuffer(), b.toBuffer()),
 )
 
 // Build 3-of-5 multisig script (fallback if MuSig2 coordination fails)
-const multisigScript = new Script()
-  .add(Opcode.OP_3)
+const multisigScript = new Bitcore.Script()
+  .add(Bitcore.Opcode.OP_3)
   .add(sortedKeys[0].toBuffer())
   .add(sortedKeys[1].toBuffer())
   .add(sortedKeys[2].toBuffer())
   .add(sortedKeys[3].toBuffer())
   .add(sortedKeys[4].toBuffer())
-  .add(Opcode.OP_5)
-  .add(Opcode.OP_CHECKMULTISIG)
+  .add(Bitcore.Opcode.OP_5)
+  .add(Bitcore.Opcode.OP_CHECKMULTISIG)
 
 // Build recovery script (30 days timelock)
 const recoveryKey = boardMembers[0].publicKey // Emergency recovery key
 const recoveryHeight = 21600 // ~30 days
-const recoveryScript = new Script()
+const recoveryScript = new Bitcore.Script()
   .add(Buffer.from(recoveryHeight.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(recoveryKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Create script tree
 const scriptTree = {
@@ -104,7 +100,7 @@ const scriptTree = {
 }
 
 // Build MuSig2 Taproot with script tree
-const tapResult = buildMuSigTaprootKeyWithScripts(boardKeys, {
+const tapResult = Bitcore.buildMuSigTaprootKeyWithScripts(boardKeys, {
   type: 'branch',
   left: { type: 'leaf', script: multisigScript },
   right: { type: 'leaf', script: recoveryScript },
@@ -249,22 +245,13 @@ MuSig2 is a multi-signature scheme that creates a single aggregated signature fr
 ### Signing a Transaction with MuSig2
 
 ```typescript
-import {
-  Transaction,
-  Output,
-  Script,
-  musigNonceGen,
-  musigNonceAgg,
-  signTaprootKeyPathWithMuSig2,
-  musigSigAgg,
-  Schnorr,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Assume we have the musig2Result from buildMuSigTaprootKey()
 // and a transaction to sign
 
 // Create spending transaction
-const tx = new Transaction()
+const tx = new Bitcore.Transaction()
   .from({
     txId: fundingTxId,
     outputIndex: 0,
@@ -274,8 +261,8 @@ const tx = new Transaction()
     mySignerIndex: 0, // Each signer has their own index
   })
   .addOutput(
-    new Output({
-      script: Script.fromAddress(recipientAddress),
+    new Bitcore.Output({
+      script: Bitcore.Script.fromAddress(recipientAddress),
       satoshis: 950000, // 50,000 sat fee
     }),
   )
@@ -284,12 +271,12 @@ const tx = new Transaction()
 const sighashBuffer = tx.getMuSig2Sighash(0)
 
 // Round 1: Nonce Generation (each signer does this)
-const aliceNonce = musigNonceGen(
+const aliceNonce = Bitcore.musigNonceGen(
   boardMembers[0],
   musig2Result.aggregatedPubKey,
   sighashBuffer,
 )
-const bobNonce = musigNonceGen(
+const bobNonce = Bitcore.musigNonceGen(
   boardMembers[1],
   musig2Result.aggregatedPubKey,
   sighashBuffer,
@@ -297,13 +284,13 @@ const bobNonce = musigNonceGen(
 // ... (repeat for all signers)
 
 // Aggregate nonces (coordinator does this)
-const aggNonce = musigNonceAgg([
+const aggNonce = Bitcore.musigNonceAgg([
   aliceNonce.publicNonces,
   bobNonce.publicNonces /* ... */,
 ])
 
 // Round 2: Partial Signatures (each signer creates their partial signature)
-const alicePartial = signTaprootKeyPathWithMuSig2(
+const alicePartial = Bitcore.signTaprootKeyPathWithMuSig2(
   aliceNonce,
   boardMembers[0],
   musig2Result.keyAggContext,
@@ -313,7 +300,7 @@ const alicePartial = signTaprootKeyPathWithMuSig2(
   musig2Result.tweak, // Use the tweak from buildMuSigTaprootKey!
 )
 
-const bobPartial = signTaprootKeyPathWithMuSig2(
+const bobPartial = Bitcore.signTaprootKeyPathWithMuSig2(
   bobNonce,
   boardMembers[1],
   musig2Result.keyAggContext,
@@ -326,7 +313,7 @@ const bobPartial = signTaprootKeyPathWithMuSig2(
 // ... (repeat for all signers)
 
 // Aggregate partial signatures into final signature (coordinator does this)
-const finalSignature = musigSigAgg(
+const finalSignature = Bitcore.musigSigAgg(
   [alicePartial, bobPartial /* ... */],
   aggNonce,
   sighashBuffer,
@@ -334,7 +321,7 @@ const finalSignature = musigSigAgg(
 )
 
 // Verify the final signature
-const verified = Schnorr.verify(
+const verified = Bitcore.Schnorr.verify(
   sighashBuffer,
   finalSignature,
   musig2Result.commitment,
@@ -522,17 +509,17 @@ const tree = {
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate test keys
 const testKeys = Array.from(
   { length: 5 },
-  () => new PrivateKey(undefined, Networks.regtest).publicKey,
+  () => new Bitcore.PrivateKey(undefined, 'regtest').publicKey,
 )
 
 // Build test multisig
-const testMultisig = Script.buildMultisigOut(testKeys, 3, {})
-const { script } = buildScriptPathTaproot(testKeys[0], {
+const testMultisig = Bitcore.Script.buildMultisigOut(testKeys, 3, {})
+const { script } = Bitcore.buildScriptPathTaproot(testKeys[0], {
   script: testMultisig,
 })
 

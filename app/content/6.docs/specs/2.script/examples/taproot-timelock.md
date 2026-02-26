@@ -37,17 +37,10 @@ Commitment
 ## Implementation
 
 ```typescript
-import {
-  PrivateKey,
-  Script,
-  Opcode,
-  buildScriptPathTaproot,
-  TapNode,
-  Address,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate voter's key
-const voterKey = new PrivateKey()
+const voterKey = new Bitcore.PrivateKey()
 const currentHeight = 1000000 // Example current block height
 const unlockHeight = currentHeight + 720 // ~24 hours at 2 min/block
 
@@ -56,12 +49,12 @@ console.log('Current height:', currentHeight)
 console.log('Unlock height:', unlockHeight)
 
 // Create time-lock script: <height> OP_CHECKLOCKTIMEVERIFY OP_DROP <pubkey> OP_CHECKSIG
-const timelockScript = new Script()
+const timelockScript = new Bitcore.Script()
   .add(Buffer.from(unlockHeight.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(voterKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 console.log('Time-lock script:')
 console.log('  Unlock height:', unlockHeight)
@@ -69,14 +62,14 @@ console.log('  Script:', timelockScript.toASM())
 console.log('  Script hex:', timelockScript.toHex())
 
 // Build Taproot with script tree
-const scriptTree: TapNode = {
+const scriptTree = {
   script: timelockScript,
 }
 
-const tapResult = buildScriptPathTaproot(voterKey.publicKey, scriptTree)
+const tapResult = Bitcore.buildScriptPathTaproot(voterKey.publicKey, scriptTree)
 
 // Create Taproot address for the vote commitment
-const taprootAddress = Address.fromTaprootCommitment(
+const taprootAddress = Bitcore.Address.fromTaprootCommitment(
   tapResult.commitment,
   'livenet',
 )

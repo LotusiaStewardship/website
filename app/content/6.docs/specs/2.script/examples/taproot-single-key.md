@@ -22,16 +22,16 @@ The most common Taproot use case: a single key controls the output with no alter
 ## Creating a Single-Key Taproot Address
 
 ```typescript
-import { PrivateKey, buildKeyPathTaproot } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate internal private key
-const privateKey = new PrivateKey()
+const privateKey = new Bitcore.PrivateKey()
 const internalPubKey = privateKey.publicKey
 
 console.log('Internal public key:', internalPubKey.toString())
 
 // Build Taproot script (automatically tweaks with empty merkle root)
-const taprootScript = buildKeyPathTaproot(internalPubKey)
+const taprootScript = Bitcore.buildKeyPathTaproot(internalPubKey)
 
 // Create address
 const taprootAddress = taprootScript.toAddress()
@@ -58,10 +58,10 @@ console.log('Is P2TR:', taprootScript.isPayToTaproot())
 ## Spending from Single-Key Taproot
 
 ```typescript
-import { Transaction, TaprootInput, Output, Script, Signature } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Create transaction
-const tx = new Transaction()
+const tx = new Bitcore.Transaction()
 
 // Simulate a UTXO with Taproot output
 const taprootUtxo = {
@@ -73,27 +73,31 @@ const taprootUtxo = {
 
 // Add Taproot input (from previous funding transaction)
 tx.addInput(
-  new TaprootInput({
+  new Bitcore.TaprootInput({
     prevTxId: Buffer.from(taprootUtxo.txId, 'hex'),
     outputIndex: taprootUtxo.outputIndex,
-    output: new Output({
+    output: new Bitcore.Output({
       script: taprootUtxo.script,
       satoshis: taprootUtxo.satoshis,
     }),
-    script: new Script(),
+    script: new Bitcore.Script(),
   }),
 )
 
 // Add output (sending to a regular P2PKH address)
 tx.addOutput(
-  new Output({
-    script: Script.buildPublicKeyHashOut(privateKey.toAddress()),
+  new Bitcore.Output({
+    script: Bitcore.Script.buildPublicKeyHashOut(privateKey.toAddress()),
     satoshis: 95000, // 5,000 sat fee
   }),
 )
 
 // Sign with SIGHASH_LOTUS + Schnorr (REQUIRED for Taproot key path)
-tx.sign(privateKey, Signature.SIGHASH_ALL | Signature.SIGHASH_LOTUS, 'schnorr')
+tx.sign(
+  privateKey,
+  Bitcore.Signature.SIGHASH_ALL | Bitcore.Signature.SIGHASH_LOTUS,
+  'schnorr',
+)
 
 console.log('Transaction created!')
 console.log('Transaction ID:', tx.id)
@@ -326,11 +330,11 @@ function generatePaymentAddress(orderId: string): string {
 ### Regtest Example
 
 ```typescript
-import { PrivateKey, buildKeyPathTaproot, Networks } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Use regtest network
-const privateKey = new PrivateKey(undefined, 'regtest')
-const taprootScript = buildKeyPathTaproot(privateKey.publicKey)
+const privateKey = new Bitcore.PrivateKey(undefined, 'regtest')
+const taprootScript = Bitcore.buildKeyPathTaproot(privateKey.publicKey)
 const address = taprootScript.toAddress('regtest')
 
 console.log('Regtest address:', address.toString())
@@ -340,8 +344,12 @@ console.log('Regtest address:', address.toString())
 ### Testnet Example
 
 ```typescript
-const privateKey = new PrivateKey(undefined, 'testnet')
-const address = buildKeyPathTaproot(privateKey.publicKey).toAddress('testnet')
+import { Bitcore } from 'xpi-ts'
+
+const privateKey = new Bitcore.PrivateKey(undefined, 'testnet')
+const address = Bitcore.buildKeyPathTaproot(privateKey.publicKey).toAddress(
+  'testnet',
+)
 
 console.log('Testnet address:', address.toString())
 // Example: lotusT...

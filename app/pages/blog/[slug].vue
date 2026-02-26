@@ -69,7 +69,8 @@ if (post.value.image?.src) {
           year:
             'numeric',
           month: 'short',
-          day: 'numeric' }) }}</time>
+          day: 'numeric'
+        }) }}</time>
       </template>
 
       <div class="flex flex-wrap items-center gap-3 mt-4">

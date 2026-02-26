@@ -32,39 +32,33 @@ Commitment
 ## Implementation
 
 ```typescript
-import {
-  PrivateKey,
-  Script,
-  Opcode,
-  Hash,
-  buildScriptPathTaproot,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Generate secret and hash
 const secret = Buffer.from(
   'my_secret_preimage_12345678901234567890123456789012',
 )
-const secretHash = Hash.sha256(secret)
+const secretHash = Bitcore.Hash.sha256(secret)
 
-const senderKey = new PrivateKey()
-const receiverKey = new PrivateKey()
+const senderKey = new Bitcore.PrivateKey()
+const receiverKey = new Bitcore.PrivateKey()
 const refundHeight = 102160 // current + 2,160 blocks (~3 days)
 
 // Success path: receiver provides preimage
-const successScript = new Script()
-  .add(Opcode.OP_SHA256)
+const successScript = new Bitcore.Script()
+  .add(Bitcore.Opcode.OP_SHA256)
   .add(secretHash)
-  .add(Opcode.OP_EQUALVERIFY)
+  .add(Bitcore.Opcode.OP_EQUALVERIFY)
   .add(receiverKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Refund path: sender reclaims after timeout
-const refundScript = new Script()
+const refundScript = new Bitcore.Script()
   .add(refundHeight)
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(senderKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 const scriptTree = {
   left: { script: successScript },
@@ -75,7 +69,7 @@ const {
   script: htlcScript,
   merkleRoot,
   leaves,
-} = buildScriptPathTaproot(senderKey.publicKey, scriptTree)
+} = Bitcore.buildScriptPathTaproot(senderKey.publicKey, scriptTree)
 
 console.log('HTLC address:', htlcScript.toAddress().toString())
 console.log('Secret hash:', secretHash.toString('hex'))
@@ -246,9 +240,11 @@ Sender reclaims funds after timelock expires:
 **Step 1 - Setup**:
 
 ```typescript
+import { Bitcore } from 'xpi-ts'
+
 // Alice generates secret
 const secret = crypto.randomBytes(32)
-const secretHash = Hash.sha256(secret)
+const secretHash = Bitcore.Hash.sha256(secret)
 
 console.log('Secret hash:', secretHash.toString('hex'))
 // Alice keeps secret, shares hash with Bob
@@ -257,6 +253,8 @@ console.log('Secret hash:', secretHash.toString('hex'))
 **Step 2 - Alice Locks XPI**:
 
 ```typescript
+import { Bitcore } from 'xpi-ts'
+
 // Alice creates HTLC on Lotus
 const aliceHTLC = buildHTLC({
   secretHash,
@@ -505,20 +503,20 @@ const defiSwap = buildConditionalSwap({
 ### Regtest Example
 
 ```typescript
-import { Networks } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Setup test swap
-const testAlice = new PrivateKey(undefined, Networks.regtest)
-const testBob = new PrivateKey(undefined, Networks.regtest)
+const testAlice = new Bitcore.PrivateKey(undefined, 'regtest')
+const testBob = new Bitcore.PrivateKey(undefined, 'regtest')
 const testSecret = crypto.randomBytes(32)
 
 // Create test HTLC
 const testHTLC = buildHTLC({
-  secretHash: Hash.sha256(testSecret),
+  secretHash: Bitcore.Hash.sha256(testSecret),
   receiverKey: testBob.publicKey,
   senderKey: testAlice.publicKey,
   timeout: 1000,
-  network: Networks.regtest,
+  network: 'regtest',
 })
 
 // Test claim

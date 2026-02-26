@@ -17,6 +17,8 @@ useSeoMeta({
   ogDescription: 'Explore the Lotusia blockchain and ecosystem'
 })
 
+const route = useRoute()
+
 /**
  * Functions
  */
@@ -90,7 +92,7 @@ onMounted(async () => {
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <ExplorerNavbar :title="$route.meta.title" />
+      <ExplorerNavbar :title="route.meta.title" />
       <ExplorerSearch />
       <UDashboardPanelContent>
         <UDashboardSection
@@ -187,7 +189,7 @@ onMounted(async () => {
               <span class="font-mono">{{ row.subver }}</span>
             </template>
             <template #blocks-data="{ row }">
-              <span class="font-semibold">{{ row.synced_blocks.toLocaleString() }}</span>
+              <span class="font-semibold">{{ row.synced_blocks?.toLocaleString() ?? 'N/A' }}</span>
             </template>
           </UTable>
         </UDashboardSection>

@@ -36,30 +36,30 @@ Commitment
 ## Implementation
 
 ```typescript
-import { PrivateKey, Script, Opcode, buildScriptPathTaproot } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Create keys
-const hotWalletKey = new PrivateKey()
-const coldStorageKey = new PrivateKey()
-const emergencyKey = new PrivateKey()
+const hotWalletKey = new Bitcore.PrivateKey()
+const coldStorageKey = new Bitcore.PrivateKey()
+const emergencyKey = new Bitcore.PrivateKey()
 
 const withdrawalDelay = 121600 // current + 21,600 (~30 days)
 
 // Script 1: Hot wallet (immediate spending)
-const hotWalletScript = new Script()
+const hotWalletScript = new Bitcore.Script()
   .add(hotWalletKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Script 2: Cold storage with time delay
-const coldStorageScript = new Script()
+const coldStorageScript = new Bitcore.Script()
   .add(withdrawalDelay)
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(coldStorageKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 // Script 3: Emergency freeze (provably unspendable)
-const freezeScript = new Script().add(Opcode.OP_RETURN)
+const freezeScript = new Bitcore.Script().add(Bitcore.Opcode.OP_RETURN)
 
 const scriptTree = {
   left: { script: hotWalletScript },
@@ -73,7 +73,7 @@ const {
   script: vaultScript,
   merkleRoot,
   leaves,
-} = buildScriptPathTaproot(hotWalletKey.publicKey, scriptTree)
+} = Bitcore.buildScriptPathTaproot(hotWalletKey.publicKey, scriptTree)
 
 console.log('Vault address:', vaultScript.toAddress().toString())
 console.log('Merkle root:', merkleRoot.toString('hex'))

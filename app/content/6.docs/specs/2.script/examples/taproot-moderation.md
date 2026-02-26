@@ -46,18 +46,11 @@ Commitment
 ## Implementation
 
 ```typescript
-import {
-  PrivateKey,
-  Script,
-  Opcode,
-  buildScriptPathTaproot,
-  TapNode,
-  Address,
-} from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 
 // Create keys for commenter and moderator
-const commenterKey = new PrivateKey()
-const moderatorKey = new PrivateKey()
+const commenterKey = new Bitcore.PrivateKey()
+const moderatorKey = new Bitcore.PrivateKey()
 
 const currentHeight = 1000000
 const refundHeight = currentHeight + 5040 // ~1 week at 2 min/block
@@ -67,31 +60,31 @@ console.log('Moderator public key:', moderatorKey.publicKey.toString())
 console.log('Refund height:', refundHeight)
 
 // Path 1: Commenter reclaims after refund delay (no penalty)
-const refundScript = new Script()
+const refundScript = new Bitcore.Script()
   .add(Buffer.from(refundHeight.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
+  .add(Bitcore.Opcode.OP_CHECKLOCKTIMEVERIFY)
+  .add(Bitcore.Opcode.OP_DROP)
   .add(commenterKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 console.log('Path 1: Commenter Refund (after', 5040, 'blocks)')
 console.log('  Script:', refundScript.toASM())
 
 // Path 2: Moderator penalty (immediate, partial return to commenter)
-const penaltyScript = new Script()
+const penaltyScript = new Bitcore.Script()
   .add(moderatorKey.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+  .add(Bitcore.Opcode.OP_CHECKSIG)
 
 console.log('Path 2: Moderator Penalty (immediate)')
 console.log('  Script:', penaltyScript.toASM())
 
 // Path 3: Multi-sig emergency recovery
-const emergencyScript = new Script()
-  .add(Opcode.OP_2) // Require 2 signatures
+const emergencyScript = new Bitcore.Script()
+  .add(Bitcore.Opcode.OP_2) // Require 2 signatures
   .add(commenterKey.publicKey.toBuffer())
   .add(moderatorKey.publicKey.toBuffer())
-  .add(Opcode.OP_2) // Out of 2 keys
-  .add(Opcode.OP_CHECKMULTISIG)
+  .add(Bitcore.Opcode.OP_2) // Out of 2 keys
+  .add(Bitcore.Opcode.OP_CHECKMULTISIG)
 
 console.log('Path 3: Emergency Recovery (2-of-2 multisig)')
 console.log('  Script:', emergencyScript.toASM())
