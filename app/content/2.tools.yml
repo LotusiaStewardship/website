@@ -33,15 +33,15 @@ sections:
         icon: i-heroicons-server-stack-solid
     links:
       - label: Windows
-        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-win64-setup-unsigned.exe
+        to: github/lotusd/releases/download/v10.4.11/lotus-10.4.11-win64-setup-unsigned.exe
         icon: i-mdi-microsoft-windows
         type: EXE Installer (.exe)
       - label: MacOS
-        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-osx-unsigned.dmg
+        to: github/lotusd/releases/download/v10.4.11/lotus-10.4.11-osx-unsigned.dmg
         icon: i-mdi-apple
         type: DMG Image (.dmg)
       - label: Linux
-        to: github/lotusd/releases/download/v10.4.9/lotus-10.4.9-x86_64-linux-gnu.tar.gz
+        to: github/lotusd/releases/download/v10.4.11/lotus-10.4.11-x86_64-linux-gnu.tar.gz
         icon: i-mdi-linux
         type: TAR archive (.tar.gz)
       - label: Source Code
