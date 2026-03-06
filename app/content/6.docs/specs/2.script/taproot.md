@@ -1,17 +1,20 @@
 ---
 title: 'Taproot'
+description: Pay-to-Taproot (P2TR) consensus specification for Lotus
 linkTitle: 'Taproot'
 category: Script
 weight: 4.1
 modified: 2025-11-10
 ---
 
-## Overview
+# Taproot Consensus Specification
 
-Taproot is an advanced script type that enables privacy-preserving smart contracts on Lotus. This is Lotus's native implementation of Taproot, defined in the lotusd consensus code. While conceptually similar to Bitcoin's BIP341, the Lotus implementation includes significant modifications to the commitment format, control block encoding, and signature requirements that make it incompatible with Bitcoin's version. This specification documents the authoritative Lotus implementation.
+**Reference Implementation**: lotusd (Lotus Root)
+
+Pay-to-Taproot (P2TR) enables efficient and private smart contracts on Lotus by combining Schnorr signatures with Merkle trees. This document specifies the consensus rules enforced by lotusd nodes.
 
 ::alert{type="info"}
-**Lotus Units**: All examples use Lotus-specific units where **1 XPI = 1,000,000 satoshis**. This differs from Bitcoin where 1 BTC = 100,000,000 satoshis.
+**Document Scope**: This specification covers only the lotusd consensus implementation. For application-level integration, refer to wallet and SDK documentation separately.
 ::
 
 ### Key Features
@@ -23,25 +26,90 @@ Taproot is an advanced script type that enables privacy-preserving smart contrac
 
 ---
 
+## Consensus Rules Summary
+
+**Reference**: `src/script/interpreter.cpp:2074-2156`, `src/script/taproot.cpp` in lotusd
+
+The following rules are enforced by all lotusd nodes:
+
+### Output Validation Rules
+
+1. **Script Format**: Must be `OP_SCRIPTTYPE OP_1 0x21 <33-byte commitment>` (36 bytes) OR `OP_SCRIPTTYPE OP_1 0x21 <33-byte commitment> 0x20 <32-byte state>` (69 bytes)
+2. **Commitment Size**: Exactly 33 bytes (compressed public key format)
+3. **State Size**: If present, exactly 32 bytes
+4. **First Byte**: Must be `OP_SCRIPTTYPE` (0x62)
+5. **Second Byte**: Must be `OP_1` (0x51)
+
+### Key Path Spending Rules
+
+1. **Stack Size**: Exactly 1 element (the signature)
+2. **Signature Format**: 64-byte Schnorr signature + 1-byte sighash type = 65 bytes total
+3. **Signature Type**: MUST be Schnorr (ECDSA forbidden, error: `TAPROOT_KEY_SPEND_MUST_USE_SCHNORR_SIG`)
+4. **Sighash Requirement**: MUST include `SIGHASH_LOTUS` (0x60) flag (error: `TAPROOT_KEY_SPEND_MUST_USE_LOTUS_SIGHASH`)
+5. **Typical Sighash**: `SIGHASH_ALL | SIGHASH_LOTUS` = 0x61
+6. **Verification**: Schnorr signature must verify against commitment pubkey and transaction sighash
+
+### Script Path Spending Rules
+
+1. **Stack Size**: At least 2 elements (script + control block + optional arguments)
+2. **Control Block Size**: 33 + (32 × n) bytes, where 0 ≤ n ≤ 128
+3. **Control Block Format**: `[(leaf_version & 0xfe) | parity] || internal_pubkey_x || merkle_proof_nodes`
+4. **Leaf Version**: Must be 0xc0 (TAPROOT_LEAF_TAPSCRIPT)
+5. **Merkle Proof**: Must verify commitment = internal_pubkey + tagged_hash("TapTweak", internal_pubkey || merkle_root) × G
+6. **Script Execution**: Revealed script must execute successfully and leave truthy value on stack
+7. **State Handling**: If output has state parameter, it's automatically pushed onto stack before script execution
+8. **Annex**: Not supported (error: `TAPROOT_ANNEX_NOT_SUPPORTED` if present)
+
+### Cryptographic Requirements
+
+1. **Tagged Hashing**: `tagged_hash(tag, msg) = SHA256(SHA256(tag) || SHA256(tag) || msg)`
+2. **Leaf Hash**: `tagged_hash("TapLeaf", 0xc0 || compact_size(script_len) || script_bytes)`
+3. **Branch Hash**: `tagged_hash("TapBranch", min(left, right) || max(left, right))` (lexicographic ordering required)
+4. **Tweak Hash**: `tagged_hash("TapTweak", internal_pubkey || merkle_root)`
+5. **Public Key Format**: 33-byte compressed (0x02 or 0x03 prefix)
+6. **Curve**: secp256k1
+
+### Error Codes
+
+- `TAPROOT_PHASEOUT`: Taproot disabled by flag
+- `SCRIPTTYPE_MALFORMED_SCRIPT`: Invalid scriptPubKey format
+- `INVALID_STACK_OPERATION`: Empty stack
+- `TAPROOT_ANNEX_NOT_SUPPORTED`: Annex present
+- `TAPROOT_KEY_SPEND_MUST_USE_SCHNORR_SIG`: ECDSA used for key path
+- `TAPROOT_KEY_SPEND_MUST_USE_LOTUS_SIGHASH`: Missing SIGHASH_LOTUS
+- `TAPROOT_VERIFY_SIGNATURE_FAILED`: Invalid signature
+- `TAPROOT_WRONG_CONTROL_SIZE`: Invalid control block size
+- `TAPROOT_LEAF_VERSION_NOT_SUPPORTED`: Leaf version not 0xc0
+- `TAPROOT_VERIFY_COMMITMENT_FAILED`: Merkle proof failed
+- `EVAL_FALSE`: Script returned false
+
+---
+
 ## Output Format
+
+**Reference**: `src/script/taproot.cpp:68-87` (IsPayToTaproot function)
 
 Taproot outputs consist of a matched pattern:
 
 ```
-OP_SCRIPTTYPE OP_1 <33-byte commitment> [<32-byte state>]
+OP_SCRIPTTYPE OP_1 0x21 <33-byte commitment> [0x20 <32-byte state>]
 ```
 
 **Components**:
 
 - `OP_SCRIPTTYPE` (0x62): Marks the script as Taproot
 - `OP_1` (0x51): Version byte
+- `0x21`: Push opcode indicating "push next 33 bytes" (decimal 33)
 - **33-byte commitment**: Tweaked public key (compressed format with 0x02/0x03 prefix)
+- `0x20`: Push opcode indicating "push next 32 bytes" (decimal 32, when state present)
 - **32-byte state** (optional): When present, pushed onto stack before executing script path spend
+
+**Note on Push Opcodes**: In Bitcoin Script, opcodes 0x01-0x4b directly encode the number of bytes to push. The value 0x21 (33 decimal) means "push the next 33 bytes", and 0x20 (32 decimal) means "push the next 32 bytes". These are not symbolic constants but literal byte counts.
 
 **Size**:
 
-- Without state: 36 bytes total (3-byte intro + 33-byte commitment)
-- With state: 69 bytes total (3-byte intro + 33-byte commitment + 1-byte push + 32-byte state)
+- Without state: 36 bytes total (OP_SCRIPTTYPE + OP_1 + 0x21 + 33-byte commitment)
+- With state: 69 bytes total (OP_SCRIPTTYPE + OP_1 + 0x21 + 33-byte commitment + 0x20 + 32-byte state)
 
 ### Lotus-Specific Features
 
@@ -54,12 +122,10 @@ Lotus Taproot differs from Bitcoin's implementation in critical ways:
    - Lotus: Parity bit indicates **internal pubkey's** Y-coordinate (used to reconstruct 33-byte key)
    - Bitcoin: Parity bit indicates **commitment pubkey's** Y-coordinate
 3. **Optional State Parameter**:
-
    - Lotus: Supports optional 32-byte state parameter for smart contracts
    - Bitcoin: No state parameter support
 
 4. **Script Identifier**:
-
    - Lotus: Uses `OP_SCRIPTTYPE` (0x62) marker before version byte
    - Bitcoin: No marker opcode
 
@@ -74,7 +140,9 @@ Lotus Taproot differs from Bitcoin's implementation in critical ways:
 
 ---
 
-## Address Format
+### Address Format
+
+**Reference**: `src/addresses/xaddress.cpp` (XAddress encoding implementation)
 
 Taproot addresses use XAddress encoding with type byte `2`:
 
@@ -96,7 +164,7 @@ lotus_JHMEcuQ6SyDcJKsSJVd6cZRSVZ8NqWZNMwAX8RDirNEazCfEgFp
 
 ---
 
-## Spending Paths
+### Spending Paths
 
 Taproot outputs can be spent via two distinct paths: **key path** (cooperative spending) or **script path** (revealing a specific script). Understanding when to use each is crucial for building efficient and private applications.
 
@@ -144,7 +212,11 @@ Can all parties cooperate?
 
 ---
 
-## Key Path Spending (Cooperative)
+## II. Spending Mechanisms
+
+### Key Path Spending (Cooperative)
+
+**Reference**: `src/script/interpreter.cpp:2097-2111` (Key path verification logic)
 
 The most common and private way to spend Taproot outputs. When all parties can cooperate, they collectively create a single Schnorr signature that spends the output.
 
@@ -206,72 +278,83 @@ For key-only outputs (no scripts), the `merkle_root` is 32 zero bytes.
 
 **For Single Signer**:
 
-```typescript
-import { PrivateKey, tweakPrivateKey, Transaction } from 'lotus-sdk'
+```
+Algorithm: Sign Taproot Key Path Transaction
 
-// 1. Start with internal private key
-const internalPrivKey = new PrivateKey()
+Input:
+  - internal_privkey: Private key (32 bytes)
+  - merkle_root: Merkle root of script tree (32 bytes, or 32 zero bytes for key-only)
+  - transaction: Unsigned transaction
+  - input_index: Index of input being signed
 
-// 2. Tweak private key with merkle root (all zeros for key-only)
-const merkleRoot = Buffer.alloc(32)
-const tweakedPrivKey = tweakPrivateKey(internalPrivKey, merkleRoot)
+Steps:
+  1. Calculate tweak:
+     internal_pubkey = internal_privkey × G
+     tweak = tagged_hash("TapTweak", internal_pubkey || merkle_root)
 
-// 3. Sign transaction with tweaked key
-const tx = new Transaction()
-// ... add inputs and outputs ...
-tx.sign(
-  tweakedPrivKey,
-  Signature.SIGHASH_ALL | Signature.SIGHASH_LOTUS,
-  'schnorr',
-)
+  2. Tweak private key:
+     tweaked_privkey = (internal_privkey + tweak) mod n
+     where n = secp256k1 curve order
+
+  3. Calculate sighash:
+     sighash = SignatureHash(transaction, input_index, SIGHASH_ALL | SIGHASH_LOTUS)
+
+  4. Create Schnorr signature:
+     signature = SchnorrSign(tweaked_privkey, sighash)  // 64 bytes
+
+  5. Append sighash byte:
+     final_signature = signature || 0x61  // 65 bytes total
+
+  6. Place in scriptSig:
+     scriptSig = <final_signature>
+
+Output: Signed transaction with 65-byte signature in scriptSig
 ```
 
 **For Multiple Signers (MuSig2)**:
 
-```typescript
-import {
-  buildMuSigTaprootKey,
-  musigNonceGen,
-  musigNonceAgg,
-  signTaprootKeyPathWithMuSig2,
-  musigSigAgg,
-} from 'lotus-sdk'
+```
+Protocol: MuSig2 Multi-Signature for Taproot Key Path
 
-// 1. Aggregate public keys
-const result = buildMuSigTaprootKey([alice.publicKey, bob.publicKey])
+Participants: n signers with private keys (privkey_1, ..., privkey_n)
 
-// 2. Round 1: Generate and exchange nonces
-const aliceNonce = musigNonceGen(alice, result.aggregatedPubKey, sighash)
-const bobNonce = musigNonceGen(bob, result.aggregatedPubKey, sighash)
-const aggNonce = musigNonceAgg([aliceNonce.publicNonces, bobNonce.publicNonces])
+Phase 1: Key Aggregation
+  1. Each signer computes: pubkey_i = privkey_i × G
+  2. Compute aggregated public key:
+     agg_pubkey = KeyAgg(pubkey_1, ..., pubkey_n)
+     (Uses MuSig2 key aggregation with coefficient system)
+  3. Compute internal pubkey and tweak:
+     internal_pubkey = agg_pubkey
+     tweak = tagged_hash("TapTweak", internal_pubkey || merkle_root)
+     commitment = internal_pubkey + tweak × G
 
-// 3. Round 2: Create and exchange partial signatures
-const alicePartial = signTaprootKeyPathWithMuSig2(
-  aliceNonce,
-  alice,
-  result.keyAggContext,
-  0,
-  aggNonce,
-  sighash,
-  result.tweak,
-)
-const bobPartial = signTaprootKeyPathWithMuSig2(
-  bobNonce,
-  bob,
-  result.keyAggContext,
-  1,
-  aggNonce,
-  sighash,
-  result.tweak,
-)
+Phase 2: Nonce Generation (Round 1)
+  1. Each signer generates two random nonces:
+     secnonce_i = (k_i,1, k_i,2)  // Secret nonces
+     pubnonce_i = (k_i,1 × G, k_i,2 × G)  // Public nonces
+  2. Broadcast pubnonce_i to all other signers
+  3. Aggregate all public nonces:
+     agg_nonce = NonceAgg(pubnonce_1, ..., pubnonce_n)
 
-// 4. Aggregate into final signature
-const finalSig = musigSigAgg(
-  [alicePartial, bobPartial],
-  aggNonce,
-  sighash,
-  result.commitment,
-)
+Phase 3: Partial Signature Generation (Round 2)
+  1. Calculate sighash:
+     sighash = SignatureHash(transaction, input_index, SIGHASH_ALL | SIGHASH_LOTUS)
+  2. Each signer creates partial signature:
+     partial_sig_i = PartialSign(secnonce_i, privkey_i, agg_pubkey, agg_nonce, sighash, tweak)
+  3. Broadcast partial_sig_i to all other signers
+
+Phase 4: Signature Aggregation
+  1. Verify all partial signatures
+  2. Aggregate into final signature:
+     final_sig = PartialSigAgg(partial_sig_1, ..., partial_sig_n, agg_nonce)
+  3. Append sighash byte:
+     complete_sig = final_sig || 0x61  // 65 bytes total
+
+Result: Single 65-byte Schnorr signature indistinguishable from single-signer case
+
+Note: MuSig2 protocol details are defined in BIP327. The key insight is that the
+final signature is a standard Schnorr signature over the tweaked aggregated key,
+making multi-sig spending look identical to single-sig on-chain.
 ```
 
 ### Privacy Guarantees
@@ -294,7 +377,9 @@ This is the **strongest privacy** available in Taproot: a 5-of-7 multisig with 1
 
 ---
 
-## Script Path Spending (Non-Cooperative)
+### Script Path Spending (Non-Cooperative)
+
+**Reference**: `src/script/interpreter.cpp:2113-2155` (Script path verification logic)
 
 When parties cannot cooperate or when specific conditions must be proven on-chain, script path spending reveals and executes one of the committed scripts.
 
@@ -345,7 +430,6 @@ The verifier reconstructs the root and confirms it matches the commitment.
 **Step-by-Step Process**:
 
 1. **Parse Input**: Extract `[stack_elements...] [script] [control_block]` from stack
-
    - Everything before the last 2 elements = arguments/data for the script
    - Second-to-last element = the script being executed
    - Last element = control block with proof
@@ -440,19 +524,66 @@ Where stack elements are the arguments/data needed by the revealed script (e.g.,
 
 ### Control Block Encoding
 
+**Reference**: See `src/script/taproot.cpp:44-54` in lotusd for parity encoding details.
+
 The control block is carefully constructed to be compact and verifiable:
 
 **Structure**:
 
 ```
-Byte 0:    [(leaf_version & 0xfe) | parity_bit]
+Byte 0:     [(leaf_version & 0xfe) | parity_bit]
 Bytes 1-32: internal_pubkey_x (32 bytes, no prefix)
 Bytes 33+:  merkle_proof_nodes (32 bytes each)
+```
+
+**First Byte Bit-Level Breakdown**:
+
+```
+Byte 0 bit layout (8 bits total):
+  Bit 7 (MSB): Leaf version bit 7
+  Bit 6:       Leaf version bit 6
+  Bit 5:       Leaf version bit 5
+  Bit 4:       Leaf version bit 4
+  Bit 3:       Leaf version bit 3
+  Bit 2:       Leaf version bit 2
+  Bit 1:       Leaf version bit 1 (always 0 for TAPROOT_LEAF_TAPSCRIPT)
+  Bit 0 (LSB): Internal pubkey Y-coordinate parity
+
+For TAPROOT_LEAF_TAPSCRIPT (0xc0 = 0b11000000):
+  Bits 7-1: 0b1100000 (96 decimal, 0x60 hex)
+  Bit 0:    0 = even Y-coordinate (use 0x02 prefix)
+            1 = odd Y-coordinate (use 0x03 prefix)
+
+Example values:
+  0xc0 (192): Leaf version 0xc0, even Y (internal pubkey starts with 0x02)
+  0xc1 (193): Leaf version 0xc0, odd Y (internal pubkey starts with 0x03)
+```
+
+**Extraction Algorithm** (from lotusd):
+
+```
+Given control_block[0]:
+  1. Extract leaf version:
+     leaf_version = control_block[0] & TAPROOT_LEAF_MASK  // 0xfe mask
+     leaf_version = control_block[0] & 0b11111110
+     // Result: 0xc0 for TAPROOT_LEAF_TAPSCRIPT
+
+  2. Extract parity bit:
+     parity = control_block[0] & 0x01
+     // Result: 0 (even) or 1 (odd)
+
+  3. Reconstruct internal pubkey prefix:
+     prefix = (parity == 1) ? 0x03 : 0x02
+
+  4. Build full 33-byte internal pubkey:
+     internal_pubkey = prefix || control_block[1:33]
 ```
 
 **Why X-Coordinate Only?**
 
 The control block stores only the 32-byte x-coordinate of the internal pubkey (not the full 33-byte compressed key). The parity bit (bit 0 of the first byte) tells us whether to use prefix 0x02 (even Y) or 0x03 (odd Y). This saves 1 byte per control block.
+
+**Lotus-Specific Detail**: The parity bit encodes the **internal pubkey's** Y-coordinate parity, NOT the commitment's parity. This differs from Bitcoin's BIP341, where the parity encodes the commitment's Y-coordinate.
 
 **Example Control Block** (no merkle proof):
 
@@ -507,25 +638,24 @@ Example: Lightning channel
   Script Path: Either party can force-close after dispute period
 ```
 
-**Code Structure**:
+**Script Structure**:
 
-```typescript
-// Create aggregated key for cooperative case
-const musig2Result = buildMuSigTaprootKey([alice.publicKey, bob.publicKey])
+```
+Recovery Script (Script Path Fallback):
+  <dispute_period_blocks>     // e.g., 720 blocks (~24 hours)
+  OP_CHECKSEQUENCEVERIFY      // Verify time-lock has passed
+  OP_DROP                     // Remove time value from stack
+  <alice_pubkey>              // 33-byte compressed public key
+  OP_CHECKSIG                 // Verify signature
 
-// Create time-locked recovery script
-const recoveryScript = new Script()
-  .add(Buffer.from(disputePeriod.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKSEQUENCEVERIFY)
-  .add(Opcode.OP_DROP)
-  .add(alice.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
-
-// Build Taproot with script fallback
-const result = buildMuSigTaprootKeyWithScripts(
-  [alice.publicKey, bob.publicKey],
-  { type: 'leaf', script: recoveryScript },
-)
+Taproot Construction:
+  1. Create MuSig2 aggregated key from [alice_pubkey, bob_pubkey]
+  2. Build script tree with single leaf (recovery script)
+  3. Calculate merkle_root = tagged_hash("TapLeaf", 0xc0 || recovery_script)
+  4. Tweak aggregated key:
+     commitment = agg_pubkey + tagged_hash("TapTweak", agg_pubkey || merkle_root) × G
+  5. Create P2TR output:
+     scriptPubKey = OP_SCRIPTTYPE OP_1 0x21 <commitment>
 ```
 
 **Spending**:
@@ -548,40 +678,43 @@ Structure:
 Example: Escrow with tiered recovery
 ```
 
-**Code Structure**:
+**Script Definitions**:
 
-```typescript
-// Multiple independent conditions
-const aliceRecovery = new Script()
-  .add(Buffer.from(oneDayLater.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
-  .add(alice.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+```
+Script 1 - Alice Recovery (after 1 day = 720 blocks):
+  <720>                    // Time-lock: 1 day
+  OP_CHECKLOCKTIMEVERIFY   // Verify absolute time-lock
+  OP_DROP
+  <alice_pubkey>
+  OP_CHECKSIG
 
-const bobRecovery = new Script()
-  .add(Buffer.from(oneWeekLater.toString(16).padStart(6, '0'), 'hex'))
-  .add(Opcode.OP_CHECKLOCKTIMEVERIFY)
-  .add(Opcode.OP_DROP)
-  .add(bob.publicKey.toBuffer())
-  .add(Opcode.OP_CHECKSIG)
+Script 2 - Bob Recovery (after 1 week = 5,040 blocks):
+  <5040>                   // Time-lock: 1 week
+  OP_CHECKLOCKTIMEVERIFY
+  OP_DROP
+  <bob_pubkey>
+  OP_CHECKSIG
 
-const emergencyMultisig = new Script()
-  .add(Opcode.OP_2)
-  .add(alice.publicKey.toBuffer())
-  .add(bob.publicKey.toBuffer())
-  .add(charlie.publicKey.toBuffer())
-  .add(Opcode.OP_3)
-  .add(Opcode.OP_CHECKMULTISIG)
+Script 3 - Emergency Multisig (2-of-3, anytime):
+  OP_2
+  <alice_pubkey>
+  <bob_pubkey>
+  <charlie_pubkey>
+  OP_3
+  OP_CHECKMULTISIG
 
-// Build balanced tree (minimizes proof sizes)
-const scriptTree: TapNode = {
-  left: { script: aliceRecovery },
-  right: {
-    left: { script: bobRecovery },
-    right: { script: emergencyMultisig },
-  },
-}
+Tree Construction (balanced for minimal proof sizes):
+  1. Calculate leaf hashes:
+     leaf_1 = tagged_hash("TapLeaf", 0xc0 || script_1)
+     leaf_2 = tagged_hash("TapLeaf", 0xc0 || script_2)
+     leaf_3 = tagged_hash("TapLeaf", 0xc0 || script_3)
+
+  2. Build tree structure:
+     branch_right = tagged_hash("TapBranch", min(leaf_2, leaf_3) || max(leaf_2, leaf_3))
+     merkle_root = tagged_hash("TapBranch", min(leaf_1, branch_right) || max(leaf_1, branch_right))
+
+  3. Create commitment:
+     commitment = internal_pubkey + tagged_hash("TapTweak", internal_pubkey || merkle_root) × G
 ```
 
 **Merkle Tree**:
@@ -616,29 +749,35 @@ Example: NFT with royalty enforcement
   Script: Verify outputs pay correct royalty
 ```
 
-**Code Structure**:
+**Script Structure**:
 
-```typescript
-// State: Commit to contract parameters
-const contractState = {
-  creatorAddress: 'lotus_...',
-  royaltyPercent: 5,
-}
-const stateHash = Hash.sha256(Buffer.from(JSON.stringify(contractState)))
+```
+Contract State Commitment:
+  state_data = creator_address || royalty_percentage
+  state_hash = SHA256(state_data)  // 32 bytes
 
-// Script: Verify royalty payment in outputs
-const royaltyScript = new Script()
-  // State is automatically pushed to stack: [32-byte state_hash]
-  // Script verifies outputs conform to royalty rules
-  .add(/* custom validation logic */)
-  .add(Opcode.OP_CHECKSIG)
+Royalty Verification Script:
+  // When executed, state_hash is already on stack (pushed by lotusd)
+  // Stack: [state_hash]
 
-// Build with state parameter
-const result = buildScriptPathTaproot(
-  internalKey,
-  { script: royaltyScript },
-  stateHash, // This gets pushed to stack during script path execution
-)
+  OP_DUP                    // Duplicate state hash
+  <expected_state_hash>     // Push expected hash
+  OP_EQUALVERIFY            // Verify state matches expected
+
+  // Custom validation logic to verify outputs pay royalty
+  // ... output verification opcodes ...
+
+  <creator_pubkey>
+  OP_CHECKSIG               // Final signature check
+
+Taproot Output Construction:
+  1. Build script tree with royalty script
+  2. Calculate merkle_root from script tree
+  3. Tweak internal key:
+     commitment = internal_pubkey + tagged_hash("TapTweak", internal_pubkey || merkle_root) × G
+  4. Create P2TR output WITH state:
+     scriptPubKey = OP_SCRIPTTYPE OP_1 0x21 <commitment> 0x20 <state_hash>
+     Total size: 69 bytes (36 + 33 for state parameter)
 ```
 
 **How State Works**:
@@ -705,7 +844,11 @@ Balance tree complexity vs transaction cost.
 
 ---
 
-## Tagged Hashing
+## III. Cryptographic Primitives
+
+### Tagged Hashing
+
+**Reference**: `src/hash.h` (TaggedHash function), `src/script/taproot.cpp:11-13` (Tag constants)
 
 Lotus Taproot uses tagged hashing to prevent cross-protocol attacks and ensure domain separation:
 
@@ -743,7 +886,9 @@ function taggedHash(tag: string, data: Buffer): Buffer {
 
 ---
 
-## Key Tweaking
+### Key Tweaking
+
+**Reference**: `src/script/taproot.cpp:55-65` (Commitment verification with tweaking), `src/pubkey.h` (AddScalar method)
 
 **Public Key Tweaking**:
 
@@ -765,48 +910,122 @@ Where:
 
 **Key-Only Spending**: Use `merkle_root = Buffer(32 zeros)` for outputs without scripts.
 
-**Example**:
+**Example Calculation**:
 
-```typescript
-import { PrivateKey, tweakPublicKey, tweakPrivateKey } from 'lotus-sdk'
+```
+Given:
+  internal_privkey = <32-byte private key>
+  internal_pubkey = internal_privkey × G  // 33-byte compressed pubkey
+  merkle_root = 0x0000...0000  // 32 zero bytes for key-only output
 
-const privateKey = new PrivateKey()
-const internalPubKey = privateKey.publicKey
+Public Key Tweaking:
+  tweak = tagged_hash("TapTweak", internal_pubkey || merkle_root)
+  tweaked_pubkey = internal_pubkey + (tweak × G)
+  // Result: 33-byte compressed public key (commitment)
 
-// For key-only (no scripts)
-const merkleRoot = Buffer.alloc(32) // 32 zero bytes
+Private Key Tweaking:
+  tweak = tagged_hash("TapTweak", internal_pubkey || merkle_root)
+  tweaked_privkey = (internal_privkey + tweak) mod n
+  where n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+  // Result: 32-byte private key that corresponds to tweaked_pubkey
 
-// Tweak the keys
-const tweakedPubKey = tweakPublicKey(internalPubKey, merkleRoot)
-const tweakedPrivKey = tweakPrivateKey(privateKey, merkleRoot)
+Verification:
+  tweaked_privkey × G == tweaked_pubkey  // Must be true
 ```
 
 ---
 
-## Script Trees
+### Script Trees
 
 Scripts are organized in a Merkle tree for compact commitments.
 
 ### Leaf Node Hashing
 
+**Reference**: See `src/script/taproot.cpp:23-26` in lotusd.
+
 ```
-leaf_hash = tagged_hash("TapLeaf", version || script)
+leaf_hash = tagged_hash("TapLeaf", leaf_version || compact_size(script_length) || script_bytes)
 ```
 
-Where:
+**Components**:
 
-- `version = 0xc0` (192) - TAPROOT_LEAF_TAPSCRIPT
-- `script` - The complete script as a serialized CScript (includes its own length encoding)
+- `leaf_version = 0xc0` (192 decimal) - TAPROOT_LEAF_TAPSCRIPT constant
+- `compact_size(script_length)` - Variable-length integer encoding of script length
+- `script_bytes` - Raw script bytes
 
-**Note**: The lotusd implementation directly serializes the `CScript` object, which includes the script's length as part of its serialization. In TypeScript implementations, you need to manually add compact size encoding of the script length before the script bytes.
+**Compact Size Encoding**:
+
+Bitcoin's compact size format encodes integers as follows:
+
+- `0x00-0xFC` (0-252): Single byte (value itself)
+- `0xFD` + 2 bytes: Values 253-65535 (little-endian uint16)
+- `0xFE` + 4 bytes: Values 65536-4294967295 (little-endian uint32)
+- `0xFF` + 8 bytes: Values > 4294967295 (little-endian uint64)
+
+**Example**:
+
+```
+Script: <pubkey> OP_CHECKSIG
+  Raw bytes: 0x21 <33-byte pubkey> 0xac
+  Length: 35 bytes
+
+Leaf Hash Calculation:
+  leaf_version = 0xc0
+  compact_size(35) = 0x23  // Single byte (35 < 253)
+  script_bytes = 0x21 <33-byte pubkey> 0xac
+
+  Input to tagged_hash:
+    0xc0 || 0x23 || 0x21 || <33-byte pubkey> || 0xac
+
+  leaf_hash = tagged_hash("TapLeaf", above_bytes)
+```
+
+**Critical**: The compact size encoding is **required** for correct leaf hash calculation. Omitting it will produce an incorrect merkle root and cause commitment verification to fail.
 
 ### Branch Node Hashing
+
+**Reference**: See `src/script/taproot.cpp:34-40` in lotusd.
 
 ```
 branch_hash = tagged_hash("TapBranch", left_hash || right_hash)
 ```
 
-Note: Hashes are sorted lexicographically before hashing.
+**Lexicographic Ordering Requirement**:
+
+Before hashing, the two child hashes MUST be sorted in lexicographic (bytewise) order:
+
+```
+if left_hash < right_hash (bytewise comparison):
+    branch_hash = tagged_hash("TapBranch", left_hash || right_hash)
+else:
+    branch_hash = tagged_hash("TapBranch", right_hash || left_hash)
+```
+
+**Why This Matters**:
+
+1. **Deterministic Tree Construction**: The same set of scripts always produces the same merkle root, regardless of the order they were added to the tree.
+
+2. **Prevents Malleability**: Without ordering, an attacker could create different merkle roots for the same script set by reordering branches, potentially causing confusion or exploits.
+
+3. **Simplified Verification**: Verifiers don't need to know the original tree structure—they only need the merkle proof, which is unambiguous due to deterministic ordering.
+
+4. **Consensus Requirement**: lotusd enforces this ordering during verification. A control block with incorrectly ordered proof nodes will fail validation.
+
+**Example**:
+
+```
+Given two leaf hashes:
+  leaf_A = 0x1234...  (starts with 0x12)
+  leaf_B = 0x5678...  (starts with 0x56)
+
+Bytewise comparison: 0x12 < 0x56
+
+Correct branch hash:
+  branch = tagged_hash("TapBranch", leaf_A || leaf_B)
+
+Incorrect (will fail verification):
+  branch = tagged_hash("TapBranch", leaf_B || leaf_A)
+```
 
 ### Tree Structure
 
@@ -828,55 +1047,94 @@ Root = leaf_hash(script)
 
 **Building a Tree**:
 
-```typescript
-import { Script, Opcode, buildScriptPathTaproot, TapNode } from 'lotus-sdk'
+```
+Example: Two-Script Tree
 
-// Create scripts
-const script1 = new Script().add(pubkey1).add(Opcode.OP_CHECKSIG)
-const script2 = new Script().add(pubkey2).add(Opcode.OP_CHECKSIG)
+Script 1:
+  <pubkey_1>
+  OP_CHECKSIG
 
-// Build tree
-const tree: TapNode = {
-  left: { script: script1 },
-  right: { script: script2 },
-}
+Script 2:
+  <pubkey_2>
+  OP_CHECKSIG
 
-const { script, merkleRoot, leaves } = buildScriptPathTaproot(
-  internalPubKey,
-  tree,
-)
+Tree Construction Algorithm:
+  1. Calculate leaf hashes:
+     leaf_1 = tagged_hash("TapLeaf", 0xc0 || compact_size(len(script_1)) || script_1)
+     leaf_2 = tagged_hash("TapLeaf", 0xc0 || compact_size(len(script_2)) || script_2)
 
-console.log('Merkle root:', merkleRoot.toString('hex'))
-console.log('Number of leaves:', leaves.length)
+  2. Combine into branch (lexicographic ordering):
+     if leaf_1 < leaf_2 (bytewise comparison):
+       merkle_root = tagged_hash("TapBranch", leaf_1 || leaf_2)
+     else:
+       merkle_root = tagged_hash("TapBranch", leaf_2 || leaf_1)
+
+  3. Create commitment:
+     tweak = tagged_hash("TapTweak", internal_pubkey || merkle_root)
+     commitment = internal_pubkey + tweak × G
+
+  4. Build P2TR output:
+     scriptPubKey = OP_SCRIPTTYPE OP_1 0x21 <commitment>
+
+Result:
+  - Merkle root: 32-byte hash
+  - Number of leaves: 2
+  - Tree depth: 1 (requires 1 proof node to spend either script)
 ```
 
 ---
 
-## Use Cases
+## IV. Common Use Cases
 
-Taproot enables various advanced use cases by combining privacy, efficiency, and flexibility. Each use case demonstrates different Taproot features with complete working code examples.
+Taproot enables various advanced use cases by combining privacy, efficiency, and flexibility.
 
-### Available Examples
+### Single-Key Spending
 
-1. **[Single-Key Spending](./examples/taproot-single-key)** - Simple payments with maximum privacy
-2. **[Time-Locked Voting](./examples/taproot-timelock)** - Locked funds with refund mechanisms
-3. **[Multi-Signature Governance](./examples/taproot-multisig)** - Organizations with multiple signing options
-4. **[Moderated Comments](./examples/taproot-moderation)** - Stakeable comments with penalty mechanisms
-5. **[Lightning Channels](./examples/taproot-lightning)** - Efficient payment channels
-6. **[Atomic Swaps](./examples/taproot-atomic-swaps)** - Trustless cross-chain exchanges
-7. **[Vaults](./examples/taproot-vaults)** - Secure cold storage with delayed withdrawals
-8. **[NFTs with State](./examples/taproot-nfts)** - Digital collectibles using the 32-byte state parameter
+**Purpose**: Simple payments with maximum privacy
+**Structure**: Key-only Taproot (no script tree)
+**Privacy**: Indistinguishable from multi-sig or complex scripts
+**Size**: 36-byte output, 65-byte signature
 
-Each example includes:
+### Time-Locked Recovery
 
-- Complete TypeScript/JavaScript code using lotus-sdk
-- Real transaction formats (hex and JSON)
-- Script breakdowns and size comparisons
-- Security considerations
+**Purpose**: Funds locked with time-based fallback
+**Structure**: Key path (cooperative) + script path (time-lock + signature)
+**Use Case**: Lightning channels, escrow services
+**Privacy**: Time-lock only revealed if used
+
+### Multi-Signature Governance
+
+**Purpose**: Organizations requiring multiple approvals
+**Structure**: MuSig2 key path + explicit multisig script path fallback
+**Privacy**: Cooperative spending looks like single-sig
+**Efficiency**: 67 bytes (key path) vs 350+ bytes (explicit multisig)
+
+### Atomic Swaps
+
+**Purpose**: Trustless cross-chain exchanges
+**Structure**: Hash-locked scripts with time-lock refunds
+**Privacy**: Swap details only revealed on-chain if executed
+**Security**: Both parties protected by time-locks
+
+### Vaults
+
+**Purpose**: Secure cold storage with delayed withdrawals
+**Structure**: Multiple time-locked recovery paths
+**Security**: Attacker cannot immediately steal funds
+**Flexibility**: Different time-locks for different amounts
+
+### Stateful Contracts
+
+**Purpose**: Smart contracts requiring persistent state
+**Structure**: Script path with 32-byte state parameter
+**Use Cases**: NFTs with royalties, token covenants, channel state
+**Trade-off**: +33 bytes output size for state inclusion
 
 ---
 
-## Security Considerations
+## V. Security Considerations
+
+**Reference**: See `src/script/interpreter.cpp:2074-2156` in lotusd for complete verification logic.
 
 ### Signature Requirements
 
@@ -976,11 +1234,13 @@ tx.sign(privateKey, sighashType, 'schnorr')
 
 ---
 
-## State Parameter
+## VI. Advanced Features
+
+### State Parameter
 
 The optional 32-byte state parameter enables stateful smart contracts by including additional data that gets pushed onto the script stack before execution.
 
-**Size Impact**: Adds 32 bytes to output (36 bytes → 68 bytes total)
+**Size Impact**: Adds 33 bytes to output (36 bytes → 69 bytes total)
 
 **Visibility**: State is visible on-chain
 
@@ -996,84 +1256,69 @@ The optional 32-byte state parameter enables stateful smart contracts by includi
 
 **Example**:
 
-```typescript
-import { buildPayToTaproot, PublicKey } from 'lotus-sdk'
+```
+Given:
+  commitment = <33-byte tweaked public key>
+  state = <32-byte state data>
 
-const commitment = tweakedPubKey
-const state = Buffer.from('0'.repeat(64), 'hex') // 32-byte state
+Script Construction:
+  scriptPubKey = OP_SCRIPTTYPE || OP_1 || 0x21 || commitment || 0x20 || state
 
-// Create Taproot with state
-const script = buildPayToTaproot(commitment, state)
+  Breakdown:
+    OP_SCRIPTTYPE: 0x62 (1 byte)
+    OP_1:          0x51 (1 byte)
+    0x21:          33 (1 byte) - push opcode for commitment
+    commitment:    33 bytes
+    0x20:          32 (1 byte) - push opcode for state
+    state:         32 bytes
 
-console.log('Script size:', script.toBuffer().length) // 69 bytes
+  Total size: 69 bytes
+
+Without state:
+  scriptPubKey = OP_SCRIPTTYPE || OP_1 || 0x21 || commitment
+  Total size: 36 bytes
 ```
 
 ---
 
-## Compatibility
+## VII. Implementation Status
 
 ### Consensus Status
 
-Taproot was initially activated but is currently **disabled** in Lotus consensus (as of Numbers upgrade, December 2022). Re-activation is planned for a future network upgrade.
+**Reference**: See `src/script/taproot.h` and `src/script/taproot.cpp` in lotusd.
 
-### Wallet Support
+Taproot is **fully enabled** and operational in Lotus consensus as of the genesis block. All Taproot validation rules are enforced by lotusd nodes.
 
-Full Taproot support requires:
+### Activation Status
 
-- Schnorr signature implementation
-- SIGHASH_LOTUS support
-- Taproot address parsing
-- Key tweaking functionality
+- **Enabled**: Genesis block (June 21, 2021)
+- **Flag**: `SCRIPT_DISABLE_TAPROOT_SIGHASH_LOTUS` (when set, disables Taproot)
+- **Default**: Taproot enabled on mainnet, testnet, and regtest
 
-### Testing
+### Implementation Requirements
 
-When Taproot is re-enabled:
+Any software implementing Taproot spending must:
 
-1. **Regtest**: Test all functionality in controlled environment
-2. **Testnet**: Verify with real network conditions
-3. **Key Path First**: Start with simple single-key spending
-4. **Script Path**: Test alternative spending conditions
-5. **Integration**: Verify with RANK protocol and other features
+1. **Schnorr Signature Support**: Implement 64-byte Schnorr signatures per BIP340
+2. **SIGHASH_LOTUS Support**: Implement Lotus-specific sighash algorithm (0x60)
+3. **Tagged Hashing**: Implement `tagged_hash(tag, msg) = SHA256(SHA256(tag) || SHA256(tag) || msg)`
+4. **33-byte Commitment Handling**: Support compressed public keys (not x-only)
+5. **Control Block Encoding**: Correctly encode/decode internal pubkey parity
+6. **Merkle Proof Verification**: Implement lexicographic ordering for branches
+7. **State Parameter Support**: Handle optional 32-byte state in outputs
 
-### Implementation Status
+### Ecosystem Support
 
-Full Taproot support is available in lotus-sdk including:
-
-- Complete address support (Legacy + XAddress)
-- Transaction creation and signing
-- Script tree building and verification
-- SIGHASH_LOTUS integration
-- Schnorr signature support
-
-**Getting Started**:
-
-```bash
-npm install lotus-sdk
-```
-
-```typescript
-import {
-  PrivateKey,
-  buildKeyPathTaproot,
-  Transaction,
-  TaprootInput,
-  Signature,
-} from 'lotus-sdk'
-
-// Generate key
-const privateKey = new PrivateKey()
-
-// Create Taproot address
-const taprootScript = buildKeyPathTaproot(privateKey.publicKey)
-const address = taprootScript.toAddress()
-
-console.log('Taproot address:', address.toString())
-// Example: lotus_JHMEcuQ6SyDcJKsSJVd6cZRSVZ8NqWZNMwAX8RDirNEazCfEgFp
-```
+- **lotusd**: Full consensus validation (reference implementation)
+- **chronik_nng**: Complete P2TR indexing and script type detection
+- **Lotus wallets**: Support for creating and spending Taproot outputs
+- **RANK/RNKC protocols**: Accept votes and comments from Taproot addresses
 
 ---
 
-## Verification Process
+## VIII. Verification Algorithms
+
+### Verification Process
 
 ### Overview
 
@@ -1107,26 +1352,22 @@ When stack contains exactly one element:
 When stack contains two or more elements:
 
 1. **Extract Components**:
-
    - Control block: Last stack element (`stacktop(-1)`)
    - Script: Second-to-last element (`stacktop(-2)`)
    - Arguments: Remaining stack elements (for script execution)
 
 2. **Validate Control Block Size**:
-
    - Minimum: 33 bytes (TAPROOT_CONTROL_BASE_SIZE)
    - Maximum: 4,129 bytes (TAPROOT_CONTROL_MAX_SIZE)
    - Must be: 33 + (32 × n) where n ≤ 128
    - Error if invalid: `TAPROOT_WRONG_CONTROL_SIZE`
 
 3. **Validate Leaf Version**:
-
    - Extract: `leaf_version = control_block[0] & TAPROOT_LEAF_MASK` (0xfe)
    - Must equal: 0xc0 (TAPROOT_LEAF_TAPSCRIPT)
    - Error if not: `TAPROOT_LEAF_VERSION_NOT_SUPPORTED`
 
 4. **Verify Commitment** (VerifyTaprootCommitment):
-
    - Extract parity: `parity = control_block[0] & 0x01`
    - Extract x-coordinate: `x_coord = control_block[1:33]`
    - Reconstruct internal pubkey: `prefix = (parity == 1) ? 0x03 : 0x02`
@@ -1146,14 +1387,12 @@ When stack contains two or more elements:
    - Error if mismatch: `TAPROOT_VERIFY_COMMITMENT_FAILED`
 
 5. **Prepare Stack**:
-
    - Pop control block and script from stack
    - If scriptPubKey has state (size == 69 bytes):
      - Extract state: bytes [37:69]
      - Push state onto stack
 
 6. **Execute Script**:
-
    - Run revealed script with prepared stack
    - Script must complete successfully
    - Top stack element must be truthy (cast to bool == true)
@@ -1177,15 +1416,32 @@ When stack contains two or more elements:
 
 ---
 
-## Technical Reference
+## IX. Technical Reference
 
 ### Constants
 
+**Reference**: See `src/script/taproot.h` and `src/script/script.h` in lotusd.
+
 - `TAPROOT_LEAF_TAPSCRIPT`: 0xc0 (192) - Only supported leaf version
 - `TAPROOT_LEAF_MASK`: 0xfe (254) - Mask to extract leaf version from control byte
-- `TAPROOT_SCRIPTTYPE`: OP_1 = 0x51 (81) - Version byte in scriptPubKey
-- `OP_SCRIPTTYPE`: 0x62 (98) - Taproot marker in scriptPubKey
+- `OP_SCRIPTTYPE`: 0x62 (98) - Script type marker opcode (first byte of P2TR output)
+- `TAPROOT_SCRIPTTYPE`: OP_1 = 0x51 (81) - Taproot version byte (second byte of P2TR output)
 - `ADDRESS_TYPE_BYTE`: 2 - XAddress type for Taproot addresses
+
+**Naming Clarification**:
+
+- `OP_SCRIPTTYPE` (0x62): The **marker opcode** that identifies this as a script-type output (not a standard P2PKH/P2SH). This is the **first byte** of the scriptPubKey.
+- `TAPROOT_SCRIPTTYPE` (0x51 = OP_1): The **version byte** that specifies this is Taproot version 1. This is the **second byte** of the scriptPubKey.
+
+These are two different constants serving different purposes:
+
+```
+scriptPubKey structure:
+  [OP_SCRIPTTYPE] [TAPROOT_SCRIPTTYPE] [0x21] [33-byte commitment]
+  [    0x62    ] [      0x51        ] [0x21] [33-byte commitment]
+  [   marker   ] [     version      ] [push] [   commitment     ]
+```
+
 - `TAPROOT_INTRO_SIZE`: 3 bytes - Size of OP_SCRIPTTYPE + OP_1 + push opcode
 - `TAPROOT_SIZE_WITHOUT_STATE`: 36 bytes - scriptPubKey size without state
 - `TAPROOT_SIZE_WITH_STATE`: 69 bytes - scriptPubKey size with state
@@ -1208,33 +1464,23 @@ When stack contains two or more elements:
 - **Schnorr signature**: 64 bytes (without sighash byte)
 - **Full signature**: 65 bytes (64-byte Schnorr + 1-byte sighash type)
 
-### Lotus Network Parameters
-
-- Block time: ~2 minutes (average)
-- Blocks per day: 720
-- Blocks per week: 5,040
-- Blocks per month: 21,600
-- Transaction sizes: Measured in bytes (no SegWit)
-
 ### Implementation References
 
-**Consensus Implementation (lotusd)**:
+**lotusd Consensus Implementation**:
 
 - `src/script/taproot.h` - Constants and function declarations
-- `src/script/taproot.cpp` - Core Taproot verification logic
-- `src/script/interpreter.cpp` - `VerifyTaprootSpend()` (lines 2074-2156)
-- `src/script/sigencoding.cpp` - Signature encoding validation
+- `src/script/taproot.cpp` - Core Taproot verification logic (`VerifyTaprootCommitment`, `IsPayToTaproot`)
+- `src/script/interpreter.cpp` - Main verification entry point `VerifyTaprootSpend()` (lines 2074-2156)
+- `src/script/sigencoding.cpp` - Signature encoding validation (`CheckTransactionSignatureEncoding`)
+- `src/script/sighashtype.h` - SIGHASH_LOTUS definition (0x60)
+- `src/hash.h` - Tagged hash implementation (`TaggedHash` function)
+- `src/pubkey.h` - Public key constants (COMPRESSED_SIZE = 33)
 
-**Library Implementation**:
+**Bitcoin BIPs (Conceptual Reference Only)**:
 
-- [lotus-sdk](https://github.com/LotusiaStewardship/lotus-sdk) - TypeScript/JavaScript Taproot support
-- `lib/bitcore/taproot.ts` - Complete Taproot implementation
-
-**Bitcoin BIPs (Reference Only)**:
-
-- [BIP340: Schnorr Signatures](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki)
-- [BIP341: Taproot](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki) - Note: Lotus differs in key areas
-- [BIP342: Tapscript](https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki)
+- [BIP340: Schnorr Signatures](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) - Schnorr signature algorithm
+- [BIP341: Taproot](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki) - Conceptual basis (Lotus implementation differs significantly)
+- [BIP342: Tapscript](https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki) - Script execution semantics
 
 ::alert{type="warning"}
 **Important**: While Lotus Taproot is inspired by Bitcoin's BIP341, there are significant differences (33-byte vs 32-byte commitments, parity encoding, SIGHASH_LOTUS requirement). Always refer to the lotusd implementation as the authoritative source for Lotus consensus rules.
@@ -1242,5 +1488,5 @@ When stack contains two or more elements:
 
 ---
 
-**Last Modified**: November 10, 2025  
-**Revision**: Updated to match lotusd consensus implementation exactly
+**Last Modified**: March 5, 2026  
+**Revision**: Comprehensive technical specification review - removed client-side library references, clarified push opcodes and constant naming, added explicit consensus rules summary, enhanced cryptographic primitive documentation with lotusd source references, reorganized document structure to separate consensus rules from implementation details
