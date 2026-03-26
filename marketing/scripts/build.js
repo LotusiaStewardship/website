@@ -357,7 +357,7 @@ function buildDocs() {
         const groupName = group || 'General';
         if (!groups[groupName]) groups[groupName] = [];
         groups[groupName].push({ title, path: docPath });
-        const renderedBody = marked(body).replace(/src="\/img\//g, 'src="/assets/images/').replace(/src="\.\.\/img\//g, 'src="/assets/images/');
+        const renderedBody = marked(body).replace(/src="\/img\//g, 'src="/assets/images/').replace(/src="\.\.\/img\//g, 'src="/assets/images/').replace(/src="\/(preview[^"]*\.png)"/g, 'src="/assets/images/$1"');
         allDocs.push({ title, path: docPath, body: renderedBody, description: meta.description || '', group: groupName });
       }
     }
