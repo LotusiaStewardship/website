@@ -153,15 +153,17 @@ function buildRoadmap() {
   let sectionsHtml = '';
   if (data.sections) {
     sectionsHtml = data.sections.map(epoch => {
-      const groups = (epoch.groups || []).map(g => {
-        const tasks = (g.tasks || []).map(t => {
-          const cls = t.done ? 'task task-done' : 'task';
-          return `<div class="${cls}">${t.label}</div>`;
+      const headline = epoch.headline ? `<p class="epoch-headline">${epoch.headline}</p>` : '';
+      const cards = (epoch.cards || []).map(card => {
+        const checklist = (card.checklist || []).map(item => {
+          const cls = item.complete ? 'task task-done' : 'task';
+          return `<div class="${cls}">${item.label}</div>`;
         }).join('');
-        const links = renderLinks(g.links);
-        return `<div class="roadmap-group"><div class="roadmap-group-title">${g.title}</div><div class="roadmap-group-desc">${g.description || ''}</div>${tasks}${links}</div>`;
+        const links = renderLinks(card.links);
+        const statusBadge = card.status ? `<span class="status-badge status-${card.status}">${card.status}</span>` : '';
+        return `<div class="roadmap-card"><div class="roadmap-card-title">${card.title} ${statusBadge}</div><div class="roadmap-card-desc">${card.description || ''}</div>${checklist}${links}</div>`;
       }).join('');
-      return `<section class="roadmap-epoch"><h2 class="epoch-title">${epoch.title}</h2>${groups}</section>`;
+      return `<section class="roadmap-epoch"><h2 class="epoch-title">${epoch.title}</h2>${headline}${cards}</section>`;
     }).join('\n');
   }
   const bc = breadcrumb([{ name: 'Roadmap', url: '/roadmap' }]);
@@ -185,22 +187,46 @@ function buildRoadmap() {
   writeOut('roadmap', html);
 }
 
+function renderTable(tableData) {
+  if (!tableData || !tableData.columns || !tableData.rows) return '';
+  const headers = tableData.columns.map(c => `<th>${c.label || c.key}</th>`).join('');
+  const rows = tableData.rows.map(r => {
+    const cells = tableData.columns.map(c => `<td>${r[c.key] || ''}</td>`).join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
+  return `<table class="specs-table"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+
 function buildFaq() {
   const data = readYaml('faq.yml');
   const tmpl = readTemplate('landing');
   let sectionsHtml = '';
-  if (data.sections) {
-    sectionsHtml = data.sections.map(s => {
-      const features = renderFeatures(s.features);
-      const links = renderLinks(s.links);
-      let specsHtml = '';
-      if (s.specs) {
-        specsHtml = '<table class="specs-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>' +
-          s.specs.map(sp => `<tr><td>${sp.name}</td><td>${sp.value}</td></tr>`).join('') +
-          '</tbody></table>';
-      }
-      return `<section class="faq-section"><div class="faq-group"><h2 class="faq-group-title">${s.title}</h2><p>${s.description || ''}</p>${features}${specsHtml}${links}</div></section>`;
+
+  if (data.questions) {
+    const qHtml = data.questions.map(q => {
+      let extra = '';
+      if (q.note) extra += `<p class="faq-note">${q.note}</p>`;
+      if (q.table) extra += renderTable(q.table);
+      if (q.links) extra += `<div class="faq-links">${q.links.map(l => `<a href="${l.to}" class="btn btn-sm btn-secondary"${l.target ? ` target="${l.target}"` : ''}>${l.label}</a>`).join(' ')}</div>`;
+      return `<details class="faq-item"><summary>${q.text}</summary><div class="faq-answer"><p>${q.answer}</p>${extra}</div></details>`;
     }).join('\n');
+    sectionsHtml += `<section class="faq-section"><div class="faq-group"><h2 class="faq-group-title">Frequently Asked Questions</h2>${qHtml}</div></section>`;
+  }
+
+  if (data.technical) {
+    let techHtml = '';
+    if (data.technical.questions) {
+      techHtml += data.technical.questions.map(q => {
+        let extra = q.note ? `<p class="faq-note">${q.note}</p>` : '';
+        return `<details class="faq-item"><summary>${q.text}</summary><div class="faq-answer"><p>${q.answer}</p>${extra}</div></details>`;
+      }).join('\n');
+    }
+    if (data.technical.sections) {
+      techHtml += data.technical.sections.map(s =>
+        `<div class="specs-group"><h3>${s.title}</h3>${renderTable(s.table)}</div>`
+      ).join('\n');
+    }
+    sectionsHtml += `<section class="faq-section"><div class="faq-group"><h2 class="faq-group-title">${data.technical.title || 'Technical Specifications'}</h2><p>${data.technical.description || ''}</p>${techHtml}</div></section>`;
   }
   const bc = breadcrumb([{ name: 'FAQ', url: '/faq' }]);
   const jsonLd = `<script type="application/ld+json">${pageJsonLd('FAQ', data.description || '', '/faq')}</script>`;
@@ -243,6 +269,7 @@ function buildBlog() {
     const dateStr = meta.date || '';
     const dateIso = dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
     const ogImage = meta.image?.src ? `/assets/images/blog/${path.basename(meta.image.src)}` : '/assets/images/blog_0.jpg';
+    const authorName = meta.authors?.[0]?.name || meta.author || 'Lotusia Stewardship';
     const html = inject(tmpl, {
       title: meta.title || slug,
       description: meta.description || '',
@@ -250,7 +277,7 @@ function buildBlog() {
       og_image: ogImage,
       date: dateStr,
       date_iso: dateIso,
-      author: meta.author || 'Lotusia Stewardship',
+      author: authorName,
       body: htmlBody
     });
     writeOut(`blog/${slug}`, html);
@@ -336,6 +363,14 @@ fs.cpSync(ASSETS, path.join(DIST, 'assets'), { recursive: true });
 
 // Robots.txt
 fs.writeFileSync(path.join(DIST, 'robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: https://lotusia.burnlotus.org/sitemap.xml\n');
+
+// _redirects for dynamic routes (Cloudflare Pages)
+fs.writeFileSync(path.join(DIST, '_redirects'), [
+  '/explorer https://explorer.lotusia.org 301',
+  '/explorer/* https://explorer.lotusia.org/explorer/:splat 301',
+  '/social/* https://lotusia.org/social/:splat 301',
+  '/api/* https://lotusia.org/api/:splat 200',
+].join('\n') + '\n');
 
 // Sitemap
 const allPages = [];
