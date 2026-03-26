@@ -17,6 +17,10 @@ useSeoMeta({
   ogImage: page.value.ogImage
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: 'https://lotusia.org/faq' }]
+})
+
 function createLinkHash(question: string) {
   return question
     .toLowerCase()

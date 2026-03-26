@@ -23,7 +23,9 @@ useSeoMeta({
   ogType: 'website',
   ogImage: 'https://lotusia.org/img/turtles_hero.jpeg',
   twitterImage: 'https://lotusia.org/img/turtles_hero.jpeg',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
+  robots: 'index, follow',
+  author: 'Lotusia Stewardship'
 })
 
 useHead({
@@ -36,14 +38,27 @@ useHead({
         'name': 'Lotusia',
         'url': 'https://lotusia.org',
         'description': 'Ethical proof-of-work blockchain built to foster human relationships, build reciprocal culture, and bolster societal value production',
+        'inLanguage': 'en',
         'publisher': {
           '@type': 'Organization',
           'name': 'Lotusia Stewardship',
           'url': 'https://lotusia.org',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': 'https://lotusia.org/img/logo.png'
+          },
+          'foundingDate': '2021',
           'sameAs': [
             'https://github.com/LotusiaStewardship',
-            'https://t.me/givelotus'
+            'https://t.me/givelotus',
+            'https://guillioud.com',
+            'https://lotusia.org'
           ]
+        },
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': 'https://lotusia.org/docs?q={search_term_string}',
+          'query-input': 'required name=search_term_string'
         }
       })
     }

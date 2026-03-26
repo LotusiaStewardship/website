@@ -22,6 +22,10 @@ useSeoMeta({
   ogDescription: page.value.description,
   ogImage: page.value.ogImage
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://lotusia.org/tools' }]
+})
 </script>
 
 <template>
