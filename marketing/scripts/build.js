@@ -89,23 +89,59 @@ function renderSections(sections, pageType) {
   }).join('\n');
 }
 
+function breadcrumb(parts) {
+  const items = [{ name: 'Home', url: '/' }, ...parts];
+  const html = items.map((p, i) => i < items.length - 1
+    ? `<a href="${p.url}">${p.name}</a>` : `<span>${p.name}</span>`
+  ).join(' / ');
+  const ld = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    'itemListElement': items.map((p, i) => ({
+      '@type': 'ListItem', 'position': i + 1,
+      'name': p.name, 'item': `https://lotusia.burnlotus.org${p.url}`
+    }))
+  };
+  return { html, ld: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` };
+}
+
+function pageJsonLd(title, description, pagePath) {
+  return JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'WebPage',
+    'name': title, 'description': description,
+    'url': `https://lotusia.burnlotus.org${pagePath}`,
+    'isPartOf': { '@type': 'WebSite', 'name': 'Lotusia', 'url': 'https://lotusia.burnlotus.org' },
+    'publisher': { '@type': 'Organization', 'name': 'Lotusia Stewardship', 'url': 'https://lotusia.burnlotus.org' },
+    'inLanguage': 'en'
+  });
+}
+
 function buildLanding(file, pagePath, pageType) {
   const data = readYaml(file);
   const tmpl = readTemplate('landing');
+  const imgFile = data.ogImage || data.hero?.image;
+  const ogImg = imgFile ? `/assets/images/${path.basename(typeof imgFile === 'string' ? imgFile : imgFile.light || 'turtles_hero.jpeg')}` : '/assets/images/turtles_hero.jpeg';
   const heroImg = data.hero?.image
-    ? `<div class="hero-image"><img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}"></div>`
+    ? `<div class="hero-image"><img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}" loading="lazy"></div>`
     : '';
+  const pageTitle = data.ogTitle || data.title || '';
+  const bc = pagePath === '/'
+    ? { html: '<span>Home</span>', ld: '' }
+    : breadcrumb([{ name: pageTitle, url: pagePath }]);
+  const jsonLd = `<script type="application/ld+json">${pageJsonLd(pageTitle, data.description || '', pagePath)}</script>`;
   const html = inject(tmpl, {
-    title: data.ogTitle || data.title || '',
-    og_title: data.ogTitle || data.title || '',
+    title: pageTitle,
+    og_title: pageTitle,
     description: data.description || '',
     path: pagePath,
+    og_image: ogImg,
     hero_title: data.hero?.title || data.title || '',
     hero_description: data.hero?.description || data.description || '',
     hero_links: renderLinks(data.hero?.links),
     hero_image: heroImg,
     sections: renderSections(data.sections, pageType),
     cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.hero?.links)}</section>` : '',
+    breadcrumb: bc.html,
+    json_ld: jsonLd + bc.ld,
     head_extra: ''
   });
   writeOut(pagePath === '/' ? '' : pagePath.slice(1), html);
@@ -128,17 +164,22 @@ function buildRoadmap() {
       return `<section class="roadmap-epoch"><h2 class="epoch-title">${epoch.title}</h2>${groups}</section>`;
     }).join('\n');
   }
+  const bc = breadcrumb([{ name: 'Roadmap', url: '/roadmap' }]);
+  const jsonLd = `<script type="application/ld+json">${pageJsonLd('Roadmap', data.description || '', '/roadmap')}</script>`;
   const html = inject(tmpl, {
     title: data.ogTitle || 'Roadmap',
     og_title: data.ogTitle || 'Roadmap',
     description: data.description || '',
     path: '/roadmap',
+    og_image: '/assets/images/roadmap_0.jpg',
     hero_title: data.hero?.title || 'Roadmap',
     hero_description: data.hero?.description || data.description || '',
     hero_links: '',
-    hero_image: data.hero?.ogImage ? `<div class="hero-image"><img src="/assets/images/${path.basename(data.hero.ogImage)}" alt="Roadmap"></div>` : '',
+    hero_image: data.hero?.ogImage ? `<div class="hero-image"><img src="/assets/images/${path.basename(data.hero.ogImage)}" alt="Roadmap" loading="lazy"></div>` : '',
     sections: sectionsHtml,
     cta: '',
+    breadcrumb: bc.html,
+    json_ld: jsonLd + bc.ld,
     head_extra: ''
   });
   writeOut('roadmap', html);
@@ -161,17 +202,22 @@ function buildFaq() {
       return `<section class="faq-section"><div class="faq-group"><h2 class="faq-group-title">${s.title}</h2><p>${s.description || ''}</p>${features}${specsHtml}${links}</div></section>`;
     }).join('\n');
   }
+  const bc = breadcrumb([{ name: 'FAQ', url: '/faq' }]);
+  const jsonLd = `<script type="application/ld+json">${pageJsonLd('FAQ', data.description || '', '/faq')}</script>`;
   const html = inject(tmpl, {
     title: data.ogTitle || 'FAQ',
     og_title: data.ogTitle || 'FAQ',
     description: data.description || '',
     path: '/faq',
+    og_image: '/assets/images/turtles_hero.jpeg',
     hero_title: data.hero?.title || 'FAQ',
     hero_description: data.hero?.description || data.description || '',
     hero_links: renderLinks(data.links),
     hero_image: '',
     sections: sectionsHtml,
     cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.cta.links)}</section>` : '',
+    breadcrumb: bc.html,
+    json_ld: jsonLd + bc.ld,
     head_extra: ''
   });
   writeOut('faq', html);
@@ -194,12 +240,16 @@ function buildBlog() {
     const slug = file.replace(/^\d+\./, '').replace('.md', '');
     const htmlBody = marked(body);
     const tmpl = readTemplate('blog-post');
+    const dateStr = meta.date || '';
+    const dateIso = dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
+    const ogImage = meta.image?.src ? `/assets/images/blog/${path.basename(meta.image.src)}` : '/assets/images/blog_0.jpg';
     const html = inject(tmpl, {
       title: meta.title || slug,
       description: meta.description || '',
       slug,
-      og_image: meta.image?.src || '/assets/images/blog_0.jpg',
-      date: meta.date || '',
+      og_image: ogImage,
+      date: dateStr,
+      date_iso: dateIso,
       author: meta.author || 'Lotusia Stewardship',
       body: htmlBody
     });
@@ -243,12 +293,19 @@ function buildDocs() {
   ).join('\n');
 
   for (const doc of allDocs) {
+    const pathParts = doc.path.split('/').filter(Boolean);
+    const bcParts = [{ name: 'Docs', url: '/docs' }];
+    if (pathParts.length > 1) {
+      bcParts.push({ name: doc.title, url: doc.path });
+    }
+    const bc = breadcrumb(bcParts);
     const html = inject(tmpl, {
       title: doc.title,
-      description: doc.description,
+      description: doc.description || `Lotusia technical documentation: ${doc.title}`,
       path: doc.path,
       sidebar,
-      body: doc.body
+      body: doc.body,
+      breadcrumb: bc.html
     });
     const outPath = doc.path === '/docs' ? 'docs' : doc.path.slice(1);
     writeOut(outPath, html);

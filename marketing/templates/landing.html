@@ -5,21 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}} | Lotusia</title>
     <meta name="description" content="{{description}}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Lotusia Stewardship">
     <meta property="og:title" content="{{og_title}}">
     <meta property="og:description" content="{{description}}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lotusia.burnlotus.org{{path}}">
-    <meta property="og:image" content="https://lotusia.burnlotus.org/assets/images/turtles_hero.jpeg">
+    <meta property="og:image" content="https://lotusia.burnlotus.org{{og_image}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Lotusia">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{og_title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:image" content="https://lotusia.burnlotus.org{{og_image}}">
     <link rel="canonical" href="https://lotusia.burnlotus.org{{path}}">
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Lotusia",
+      "url": "https://lotusia.burnlotus.org",
+      "description": "Ethical proof-of-work blockchain built to foster human relationships, build reciprocal culture, and bolster societal value production",
+      "inLanguage": "en",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lotusia Stewardship",
+        "url": "https://lotusia.burnlotus.org",
+        "logo": {"@type": "ImageObject", "url": "https://lotusia.burnlotus.org/assets/images/logo.png"},
+        "foundingDate": "2021",
+        "sameAs": ["https://github.com/LotusiaStewardship","https://t.me/givelotus","https://guillioud.com","https://lotusia.org"]
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://lotusia.burnlotus.org/docs?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    {{json_ld}}
     {{head_extra}}
 </head>
 <body>
     {{header}}
     <main>
+        <nav aria-label="Breadcrumb" class="breadcrumb">{{breadcrumb}}</nav>
         <section class="hero">
             <div class="hero-content">
                 <h1>{{hero_title}}</h1>

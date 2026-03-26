@@ -150,6 +150,14 @@ html.light .theme-icon::before{content:'☀️'}
 .prose img{max-width:100%;border-radius:var(--radius)}
 .prose blockquote{border-left:3px solid var(--purple);padding:0.5rem 1rem;margin:1rem 0;color:var(--fg-dim);background:var(--purple-dim);border-radius:0 var(--radius) var(--radius) 0}
 
+/* ═══ Breadcrumb ═══ */
+.breadcrumb{max-width:1200px;margin:0 auto;padding:1rem 2rem 0;font-size:0.78rem;color:var(--fg-muted)}
+.breadcrumb a{color:var(--fg-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--purple)}
+.breadcrumb span{color:var(--fg-dim)}
+.docs-breadcrumb{padding:1rem 2rem 0;max-width:none;margin-left:260px}
+@media(max-width:768px){.docs-breadcrumb{margin-left:0}}
+
 /* ═══ Footer ═══ */
 .site-footer{max-width:1200px;margin:0 auto;padding:2rem;text-align:center;font-size:0.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
 

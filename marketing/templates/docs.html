@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} | Lotusia</title>
+    <title>{{title}} | Lotusia Docs</title>
     <meta name="description" content="{{description}}">
+    <meta name="robots" content="index, follow, max-snippet:-1">
+    <meta name="author" content="Lotusia Stewardship">
     <meta property="og:title" content="{{title}} - Lotusia Docs">
     <meta property="og:description" content="{{description}}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://lotusia.burnlotus.org{{path}}">
+    <meta property="og:site_name" content="Lotusia">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title}} - Lotusia Docs">
     <link rel="canonical" href="https://lotusia.burnlotus.org{{path}}">
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "{{title}}",
+      "description": "{{description}}",
+      "url": "https://lotusia.burnlotus.org{{path}}",
+      "author": {"@type": "Organization", "name": "Lotusia Stewardship"},
+      "publisher": {"@type": "Organization", "name": "Lotusia Stewardship", "url": "https://lotusia.burnlotus.org", "logo": {"@type": "ImageObject", "url": "https://lotusia.burnlotus.org/assets/images/logo.png"}},
+      "inLanguage": "en",
+      "isPartOf": {"@type": "WebSite", "name": "Lotusia", "url": "https://lotusia.burnlotus.org"}
+    }
+    </script>
 </head>
 <body>
     {{header}}
     <main class="docs-layout">
-        <aside class="docs-sidebar">
-            {{sidebar}}
+        <nav aria-label="Breadcrumb" class="breadcrumb docs-breadcrumb">{{breadcrumb}}</nav>
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav>{{sidebar}}</nav>
         </aside>
-        <article class="docs-content prose">
-            <h1>{{title}}</h1>
-            {{body}}
+        <article class="docs-content prose" itemscope itemtype="https://schema.org/TechArticle">
+            <h1 itemprop="headline">{{title}}</h1>
+            <div itemprop="articleBody">{{body}}</div>
         </article>
     </main>
     {{footer}}
