@@ -37,9 +37,9 @@ function writeOut(relPath, html) {
 
 function renderFeatures(features) {
   if (!features || !features.length) return '';
-  return '<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">' + features.map(f =>
-    `<div class="rounded-xl bg-gray-100/50 dark:bg-gray-800/50 p-6 border border-gray-200/50 dark:border-gray-700/50"><div class="font-semibold text-gray-900 dark:text-white mb-1">${f.name}</div><div class="text-sm text-gray-500 dark:text-gray-400 leading-6">${f.description}</div></div>`
-  ).join('') + '</div>';
+  return '<dl class="mt-6 leading-7 space-y-4">' + features.map(f =>
+    `<div class="relative pl-8"><dt class="font-semibold text-gray-900 dark:text-white"><span class="absolute left-0 top-1 h-5 w-5 text-primary" aria-hidden="true">&#x2022;</span><span>${f.name}</span></dt><dd class="text-gray-500 dark:text-gray-400 leading-6">${f.description}</dd></div>`
+  ).join('') + '</dl>';
 }
 
 function renderQuotes(quotes) {
@@ -56,8 +56,8 @@ function renderLinks(links) {
   return '<div class="mt-10 flex flex-wrap gap-x-6 gap-y-3">' + links.map(l => {
     const isPrimary = l.color === 'purple' || l.color === 'primary';
     const cls = isPrimary
-      ? 'inline-flex items-center rounded-full font-medium text-sm px-4 py-2.5 shadow-sm bg-primary-500 text-white hover:bg-primary-600 transition-colors gap-x-2'
-      : 'inline-flex items-center rounded-full font-medium text-sm px-4 py-2.5 shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors gap-x-2';
+      ? 'inline-flex items-center rounded-full font-medium text-base gap-x-2.5 px-3.5 py-2.5 shadow-sm text-white dark:text-gray-900 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500 transition-colors'
+      : 'inline-flex items-center rounded-full font-medium text-base gap-x-2.5 px-3.5 py-2.5 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors';
     const tgt = l.target === '_blank' ? ' target="_blank"' : '';
     const href = l.to || '#';
     return `<a href="${href}" class="${cls}"${tgt}>${l.label}</a>`;
