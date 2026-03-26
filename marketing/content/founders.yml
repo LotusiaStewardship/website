@@ -62,7 +62,7 @@ sections:
         icon: i-heroicons-heart-solid
     links:
       - label: LinkedIn
-        to: https://www.linkedin.com/in/matthew-urgero/
+        to: https://www.linkedin.com/in/matthewurgero/
         target: _blank
         color: gray
         icon: i-simple-icons-linkedin

@@ -293,10 +293,12 @@ function buildBlog() {
     const raw = fs.readFileSync(path.join(blogDir, file), 'utf8');
     const { meta, body } = parseFrontmatter(raw);
     const slug = file.replace(/^\d+\./, '').replace('.md', '');
-    const htmlBody = marked(body);
+    const htmlBody = marked(body).replace(/src="\/img\//g, 'src="/assets/images/');
     const tmpl = readTemplate('blog-post');
-    const dateStr = meta.date || '';
-    const dateIso = dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
+    const dateRaw = meta.date || '';
+    const dateObj = dateRaw ? new Date(dateRaw) : null;
+    const dateStr = dateObj ? dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+    const dateIso = dateObj ? dateObj.toISOString().split('T')[0] : '';
     const ogImage = meta.image?.src ? `/assets/images/blog/${path.basename(meta.image.src)}` : '/assets/images/blog_0.jpg';
     const authorName = meta.authors?.[0]?.name || meta.author || 'Lotusia Stewardship';
     const heroImage = ogImage !== '/assets/images/blog_0.jpg'
@@ -315,7 +317,8 @@ function buildBlog() {
     writeOut(`blog/${slug}`, html);
     const authorAvatar = meta.authors?.[0]?.avatar?.src ? `/assets/images/${path.basename(meta.authors[0].avatar.src)}` : '';
     const badge = meta.badge?.label || '';
-    posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: meta.date || '', image: ogImage, author: authorName, avatar: authorAvatar, badge });
+    const cardDate = dateObj ? dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: cardDate, image: ogImage, author: authorName, avatar: authorAvatar, badge });
   }
 
   const postsHtml = posts.map(p => {
@@ -354,7 +357,8 @@ function buildDocs() {
         const groupName = group || 'General';
         if (!groups[groupName]) groups[groupName] = [];
         groups[groupName].push({ title, path: docPath });
-        allDocs.push({ title, path: docPath, body: marked(body), description: meta.description || '', group: groupName });
+        const renderedBody = marked(body).replace(/src="\/img\//g, 'src="/assets/images/').replace(/src="\.\.\/img\//g, 'src="/assets/images/');
+        allDocs.push({ title, path: docPath, body: renderedBody, description: meta.description || '', group: groupName });
       }
     }
   }
