@@ -11,9 +11,9 @@
             <a href="{{url_roadmap}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_roadmap}}</a>
             <a href="{{url_faq}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_faq}}</a>
             <a href="{{url_docs}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_docs}}</a>
-            <div class="relative group">
-                <button class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_more}} <span class="text-xs">▾</span></button>
-                <div class="hidden group-hover:block group-focus-within:block absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50">
+            <div class="relative" data-dropdown>
+                <button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary" data-dropdown-trigger aria-expanded="false">{{nav_more}} <span class="text-xs">▾</span></button>
+                <div class="hidden absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>
                     <a href="{{url_founders}}" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_founders}}</a>
                     <a href="{{url_blog}}" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_blog}}</a>
                     <a href="https://explorer.lotusia.org" target="_blank" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_explorer}}</a>
@@ -48,3 +48,67 @@
         {{lang_switcher_mobile}}
     </div>
 </header>
+<script>
+  (() => {
+    const dropdowns = Array.from(document.querySelectorAll('[data-dropdown]'));
+    if (!dropdowns.length) return;
+
+    const close = (el) => {
+      const menu = el.querySelector('[data-dropdown-menu]');
+      const trigger = el.querySelector('[data-dropdown-trigger]');
+      if (!menu || !trigger) return;
+      menu.classList.add('hidden');
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    const open = (el) => {
+      const menu = el.querySelector('[data-dropdown-menu]');
+      const trigger = el.querySelector('[data-dropdown-trigger]');
+      if (!menu || !trigger) return;
+      menu.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+
+    dropdowns.forEach((el) => {
+      const trigger = el.querySelector('[data-dropdown-trigger]');
+      let closeTimer = null;
+      if (!trigger) return;
+
+      const scheduleClose = () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => close(el), 140);
+      };
+
+      const cancelClose = () => {
+        clearTimeout(closeTimer);
+      };
+
+      el.addEventListener('mouseenter', () => {
+        cancelClose();
+        open(el);
+      });
+      el.addEventListener('mouseleave', scheduleClose);
+      el.addEventListener('focusin', () => {
+        cancelClose();
+        open(el);
+      });
+      el.addEventListener('focusout', () => {
+        if (!el.contains(document.activeElement)) scheduleClose();
+      });
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        cancelClose();
+        const expanded = trigger.getAttribute('aria-expanded') === 'true';
+        dropdowns.forEach((x) => { if (x !== el) close(x); });
+        if (expanded) close(el);
+        else open(el);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      dropdowns.forEach((el) => {
+        if (!el.contains(e.target)) close(el);
+      });
+    });
+  })();
+</script>

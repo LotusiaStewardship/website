@@ -142,9 +142,19 @@ function hreflangTags(alternates) {
 // ── Language switcher ────────────────────────────────────────────────────────
 function langSwitcher(currentLang, alternates, mobile = false) {
   const cur = I18N[currentLang];
+  const flagByLang = {
+    en: '🇬🇧',
+    fr: '🇫🇷',
+    es: '🇪🇸',
+    it: '🇮🇹',
+    de: '🇩🇪',
+    ru: '🇷🇺',
+    cn: '🇨🇳'
+  };
   const items = LANGS.map(lang => {
     const href  = alternates[lang] || alternates.en;
-    const label = `${I18N[lang].lang_name} (${lang.toUpperCase()})`;
+    const flag = flagByLang[lang] || '🌐';
+    const label = `${flag} ${I18N[lang].lang_name} (${lang.toUpperCase()})`;
     const active = lang === currentLang;
     if (mobile) {
       const cls = active
@@ -162,7 +172,8 @@ function langSwitcher(currentLang, alternates, mobile = false) {
     return `<div class="border-t border-gray-200 dark:border-gray-800 mt-2 pt-2">${items}</div>`;
   }
   const langLabel = cur.common.language;
-  return `<div class="relative group"><button class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">${langLabel}: ${currentLang.toUpperCase()} <span class="text-xs">▾</span></button><div class="hidden group-hover:block group-focus-within:block absolute top-full right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50">${items}</div></div>`;
+  const currentFlag = flagByLang[currentLang] || '🌐';
+  return `<div class="relative" data-dropdown><button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary" data-dropdown-trigger aria-expanded="false">${langLabel}: ${currentFlag} ${currentLang.toUpperCase()} <span class="text-xs">▾</span></button><div class="hidden absolute top-full right-0 mt-1 w-60 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>${items}</div></div>`;
 }
 
 // ── Nav vars (injected into every header/footer render) ───────────────────────
@@ -208,6 +219,69 @@ function makePageMeta(lang, pagePath, alternates) {
   };
 }
 
+// ── i18n overlay: merge translated strings onto YAML data ─────────────────────
+function overlayI18nSections(yamlSections, i18nSections) {
+  if (!i18nSections?.length || !yamlSections?.length) return yamlSections;
+  return yamlSections.map((section, i) => {
+    const t = i18nSections[i];
+    if (!t) return section;
+    const out = { ...section };
+    if (t.title)       out.title = t.title;
+    if (t.description) out.description = t.description;
+    if (t.headline)    out.headline = t.headline;
+    if (t.features && section.features) {
+      out.features = section.features.map((f, fi) => {
+        const ft = t.features?.[fi];
+        return ft ? { ...f, name: ft.name || f.name, description: ft.description || f.description } : f;
+      });
+    }
+    if (t.quotes && section.quotes) {
+      out.quotes = section.quotes.map((q, qi) => {
+        const qt = t.quotes?.[qi];
+        return qt ? { ...q, text: qt.text || q.text } : q;
+      });
+    }
+    return out;
+  });
+}
+
+function overlayI18nFaqQuestions(yamlQuestions, i18nQuestions) {
+  if (!i18nQuestions?.length || !yamlQuestions?.length) return yamlQuestions;
+  return yamlQuestions.map((q, i) => {
+    const t = i18nQuestions[i];
+    if (!t) return q;
+    return { ...q, text: t.text || q.text, answer: t.answer || q.answer };
+  });
+}
+
+function overlayI18nRoadmapSections(yamlSections, i18nSections) {
+  if (!i18nSections?.length || !yamlSections?.length) return yamlSections;
+  return yamlSections.map((epoch, i) => {
+    const te = i18nSections[i];
+    if (!te) return epoch;
+    const out = { ...epoch };
+    if (te.title)    out.title = te.title;
+    if (te.headline) out.headline = te.headline;
+    if (te.cards && epoch.cards) {
+      out.cards = epoch.cards.map((card, ci) => {
+        const tc = te.cards?.[ci];
+        if (!tc) return card;
+        const cardOut = { ...card };
+        if (tc.title)       cardOut.title = tc.title;
+        if (tc.description) cardOut.description = tc.description;
+        if (tc.checklist && card.checklist) {
+          cardOut.checklist = card.checklist.map((item, li) => {
+            const tl = tc.checklist?.[li];
+            return tl ? { ...item, label: tl.label || item.label } : item;
+          });
+        }
+        return cardOut;
+      });
+    }
+    return out;
+  });
+}
+
 // ── Content renderers ─────────────────────────────────────────────────────────
 function renderFeatures(features) {
   if (!features?.length) return '';
@@ -241,18 +315,24 @@ function translateLabel(i18n, label) {
   return map[label] || label;
 }
 
-function renderLinks(links, lang) {
+function renderLinks(links, lang, opts = {}) {
   if (!links?.length) return '';
   const i18n = I18N[lang];
-  return '<div class="mt-10 flex flex-wrap gap-x-6 gap-y-3">'
+  const { defaultPrimary = false, singleRow = false } = opts;
+  const wrapperClass = singleRow
+    ? 'mt-10 flex flex-nowrap gap-3 overflow-x-auto pb-1'
+    : 'mt-10 flex flex-wrap gap-x-6 gap-y-3';
+  return `<div class="${wrapperClass}">`
     + links.map(l => {
-        const primary = l.color === 'purple' || l.color === 'primary';
+        const primary = l.color === 'purple' || l.color === 'primary' || (!l.color && defaultPrimary);
         const cls = primary
-          ? 'inline-flex items-center rounded-full font-medium text-base gap-x-2.5 px-3.5 py-2.5 shadow-sm text-white dark:text-gray-900 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500 transition-colors'
+          ? 'inline-flex items-center rounded-full font-medium text-base gap-x-2.5 px-3.5 py-2.5 shadow-sm text-white bg-primary-500 hover:bg-primary-600 transition-colors'
           : 'inline-flex items-center rounded-full font-medium text-base gap-x-2.5 px-3.5 py-2.5 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors';
+        const clsWithRow = singleRow ? `${cls} flex-shrink-0 whitespace-nowrap` : cls;
         const tgt  = l.target === '_blank' ? ' target="_blank"' : '';
         const href = localHref(lang, l.to || '#');
-        return `<a href="${href}" class="${cls}"${tgt}>${translateLabel(i18n, l.label)}</a>`;
+        const icon = l.icon ? `<span class="${l.icon} h-5 w-5 flex-shrink-0" aria-hidden="true"></span>` : '';
+        return `<a href="${href}" class="${clsWithRow}"${tgt}>${icon}<span>${translateLabel(i18n, l.label)}</span></a>`;
       }).join('')
     + '</div>';
 }
@@ -262,7 +342,10 @@ function renderSections(sections, pageType, lang) {
   return sections.map((s, i) => {
     const quotes   = renderQuotes(s.quotes);
     const features = renderFeatures(s.features);
-    const links    = renderLinks(s.links, lang);
+    const links    = renderLinks(s.links, lang, {
+      defaultPrimary: pageType === 'tools',
+      singleRow: pageType === 'tools'
+    });
 
     // image selection
     let image = '';
@@ -329,8 +412,11 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
   const pageTitle = pi.og_title || data.ogTitle || data.title || '';
   const title     = pi.title    || pageTitle;
   const heroTitle = pi.hero_title || data.hero?.title || data.title || '';
-  const heroDesc  = pi.hero_description || data.hero?.description || data.description || '';
+  const heroDesc  = pi.hero_description || pi.description || data.hero?.description || data.description || '';
   const description = pi.description || data.description || '';
+
+  // overlay i18n onto sections
+  const sections = overlayI18nSections(data.sections, pi.sections);
 
   const bcParts = isHome ? [] : [
     { name: i18n.common.home, url: navRoute(lang, '/') },
@@ -341,11 +427,11 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
   const heroBlock = `<div class="md:py-40 relative py-16 sm:py-16 lg:py-16"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center"><div><h1 class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl">${heroTitle}</h1><p class="mt-6 text-lg tracking-tight text-gray-600 dark:text-gray-300">${heroDesc}</p>${renderLinks(data.hero?.links, lang)}</div><div class="flex justify-center">${heroImg}</div></div></div>`;
 
   // JSON-LD
-  const ldItems = [webPageJsonLd(title, description, pagePath, lang, isHome ? 'WebPage' : 'WebPage')];
+  const ldItems = [webPageJsonLd(title, description, pagePath, lang)];
   if (isHome) ldItems.unshift(webSiteJsonLd(lang), { '@context': 'https://schema.org', ...ORG });
   if (!isHome) ldItems.push(breadcrumbJsonLd(bcParts));
-  if (pageType === 'founders' && data.sections) {
-    data.sections.forEach((s, idx) => {
+  if (pageType === 'founders' && sections) {
+    sections.forEach((s, idx) => {
       ldItems.push({
         '@context': 'https://schema.org', '@type': 'Person',
         name: s.title, jobTitle: s.headline || 'Founder',
@@ -354,8 +440,13 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
     });
   }
 
-  const ctaHtml = data.cta
-    ? `<div class="max-w-3xl mx-auto py-16 sm:py-24 text-center px-4"><h2 class="text-3xl font-bold tracking-tight sm:text-4xl">${data.cta.title}</h2><p class="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">${data.cta.description}</p>${renderLinks(data.cta.links || data.hero?.links, lang)}</div>`
+  // CTA with i18n overlay
+  let ctaData = data.cta;
+  if (ctaData && pi.cta) {
+    ctaData = { ...ctaData, title: pi.cta.title || ctaData.title, description: pi.cta.description || ctaData.description };
+  }
+  const ctaHtml = ctaData
+    ? `<div class="max-w-3xl mx-auto py-16 sm:py-24 text-center px-4"><h2 class="text-3xl font-bold tracking-tight sm:text-4xl">${ctaData.title}</h2><p class="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">${ctaData.description}</p>${renderLinks(ctaData.links || data.hero?.links, lang)}</div>`
     : '';
 
   const vars = {
@@ -365,7 +456,7 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
     description,
     og_image:       ogImg,
     hero_block:     heroBlock,
-    sections:       renderSections(data.sections, pageType, lang),
+    sections:       renderSections(sections, pageType, lang),
     cta:            ctaHtml,
     breadcrumb_html: breadcrumbDiv,
     json_ld:        jsonLd(...ldItems),
@@ -383,7 +474,8 @@ function buildRoadmap(lang, sitemap) {
   const pagePath = langPath(lang, basePath);
   const alternates = Object.fromEntries(LANGS.map(c => [c, langPath(c, basePath)]));
 
-  const sectionsHtml = (data.sections || []).map(epoch => {
+  const roadmapSections = overlayI18nRoadmapSections(data.sections, pi.sections);
+  const sectionsHtml = (roadmapSections || []).map(epoch => {
     const headline = epoch.headline
       ? `<div class="mb-3 text-sm/6 font-semibold text-primary flex items-center">${epoch.headline}</div>` : '';
     const statusColors = {
@@ -404,7 +496,7 @@ function buildRoadmap(lang, sitemap) {
   }).join('\n');
 
   const heroTitle = pi.hero_title || data.hero?.title || 'Roadmap';
-  const heroDesc  = pi.hero_description || data.hero?.description || data.description || '';
+  const heroDesc  = pi.hero_description || pi.description || data.hero?.description || data.description || '';
   const title     = pi.title || data.ogTitle || 'Roadmap';
   const description = pi.description || data.description || '';
 
@@ -459,8 +551,9 @@ function buildFaq(lang, sitemap) {
     }).join('\n');
   }
 
+  const translatedQuestions = overlayI18nFaqQuestions(data.questions, pi.questions);
   let sectionsHtml = '';
-  if (data.questions)  sectionsHtml += `<div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8"><div class="lg:col-span-10"><div class="mt-8 pb-24">${renderFaqItems(data.questions)}</div></div></div>`;
+  if (translatedQuestions)  sectionsHtml += `<div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8"><div class="lg:col-span-10"><div class="mt-8 pb-24">${renderFaqItems(translatedQuestions)}</div></div></div>`;
   if (data.technical) {
     let techHtml = renderFaqItems(data.technical.questions);
     if (data.technical.sections) {
@@ -471,19 +564,20 @@ function buildFaq(lang, sitemap) {
     sectionsHtml += `<div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8"><div class="lg:col-span-10"><div class="mt-8 pb-24">${techHtml}</div></div></div>`;
   }
   if (data.cta) {
-    sectionsHtml += `<div class="py-16 sm:py-24 text-center"><h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-gray-900 dark:text-white">${data.cta.title}</h2><p class="mt-4 text-lg text-gray-500 dark:text-gray-400">${data.cta.description}</p>${renderLinks(data.cta.links, lang)}</div>`;
+    const faqCta = pi.cta ? { ...data.cta, title: pi.cta.title || data.cta.title, description: pi.cta.description || data.cta.description } : data.cta;
+    sectionsHtml += `<div class="py-16 sm:py-24 text-center"><h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-gray-900 dark:text-white">${faqCta.title}</h2><p class="mt-4 text-lg text-gray-500 dark:text-gray-400">${faqCta.description}</p>${renderLinks(faqCta.links, lang)}</div>`;
   }
 
   const title       = pi.title       || data.ogTitle  || 'FAQ';
   const heroTitle   = pi.hero_title  || data.hero?.title || 'FAQ';
-  const heroDesc    = pi.hero_description || data.hero?.description || data.description || '';
+  const heroDesc    = pi.hero_description || pi.description || data.hero?.description || data.description || '';
   const description = pi.description || data.description || '';
 
   const bcParts = [
     { name: i18n.common.home, url: navRoute(lang, '/') },
     { name: title,            url: pagePath }
   ];
-  const faqMainEntity = (data.questions || []).map(q => ({
+  const faqMainEntity = (translatedQuestions || []).map(q => ({
     '@type': 'Question', name: q.text,
     acceptedAnswer: { '@type': 'Answer', text: q.answer }
   }));

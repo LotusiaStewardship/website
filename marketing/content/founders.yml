@@ -34,13 +34,13 @@ sections:
       - label: GitHub
         to: https://github.com/boblepointu
         target: _blank
-        color: gray
+        color: primary
         icon: i-simple-icons-github
         size: md
       - label: LinkedIn
         to: https://www.linkedin.com/in/alex--g/
         target: _blank
-        color: gray
+        color: primary
         icon: i-simple-icons-linkedin
         size: md
   - title: Matthew Urgero
@@ -64,7 +64,7 @@ sections:
       - label: LinkedIn
         to: https://www.linkedin.com/in/matthewurgero/
         target: _blank
-        color: gray
+        color: primary
         icon: i-simple-icons-linkedin
         size: md
 cta:
