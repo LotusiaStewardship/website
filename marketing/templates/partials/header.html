@@ -1,0 +1,25 @@
+<header class="site-header">
+    <nav class="nav">
+        <a href="/" class="nav-logo"><img src="/assets/images/logo.png" alt="Lotusia" class="logo-img"></a>
+        <div class="nav-links">
+            <a href="/ecosystem">Ecosystem</a>
+            <a href="/tools">Tools</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+            <a href="/docs">Docs</a>
+            <a href="/founders">Founders</a>
+            <a href="/blog">Blog</a>
+            <a href="https://explorer.lotusia.org" target="_blank">Explorer</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://t.me/givelotus" target="_blank" class="nav-icon" title="Telegram">TG</a>
+            <a href="https://github.com/LotusiaStewardship" target="_blank" class="nav-icon" title="GitHub">GH</a>
+            <button class="theme-toggle" onclick="document.documentElement.classList.toggle('light');localStorage.setItem('theme',document.documentElement.classList.contains('light')?'light':'dark')" title="Toggle theme">
+                <span class="theme-icon"></span>
+            </button>
+        </div>
+        <button class="nav-burger" onclick="this.parentElement.classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+</header>

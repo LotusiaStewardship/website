@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} | Lotusia</title>
+    <meta name="description" content="{{description}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lotusia.burnlotus.org/blog/{{slug}}">
+    <meta property="og:image" content="https://lotusia.burnlotus.org{{og_image}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://lotusia.burnlotus.org/blog/{{slug}}">
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    {{header}}
+    <main>
+        <article class="blog-article">
+            <header class="article-header">
+                <h1>{{title}}</h1>
+                <p class="article-meta">{{description}}</p>
+                <p class="article-date">{{date}} · {{author}}</p>
+            </header>
+            <div class="article-body prose">
+                {{body}}
+            </div>
+        </article>
+    </main>
+    {{footer}}
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')</script>
+</body>
+</html>
