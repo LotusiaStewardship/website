@@ -291,6 +291,9 @@ function buildBlog() {
     const dateIso = dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
     const ogImage = meta.image?.src ? `/assets/images/blog/${path.basename(meta.image.src)}` : '/assets/images/blog_0.jpg';
     const authorName = meta.authors?.[0]?.name || meta.author || 'Lotusia Stewardship';
+    const heroImage = ogImage !== '/assets/images/blog_0.jpg'
+      ? `<img src="${ogImage}" alt="${meta.title || slug}" class="blog-hero-img" loading="lazy">`
+      : '';
     const html = inject(tmpl, {
       title: meta.title || slug,
       description: meta.description || '',
@@ -299,7 +302,7 @@ function buildBlog() {
       date: dateStr,
       date_iso: dateIso,
       author: authorName,
-      body: htmlBody
+      body: heroImage + htmlBody
     });
     writeOut(`blog/${slug}`, html);
     posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: meta.date || '' });
@@ -317,35 +320,56 @@ function buildDocs() {
   const docsRoot = path.join(CONTENT, 'docs');
   const tmpl = readTemplate('docs');
   const allDocs = [];
+  const groups = {};
 
-  function walkDir(dir, urlPrefix) {
+  function cleanName(name) { return name.replace(/^\d+\./, ''); }
+
+  function walkDir(dir, urlPrefix, group) {
     const entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
     for (const e of entries) {
       if (e.isDirectory()) {
-        walkDir(path.join(dir, e.name), `${urlPrefix}/${e.name.replace(/^\d+\./, '')}`);
+        const dirName = cleanName(e.name);
+        const newGroup = group ? `${group} / ${dirName}` : dirName;
+        walkDir(path.join(dir, e.name), `${urlPrefix}/${dirName}`, newGroup);
       } else if (e.name.endsWith('.md')) {
         const raw = fs.readFileSync(path.join(dir, e.name), 'utf8');
         const { meta, body } = parseFrontmatter(raw);
-        const slug = e.name === 'index.md' || e.name === '0.index.md'
-          ? urlPrefix || '/docs'
-          : `${urlPrefix}/${e.name.replace(/^\d+\./, '').replace('.md', '')}`;
+        const isIndex = e.name === 'index.md' || e.name === '0.index.md';
+        const slug = isIndex ? urlPrefix : `${urlPrefix}/${cleanName(e.name).replace('.md', '')}`;
         const docPath = slug.startsWith('/docs') ? slug : `/docs${slug}`;
-        allDocs.push({ title: meta.title || e.name.replace('.md', ''), path: docPath, body: marked(body), description: meta.description || '' });
+        const title = meta.title || cleanName(e.name).replace('.md', '').replace(/-/g, ' ');
+        const groupName = group || 'General';
+        if (!groups[groupName]) groups[groupName] = [];
+        groups[groupName].push({ title, path: docPath });
+        allDocs.push({ title, path: docPath, body: marked(body), description: meta.description || '', group: groupName });
       }
     }
   }
-  walkDir(docsRoot, '/docs');
+  walkDir(docsRoot, '/docs', '');
 
-  const sidebar = allDocs.map(d =>
-    `<a href="${d.path}">${d.title}</a>`
-  ).join('\n');
+  let sidebar = '<a href="/docs" class="sidebar-home">Introduction</a>\n';
+  const guidesDocs = groups['guides'];
+  if (guidesDocs) {
+    sidebar += `<div class="sidebar-group"><div class="sidebar-group-title">Guides</div>`;
+    sidebar += guidesDocs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
+    sidebar += '</div>\n';
+  }
+  for (const [group, docs] of Object.entries(groups)) {
+    if (group === 'General' || group === 'guides') continue;
+    sidebar += `<div class="sidebar-group"><div class="sidebar-group-title">${group}</div>`;
+    sidebar += docs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
+    sidebar += '</div>\n';
+  }
+  const generalDocs = groups['General'];
+  if (generalDocs) {
+    for (const d of generalDocs) {
+      if (d.path !== '/docs') sidebar += `<a href="${d.path}">${d.title}</a>\n`;
+    }
+  }
 
   for (const doc of allDocs) {
-    const pathParts = doc.path.split('/').filter(Boolean);
     const bcParts = [{ name: 'Docs', url: '/docs' }];
-    if (pathParts.length > 1) {
-      bcParts.push({ name: doc.title, url: doc.path });
-    }
+    if (doc.path !== '/docs') bcParts.push({ name: doc.title, url: doc.path });
     const bc = breadcrumb(bcParts);
     const html = inject(tmpl, {
       title: doc.title,
