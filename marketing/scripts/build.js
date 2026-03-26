@@ -69,13 +69,21 @@ function renderSections(sections, pageType) {
     const links = renderLinks(s.links);
     const imgIdx = i + 1;
     let image = '';
-    if (!quotes && pageType !== 'founders') {
-      const candidates = [`turtles_${imgIdx}.jpeg`, `ecosystem_${imgIdx}_0.jpg`];
-      image = `<div class="section-image"><img src="/assets/images/${candidates[0]}" alt="${s.title}"></div>`;
-    }
     if (pageType === 'founders') {
       const founderImg = i === 0 ? 'alexandre_guillioud.jpeg' : 'matthew_urgero.jpeg';
-      image = `<div class="section-image"><img src="/assets/images/${founderImg}" alt="${s.title}"></div>`;
+      image = `<div class="section-image"><img src="/assets/images/${founderImg}" alt="${s.title}" loading="lazy"></div>`;
+    } else if (pageType === 'ecosystem') {
+      const ecoImages = ['ecosystem_0_0.jpg', 'ecosystem_1_2.jpg', 'ecosystem_2_0.jpg', 'ecosystem_3_0.jpg'];
+      if (!quotes && ecoImages[i]) {
+        image = `<div class="section-image"><img src="/assets/images/${ecoImages[i]}" alt="${s.title}" loading="lazy"></div>`;
+      }
+    } else if (pageType === 'tools') {
+      const toolImages = ['LotusQT_0.png', 'lotus-lib_1.jpeg', 'extension_1.jpeg', 'bigvase_1.jpeg'];
+      if (toolImages[i]) {
+        image = `<div class="section-image"><img src="/assets/images/${toolImages[i]}" alt="${s.title}" loading="lazy"></div>`;
+      }
+    } else if (!quotes) {
+      image = `<div class="section-image"><img src="/assets/images/turtles_${imgIdx}.jpeg" alt="${s.title}" loading="lazy"></div>`;
     }
     return `<section class="landing-section">
       <div class="section-content">
@@ -144,7 +152,7 @@ function buildLanding(file, pagePath, pageType) {
   const pageTitle = data.ogTitle || data.title || '';
   const isHome = pagePath === '/';
   const bc = isHome
-    ? { html: '<span>Home</span>', ld: '' }
+    ? { html: '', ld: '' }
     : breadcrumb([{ name: pageTitle, url: pagePath }]);
   const jsonLd = isHome
     ? websiteJsonLd()
@@ -305,12 +313,17 @@ function buildBlog() {
       body: heroImage + htmlBody
     });
     writeOut(`blog/${slug}`, html);
-    posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: meta.date || '' });
+    const authorAvatar = meta.authors?.[0]?.avatar?.src ? `/assets/images/${path.basename(meta.authors[0].avatar.src)}` : '';
+    const badge = meta.badge?.label || '';
+    posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: meta.date || '', image: ogImage, author: authorName, avatar: authorAvatar, badge });
   }
 
-  const postsHtml = posts.map(p =>
-    `<a href="/blog/${p.slug}" class="blog-card"><h2>${p.title}</h2><p>${p.description}</p><div class="blog-date">${p.date}</div></a>`
-  ).join('\n');
+  const postsHtml = posts.map(p => {
+    const imgHtml = p.image ? `<img src="${p.image}" alt="${p.title}" class="blog-card-img" loading="lazy">` : '';
+    const avatarHtml = p.avatar ? `<img src="${p.avatar}" alt="${p.author}" class="blog-card-avatar">` : '';
+    const badgeHtml = p.badge ? `<span class="blog-card-badge">${p.badge}</span>` : '';
+    return `<a href="/blog/${p.slug}" class="blog-card">${imgHtml}<div class="blog-card-body">${badgeHtml}<h2>${p.title}</h2><p>${p.description}</p><div class="blog-card-meta">${avatarHtml}<span class="blog-date">${p.date}</span></div></div></a>`;
+  }).join('\n');
   const tmpl = readTemplate('blog-index');
   const html = inject(tmpl, { blog_posts: postsHtml });
   writeOut('blog', html);
@@ -350,15 +363,15 @@ function buildDocs() {
   let sidebar = '<a href="/docs" class="sidebar-home">Introduction</a>\n';
   const guidesDocs = groups['guides'];
   if (guidesDocs) {
-    sidebar += `<div class="sidebar-group"><div class="sidebar-group-title">Guides</div>`;
+    sidebar += `<details class="sidebar-group" open><summary>Guides</summary>`;
     sidebar += guidesDocs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
-    sidebar += '</div>\n';
+    sidebar += '</details>\n';
   }
   for (const [group, docs] of Object.entries(groups)) {
     if (group === 'General' || group === 'guides') continue;
-    sidebar += `<div class="sidebar-group"><div class="sidebar-group-title">${group}</div>`;
+    sidebar += `<details class="sidebar-group"><summary>${group}</summary>`;
     sidebar += docs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
-    sidebar += '</div>\n';
+    sidebar += '</details>\n';
   }
   const generalDocs = groups['General'];
   if (generalDocs) {
