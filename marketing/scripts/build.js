@@ -10,6 +10,7 @@ const TEMPLATES = path.join(ROOT, 'templates');
 const CONTENT   = path.join(ROOT, 'content');
 const ASSETS    = path.join(ROOT, 'assets');
 const I18N_DIR  = path.join(ROOT, 'i18n');
+const IMAGES_DIR = path.join(ASSETS, 'images');
 
 const SITE_URL = 'https://lotusia.burnlotus.org';
 const LANGS    = ['en', 'fr', 'es', 'it', 'de', 'ru', 'cn'];
@@ -72,6 +73,138 @@ function localHref(lang, href) {
   return navRoute(lang, href);
 }
 
+function formatDateYMD(date) {
+  return date instanceof Date && !Number.isNaN(date.getTime())
+    ? date.toISOString().slice(0, 10)
+    : '';
+}
+
+function fileLastmod(filePath) {
+  try {
+    return formatDateYMD(fs.statSync(filePath).mtime);
+  } catch {
+    return '';
+  }
+}
+
+function maxLastmod(a, b) {
+  if (!a) return b || '';
+  if (!b) return a || '';
+  return a > b ? a : b;
+}
+
+function setSitemapEntry(sitemap, canonicalPath, alternates, lastmod = '') {
+  const current = sitemap.get(canonicalPath);
+  if (!current) {
+    sitemap.set(canonicalPath, { alternates, lastmod: lastmod || '' });
+    return;
+  }
+  const mergedAlternates = { ...current.alternates, ...alternates };
+  sitemap.set(canonicalPath, {
+    alternates: mergedAlternates,
+    lastmod: maxLastmod(current.lastmod, lastmod)
+  });
+}
+
+function localizedAlternates(basePath) {
+  return Object.fromEntries(LANGS.map(c => [c, langPath(c, basePath)]));
+}
+
+const imageMetaCache = new Map();
+function getAssetImageFilePath(src) {
+  if (!src || typeof src !== 'string') return '';
+  if (!src.startsWith('/assets/images/')) return '';
+  const rel = decodeURIComponent(src.replace('/assets/images/', ''));
+  return path.join(IMAGES_DIR, rel);
+}
+
+function readImageSize(filePath) {
+  if (!filePath) return null;
+  if (imageMetaCache.has(filePath)) return imageMetaCache.get(filePath);
+  let out = null;
+  try {
+    const buf = fs.readFileSync(filePath);
+    if (buf.length > 24 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) {
+      out = { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+    } else if (buf.length > 4 && buf[0] === 0xff && buf[1] === 0xd8) {
+      let i = 2;
+      while (i < buf.length - 9) {
+        if (buf[i] !== 0xff) { i += 1; continue; }
+        const marker = buf[i + 1];
+        if (marker === 0xd9 || marker === 0xda) break;
+        const len = buf.readUInt16BE(i + 2);
+        if ((marker >= 0xc0 && marker <= 0xc3) || (marker >= 0xc5 && marker <= 0xc7) || (marker >= 0xc9 && marker <= 0xcb) || (marker >= 0xcd && marker <= 0xcf)) {
+          out = { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+          break;
+        }
+        i += 2 + len;
+      }
+    } else if (buf.length > 10 && (String.fromCharCode(...buf.slice(0, 6)) === 'GIF87a' || String.fromCharCode(...buf.slice(0, 6)) === 'GIF89a')) {
+      out = { width: buf.readUInt16LE(6), height: buf.readUInt16LE(8) };
+    } else if (buf.length > 30 && buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') {
+      const type = buf.toString('ascii', 12, 16);
+      if (type === 'VP8X') {
+        out = {
+          width: 1 + buf.readUIntLE(24, 3),
+          height: 1 + buf.readUIntLE(27, 3)
+        };
+      }
+    }
+  } catch {
+    out = null;
+  }
+  imageMetaCache.set(filePath, out);
+  return out;
+}
+
+function inferAltFromSrc(src, fallback = 'Editorial image') {
+  if (!src || typeof src !== 'string') return fallback;
+  const base = path.basename(src).replace(path.extname(src), '').replace(/[-_]+/g, ' ').trim();
+  return base ? `${base} image` : fallback;
+}
+
+function escapeAttr(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function imgTag(src, alt, className = '', extraAttrs = '') {
+  const filePath = getAssetImageFilePath(src);
+  const dims = readImageSize(filePath);
+  const sizeAttrs = dims?.width && dims?.height ? ` width="${dims.width}" height="${dims.height}"` : '';
+  const cls = className ? ` class="${className}"` : '';
+  const attrs = extraAttrs ? ` ${extraAttrs.trim()}` : '';
+  return `<img src="${src}" alt="${escapeAttr(alt || inferAltFromSrc(src))}"${cls}${sizeAttrs}${attrs}>`;
+}
+
+function optimizeContentImages(html, fallbackAltPrefix) {
+  if (!html) return html;
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    const srcM = tag.match(/\ssrc="([^"]+)"/i);
+    if (!srcM) return tag;
+    const src = srcM[1];
+    const altM = tag.match(/\salt="([^"]*)"/i);
+    const widthM = tag.match(/\swidth="([^"]+)"/i);
+    const heightM = tag.match(/\sheight="([^"]+)"/i);
+    const loadingM = tag.match(/\sloading="([^"]+)"/i);
+    const alt = (altM && altM[1].trim()) ? altM[1] : inferAltFromSrc(src, `${fallbackAltPrefix} image`);
+    const filePath = getAssetImageFilePath(src);
+    const dims = readImageSize(filePath);
+    let out = tag;
+    if (!altM) out = out.replace('<img', `<img alt="${escapeAttr(alt)}"`);
+    else if (!altM[1].trim()) out = out.replace(altM[0], ` alt="${escapeAttr(alt)}"`);
+    if (dims?.width && dims?.height && (!widthM || !heightM)) {
+      if (!widthM) out = out.replace('<img', `<img width="${dims.width}"`);
+      if (!heightM) out = out.replace('<img', `<img height="${dims.height}"`);
+    }
+    if (!loadingM) out = out.replace('<img', '<img loading="lazy"');
+    return out;
+  });
+}
+
 // ── JSON-LD helpers ───────────────────────────────────────────────────────────
 function jsonLd(...items) {
   return items.filter(Boolean)
@@ -131,11 +264,20 @@ function breadcrumbJsonLd(parts) {
 
 // ── hreflang tags ────────────────────────────────────────────────────────────
 function hreflangTags(alternates) {
-  const lines = LANGS.map(lang => {
+  const unique = new Set();
+  const entries = Object.entries(alternates || {})
+    .filter(([lang, href]) => LANGS.includes(lang) && href)
+    .filter(([, href]) => {
+      if (unique.has(href)) return false;
+      unique.add(href);
+      return true;
+    });
+  const lines = entries.map(([lang, href]) => {
     const hreflang = I18N[lang].hreflang || lang;
-    return `<link rel="alternate" hreflang="${hreflang}" href="${abs(alternates[lang] || alternates.en)}">`;
+    return `<link rel="alternate" hreflang="${hreflang}" href="${abs(href)}">`;
   });
-  lines.push(`<link rel="alternate" hreflang="x-default" href="${abs(alternates.en)}">`);
+  const xDefault = alternates?.en || entries[0]?.[1];
+  if (xDefault) lines.push(`<link rel="alternate" hreflang="x-default" href="${abs(xDefault)}">`);
   return lines.join('\n');
 }
 
@@ -301,7 +443,7 @@ function renderQuotes(quotes) {
     `<div class="rounded-xl bg-gray-100/50 dark:bg-gray-800/50 p-6 border border-gray-200/50 dark:border-gray-700/50 mb-4">`
     + `<p class="text-gray-600 dark:text-gray-300 italic mb-3 leading-7">"${q.text}"</p>`
     + `<div class="flex items-center gap-3">`
-    + (q.avatar ? `<img src="/assets/images/${path.basename(q.avatar)}" alt="${q.author}" class="w-10 h-10 rounded-full object-cover">` : '')
+    + (q.avatar ? imgTag(`/assets/images/${path.basename(q.avatar)}`, `${q.author} avatar`, 'w-10 h-10 rounded-full object-cover') : '')
     + `<div><div class="font-semibold text-gray-900 dark:text-white text-sm">${q.author}</div><div class="text-xs text-gray-500 dark:text-gray-400">${q.title || ''}</div></div></div></div>`
   ).join('');
 }
@@ -351,15 +493,15 @@ function renderSections(sections, pageType, lang) {
     let image = '';
     if (pageType === 'founders') {
       const img = i === 0 ? 'alexandre_guillioud.jpeg' : 'matthew_urgero.jpeg';
-      image = `<img src="/assets/images/${img}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
+      image = imgTag(`/assets/images/${img}`, `${s.title} portrait`, 'w-full max-w-sm', 'loading="lazy" style="border-radius:15%;"');
     } else if (pageType === 'ecosystem') {
       const imgs = ['ecosystem_0_0.jpg','ecosystem_1_2.jpg','ecosystem_2_0.jpg','ecosystem_3_0.jpg'];
-      if (!quotes && imgs[i]) image = `<img src="/assets/images/${imgs[i]}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
+      if (!quotes && imgs[i]) image = imgTag(`/assets/images/${imgs[i]}`, `${s.title} illustration`, 'w-full max-w-sm', 'loading="lazy" style="border-radius:15%;"');
     } else if (pageType === 'tools') {
       const imgs = ['LotusQT_0.png','lotus-lib_1.jpeg','extension_1.jpeg','bigvase_1.jpeg'];
-      if (imgs[i]) image = `<img src="/assets/images/${imgs[i]}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
+      if (imgs[i]) image = imgTag(`/assets/images/${imgs[i]}`, `${s.title} screenshot`, 'w-full max-w-sm', 'loading="lazy" style="border-radius:15%;"');
     } else if (!quotes) {
-      image = `<img src="/assets/images/turtles_${i + 1}.jpeg" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
+      image = imgTag(`/assets/images/turtles_${i + 1}.jpeg`, `${s.title} illustration`, 'w-full max-w-sm', 'loading="lazy" style="border-radius:15%;"');
     }
 
     // alternation: even index → text left / image right; odd → image left / text right
@@ -397,7 +539,7 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
   const i18n    = I18N[lang];
   const pi      = i18n.pages[pageType] || {};
   const pagePath = langPath(lang, basePath);
-  const alternates = Object.fromEntries(LANGS.map(c => [c, langPath(c, basePath)]));
+  const alternates = localizedAlternates(basePath);
   const isHome   = basePath === '/';
 
   // image / hero
@@ -406,7 +548,7 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
     ? `/assets/images/${path.basename(typeof imgFile === 'string' ? imgFile : imgFile.light || 'turtles_hero.jpeg')}`
     : '/assets/images/turtles_hero.jpeg';
   const heroImg  = data.hero?.image
-    ? `<img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}" loading="lazy" style="border-radius:15%;" class="w-full max-w-md">`
+    ? imgTag(`/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}`, `${data.hero?.title || data.title || 'Lotusia'} hero image`, 'w-full max-w-md', 'loading="lazy" style="border-radius:15%;"')
     : '';
 
   const pageTitle = pi.og_title || data.ogTitle || data.title || '';
@@ -463,7 +605,7 @@ function buildLanding(file, basePath, pageType, lang, sitemap) {
     head_extra:     ''
   };
   writeOutFromPath(pagePath, renderPage('landing', vars));
-  sitemap.set(basePath, alternates);
+  setSitemapEntry(sitemap, basePath, alternates, fileLastmod(path.join(CONTENT, file)));
 }
 
 function buildRoadmap(lang, sitemap) {
@@ -472,7 +614,7 @@ function buildRoadmap(lang, sitemap) {
   const pi       = i18n.pages.roadmap || {};
   const basePath = '/roadmap';
   const pagePath = langPath(lang, basePath);
-  const alternates = Object.fromEntries(LANGS.map(c => [c, langPath(c, basePath)]));
+  const alternates = localizedAlternates(basePath);
 
   const roadmapSections = overlayI18nRoadmapSections(data.sections, pi.sections);
   const sectionsHtml = (roadmapSections || []).map(epoch => {
@@ -529,7 +671,7 @@ function buildRoadmap(lang, sitemap) {
     head_extra:  ''
   };
   writeOutFromPath(pagePath, renderPage('landing', vars));
-  sitemap.set(basePath, alternates);
+  setSitemapEntry(sitemap, basePath, alternates, fileLastmod(path.join(CONTENT, 'roadmap.yml')));
 }
 
 function buildFaq(lang, sitemap) {
@@ -538,7 +680,7 @@ function buildFaq(lang, sitemap) {
   const pi       = i18n.pages.faq || {};
   const basePath = '/faq';
   const pagePath = langPath(lang, basePath);
-  const alternates = Object.fromEntries(LANGS.map(c => [c, langPath(c, basePath)]));
+  const alternates = localizedAlternates(basePath);
 
   function renderFaqItems(questions) {
     if (!questions?.length) return '';
@@ -600,7 +742,7 @@ function buildFaq(lang, sitemap) {
     head_extra:  ''
   };
   writeOutFromPath(pagePath, renderPage('landing', vars));
-  sitemap.set(basePath, alternates);
+  setSitemapEntry(sitemap, basePath, alternates, fileLastmod(path.join(CONTENT, 'faq.yml')));
 }
 
 // ── Frontmatter parser ───────────────────────────────────────────────────────
@@ -616,13 +758,17 @@ function buildBlog(sitemap) {
   const en      = I18N.en;
   const posts   = [];
 
-  const alternatesForBlog = Object.fromEntries(LANGS.map(l => [l, '/blog']));
+  const alternatesForBlog = { en: '/blog' };
+  let blogIndexLastmod = '';
 
   for (const file of files) {
     const raw    = fs.readFileSync(path.join(blogDir, file), 'utf8');
     const { meta, body } = parseFrontmatter(raw);
     const slug   = file.replace(/^\d+\./, '').replace('.md', '');
-    const htmlBody = marked(body).replace(/src="\/img\//g, 'src="/assets/images/');
+    const htmlBody = optimizeContentImages(
+      marked(body).replace(/src="\/img\//g, 'src="/assets/images/'),
+      meta.title || slug
+    );
     const dateRaw  = meta.date || '';
     const dateObj  = dateRaw ? new Date(dateRaw) : null;
     const dateStr  = dateObj ? dateObj.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) : '';
@@ -632,9 +778,10 @@ function buildBlog(sitemap) {
       : '/assets/images/blog_0.jpg';
     const authorName  = meta.authors?.[0]?.name || meta.author || 'Lotusia Stewardship';
     const heroImage   = ogImage !== '/assets/images/blog_0.jpg'
-      ? `<img src="${ogImage}" alt="${meta.title || slug}" class="blog-hero-img" loading="lazy">` : '';
+      ? imgTag(ogImage, `${meta.title || slug} hero image`, 'blog-hero-img', 'loading="lazy"')
+      : '';
     const canonicalPath = `/blog/${slug}`;
-    const alternatesPost = Object.fromEntries(LANGS.map(l => [l, canonicalPath]));
+    const alternatesPost = { en: canonicalPath };
     const wordCount      = (body || '').split(/\s+/).filter(Boolean).length;
     const articleSection = meta.badge?.label || 'Blog';
 
@@ -672,21 +819,23 @@ function buildBlog(sitemap) {
     const badge    = meta.badge?.label || '';
     const cardDate = dateObj ? dateObj.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : '';
     posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: cardDate, image: ogImage, author: authorName, avatar: authorAvatar, badge, canonicalPath });
-    sitemap.set(canonicalPath, alternatesPost);
+    const postLastmod = dateIso || fileLastmod(path.join(blogDir, file));
+    setSitemapEntry(sitemap, canonicalPath, alternatesPost, postLastmod);
+    blogIndexLastmod = maxLastmod(blogIndexLastmod, postLastmod);
   }
 
   // Blog index
   const postsHtml = posts.map((p, idx) => {
     const isFirst    = idx === 0;
     const avatarHtml = p.avatar
-      ? `<div class="inline-flex flex-row-reverse justify-end"><span class="inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs ring-2 ring-white dark:ring-gray-900 overflow-hidden"><img src="${p.avatar}" alt="${p.author}" class="h-full w-full object-cover"></span></div>` : '';
+      ? `<div class="inline-flex flex-row-reverse justify-end"><span class="inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs ring-2 ring-white dark:ring-gray-900 overflow-hidden">${imgTag(p.avatar, `${p.author} avatar`, 'h-full w-full object-cover')}</span></div>` : '';
     const badgeHtml  = p.badge
       ? `<div class="mb-3"><span class="inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-500/10 text-primary-500">${p.badge}</span></div>` : '';
     const imgWrapCls = isFirst
       ? 'relative overflow-hidden w-full rounded-lg lg:col-span-2'
       : 'relative overflow-hidden w-full rounded-lg';
     const imgHtml    = p.image
-      ? `<div class="${imgWrapCls}"><img src="${p.image}" alt="${p.title}" class="w-full ${isFirst ? 'h-auto' : 'h-48'} object-cover" loading="lazy"></div>` : '';
+      ? `<div class="${imgWrapCls}">${imgTag(p.image, `${p.title} cover image`, `w-full ${isFirst ? 'h-auto' : 'h-48'} object-cover`, 'loading="lazy"')}</div>` : '';
     const wrapperCls = isFirst
       ? 'relative flex flex-col w-full gap-y-6 lg:col-span-3 lg:grid lg:grid-cols-5 lg:gap-8'
       : 'relative flex flex-col w-full gap-y-6';
@@ -714,7 +863,7 @@ function buildBlog(sitemap) {
     head_extra: ''
   };
   writeOutFromPath('/blog', renderPage('blog-index', vars));
-  sitemap.set('/blog', alternatesForBlog);
+  setSitemapEntry(sitemap, '/blog', alternatesForBlog, blogIndexLastmod);
 }
 
 function buildDocs(sitemap) {
@@ -741,11 +890,19 @@ function buildDocs(sitemap) {
         const gname  = group || 'General';
         if (!groups[gname]) groups[gname] = [];
         groups[gname].push({ title, path: docPath });
-        const rendered = marked(body)
+        const rendered = optimizeContentImages(marked(body)
           .replace(/src="\/img\//g, 'src="/assets/images/')
           .replace(/src="\.\.\/img\//g, 'src="/assets/images/')
-          .replace(/src="\/(preview[^"]*\.png)"/g, 'src="/assets/images/$1"');
-        allDocs.push({ title, path: docPath, body: rendered, rawBody: body, description: meta.description || '', group: gname });
+          .replace(/src="\/(preview[^"]*\.png)"/g, 'src="/assets/images/$1"'), title);
+        allDocs.push({
+          title,
+          path: docPath,
+          body: rendered,
+          rawBody: body,
+          description: meta.description || '',
+          group: gname,
+          lastmod: fileLastmod(path.join(dir, e.name))
+        });
       }
     }
   }
@@ -781,7 +938,7 @@ function buildDocs(sitemap) {
   }
 
   for (const doc of allDocs) {
-    const alternates = Object.fromEntries(LANGS.map(l => [l, doc.path]));
+    const alternates = { en: doc.path };
     const bcParts    = [{ name: 'Home', url: '/' }, { name: 'Docs', url: '/docs' }];
     if (doc.path !== '/docs') bcParts.push({ name: doc.title, url: doc.path });
 
@@ -811,20 +968,33 @@ function buildDocs(sitemap) {
       head_extra: ''
     };
     writeOutFromPath(doc.path, renderPage('docs', vars));
-    sitemap.set(doc.path, alternates);
+    setSitemapEntry(sitemap, doc.path, alternates, doc.lastmod);
   }
 }
 
 // ── Sitemap ──────────────────────────────────────────────────────────────────
 function buildSitemap(sitemap) {
   const urls = [];
-  for (const [, alternates] of sitemap.entries()) {
-    const enPath = alternates.en;
-    const links  = LANGS.map(lang => {
-      const hreflang = I18N[lang].hreflang || lang;
-      return `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${abs(alternates[lang] || enPath)}"/>`;
-    }).join('\n');
-    urls.push(`  <url>\n    <loc>${abs(enPath)}</loc>\n${links}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(enPath)}"/>\n  </url>`);
+  for (const [, entry] of sitemap.entries()) {
+    const alternates = entry.alternates || {};
+    const enPath = alternates.en || Object.values(alternates)[0];
+    if (!enPath) continue;
+    const unique = new Set();
+    const links = Object.entries(alternates)
+      .filter(([lang, href]) => LANGS.includes(lang) && href)
+      .filter(([, href]) => {
+        if (unique.has(href)) return false;
+        unique.add(href);
+        return true;
+      })
+      .map(([lang, href]) => {
+        const hreflang = I18N[lang].hreflang || lang;
+        return `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${abs(href)}"/>`;
+      })
+      .join('\n');
+    const xDefault = alternates.en || Object.values(alternates)[0];
+    const lastmod = entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : '';
+    urls.push(`  <url>\n    <loc>${abs(enPath)}</loc>${lastmod}\n${links}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(xDefault)}"/>\n  </url>`);
   }
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>`;
 }
