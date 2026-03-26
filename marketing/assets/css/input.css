@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face{font-family:'Inter';font-weight:300;font-display:swap;src:url('../fonts/inter-light.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:400;font-display:swap;src:url('../fonts/inter-regular.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:500;font-display:swap;src:url('../fonts/inter-medium.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:600;font-display:swap;src:url('../fonts/inter-semibold.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:700;font-display:swap;src:url('../fonts/inter-bold.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:400;font-display:swap;src:url('../fonts/jetbrains-mono-regular.woff2') format('woff2')}
+
+@layer base {
+  :root { --header-height: 4rem; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+}
+
+@layer components {
+  /* Prose — markdown body */
+  .prose h1 { @apply text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white; }
+  .prose h2 { @apply text-2xl font-semibold mt-10 mb-4 pt-5 border-t border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white; }
+  .prose h3 { @apply text-xl font-semibold mt-6 mb-3 text-gray-900 dark:text-white; }
+  .prose h4 { @apply text-lg font-semibold mt-4 mb-2 text-gray-900 dark:text-white; }
+  .prose p { @apply mb-4 text-gray-600 dark:text-gray-300 leading-7; }
+  .prose ul, .prose ol { @apply mb-4 ml-6 text-gray-600 dark:text-gray-300; }
+  .prose li { @apply mb-1 leading-7; }
+  .prose code { @apply font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded; }
+  .prose pre { @apply bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 overflow-x-auto mb-4; }
+  .prose pre code { @apply bg-transparent p-0; }
+  .prose a { @apply text-primary-500 hover:underline; }
+  .prose table { @apply w-full border-collapse mb-4 text-sm; }
+  .prose th { @apply text-left p-2 border-b-2 border-gray-200 dark:border-gray-700 font-semibold text-gray-900 dark:text-white; }
+  .prose td { @apply p-2 border-b border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300; }
+  .prose img { @apply max-w-full rounded-xl; }
+  .prose blockquote { @apply border-l-[3px] border-primary-500 pl-4 py-2 my-4 text-gray-600 dark:text-gray-300 bg-primary-500/5 rounded-r-xl; }
+  .prose strong { @apply text-gray-900 dark:text-white; }
+
+  /* FAQ accordion */
+  .faq-item { @apply border border-gray-200 dark:border-gray-800 rounded-xl mb-2 overflow-hidden transition-colors; }
+  .faq-item:hover { @apply border-primary-500/20; }
+  .faq-item summary { @apply p-4 font-medium cursor-pointer flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 text-gray-900 dark:text-white; }
+  .faq-item summary::before { content: '▸'; @apply text-xs text-gray-400 transition-transform flex-shrink-0; }
+  .faq-item[open] summary::before { transform: rotate(90deg); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-answer { @apply px-4 pb-4 text-sm text-gray-600 dark:text-gray-300 leading-7; }
+
+  /* Roadmap tasks */
+  .task { @apply flex items-start gap-2 py-1 text-sm text-gray-500 dark:text-gray-400; }
+  .task-done { @apply opacity-50; }
+  .task::before { content: '☐'; @apply flex-shrink-0 text-sm; }
+  .task-done::before { content: '☑'; @apply text-emerald-500; }
+
+  /* Blog hero image */
+  .blog-hero-img { @apply w-full max-h-96 object-cover rounded-xl mb-8; }
+}

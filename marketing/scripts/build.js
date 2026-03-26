@@ -37,24 +37,27 @@ function writeOut(relPath, html) {
 
 function renderFeatures(features) {
   if (!features || !features.length) return '';
-  return '<div class="features">' + features.map(f =>
-    `<div class="feature"><div class="feature-title">${f.name}</div><div class="feature-desc">${f.description}</div></div>`
+  return '<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">' + features.map(f =>
+    `<div class="rounded-xl bg-gray-100/50 dark:bg-gray-800/50 p-6 border border-gray-200/50 dark:border-gray-700/50"><div class="font-semibold text-gray-900 dark:text-white mb-1">${f.name}</div><div class="text-sm text-gray-500 dark:text-gray-400 leading-6">${f.description}</div></div>`
   ).join('') + '</div>';
 }
 
 function renderQuotes(quotes) {
   if (!quotes || !quotes.length) return '';
   return quotes.map(q =>
-    `<div class="quote"><p class="quote-text">"${q.text}"</p><div class="quote-author">` +
-    (q.avatar ? `<img src="/assets/images/${path.basename(q.avatar)}" alt="${q.author}" class="quote-avatar">` : '') +
-    `<div><div class="quote-name">${q.author}</div><div class="quote-role">${q.title || ''}</div></div></div></div>`
+    `<div class="rounded-xl bg-gray-100/50 dark:bg-gray-800/50 p-6 border border-gray-200/50 dark:border-gray-700/50 mb-4"><p class="text-gray-600 dark:text-gray-300 italic mb-3 leading-7">"${q.text}"</p><div class="flex items-center gap-3">` +
+    (q.avatar ? `<img src="/assets/images/${path.basename(q.avatar)}" alt="${q.author}" class="w-10 h-10 rounded-full object-cover">` : '') +
+    `<div><div class="font-semibold text-gray-900 dark:text-white text-sm">${q.author}</div><div class="text-xs text-gray-500 dark:text-gray-400">${q.title || ''}</div></div></div></div>`
   ).join('');
 }
 
 function renderLinks(links) {
   if (!links || !links.length) return '';
-  return '<div class="hero-links">' + links.map(l => {
-    const cls = l.color === 'purple' ? 'btn btn-primary' : 'btn btn-secondary';
+  return '<div class="mt-10 flex flex-wrap gap-x-6 gap-y-3">' + links.map(l => {
+    const isPrimary = l.color === 'purple' || l.color === 'primary';
+    const cls = isPrimary
+      ? 'inline-flex items-center rounded-full font-medium text-sm px-4 py-2.5 shadow-sm bg-primary-500 text-white hover:bg-primary-600 transition-colors gap-x-2'
+      : 'inline-flex items-center rounded-full font-medium text-sm px-4 py-2.5 shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors gap-x-2';
     const tgt = l.target === '_blank' ? ' target="_blank"' : '';
     const href = l.to || '#';
     return `<a href="${href}" class="${cls}"${tgt}>${l.label}</a>`;
@@ -71,29 +74,32 @@ function renderSections(sections, pageType) {
     let image = '';
     if (pageType === 'founders') {
       const founderImg = i === 0 ? 'alexandre_guillioud.jpeg' : 'matthew_urgero.jpeg';
-      image = `<div class="section-image"><img src="/assets/images/${founderImg}" alt="${s.title}" loading="lazy"></div>`;
+      image = `<img src="/assets/images/${founderImg}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
     } else if (pageType === 'ecosystem') {
       const ecoImages = ['ecosystem_0_0.jpg', 'ecosystem_1_2.jpg', 'ecosystem_2_0.jpg', 'ecosystem_3_0.jpg'];
       if (!quotes && ecoImages[i]) {
-        image = `<div class="section-image"><img src="/assets/images/${ecoImages[i]}" alt="${s.title}" loading="lazy"></div>`;
+        image = `<img src="/assets/images/${ecoImages[i]}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
       }
     } else if (pageType === 'tools') {
       const toolImages = ['LotusQT_0.png', 'lotus-lib_1.jpeg', 'extension_1.jpeg', 'bigvase_1.jpeg'];
       if (toolImages[i]) {
-        image = `<div class="section-image"><img src="/assets/images/${toolImages[i]}" alt="${s.title}" loading="lazy"></div>`;
+        image = `<img src="/assets/images/${toolImages[i]}" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
       }
     } else if (!quotes) {
-      image = `<div class="section-image"><img src="/assets/images/turtles_${imgIdx}.jpeg" alt="${s.title}" loading="lazy"></div>`;
+      image = `<img src="/assets/images/turtles_${imgIdx}.jpeg" alt="${s.title}" loading="lazy" style="border-radius:15%;" class="w-full max-w-sm">`;
     }
-    return `<section class="landing-section">
-      <div class="section-content">
-        ${s.headline ? `<p class="section-headline">${s.headline}</p>` : ''}
-        <h2>${s.title}</h2>
-        <p>${s.description}</p>
-        ${quotes}${features}${links}
+    const reverse = i % 2 === 1 ? ' lg:flex-row-reverse' : '';
+    return `<div class="py-16 sm:py-24">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center${reverse}">
+        <div>
+          ${s.headline ? `<p class="text-xs font-semibold text-primary-500 uppercase tracking-widest mb-2">${s.headline}</p>` : ''}
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">${s.title}</h2>
+          <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">${s.description}</p>
+          ${quotes}${features}${links}
+        </div>
+        <div class="flex justify-center">${image}</div>
       </div>
-      ${image}
-    </section>`;
+    </div>`;
   }).join('\n');
 }
 
@@ -147,7 +153,7 @@ function buildLanding(file, pagePath, pageType) {
   const imgFile = data.ogImage || data.hero?.image;
   const ogImg = imgFile ? `/assets/images/${path.basename(typeof imgFile === 'string' ? imgFile : imgFile.light || 'turtles_hero.jpeg')}` : '/assets/images/turtles_hero.jpeg';
   const heroImg = data.hero?.image
-    ? `<div class="hero-image"><img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}" loading="lazy"></div>`
+    ? `<img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}" loading="lazy" style="border-radius:15%;" class="w-full max-w-md">`
     : '';
   const pageTitle = data.ogTitle || data.title || '';
   const isHome = pagePath === '/';
@@ -168,8 +174,8 @@ function buildLanding(file, pagePath, pageType) {
     hero_links: renderLinks(data.hero?.links),
     hero_image: heroImg,
     sections: renderSections(data.sections, pageType),
-    cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.hero?.links)}</section>` : '',
-    breadcrumb: bc.html,
+    cta: data.cta ? `<div class="max-w-3xl mx-auto py-16 sm:py-24 text-center px-4"><h2 class="text-3xl font-bold tracking-tight sm:text-4xl">${data.cta.title}</h2><p class="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">${data.cta.description}</p>${renderLinks(data.hero?.links)}</div>` : '',
+    breadcrumb_html: isHome ? '' : `<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4 text-sm text-gray-500">${bc.html}</div>`,
     json_ld: jsonLd,
     head_extra: ''
   });
@@ -182,17 +188,18 @@ function buildRoadmap() {
   let sectionsHtml = '';
   if (data.sections) {
     sectionsHtml = data.sections.map(epoch => {
-      const headline = epoch.headline ? `<p class="epoch-headline">${epoch.headline}</p>` : '';
+      const headline = epoch.headline ? `<p class="text-sm text-primary-500 font-medium mb-6">${epoch.headline}</p>` : '';
       const cards = (epoch.cards || []).map(card => {
         const checklist = (card.checklist || []).map(item => {
           const cls = item.complete ? 'task task-done' : 'task';
           return `<div class="${cls}">${item.label}</div>`;
         }).join('');
         const links = renderLinks(card.links);
-        const statusBadge = card.status ? `<span class="status-badge status-${card.status}">${card.status}</span>` : '';
-        return `<div class="roadmap-card"><div class="roadmap-card-title">${card.title} ${statusBadge}</div><div class="roadmap-card-desc">${card.description || ''}</div>${checklist}${links}</div>`;
+        const statusColors = { complete: 'bg-emerald-500/10 text-emerald-500', ongoing: 'bg-amber-500/10 text-amber-500', planned: 'bg-primary-500/10 text-primary-500' };
+        const statusBadge = card.status ? `<span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusColors[card.status] || ''}">${card.status}</span>` : '';
+        return `<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-6 mb-4"><div class="font-semibold text-lg flex items-center gap-3 flex-wrap mb-2">${card.title} ${statusBadge}</div><div class="text-sm text-gray-600 dark:text-gray-300 mb-3 leading-7">${card.description || ''}</div>${checklist}${links}</div>`;
       }).join('');
-      return `<section class="roadmap-epoch"><h2 class="epoch-title">${epoch.title}</h2>${headline}${cards}</section>`;
+      return `<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16"><h2 class="text-2xl font-bold mb-1">${epoch.title}</h2>${headline}${cards}</div>`;
     }).join('\n');
   }
   const bc = breadcrumb([{ name: 'Roadmap', url: '/roadmap' }]);
@@ -209,7 +216,7 @@ function buildRoadmap() {
     hero_image: data.hero?.ogImage ? `<div class="hero-image"><img src="/assets/images/${path.basename(data.hero.ogImage)}" alt="Roadmap" loading="lazy"></div>` : '',
     sections: sectionsHtml,
     cta: '',
-    breadcrumb: bc.html,
+    breadcrumb_html: `<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4 text-sm text-gray-500">${bc.html}</div>`,
     json_ld: jsonLd,
     head_extra: ''
   });
@@ -271,7 +278,7 @@ function buildFaq() {
     hero_image: '',
     sections: sectionsHtml,
     cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.cta.links)}</section>` : '',
-    breadcrumb: bc.html,
+    breadcrumb_html: `<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4 text-sm text-gray-500">${bc.html}</div>`,
     json_ld: jsonLd,
     head_extra: ''
   });
@@ -322,10 +329,10 @@ function buildBlog() {
   }
 
   const postsHtml = posts.map(p => {
-    const imgHtml = p.image ? `<img src="${p.image}" alt="${p.title}" class="blog-card-img" loading="lazy">` : '';
-    const avatarHtml = p.avatar ? `<img src="${p.avatar}" alt="${p.author}" class="blog-card-avatar">` : '';
-    const badgeHtml = p.badge ? `<span class="blog-card-badge">${p.badge}</span>` : '';
-    return `<a href="/blog/${p.slug}" class="blog-card">${imgHtml}<div class="blog-card-body">${badgeHtml}<h2>${p.title}</h2><p>${p.description}</p><div class="blog-card-meta">${avatarHtml}<span class="blog-date">${p.date}</span></div></div></a>`;
+    const imgHtml = p.image ? `<img src="${p.image}" alt="${p.title}" class="w-full h-48 object-cover" loading="lazy">` : '';
+    const avatarHtml = p.avatar ? `<img src="${p.avatar}" alt="${p.author}" class="w-6 h-6 rounded-full object-cover">` : '';
+    const badgeHtml = p.badge ? `<span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary-500/10 text-primary-500 mb-2 inline-block">${p.badge}</span>` : '';
+    return `<a href="/blog/${p.slug}" class="block rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:border-primary-500/50 hover:-translate-y-0.5 transition-all group">${imgHtml}<div class="p-6">${badgeHtml}<h2 class="text-xl font-semibold group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors truncate">${p.title}</h2><p class="text-sm text-gray-600 dark:text-gray-300 mt-2 leading-7 line-clamp-3">${p.description}</p><div class="flex items-center gap-2 mt-4">${avatarHtml}<span class="text-xs text-gray-500">${p.date}</span></div></div></a>`;
   }).join('\n');
   const tmpl = readTemplate('blog-index');
   const html = inject(tmpl, { blog_posts: postsHtml });
@@ -364,23 +371,23 @@ function buildDocs() {
   }
   walkDir(docsRoot, '/docs', '');
 
-  let sidebar = '<a href="/docs" class="sidebar-home">Introduction</a>\n';
+  let sidebar = '<a href="/docs" class="block px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-white mb-3 hover:text-primary">Introduction</a>\n';
   const guidesDocs = groups['guides'];
   if (guidesDocs) {
-    sidebar += `<details class="sidebar-group" open><summary>Guides</summary>`;
-    sidebar += guidesDocs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
+    sidebar += `<details class="mb-2 border-t border-gray-200 dark:border-gray-800 pt-2" open><summary class="text-xs font-bold uppercase tracking-widest text-primary-500 px-3 py-1.5 cursor-pointer select-none flex items-center gap-1"><span class="text-[0.6rem] text-gray-400 transition-transform">▸</span> Guides</summary>`;
+    sidebar += guidesDocs.map(d => `<a href="${d.path}" class="block px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">${d.title}</a>`).join('\n');
     sidebar += '</details>\n';
   }
   for (const [group, docs] of Object.entries(groups)) {
     if (group === 'General' || group === 'guides') continue;
-    sidebar += `<details class="sidebar-group"><summary>${group}</summary>`;
-    sidebar += docs.map(d => `<a href="${d.path}">${d.title}</a>`).join('\n');
+    sidebar += `<details class="mb-2 border-t border-gray-200 dark:border-gray-800 pt-2"><summary class="text-xs font-bold uppercase tracking-widest text-primary-500 px-3 py-1.5 cursor-pointer select-none flex items-center gap-1"><span class="text-[0.6rem] text-gray-400 transition-transform">▸</span> ${group}</summary>`;
+    sidebar += docs.map(d => `<a href="${d.path}" class="block px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">${d.title}</a>`).join('\n');
     sidebar += '</details>\n';
   }
   const generalDocs = groups['General'];
   if (generalDocs) {
     for (const d of generalDocs) {
-      if (d.path !== '/docs') sidebar += `<a href="${d.path}">${d.title}</a>\n`;
+      if (d.path !== '/docs') sidebar += `<a href="${d.path}" class="block px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">${d.title}</a>\n`;
     }
   }
 

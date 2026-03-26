@@ -5,45 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}} | Lotusia Docs</title>
     <meta name="description" content="{{description}}">
-    <meta name="robots" content="index, follow, max-snippet:-1">
-    <meta name="author" content="Lotusia Stewardship">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="{{title}} - Lotusia Docs">
     <meta property="og:description" content="{{description}}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://lotusia.burnlotus.org{{path}}">
     <meta property="og:site_name" content="Lotusia">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{title}} - Lotusia Docs">
     <link rel="canonical" href="https://lotusia.burnlotus.org{{path}}">
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "TechArticle",
-      "headline": "{{title}}",
-      "description": "{{description}}",
-      "url": "https://lotusia.burnlotus.org{{path}}",
-      "author": {"@type": "Organization", "name": "Lotusia Stewardship"},
-      "publisher": {"@type": "Organization", "name": "Lotusia Stewardship", "url": "https://lotusia.burnlotus.org", "logo": {"@type": "ImageObject", "url": "https://lotusia.burnlotus.org/assets/images/logo.png"}},
-      "inLanguage": "en",
-      "isPartOf": {"@type": "WebSite", "name": "Lotusia", "url": "https://lotusia.burnlotus.org"}
-    }
-    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"{{title}}","url":"https://lotusia.burnlotus.org{{path}}","author":{"@type":"Organization","name":"Lotusia Stewardship"},"inLanguage":"en"}</script>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
     {{header}}
-    <main class="docs-layout">
-        <nav aria-label="Breadcrumb" class="breadcrumb docs-breadcrumb">{{breadcrumb}}</nav>
-        <aside class="docs-sidebar" aria-label="Documentation navigation">
+    <main class="flex max-w-7xl mx-auto min-h-[calc(100vh-var(--header-height))]">
+        <aside class="hidden lg:block w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 sticky top-[--header-height] h-[calc(100vh-var(--header-height))] overflow-y-auto p-4 text-sm" aria-label="Documentation navigation">
             <nav>{{sidebar}}</nav>
         </aside>
-        <article class="docs-content prose" itemscope itemtype="https://schema.org/TechArticle">
-            <h1 itemprop="headline">{{title}}</h1>
-            <div itemprop="articleBody">{{body}}</div>
-        </article>
+        <div class="flex-1 min-w-0 px-4 sm:px-8 py-8 max-w-none">
+            <nav class="text-sm text-gray-500 mb-6">{{breadcrumb}}</nav>
+            <article class="prose max-w-none" itemscope itemtype="https://schema.org/TechArticle">
+                <h1 itemprop="headline" class="text-3xl font-bold mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">{{title}}</h1>
+                <div itemprop="articleBody">{{body}}</div>
+            </article>
+        </div>
     </main>
     {{footer}}
-    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')</script>
+    <script>if(localStorage.getItem('theme')!=='dark'){document.documentElement.classList.remove('dark')}</script>
 </body>
 </html>

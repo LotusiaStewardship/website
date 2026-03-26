@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Lotusia</title>
     <meta name="description" content="Get the latest updates from the Lotusia Ecosystem — blockchain development, protocol upgrades, and community news">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-    <meta name="author" content="Lotusia Stewardship">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="Blog - Lotusia">
     <meta property="og:description" content="Get the latest updates from the Lotusia Ecosystem">
     <meta property="og:type" content="website">
@@ -14,38 +13,25 @@
     <meta property="og:image" content="https://lotusia.burnlotus.org/assets/images/blog_0.jpg">
     <meta property="og:site_name" content="Lotusia">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog - Lotusia">
-    <meta name="twitter:description" content="Get the latest updates from the Lotusia Ecosystem">
     <link rel="canonical" href="https://lotusia.burnlotus.org/blog">
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "Lotusia Blog",
-      "url": "https://lotusia.burnlotus.org/blog",
-      "description": "Official blog of the Lotusia Stewardship — blockchain development updates, protocol upgrades, and ecosystem news",
-      "publisher": {"@type": "Organization", "name": "Lotusia Stewardship", "url": "https://lotusia.burnlotus.org", "logo": {"@type": "ImageObject", "url": "https://lotusia.burnlotus.org/assets/images/logo.png"}},
-      "inLanguage": "en"
-    }
-    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Lotusia Blog","url":"https://lotusia.burnlotus.org/blog","publisher":{"@type":"Organization","name":"Lotusia Stewardship","url":"https://lotusia.burnlotus.org"},"inLanguage":"en"}</script>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
     {{header}}
-    <main>
-        <nav aria-label="Breadcrumb" class="breadcrumb"><a href="/">Home</a> / <span>Blog</span></nav>
-        <section class="hero hero-compact">
-            <div class="hero-content">
-                <h1>Blog</h1>
-                <p class="hero-desc">Get the latest updates from the Ecosystem</p>
+    <main class="min-h-[calc(100vh-var(--header-height))]">
+        <div class="py-16 sm:py-24">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
+                <h1 class="text-5xl font-bold tracking-tight sm:text-7xl">Blog</h1>
+                <p class="mt-6 text-lg text-gray-600 dark:text-gray-300">Get the latest updates from the Ecosystem</p>
             </div>
-        </section>
-        <section class="blog-list">
+        </div>
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pb-16 grid gap-6">
             {{blog_posts}}
-        </section>
+        </div>
     </main>
     {{footer}}
-    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')</script>
+    <script>if(localStorage.getItem('theme')!=='dark'){document.documentElement.classList.remove('dark')}</script>
 </body>
 </html>
