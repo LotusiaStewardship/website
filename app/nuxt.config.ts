@@ -31,8 +31,16 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxthq/studio',
     '@vueuse/nuxt',
-    'nuxt-site-config'
+    'nuxt-site-config',
+    '@nuxtjs/sitemap'
   ],
+  site: {
+    url: 'https://lotusia.org',
+    name: 'Lotusia'
+  },
+  sitemap: {
+    autoLastmod: true
+  },
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
     'components:extend': (components) => {
