@@ -12,7 +12,7 @@ const ASSETS    = path.join(ROOT, 'assets');
 const I18N_DIR  = path.join(ROOT, 'i18n');
 const IMAGES_DIR = path.join(ASSETS, 'images');
 
-const SITE_URL = 'https://lotusia.burnlotus.org';
+const SITE_URL = process.env.SITE_URL || 'https://lotusia.org';
 const LANGS    = ['en', 'fr', 'es', 'it', 'de', 'ru', 'cn'];
 
 // ── Localised routes: only these pages are duplicated per language ──────────
