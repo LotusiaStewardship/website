@@ -104,15 +104,33 @@ function breadcrumb(parts) {
   return { html, ld: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` };
 }
 
+const SITE_URL = 'https://lotusia.burnlotus.org';
+const ORG = {
+  '@type': 'Organization', 'name': 'Lotusia Stewardship', 'url': SITE_URL,
+  'logo': { '@type': 'ImageObject', 'url': `${SITE_URL}/assets/images/logo.png` },
+  'foundingDate': '2021',
+  'sameAs': ['https://github.com/LotusiaStewardship', 'https://t.me/givelotus', 'https://guillioud.com', 'https://lotusia.org']
+};
+
+function websiteJsonLd() {
+  return `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'WebSite',
+    'name': 'Lotusia', 'url': SITE_URL,
+    'description': 'Ethical proof-of-work blockchain built to foster human relationships, build reciprocal culture, and bolster societal value production',
+    'inLanguage': 'en', 'publisher': ORG,
+    'potentialAction': { '@type': 'SearchAction', 'target': `${SITE_URL}/docs?q={search_term_string}`, 'query-input': 'required name=search_term_string' }
+  })}</script>`;
+}
+
 function pageJsonLd(title, description, pagePath) {
-  return JSON.stringify({
+  return `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org', '@type': 'WebPage',
     'name': title, 'description': description,
-    'url': `https://lotusia.burnlotus.org${pagePath}`,
-    'isPartOf': { '@type': 'WebSite', 'name': 'Lotusia', 'url': 'https://lotusia.burnlotus.org' },
-    'publisher': { '@type': 'Organization', 'name': 'Lotusia Stewardship', 'url': 'https://lotusia.burnlotus.org' },
+    'url': `${SITE_URL}${pagePath}`,
+    'isPartOf': { '@type': 'WebSite', 'name': 'Lotusia', 'url': SITE_URL },
+    'publisher': { '@type': 'Organization', 'name': 'Lotusia Stewardship', 'url': SITE_URL },
     'inLanguage': 'en'
-  });
+  })}</script>`;
 }
 
 function buildLanding(file, pagePath, pageType) {
@@ -124,10 +142,13 @@ function buildLanding(file, pagePath, pageType) {
     ? `<div class="hero-image"><img src="/assets/images/${path.basename(typeof data.hero.image === 'string' ? data.hero.image : data.hero.image.light || '')}" alt="${data.hero?.title || ''}" loading="lazy"></div>`
     : '';
   const pageTitle = data.ogTitle || data.title || '';
-  const bc = pagePath === '/'
+  const isHome = pagePath === '/';
+  const bc = isHome
     ? { html: '<span>Home</span>', ld: '' }
     : breadcrumb([{ name: pageTitle, url: pagePath }]);
-  const jsonLd = `<script type="application/ld+json">${pageJsonLd(pageTitle, data.description || '', pagePath)}</script>`;
+  const jsonLd = isHome
+    ? websiteJsonLd()
+    : pageJsonLd(pageTitle, data.description || '', pagePath) + bc.ld;
   const html = inject(tmpl, {
     title: pageTitle,
     og_title: pageTitle,
@@ -141,7 +162,7 @@ function buildLanding(file, pagePath, pageType) {
     sections: renderSections(data.sections, pageType),
     cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.hero?.links)}</section>` : '',
     breadcrumb: bc.html,
-    json_ld: jsonLd + bc.ld,
+    json_ld: jsonLd,
     head_extra: ''
   });
   writeOut(pagePath === '/' ? '' : pagePath.slice(1), html);
@@ -167,7 +188,7 @@ function buildRoadmap() {
     }).join('\n');
   }
   const bc = breadcrumb([{ name: 'Roadmap', url: '/roadmap' }]);
-  const jsonLd = `<script type="application/ld+json">${pageJsonLd('Roadmap', data.description || '', '/roadmap')}</script>`;
+  const jsonLd = pageJsonLd('Roadmap', data.description || '', '/roadmap') + bc.ld;
   const html = inject(tmpl, {
     title: data.ogTitle || 'Roadmap',
     og_title: data.ogTitle || 'Roadmap',
@@ -181,7 +202,7 @@ function buildRoadmap() {
     sections: sectionsHtml,
     cta: '',
     breadcrumb: bc.html,
-    json_ld: jsonLd + bc.ld,
+    json_ld: jsonLd,
     head_extra: ''
   });
   writeOut('roadmap', html);
@@ -229,7 +250,7 @@ function buildFaq() {
     sectionsHtml += `<section class="faq-section"><div class="faq-group"><h2 class="faq-group-title">${data.technical.title || 'Technical Specifications'}</h2><p>${data.technical.description || ''}</p>${techHtml}</div></section>`;
   }
   const bc = breadcrumb([{ name: 'FAQ', url: '/faq' }]);
-  const jsonLd = `<script type="application/ld+json">${pageJsonLd('FAQ', data.description || '', '/faq')}</script>`;
+  const jsonLd = pageJsonLd('FAQ', data.description || '', '/faq') + bc.ld;
   const html = inject(tmpl, {
     title: data.ogTitle || 'FAQ',
     og_title: data.ogTitle || 'FAQ',
@@ -243,7 +264,7 @@ function buildFaq() {
     sections: sectionsHtml,
     cta: data.cta ? `<section class="cta"><h2>${data.cta.title}</h2><p>${data.cta.description}</p>${renderLinks(data.cta.links)}</section>` : '',
     breadcrumb: bc.html,
-    json_ld: jsonLd + bc.ld,
+    json_ld: jsonLd,
     head_extra: ''
   });
   writeOut('faq', html);
