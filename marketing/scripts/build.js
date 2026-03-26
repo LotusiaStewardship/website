@@ -158,13 +158,13 @@ function langSwitcher(currentLang, alternates, mobile = false) {
     const active = lang === currentLang;
     if (mobile) {
       const cls = active
-        ? 'block px-3 py-2 text-sm font-semibold text-primary rounded-lg'
-        : 'block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+        ? 'block px-3 py-2 text-sm font-semibold text-primary rounded-lg whitespace-nowrap'
+        : 'block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg whitespace-nowrap';
       return `<a href="${href}" lang="${I18N[lang].html_lang}" class="${cls}">${label}</a>`;
     }
     const cls = active
-      ? 'block px-3 py-2 text-sm text-primary font-semibold rounded-lg'
-      : 'block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+      ? 'block px-3 py-2 text-sm text-primary font-semibold rounded-lg whitespace-nowrap'
+      : 'block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg whitespace-nowrap';
     return `<a href="${href}" lang="${I18N[lang].html_lang}" class="${cls}">${label}</a>`;
   }).join('');
 
@@ -173,7 +173,7 @@ function langSwitcher(currentLang, alternates, mobile = false) {
   }
   const langLabel = cur.common.language;
   const currentFlag = flagByLang[currentLang] || '🌐';
-  return `<div class="relative" data-dropdown><button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary" data-dropdown-trigger aria-expanded="false">${langLabel}: ${currentFlag} ${currentLang.toUpperCase()} <span class="text-xs">▾</span></button><div class="hidden absolute top-full right-0 mt-1 w-60 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>${items}</div></div>`;
+  return `<div class="relative" data-dropdown><button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary whitespace-nowrap" data-dropdown-trigger aria-expanded="false">${langLabel}: ${currentFlag} ${currentLang.toUpperCase()} <span class="text-xs">▾</span></button><div class="hidden absolute top-full right-0 mt-1 w-60 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>${items}</div></div>`;
 }
 
 // ── Nav vars (injected into every header/footer render) ───────────────────────
@@ -682,12 +682,18 @@ function buildBlog(sitemap) {
       ? `<div class="inline-flex flex-row-reverse justify-end"><span class="inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs ring-2 ring-white dark:ring-gray-900 overflow-hidden"><img src="${p.avatar}" alt="${p.author}" class="h-full w-full object-cover"></span></div>` : '';
     const badgeHtml  = p.badge
       ? `<div class="mb-3"><span class="inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-500/10 text-primary-500">${p.badge}</span></div>` : '';
+    const imgWrapCls = isFirst
+      ? 'relative overflow-hidden w-full rounded-lg lg:col-span-2'
+      : 'relative overflow-hidden w-full rounded-lg';
     const imgHtml    = p.image
-      ? `<div class="relative overflow-hidden w-full rounded-lg"><img src="${p.image}" alt="${p.title}" class="w-full ${isFirst ? 'h-auto' : 'h-48'} object-cover" loading="lazy"></div>` : '';
+      ? `<div class="${imgWrapCls}"><img src="${p.image}" alt="${p.title}" class="w-full ${isFirst ? 'h-auto' : 'h-48'} object-cover" loading="lazy"></div>` : '';
     const wrapperCls = isFirst
-      ? 'relative flex flex-col w-full gap-y-6 lg:grid lg:grid-cols-2'
+      ? 'relative flex flex-col w-full gap-y-6 lg:col-span-3 lg:grid lg:grid-cols-5 lg:gap-8'
       : 'relative flex flex-col w-full gap-y-6';
-    return `<article class="${wrapperCls}">${imgHtml}<div class="flex flex-col justify-between flex-1"><div class="flex-1"><a href="/blog/${p.slug}" class="absolute inset-0"><span class="sr-only">${p.title}</span></a>${badgeHtml}<h2 class="text-gray-900 dark:text-white text-xl font-semibold">${p.title}</h2><p class="text-base text-gray-500 dark:text-gray-400 mt-1">${p.description}</p></div><div class="relative flex items-center gap-x-3 mt-4">${avatarHtml}<time class="text-sm text-gray-500 font-medium">${p.date}</time></div></div></article>`;
+    const textWrapCls = isFirst
+      ? 'flex flex-col justify-between flex-1 lg:col-span-3'
+      : 'flex flex-col justify-between flex-1';
+    return `<article class="${wrapperCls}">${imgHtml}<div class="${textWrapCls}"><div class="flex-1"><a href="/blog/${p.slug}" class="absolute inset-0"><span class="sr-only">${p.title}</span></a>${badgeHtml}<h2 class="text-gray-900 dark:text-white text-xl font-semibold">${p.title}</h2><p class="text-base text-gray-500 dark:text-gray-400 mt-1">${p.description}</p></div><div class="relative flex items-center gap-x-3 mt-4">${avatarHtml}<time class="text-sm text-gray-500 font-medium">${p.date}</time></div></div></article>`;
   }).join('\n');
 
   const vars = {
