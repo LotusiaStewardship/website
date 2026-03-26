@@ -1,0 +1,78 @@
+{
+  "lang": "de",
+  "lang_name": "Deutsch",
+  "html_lang": "de",
+  "locale": "de_DE",
+  "hreflang": "de",
+  "prefix": "/de",
+  "nav": {
+    "ecosystem": "Okosystem",
+    "tools": "Tools",
+    "roadmap": "Roadmap",
+    "faq": "FAQ",
+    "docs": "Dokumentation",
+    "founders": "Grunder",
+    "blog": "Blog",
+    "more": "Mehr",
+    "explorer": "Explorer"
+  },
+  "common": {
+    "home": "Startseite",
+    "language": "Sprache",
+    "copyright": "Copyright",
+    "all_rights_reserved": "Alle Rechte vorbehalten.",
+    "toggle_theme": "Theme wechseln"
+  },
+  "buttons": {
+    "get_started": "Loslegen",
+    "learn_more": "Mehr erfahren",
+    "technical_docs": "Technische Doku"
+  },
+  "pages": {
+    "index": {
+      "title": "Willkommen bei Lotusia",
+      "og_title": "Willkommen bei Lotusia | Lotusia",
+      "description": "Lotusia wurde gegrundet, um menschliche Beziehungen zu fordern, eine reziproke Kultur aufzubauen und gesellschaftliche Wertschopfung zu starken.",
+      "hero_title": "Menschlichkeit in die Gesellschaft zuruckbringen"
+    },
+    "ecosystem": {
+      "title": "Okosystem",
+      "og_title": "Okosystem - Lotusia",
+      "description": "Drei Saulen arbeiten zusammen - Stewardship fuhrt, Treasury sichert, die Burgerschaft schafft Wert.",
+      "hero_title": "Drei Saulen, eine Vision"
+    },
+    "tools": {
+      "title": "Offentliche Guter",
+      "og_title": "Offentliche Guter - Lotusia",
+      "description": "Open-Source-Software und Infrastruktur fur das Lotusia-Okosystem.",
+      "hero_title": "Offentliche Guter"
+    },
+    "founders": {
+      "title": "Grunder",
+      "og_title": "Grunder - Lotusia",
+      "description": "Lerne die Grunder und die Kernleitung von Lotusia kennen."
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "og_title": "Roadmap | Lotusia",
+      "description": "Ziele und Meilensteine der Stewardship fur kommende Epochen.",
+      "hero_title": "Roadmap"
+    },
+    "faq": {
+      "title": "FAQ",
+      "og_title": "FAQ - Lotusia",
+      "description": "Lotusia einfach erklart.",
+      "hero_title": "FAQ"
+    },
+    "blog": {
+      "title": "Blog",
+      "og_title": "Blog - Lotusia",
+      "description": "Neueste Updates aus dem Lotusia-Okosystem."
+    },
+    "docs": {
+      "title": "Dokumentation",
+      "og_title": "Dokumentation - Lotusia",
+      "description": "Technische Dokumentation von Lotusia."
+    }
+  }
+}

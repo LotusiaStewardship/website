@@ -1,35 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{html_lang}}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Lotusia</title>
-    <meta name="description" content="Get the latest updates from the Lotusia Ecosystem — blockchain development, protocol upgrades, and community news">
+    <title>{{title}} | Lotusia</title>
+    <meta name="description" content="{{description}}">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Blog - Lotusia">
-    <meta property="og:description" content="Get the latest updates from the Lotusia Ecosystem">
+    <meta property="og:title" content="{{og_title}}">
+    <meta property="og:description" content="{{description}}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lotusia.burnlotus.org/blog">
-    <meta property="og:image" content="https://lotusia.burnlotus.org/assets/images/blog_0.jpg">
+    <meta property="og:url" content="{{canonical_url}}">
+    <meta property="og:image" content="https://lotusia.burnlotus.org{{og_image}}">
     <meta property="og:site_name" content="Lotusia">
+    <meta property="og:locale" content="{{og_locale}}">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://lotusia.burnlotus.org/blog">
+    <link rel="canonical" href="{{canonical_url}}">
+    {{hreflang_tags}}
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Lotusia Blog","url":"https://lotusia.burnlotus.org/blog","publisher":{"@type":"Organization","name":"Lotusia Stewardship","url":"https://lotusia.burnlotus.org"},"inLanguage":"en"}</script>
+    {{json_ld}}
+    {{head_extra}}
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+<body class="bg-background text-foreground min-h-screen">
     {{header}}
     <main class="min-h-[calc(100vh-var(--header-height))]">
-        <div class="py-16 sm:py-24">
-            <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
-                <h1 class="text-5xl font-bold tracking-tight sm:text-7xl">Blog</h1>
-                <p class="mt-6 text-lg text-gray-600 dark:text-gray-300">Get the latest updates from the Ecosystem</p>
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="relative border-b border-gray-200 dark:border-gray-800 py-[50px]">
+            <div class="flex flex-col lg:flex-row items-start gap-6">
+                <div class="flex-1">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{hero_title}}</h1>
+                    </div>
+                    <p class="mt-4 text-lg text-gray-500 dark:text-gray-400">{{hero_description}}</p>
+                </div>
             </div>
         </div>
-        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pb-16 grid gap-6">
-            {{blog_posts}}
+        <div class="mt-8 pb-24">
+            <div class="flex flex-col lg:grid lg:grid-cols-3 gap-x-8 gap-y-16">
+                {{blog_posts}}
+            </div>
         </div>
+      </div>
     </main>
     {{footer}}
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>

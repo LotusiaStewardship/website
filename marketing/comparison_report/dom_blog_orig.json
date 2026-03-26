@@ -1,0 +1,1221 @@
+{
+  "tree": {
+    "bodyClasses": "",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/logo.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "block",
+                      "h": 48,
+                      "layout": "items-center",
+                      "tag": "div",
+                      "w": 170
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 48,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 170
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 48,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 370
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/ecosystem",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Ecosystem",
+                      "w": 74
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 74
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/tools",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Tools",
+                      "w": 35
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 35
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/roadmap",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Roadmap",
+                      "w": 64
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 64
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/faq",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "FAQ",
+                      "w": 27
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 27
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/docs",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Docs",
+                      "w": 34
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "w-5 h-5 flex-shrink-0",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                              "tag": "button",
+                              "text": "More",
+                              "w": 58
+                            }
+                          ],
+                          "display": "inline-flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "inline-flex w-full",
+                          "tag": "div",
+                          "w": 58
+                        }
+                      ],
+                      "display": "block",
+                      "h": 25,
+                      "layout": "relative",
+                      "tag": "div",
+                      "w": 58
+                    },
+                    {
+                      "display": "none",
+                      "h": 0,
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 25,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 58
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 25,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "ul",
+              "w": 452
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-primary-500",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-gray-400",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        }
+                      ],
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                },
+                {
+                  "children": [
+                    {
+                      "display": "inline-block",
+                      "h": 0,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 0
+                    }
+                  ],
+                  "display": "none",
+                  "h": 0,
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 text-gray-700 inline-flex items-center lg:hidden",
+                  "tag": "button",
+                  "w": 0
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 370
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "light",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 40,
+                              "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                              "tag": "h1",
+                              "text": "Blog",
+                              "w": 71
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "display": "block",
+                          "h": 28,
+                          "layout": "mt-4 text-lg text-gray-500",
+                          "tag": "p",
+                          "text": "Get the latest updates from the Ecosystem",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 84,
+                      "layout": "flex-1",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 84,
+                  "layout": "flex flex-col lg:flex-row items-start gap-6",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 185,
+              "layout": "relative border-b border-gray-200 py-[50px]",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "alt": "The Future Is Peer-to-Peer",
+                              "src": "/_ipx/_/img/blog/p2p-future.jpg",
+                              "tag": "img"
+                            }
+                          ],
+                          "display": "block",
+                          "h": 333,
+                          "layout": "relative overflow-hidden w-full rounded-lg",
+                          "tag": "div",
+                          "w": 592
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 333,
+                                      "layout": "absolute",
+                                      "tag": "span",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "inline",
+                                  "h": 0,
+                                  "href": "/blog/the-future-is-peer-to-peer",
+                                  "tag": "a",
+                                  "w": 0
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 text-primary-500",
+                                      "tag": "span",
+                                      "text": "Lotusian Philosophy",
+                                      "w": 129
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 25,
+                                  "layout": "mb-3",
+                                  "tag": "div",
+                                  "w": 592
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-gray-900 text-xl font-semibold",
+                                  "tag": "h2",
+                                  "text": "The Future Is Peer-to-Peer",
+                                  "w": 592
+                                },
+                                {
+                                  "display": "flow-root",
+                                  "h": 48,
+                                  "layout": "text-base text-gray-500 mt-1",
+                                  "tag": "p",
+                                  "text": "Wallets should connect people directly, not through intermediaries. When wallets...",
+                                  "w": 592
+                                }
+                              ],
+                              "display": "block",
+                              "h": 117,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 592
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs relative lg:hover:scale-105 lg:hover:ring-primary-500",
+                                      "tag": "span",
+                                      "w": 24
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row-reverse",
+                                  "flexWrap": "nowrap",
+                                  "h": 24,
+                                  "layout": "inline-flex flex-row-reverse justify-end",
+                                  "tag": "div",
+                                  "w": 24
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "text-sm text-gray-500 font-medium",
+                                  "tag": "time",
+                                  "text": "Nov 16, 2025",
+                                  "w": 83
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "relative flex items-center gap-x-3 mt-4",
+                              "tag": "div",
+                              "w": 592
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "column",
+                          "flexWrap": "nowrap",
+                          "h": 157,
+                          "layout": "flex flex-col justify-between flex-1",
+                          "tag": "div",
+                          "w": 592
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "592px 592px",
+                      "h": 333,
+                      "layout": "relative flex flex-col w-full gap-y-6 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-center col-span-full",
+                      "tag": "article",
+                      "w": 1216
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "alt": "Multi-Signature Coordination In a Peer-to-Peer World",
+                              "src": "/_ipx/_/img/blog/musig2-p2p.jpg",
+                              "tag": "img"
+                            }
+                          ],
+                          "display": "block",
+                          "h": 216,
+                          "layout": "relative overflow-hidden w-full rounded-lg",
+                          "tag": "div",
+                          "w": 384
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 397,
+                                      "layout": "absolute",
+                                      "tag": "span",
+                                      "w": 384
+                                    }
+                                  ],
+                                  "display": "inline",
+                                  "h": 0,
+                                  "href": "/blog/multi-signature-coordination-peer-to-peer-world",
+                                  "tag": "a",
+                                  "w": 0
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 text-primary-500",
+                                      "tag": "span",
+                                      "text": "Technical Deep Dive",
+                                      "w": 130
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 25,
+                                  "layout": "mb-3",
+                                  "tag": "div",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-gray-900 text-xl font-semibold",
+                                  "tag": "h2",
+                                  "text": "Multi-Signature Coordination In a Peer-to-Peer World",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "flow-root",
+                                  "h": 48,
+                                  "layout": "text-base text-gray-500 mt-1",
+                                  "tag": "p",
+                                  "text": "We are solving multi-signature coordination without servers\u2014the hard problem the...",
+                                  "w": 384
+                                }
+                              ],
+                              "display": "block",
+                              "h": 117,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs relative lg:hover:scale-105 lg:hover:ring-primary-500",
+                                      "tag": "span",
+                                      "w": 24
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row-reverse",
+                                  "flexWrap": "nowrap",
+                                  "h": 24,
+                                  "layout": "inline-flex flex-row-reverse justify-end",
+                                  "tag": "div",
+                                  "w": 24
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "text-sm text-gray-500 font-medium",
+                                  "tag": "time",
+                                  "text": "Nov 14, 2025",
+                                  "w": 83
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "relative flex items-center gap-x-3 mt-4",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "column",
+                          "flexWrap": "nowrap",
+                          "h": 157,
+                          "layout": "flex flex-col justify-between flex-1",
+                          "tag": "div",
+                          "w": 384
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "column",
+                      "flexWrap": "nowrap",
+                      "h": 397,
+                      "layout": "relative flex flex-col w-full gap-y-6",
+                      "tag": "article",
+                      "w": 384
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "alt": "Winter Solstice 2025: The 2nd Samuel Epoch Brings Taproot Back to Lotus",
+                              "src": "/_ipx/_/img/blog/winter-solstice-2025.jpg",
+                              "tag": "img"
+                            }
+                          ],
+                          "display": "block",
+                          "h": 216,
+                          "layout": "relative overflow-hidden w-full rounded-lg",
+                          "tag": "div",
+                          "w": 384
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 397,
+                                      "layout": "absolute",
+                                      "tag": "span",
+                                      "w": 384
+                                    }
+                                  ],
+                                  "display": "inline",
+                                  "h": 0,
+                                  "href": "/blog/winter-solstice-2025",
+                                  "tag": "a",
+                                  "w": 0
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 text-primary-500",
+                                      "tag": "span",
+                                      "text": "Network Upgrade",
+                                      "w": 114
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 25,
+                                  "layout": "mb-3",
+                                  "tag": "div",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-gray-900 text-xl font-semibold",
+                                  "tag": "h2",
+                                  "text": "Winter Solstice 2025: The 2nd Samuel Epoch Brings Taproot Back to Lotus",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "flow-root",
+                                  "h": 48,
+                                  "layout": "text-base text-gray-500 mt-1",
+                                  "tag": "p",
+                                  "text": "Version 10.4.9 activates Taproot, enhances mining performance, and brings privac...",
+                                  "w": 384
+                                }
+                              ],
+                              "display": "block",
+                              "h": 117,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs relative lg:hover:scale-105 lg:hover:ring-primary-500",
+                                      "tag": "span",
+                                      "w": 24
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row-reverse",
+                                  "flexWrap": "nowrap",
+                                  "h": 24,
+                                  "layout": "inline-flex flex-row-reverse justify-end",
+                                  "tag": "div",
+                                  "w": 24
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "text-sm text-gray-500 font-medium",
+                                  "tag": "time",
+                                  "text": "Nov 11, 2025",
+                                  "w": 79
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "relative flex items-center gap-x-3 mt-4",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "column",
+                          "flexWrap": "nowrap",
+                          "h": 157,
+                          "layout": "flex flex-col justify-between flex-1",
+                          "tag": "div",
+                          "w": 384
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "column",
+                      "flexWrap": "nowrap",
+                      "h": 397,
+                      "layout": "relative flex flex-col w-full gap-y-6",
+                      "tag": "article",
+                      "w": 384
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "alt": "The New Beginning",
+                              "src": "/_ipx/_/img/blog/the-new-beginning.png",
+                              "tag": "img"
+                            }
+                          ],
+                          "display": "block",
+                          "h": 216,
+                          "layout": "relative overflow-hidden w-full rounded-lg",
+                          "tag": "div",
+                          "w": 384
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 397,
+                                      "layout": "absolute",
+                                      "tag": "span",
+                                      "w": 384
+                                    }
+                                  ],
+                                  "display": "inline",
+                                  "h": 0,
+                                  "href": "/blog/the-new-beginning",
+                                  "tag": "a",
+                                  "w": 0
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 text-primary-500",
+                                      "tag": "span",
+                                      "text": "Give Lotus",
+                                      "w": 76
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 25,
+                                  "layout": "mb-3",
+                                  "tag": "div",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-gray-900 text-xl font-semibold",
+                                  "tag": "h2",
+                                  "text": "The New Beginning",
+                                  "w": 384
+                                },
+                                {
+                                  "display": "flow-root",
+                                  "h": 48,
+                                  "layout": "text-base text-gray-500 mt-1",
+                                  "tag": "p",
+                                  "text": "After three years, the Lotusia Stewardship is reinvigorated to spreading the #GiveLotus ethos",
+                                  "w": 384
+                                }
+                              ],
+                              "display": "block",
+                              "h": 117,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "inline-flex items-center justify-center flex-shrink-0 rounded-full h-6 w-6 text-xs relative lg:hover:scale-105 lg:hover:ring-primary-500",
+                                      "tag": "span",
+                                      "w": 24
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row-reverse",
+                                  "flexWrap": "nowrap",
+                                  "h": 24,
+                                  "layout": "inline-flex flex-row-reverse justify-end",
+                                  "tag": "div",
+                                  "w": 24
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "text-sm text-gray-500 font-medium",
+                                  "tag": "time",
+                                  "text": "Jun 10, 2024",
+                                  "w": 82
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "relative flex items-center gap-x-3 mt-4",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "column",
+                          "flexWrap": "nowrap",
+                          "h": 157,
+                          "layout": "flex flex-col justify-between flex-1",
+                          "tag": "div",
+                          "w": 384
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "column",
+                      "flexWrap": "nowrap",
+                      "h": 397,
+                      "layout": "relative flex flex-col w-full gap-y-6",
+                      "tag": "article",
+                      "w": 384
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "384px 384px 384px",
+                  "h": 794,
+                  "layout": "flex flex-col lg:grid lg:grid-cols-3 gap-x-8 gap-y-16",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 890,
+              "layout": "mt-8 pb-24",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 1107,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 1107,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 48,
+          "tag": "a",
+          "text": "",
+          "w": 170
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 48,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        },
+        {
+          "display": "none",
+          "h": 0,
+          "tag": "button",
+          "text": "",
+          "w": 0
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "block",
+          "h": 185,
+          "tag": "div",
+          "text": "BlogGet the latest updates from the Ecos",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 890,
+          "tag": "div",
+          "text": "Lotusian PhilosophyThe Future Is Peer-to",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 1107,
+      "tag": "div",
+      "text": "BlogGet the latest updates from the EcosystemLotusian Philos",
+      "w": 1280
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 84,
+          "tag": "div",
+          "text": "BlogGet the latest updates from the Ecos",
+          "w": 1216
+        }
+      ],
+      "className": "relative border-b border-gray-200 dark:border-gray-800 py-[50px]",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 185,
+      "tag": "div",
+      "text": "BlogGet the latest updates from the Ecosystem",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 794,
+          "tag": "div",
+          "text": "Lotusian PhilosophyThe Future Is Peer-to",
+          "w": 1216
+        }
+      ],
+      "className": "mt-8 pb-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 890,
+      "tag": "div",
+      "text": "Lotusian PhilosophyThe Future Is Peer-to-PeerWallets should",
+      "w": 1216
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All righ",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+      "w": 596
+    }
+  ]
+}

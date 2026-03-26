@@ -1,0 +1,78 @@
+{
+  "lang": "cn",
+  "lang_name": "中文",
+  "html_lang": "zh-CN",
+  "locale": "zh_CN",
+  "hreflang": "zh-CN",
+  "prefix": "/cn",
+  "nav": {
+    "ecosystem": "生态系统",
+    "tools": "工具",
+    "roadmap": "路线图",
+    "faq": "常见问题",
+    "docs": "文档",
+    "founders": "创始人",
+    "blog": "博客",
+    "more": "更多",
+    "explorer": "浏览器"
+  },
+  "common": {
+    "home": "首页",
+    "language": "语言",
+    "copyright": "版权",
+    "all_rights_reserved": "保留所有权利。",
+    "toggle_theme": "切换主题"
+  },
+  "buttons": {
+    "get_started": "开始使用",
+    "learn_more": "了解更多",
+    "technical_docs": "技术文档"
+  },
+  "pages": {
+    "index": {
+      "title": "欢迎来到 Lotusia",
+      "og_title": "欢迎来到 Lotusia | Lotusia",
+      "description": "Lotusia 旨在促进人际关系、构建互惠文化，并增强线上线下社会价值创造。",
+      "hero_title": "让社会重回人性"
+    },
+    "ecosystem": {
+      "title": "生态系统",
+      "og_title": "生态系统 - Lotusia",
+      "description": "三大支柱协同运作：Stewardship 引导，Treasury 保障，公民共创价值。",
+      "hero_title": "三大支柱，一个愿景"
+    },
+    "tools": {
+      "title": "公共产品",
+      "og_title": "公共产品 - Lotusia",
+      "description": "为 Lotusia 生态构建的开源软件与基础设施。",
+      "hero_title": "公共产品"
+    },
+    "founders": {
+      "title": "创始人",
+      "og_title": "创始人 - Lotusia",
+      "description": "认识 Lotusia 的创始人与核心领导团队。"
+    },
+    "roadmap": {
+      "title": "路线图",
+      "og_title": "路线图 | Lotusia",
+      "description": "Stewardship 为未来阶段制定的目标与里程碑。",
+      "hero_title": "路线图"
+    },
+    "faq": {
+      "title": "常见问题",
+      "og_title": "常见问题 - Lotusia",
+      "description": "快速了解 Lotusia。",
+      "hero_title": "常见问题"
+    },
+    "blog": {
+      "title": "博客",
+      "og_title": "博客 - Lotusia",
+      "description": "Lotusia 生态系统的最新动态。"
+    },
+    "docs": {
+      "title": "文档",
+      "og_title": "文档 - Lotusia",
+      "description": "Lotusia 技术文档。"
+    }
+  }
+}

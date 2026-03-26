@@ -1,35 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{html_lang}}" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} | Lotusia Docs</title>
+    <title>{{title}} | Lotusia</title>
     <meta name="description" content="{{description}}">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="{{title}} - Lotusia Docs">
     <meta property="og:description" content="{{description}}">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://lotusia.burnlotus.org{{path}}">
+    <meta property="og:url" content="{{canonical_url}}">
     <meta property="og:site_name" content="Lotusia">
+    <meta property="og:locale" content="{{og_locale}}">
     <meta name="twitter:card" content="summary">
-    <link rel="canonical" href="https://lotusia.burnlotus.org{{path}}">
+    <link rel="canonical" href="{{canonical_url}}">
+    {{hreflang_tags}}
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"{{title}}","url":"https://lotusia.burnlotus.org{{path}}","author":{"@type":"Organization","name":"Lotusia Stewardship"},"inLanguage":"en"}</script>
+    {{json_ld}}
+    {{head_extra}}
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+<body class="bg-background text-foreground min-h-screen">
     {{header}}
-    <main class="flex max-w-7xl mx-auto min-h-[calc(100vh-var(--header-height))]">
-        <aside class="hidden lg:block w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 sticky top-[--header-height] h-[calc(100vh-var(--header-height))] overflow-y-auto p-4 text-sm" aria-label="Documentation navigation">
-            <nav>{{sidebar}}</nav>
-        </aside>
-        <div class="flex-1 min-w-0 px-4 sm:px-8 py-8 max-w-none">
-            <nav class="text-sm text-gray-500 mb-6">{{breadcrumb}}</nav>
-            <article class="prose max-w-none" itemscope itemtype="https://schema.org/TechArticle">
-                <h1 itemprop="headline" class="text-3xl font-bold mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">{{title}}</h1>
+    <main class="min-h-[calc(100vh-var(--header-height))]">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
+          <div class="lg:col-span-2 hidden lg:block">
+            <div class="mt-8 pb-24 sticky top-[calc(var(--header-height)+2rem)]">
+              <nav class="text-sm overflow-y-auto max-h-[calc(100vh-var(--header-height)-4rem)]">{{sidebar}}</nav>
+            </div>
+          </div>
+          <div class="lg:col-span-6">
+            <div class="relative border-b border-gray-200 dark:border-gray-800 py-8">
+              <div class="flex flex-col lg:flex-row items-start gap-6">
+                <div class="flex-1">
+                  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{title}}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8 pb-24 max-w-none">
+              <article class="prose max-w-none" itemscope itemtype="https://schema.org/TechArticle">
                 <div itemprop="articleBody">{{body}}</div>
-            </article>
+              </article>
+            </div>
+          </div>
+          <div class="lg:col-span-2 lg:order-last hidden lg:block">
+            <nav class="sticky top-[calc(var(--header-height)+2rem)] bg-background/75 px-4 lg:py-8 text-sm">
+              <nav class="text-xs text-gray-500 mb-4">{{breadcrumb}}</nav>
+            </nav>
+          </div>
         </div>
+      </div>
     </main>
     {{footer}}
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>

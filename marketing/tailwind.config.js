@@ -1,28 +1,47 @@
 /** @type {import('tailwindcss').Config} */
+function rgb(varName) {
+  return `rgb(var(${varName}) / <alpha-value>)`;
+}
+
 module.exports = {
   content: ['./dist/**/*.html'],
   darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace']
+        sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
       },
       colors: {
         primary: {
-          DEFAULT: '#a855f7',
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87'
+          DEFAULT: rgb('--color-primary-DEFAULT'),
+          50: rgb('--color-primary-50'),
+          100: rgb('--color-primary-100'),
+          200: rgb('--color-primary-200'),
+          300: rgb('--color-primary-300'),
+          400: rgb('--color-primary-400'),
+          500: rgb('--color-primary-500'),
+          600: rgb('--color-primary-600'),
+          700: rgb('--color-primary-700'),
+          800: rgb('--color-primary-800'),
+          900: rgb('--color-primary-900'),
+          950: rgb('--color-primary-950'),
         },
-        background: '#111827'
+        gray: {
+          50: rgb('--color-gray-50'),
+          100: rgb('--color-gray-100'),
+          200: rgb('--color-gray-200'),
+          300: rgb('--color-gray-300'),
+          400: rgb('--color-gray-400'),
+          500: rgb('--color-gray-500'),
+          600: rgb('--color-gray-600'),
+          700: rgb('--color-gray-700'),
+          800: rgb('--color-gray-800'),
+          900: rgb('--color-gray-900'),
+          950: rgb('--color-gray-950'),
+        },
+        background: rgb('--ui-background'),
+        foreground: rgb('--ui-foreground'),
       },
       maxWidth: {
         '7xl': '80rem',

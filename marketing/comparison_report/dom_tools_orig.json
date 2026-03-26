@@ -1,0 +1,2222 @@
+{
+  "tree": {
+    "bodyClasses": "",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/logo.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "block",
+                      "h": 48,
+                      "layout": "items-center",
+                      "tag": "div",
+                      "w": 170
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 48,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 170
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 48,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 370
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/ecosystem",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Ecosystem",
+                      "w": 74
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 74
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/tools",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1 text-primary",
+                      "tag": "a",
+                      "text": "Tools",
+                      "w": 35
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 35
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/roadmap",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Roadmap",
+                      "w": 64
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 64
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/faq",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "FAQ",
+                      "w": 27
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 27
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/docs",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Docs",
+                      "w": 34
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "w-5 h-5 flex-shrink-0",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                              "tag": "button",
+                              "text": "More",
+                              "w": 58
+                            }
+                          ],
+                          "display": "inline-flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "inline-flex w-full",
+                          "tag": "div",
+                          "w": 58
+                        }
+                      ],
+                      "display": "block",
+                      "h": 25,
+                      "layout": "relative",
+                      "tag": "div",
+                      "w": 58
+                    },
+                    {
+                      "display": "none",
+                      "h": 0,
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 25,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 58
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 25,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "ul",
+              "w": 452
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-primary-500",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-gray-400",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        }
+                      ],
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                },
+                {
+                  "children": [
+                    {
+                      "display": "inline-block",
+                      "h": 0,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 0
+                    }
+                  ],
+                  "display": "none",
+                  "h": 0,
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 text-gray-700 inline-flex items-center lg:hidden",
+                  "tag": "button",
+                  "w": 0
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 370
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "light",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 72,
+                          "layout": "text-5xl font-bold text-gray-900 sm:text-7xl",
+                          "tag": "h1",
+                          "text": "Public Goods",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 56,
+                          "layout": "mt-6 text-lg text-gray-600",
+                          "tag": "p",
+                          "text": "Open-source software and infrastructure produced by the Lotusia Stewardship for ...",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 152,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/tools_0.jpg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 224,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 352,
+              "layout": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 28,
+                          "layout": "mb-2 text-base/7 font-semibold text-primary",
+                          "tag": "div",
+                          "text": "Winter Solstice 2025 - 10th Epoch of the Lotus Network",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 96,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Core Blockchain Software - lotusd",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 160,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "The Stewardship maintains lotusd and Lotus-QT, the reference implementation of t...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Full Node & Mining",
+                                      "w": 143
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Complete validating node with SHA-256d mining and GPU acceleration",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "RPC & REST APIs",
+                                      "w": 127
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "JSON-RPC and REST interfaces for blockchain queries and transaction broadcasting",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Advanced Scripts",
+                                      "w": 136
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Taproot, MuSig2, SwapSig, and custom script types with signature verification",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "P2P Infrastructure",
+                                      "w": 140
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Mempool management, block propagation, and consensus rule enforcement",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 352,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Windows",
+                                  "w": 61
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://github.com/LotusiaStewardship/lotusd/releases/download/v10.4.11/lotus-10.4.11-win64-setup-unsigned.exe",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 113
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "MacOS",
+                                  "w": 47
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://github.com/LotusiaStewardship/lotusd/releases/download/v10.4.11/lotus-10.4.11-osx-unsigned.dmg",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 99
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Linux",
+                                  "w": 35
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://github.com/LotusiaStewardship/lotusd/releases/download/v10.4.11/lotus-10.4.11-x86_64-linux-gnu.tar.gz",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 87
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Source Code",
+                                  "w": 85
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://github.com/LotusiaStewardship/lotusd",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 137
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 36,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 760,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/LotusQT_0.png",
+                          "tag": "img"
+                        },
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/LotusQT_1.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "544px",
+                      "h": 742,
+                      "layout": "grid grid-cols-1 gap-8 sm:grid-cols-1 py-0",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 760,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 952,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Developer SDK - xpi-ts",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "A TypeScript library developed by the Stewardship for building applications that...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Transaction Building",
+                                      "w": 157
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Create and sign transactions with Bitcore-compatible APIs, HD wallets, and mnemonic phrase support",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Advanced Cryptography",
+                                      "w": 189
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "MuSig2 multi-signatures, Taproot addresses, and secure key derivation out of the box",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "RANK Protocol",
+                                      "w": 111
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Build reputation and content ranking systems with native on-chain RANK support",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "TypeScript Native",
+                                      "w": 138
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Fully typed modules with comprehensive documentation and real-world examples",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 352,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "GitHub Repository",
+                                  "w": 122
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://github.com/LotusiaStewardship/xpi-ts",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 174
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "NPM Package",
+                                  "w": 88
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://www.npmjs.com/package/xpi-ts",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 140
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 36,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 644,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/lotus-lib_3.jpeg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "544px",
+                      "h": 423,
+                      "layout": "grid grid-cols-1 gap-8 sm:grid-cols-1 py-0",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 644,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 836,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Browser Extension",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "A reference implementation of the RANK protocol, developed by the Stewardship as...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Rank Content with Lotus",
+                                      "w": 189
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Burn Lotus to upvote or downvote social media posts using the RANK protocol",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "See Community Ratings",
+                                      "w": 184
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "View how the community has ranked content before you engage",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Tip Creators Directly",
+                                      "w": 160
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Give Lotus to content creators and friends from your browser",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Build Your Influence",
+                                      "w": 152
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Quality contributions build your reputation in the community",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 280,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Chrome Web Store",
+                                  "w": 125
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://chromewebstore.google.com/detail/lotusia/bbdehfckfcaablnndggpliihmfmflcbh",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 177
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 36,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 572,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/extension_1.jpeg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "544px",
+                      "h": 602,
+                      "layout": "grid grid-cols-1 gap-8 sm:grid-cols-1 py-0",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 602,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 794,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 96,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Mobile Wallet Reference Implementation",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 96,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "BigVase is a reference implementation of a non-custodial Lotus wallet, developed...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Your Keys, Your Lotus",
+                                      "w": 162
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Non-custodial wallet where you control your funds with backup phrases",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Give & Receive Easily",
+                                      "w": 163
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Give Lotus to friends or receive Lotus with simple QR codes and contact lists",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Track Your Balance",
+                                      "w": 146
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "See your Lotus balance and transaction history at a glance",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Works Everywhere",
+                                      "w": 143
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Available on both Android and iPhone",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 304,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Android",
+                                  "w": 53
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://play.google.com/store/apps/details?id=com.soleilvert.lotuswallet",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 105
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "iOS",
+                                  "w": 23
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "https://apps.apple.com/us/app/bigvase/id6751052174",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 75
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 36,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 612,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/bigvase_1.jpeg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "544px",
+                      "h": 738,
+                      "layout": "grid grid-cols-1 gap-8 sm:grid-cols-1 py-0",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 738,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 930,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 3864,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 3864,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 48,
+          "tag": "a",
+          "text": "",
+          "w": 170
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 48,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        },
+        {
+          "display": "none",
+          "h": 0,
+          "tag": "button",
+          "text": "",
+          "w": 0
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 5,
+      "children": [
+        {
+          "display": "block",
+          "h": 352,
+          "tag": "div",
+          "text": "Public GoodsOpen-source software and inf",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 952,
+          "tag": "div",
+          "text": "Winter Solstice 2025 - 10th Epoch of the",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 836,
+          "tag": "div",
+          "text": "Developer SDK - xpi-tsA TypeScript libra",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 794,
+          "tag": "div",
+          "text": "Browser ExtensionA reference implementat",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 930,
+          "tag": "div",
+          "text": "Mobile Wallet Reference ImplementationBi",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 3864,
+      "tag": "div",
+      "text": "Public GoodsOpen-source software and infrastructure produced",
+      "w": 1280
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 224,
+          "tag": "div",
+          "text": "Public GoodsOpen-source software and inf",
+          "w": 1216
+        }
+      ],
+      "className": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 352,
+      "tag": "div",
+      "text": "Public GoodsOpen-source software and infrastructure produced",
+      "w": 1216
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "block",
+          "h": 72,
+          "tag": "h1",
+          "text": "Public Goods",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 56,
+          "tag": "p",
+          "text": "Open-source software and infrastructure",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 152,
+      "tag": "div",
+      "text": "Public GoodsOpen-source software and infrastructure produced",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 760,
+          "tag": "div",
+          "text": "Winter Solstice 2025 - 10th Epoch of the",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 952,
+      "tag": "div",
+      "text": "Winter Solstice 2025 - 10th Epoch of the Lotus NetworkCore B",
+      "w": 1216
+    },
+    {
+      "childCount": 5,
+      "children": [
+        {
+          "display": "block",
+          "h": 28,
+          "tag": "div",
+          "text": "Winter Solstice 2025 - 10th Epoch of the",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 96,
+          "tag": "h2",
+          "text": "Core Blockchain Software - lotusd",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 160,
+          "tag": "p",
+          "text": "The Stewardship maintains lotusd and Lot",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 352,
+          "tag": "dl",
+          "text": "Full Node & MiningComplete validating no",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 36,
+          "tag": "div",
+          "text": "WindowsMacOSLinuxSource Code",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 760,
+      "tag": "div",
+      "text": "Winter Solstice 2025 - 10th Epoch of the Lotus NetworkCore B",
+      "w": 544
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "block",
+          "h": 335,
+          "tag": "img",
+          "text": "",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 375,
+          "tag": "img",
+          "text": "",
+          "w": 544
+        }
+      ],
+      "className": "grid grid-cols-1 gap-8 sm:grid-cols-1 xl:grid-cols-1 py-0",
+      "display": "grid",
+      "flexDir": "row",
+      "gridCols": "544px",
+      "h": 742,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 644,
+          "tag": "div",
+          "text": "Developer SDK - xpi-tsA TypeScript libra",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 836,
+      "tag": "div",
+      "text": "Developer SDK - xpi-tsA TypeScript library developed by the",
+      "w": 1216
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Developer SDK - xpi-ts",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "A TypeScript library developed by the St",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 352,
+          "tag": "dl",
+          "text": "Transaction BuildingCreate and sign tran",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 36,
+          "tag": "div",
+          "text": "GitHub RepositoryNPM Package",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 644,
+      "tag": "div",
+      "text": "Developer SDK - xpi-tsA TypeScript library developed by the",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 423,
+          "tag": "img",
+          "text": "",
+          "w": 544
+        }
+      ],
+      "className": "grid grid-cols-1 gap-8 sm:grid-cols-1 xl:grid-cols-1 py-0",
+      "display": "grid",
+      "flexDir": "row",
+      "gridCols": "544px",
+      "h": 423,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 602,
+          "tag": "div",
+          "text": "Browser ExtensionA reference implementat",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 794,
+      "tag": "div",
+      "text": "Browser ExtensionA reference implementation of the RANK prot",
+      "w": 1216
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Browser Extension",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "A reference implementation of the RANK p",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 280,
+          "tag": "dl",
+          "text": "Rank Content with LotusBurn Lotus to upv",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 36,
+          "tag": "div",
+          "text": "Chrome Web Store",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 572,
+      "tag": "div",
+      "text": "Browser ExtensionA reference implementation of the RANK prot",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 602,
+          "tag": "img",
+          "text": "",
+          "w": 380
+        }
+      ],
+      "className": "grid grid-cols-1 gap-8 sm:grid-cols-1 xl:grid-cols-1 py-0",
+      "display": "grid",
+      "flexDir": "row",
+      "gridCols": "544px",
+      "h": 602,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 738,
+          "tag": "div",
+          "text": "Mobile Wallet Reference ImplementationBi",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 930,
+      "tag": "div",
+      "text": "Mobile Wallet Reference ImplementationBigVase is a reference",
+      "w": 1216
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "block",
+          "h": 96,
+          "tag": "h2",
+          "text": "Mobile Wallet Reference Implementation",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 96,
+          "tag": "p",
+          "text": "BigVase is a reference implementation of",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 304,
+          "tag": "dl",
+          "text": "Your Keys, Your LotusNon-custodial walle",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 36,
+          "tag": "div",
+          "text": "AndroidiOS",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 612,
+      "tag": "div",
+      "text": "Mobile Wallet Reference ImplementationBigVase is a reference",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 738,
+          "tag": "img",
+          "text": "",
+          "w": 373
+        }
+      ],
+      "className": "grid grid-cols-1 gap-8 sm:grid-cols-1 xl:grid-cols-1 py-0",
+      "display": "grid",
+      "flexDir": "row",
+      "gridCols": "544px",
+      "h": 738,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All righ",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+      "w": 596
+    }
+  ]
+}
