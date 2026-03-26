@@ -44,19 +44,29 @@ sections:
         icon: i-simple-icons-linkedin
         size: md
   - title: Matthew Urgero
-    headline: Faithful Turtle — Architect & Operations
-    description: "Matthew brings deep conviction and operational excellence to Lotusia. His focus on long-term sustainability over short-term speculation defines the project's ethos. He oversees ecosystem operations, community coordination, and strategic planning to ensure Lotusia grows as a genuine tool for human connection rather than financial exploitation."
+    headline: Faithful Turtle — Sr. IT Systems Engineer · Architect & Operations
+    description: "Senior IT Systems Engineer based in Arizona, USA. Matthew co-founded Lotusia with a deep conviction that cryptocurrency should serve human relationships, not exploit them. As Architect & Operations lead since 2024, he drives ecosystem operations, infrastructure reliability, community coordination, and strategic planning. His background in enterprise IT systems engineering brings operational rigor to every aspect of the Lotusia platform — from network architecture to deployment pipelines. Matthew's focus on long-term sustainability over short-term speculation defines the project's ethos."
     align: left
     features:
+      - name: IT Systems Engineering
+        description: Enterprise-grade infrastructure, networking, and systems architecture
+        icon: i-heroicons-server-stack-solid
       - name: Ecosystem Operations
-        description: Oversees day-to-day operations and community coordination
+        description: Oversees day-to-day operations, deployment pipelines, and infrastructure reliability
         icon: i-heroicons-cog-solid
       - name: Strategic Vision
-        description: Drives the long-term roadmap aligned with Lotusia's core values
+        description: Drives the long-term roadmap aligned with Lotusia's core values of truth and integrity
         icon: i-heroicons-light-bulb-solid
       - name: Community Building
-        description: Fosters authentic human relationships within the Lotusia ecosystem
+        description: Fosters authentic human relationships within the Lotusia ecosystem worldwide
         icon: i-heroicons-heart-solid
+    links:
+      - label: LinkedIn
+        to: https://www.linkedin.com/in/matthew-urgero/
+        target: _blank
+        color: gray
+        icon: i-simple-icons-linkedin
+        size: md
 cta:
   title: Built by People, for People
   description: Lotusia exists because its founders believe that technology should serve humanity. Every line of code, every infrastructure decision, every community interaction is guided by this principle. Join us in building something that matters.

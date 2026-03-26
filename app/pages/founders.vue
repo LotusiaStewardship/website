@@ -53,8 +53,14 @@ useHead({
           {
             '@type': 'Person',
             'name': 'Matthew Urgero',
-            'jobTitle': 'Architect & Operations',
-            'description': 'Ecosystem operations and strategic planning. Focuses on long-term sustainability and community building within the Lotusia ecosystem.'
+            'url': 'https://www.linkedin.com/in/matthew-urgero/',
+            'jobTitle': 'Sr. IT Systems Engineer · Architect & Operations',
+            'description': 'Senior IT Systems Engineer and Architect & Operations at Lotusia Stewardship. Based in San Tan Valley, Arizona. Focuses on ecosystem operations, strategic planning, long-term sustainability, and community building. Drives the roadmap aligned with Lotusia core values of truth, integrity, and pragmatism.',
+            'address': { '@type': 'PostalAddress', 'addressLocality': 'San Tan Valley', 'addressRegion': 'Arizona', 'addressCountry': 'US' },
+            'sameAs': [
+              'https://www.linkedin.com/in/matthew-urgero/'
+            ],
+            'worksFor': { '@type': 'Organization', 'name': 'Lotusia Stewardship', 'url': 'https://lotusia.org' }
           }
         ],
         'sameAs': [
