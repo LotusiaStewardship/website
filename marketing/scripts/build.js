@@ -182,9 +182,17 @@ function buildSocialPages(sitemap) {
   const trendingPath = '/social/trending';
   const profilesPath = '/social/profiles';
   const lastmod = fileLastmod(path.join(SOCIAL_DIR, 'social-data.json')) || formatDateYMD(new Date());
-  setSitemapEntry(sitemap, activityPath, { en: activityPath }, lastmod);
-  setSitemapEntry(sitemap, trendingPath, { en: trendingPath }, lastmod);
-  setSitemapEntry(sitemap, profilesPath, { en: profilesPath }, lastmod);
+  setSitemapEntry(sitemap, activityPath, localizedAlternates(activityPath), lastmod);
+  setSitemapEntry(sitemap, trendingPath, localizedAlternates(trendingPath), lastmod);
+  setSitemapEntry(sitemap, profilesPath, localizedAlternates(profilesPath), lastmod);
+}
+
+function buildExplorerPages(sitemap) {
+  const overviewPath = '/explorer';
+  const blocksPath = '/explorer/blocks';
+  const lastmod = fileLastmod(path.join(SOCIAL_DIR, 'social-data.json')) || formatDateYMD(new Date());
+  setSitemapEntry(sitemap, overviewPath, localizedAlternates(overviewPath), lastmod);
+  setSitemapEntry(sitemap, blocksPath, localizedAlternates(blocksPath), lastmod);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -246,6 +254,7 @@ buildLocalizedLandingPages({
 buildBlogPages({ buildBlog, sitemap });
 buildDocsPages({ buildDocs, sitemap });
 buildSocialPages(sitemap);
+buildExplorerPages(sitemap);
 
 // Copy assets
 fs.cpSync(ASSETS, path.join(DIST, 'assets'), { recursive: true });

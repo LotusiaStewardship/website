@@ -1,3 +1,7 @@
+function workerText(lang, key, fallback) {
+  return workerI18nValue(lang, 'worker.' + key, fallback);
+}
+
 function parsePageAndSize(url) {
   const pageRaw = Number(url.searchParams.get('page') || 1);
   const pageSizeRaw = Number(url.searchParams.get('pageSize') || 10);
@@ -152,12 +156,15 @@ function middleEllipsis(value, head, tail) {
   return text.slice(0, keepHead) + '...' + text.slice(-keepTail);
 }
 
-function profileCellHtml(platform, profileId) {
+function profileCellHtml(platform, profileId, options) {
+  const opts = options || {};
+  const lang = WORKER_LANGS.includes(opts.lang) ? opts.lang : 'en';
   const handle = String(profileId || '');
   const avatar = renderAvatarHtml(platform, handle, { size: 'sm' });
+  const href = withWorkerLangPrefix(lang, '/social/' + esc(platform) + '/' + esc(profileId));
   return '<div class="flex items-center gap-2">' +
     avatar +
-    '<a class="font-semibold text-sm text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" style="max-width:12rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(handle) + '</a>' +
+    '<a class="font-semibold text-sm text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" style="max-width:12rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;" href="' + href + '">' + esc(handle) + '</a>' +
     iconSvg('x', 'h-4 w-4 text-sky-500 dark:text-sky-400') +
     '</div>';
 }
@@ -258,6 +265,10 @@ function voteToneHtml(sentiment, sats) {
 
 function paginationHtml(basePath, page, pageSize, numPages, options) {
   const opts = options || {};
+  const lang = WORKER_LANGS.includes(opts.lang) ? opts.lang : 'en';
+  const rowsPerPageLabel = workerText(lang, 'rows_per_page', 'Rows per page');
+  const pageLabel = workerText(lang, 'page', 'Page');
+  const ofLabel = workerText(lang, 'of', 'of');
   const pageParam = String(opts.pageParam || 'page');
   const pageSizeParam = String(opts.pageSizeParam || 'pageSize');
   const groupId = String(opts.groupId || '').trim();
@@ -309,8 +320,8 @@ function paginationHtml(basePath, page, pageSize, numPages, options) {
   if (totalPages <= 1) return '';
   return '<div class="mt-0 rounded-b-2xl border border-gray-200/90 dark:border-gray-700/70 border-t-0 bg-gray-50/70 dark:bg-gray-900/60 px-4 py-3 overflow-visible"' + groupAttr + '>' +
     '<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">' +
-    '<div class="flex items-center gap-3"><span class="text-sm font-semibold text-gray-700 dark:text-gray-200">Rows per page</span>' + selectControl + '</div>' +
-    '<div class="flex flex-wrap items-center gap-2 sm:gap-3"><span class="inline-flex items-center justify-center h-11 px-3 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-xl tabular-nums whitespace-nowrap">Page ' + safePage + ' of ' + totalPages + '</span><div class="flex flex-wrap items-center gap-2 sm:whitespace-nowrap">' + prevLink + endCaps + nextLink + '</div></div>' +
+    '<div class="flex items-center gap-3"><span class="text-sm font-semibold text-gray-700 dark:text-gray-200">' + esc(rowsPerPageLabel) + '</span>' + selectControl + '</div>' +
+    '<div class="flex flex-wrap items-center gap-2 sm:gap-3"><span class="inline-flex items-center justify-center h-11 px-3 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-xl tabular-nums whitespace-nowrap">' + esc(pageLabel) + ' ' + safePage + ' ' + esc(ofLabel) + ' ' + totalPages + '</span><div class="flex flex-wrap items-center gap-2 sm:whitespace-nowrap">' + prevLink + endCaps + nextLink + '</div></div>' +
     '</div>' +
     '</div>';
 }
@@ -334,17 +345,17 @@ function shortHash(value) {
 }
 
 function parseExplorerBlockPath(pathname) {
-  const m = pathname.match(/^\/explorer\/block\/([^/]+)\/?$/);
+  const m = stripWorkerLangPrefix(pathname).match(/^\/explorer\/block\/([^/]+)\/?$/);
   return m ? decodeURIComponent(m[1]) : null;
 }
 
 function parseExplorerTxPath(pathname) {
-  const m = pathname.match(/^\/explorer\/tx\/([^/]+)\/?$/);
+  const m = stripWorkerLangPrefix(pathname).match(/^\/explorer\/tx\/([^/]+)\/?$/);
   return m ? decodeURIComponent(m[1]) : null;
 }
 
 function parseExplorerAddressPath(pathname) {
-  const m = pathname.match(/^\/explorer\/address\/([^/]+)\/?$/);
+  const m = stripWorkerLangPrefix(pathname).match(/^\/explorer\/address\/([^/]+)\/?$/);
   return m ? decodeURIComponent(m[1]) : null;
 }
 

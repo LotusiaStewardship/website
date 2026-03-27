@@ -2,7 +2,14 @@
 
 function makeNavMetaHelpers({ SITE_URL, I18N, LANGS, LOCALIZED_ROUTES }) {
   function abs(p) {
-    return `${SITE_URL}${p}`;
+    const raw = String(p || '/');
+    try {
+      const url = new URL(raw, SITE_URL);
+      url.pathname = encodeURI(decodeURI(url.pathname));
+      return url.toString();
+    } catch (_) {
+      return `${SITE_URL}${encodeURI(raw)}`;
+    }
   }
 
   function langPath(lang, basePath) {

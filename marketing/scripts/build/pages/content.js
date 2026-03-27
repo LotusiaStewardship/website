@@ -31,6 +31,36 @@ function makeBlogDocsBuilders(ctx) {
     return { meta: yaml.load(m[1]) || {}, body: m[2] };
   }
 
+  function stripMarkdown(markdown) {
+    return String(markdown || '')
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/`[^`]*`/g, ' ')
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+      .replace(/\[[^\]]+\]\([^)]+\)/g, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/[#>*_~\-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function clampText(text, minLen, maxLen, fallback) {
+    const base = String(text || '').replace(/\s+/g, ' ').trim();
+    const backup = String(fallback || '').replace(/\s+/g, ' ').trim();
+    let out = base || backup;
+    if (!out) return '';
+    if (out.length < minLen && backup && out !== backup) out = `${out} ${backup}`.replace(/\s+/g, ' ').trim();
+    if (out.length < minLen) out = `${out} Learn more on the official Lotusia website.`.replace(/\s+/g, ' ').trim();
+    if (out.length > maxLen) out = out.slice(0, maxLen - 1).trimEnd() + '…';
+    return out;
+  }
+
+  function buildMetaTitle(rawTitle, maxLen) {
+    const text = String(rawTitle || '').replace(/\s+/g, ' ').trim();
+    if (!text) return 'Lotusia';
+    if (text.length <= maxLen) return text;
+    return text.slice(0, maxLen - 1).trimEnd() + '…';
+  }
+
   function buildBlog(sitemap) {
     const blogDir = path.join(CONTENT, 'blog');
     const files = fs.readdirSync(blogDir).filter(f => f.endsWith('.md')).sort().reverse();
@@ -45,6 +75,7 @@ function makeBlogDocsBuilders(ctx) {
       const { meta, body } = parseFrontmatter(raw);
       const slug = file.replace(/^\d+\./, '').replace('.md', '');
       const htmlBody = optimizeContentImages(marked(body).replace(/src="\/img\//g, 'src="/assets/images/'), meta.title || slug);
+      const plainBody = stripMarkdown(body);
       const dateRaw = meta.date || '';
       const dateObj = dateRaw ? new Date(dateRaw) : null;
       const dateStr = dateObj ? dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
@@ -59,10 +90,14 @@ function makeBlogDocsBuilders(ctx) {
       const wordCount = (body || '').split(/\s+/).filter(Boolean).length;
       const articleSection = (meta.badge && meta.badge.label) || 'Blog';
 
+      const fallbackDescription = `Read this Lotusia blog update about ${meta.title || slug} and stay current with ecosystem progress and releases.`;
+      const metaDescription = clampText(meta.description || '', 90, 160, fallbackDescription || plainBody);
+      const metaTitle = buildMetaTitle(meta.title || slug, 52);
       const vars = {
         ...makePageMeta('en', canonicalPath, alternatesPost),
         title: meta.title || slug,
-        description: meta.description || '',
+        meta_title: metaTitle,
+        description: metaDescription,
         slug,
         og_image: ogImage,
         date: dateStr,
@@ -73,7 +108,7 @@ function makeBlogDocsBuilders(ctx) {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
           headline: meta.title || slug,
-          description: meta.description || '',
+          description: metaDescription,
           url: abs(canonicalPath),
           image: abs(ogImage),
           datePublished: dateIso || undefined,
@@ -93,7 +128,7 @@ function makeBlogDocsBuilders(ctx) {
         : '';
       const badge = (meta.badge && meta.badge.label) || '';
       const cardDate = dateObj ? dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-      posts.push({ title: meta.title || slug, description: meta.description || '', slug, date: cardDate, image: ogImage, author: authorName, avatar: authorAvatar, badge, canonicalPath });
+      posts.push({ title: meta.title || slug, description: metaDescription, slug, date: cardDate, image: ogImage, author: authorName, avatar: authorAvatar, badge, canonicalPath });
       const postLastmod = dateIso || fileLastmod(path.join(blogDir, file));
       setSitemapEntry(sitemap, canonicalPath, alternatesPost, postLastmod);
       blogIndexLastmod = maxLastmod(blogIndexLastmod, postLastmod);
@@ -119,8 +154,9 @@ function makeBlogDocsBuilders(ctx) {
     const vars = {
       ...makePageMeta('en', '/blog', alternatesForBlog),
       title: en.pages.blog.title,
+      meta_title: 'Lotusia Blog Updates',
       og_title: en.pages.blog.og_title,
-      description: en.pages.blog.description,
+      description: clampText(en.pages.blog.description, 90, 160, 'Latest Lotusia ecosystem updates, releases, and technical insights from the Stewardship team.'),
       og_image: '/assets/images/blog_0.jpg',
       hero_title: en.pages.blog.title,
       hero_description: en.pages.blog.description,
@@ -164,10 +200,13 @@ function makeBlogDocsBuilders(ctx) {
             .replace(/src="\/img\//g, 'src="/assets/images/')
             .replace(/src="\.\.\/img\//g, 'src="/assets/images/')
             .replace(/src="\/(preview[^"]*\.png)"/g, 'src="/assets/images/$1"'), title);
+          const normalizedBody = rendered
+            .replace(/<h1(\b[^>]*)>/gi, '<h2$1>')
+            .replace(/<\/h1>/gi, '</h2>');
           allDocs.push({
             title,
             path: docPath,
-            body: rendered,
+            body: normalizedBody,
             rawBody: body,
             description: meta.description || '',
             group: gname,
@@ -207,14 +246,25 @@ function makeBlogDocsBuilders(ctx) {
       return sb;
     }
 
+    const titleCounts = allDocs.reduce((acc, doc) => {
+      acc[doc.title] = (acc[doc.title] || 0) + 1;
+      return acc;
+    }, {});
+
     for (const doc of allDocs) {
       const alternates = { en: doc.path };
       const bcParts = [{ name: 'Home', url: '/' }, { name: 'Docs', url: '/docs' }];
       if (doc.path !== '/docs') bcParts.push({ name: doc.title, url: doc.path });
+      const defaultDescription = `Lotusia technical documentation for ${doc.title}. Explore specifications, implementation details, and practical guidance.`;
+      const metaDescription = clampText(doc.description, 90, 160, defaultDescription);
+      const dedupTitle = titleCounts[doc.title] > 1 ? `${doc.title} - ${doc.group}` : doc.title;
+      const metaTitle = doc.path === '/docs' ? 'Lotusia Documentation' : buildMetaTitle(dedupTitle, 52);
       const vars = {
         ...makePageMeta('en', doc.path, alternates),
         title: doc.title,
-        description: doc.description || `Lotusia technical documentation: ${doc.title}`,
+        meta_title: metaTitle,
+        description: metaDescription,
+        og_image: '/assets/images/logo.png',
         sidebar: buildSidebar(doc.path),
         body: doc.body,
         breadcrumb: breadcrumbHtml(bcParts),
@@ -223,7 +273,7 @@ function makeBlogDocsBuilders(ctx) {
             '@context': 'https://schema.org',
             '@type': 'TechArticle',
             headline: doc.title,
-            description: doc.description || `Lotusia technical documentation: ${doc.title}`,
+            description: metaDescription,
             url: abs(doc.path),
             articleSection: doc.group,
             isPartOf: { '@type': 'WebSite', name: 'Lotusia', url: SITE_URL },

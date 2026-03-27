@@ -1,45 +1,50 @@
-async function renderActivityPage(url) {
+async function renderActivityPage(url, lang) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const params = parsePageAndSize(url);
   const payload = await fetchSocialJson('/api/social/activity', { page: params.page, pageSize: params.pageSize });
   const rows = (payload.votes || []).map(v => {
     return '<tr>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="' + localize('/explorer/tx/' + esc(v.txid)) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatUtc(v.firstSeen)) + '</td>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(v.platform || 'twitter', v.profileId || '') + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(v.platform || 'twitter', v.profileId || '', { lang: safeLang }) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteToneHtml(String(v.sentiment || 'neutral'), v.sats) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="inline-flex items-center text-sky-500 dark:text-sky-400 hover:underline" target="_blank" rel="noopener noreferrer" href="https://x.com/' + esc(v.profileId) + '/status/' + esc(v.postId) + '">' + esc(v.postId) + iconSvg('external', 'ml-2 h-4 w-4 text-gray-400') + '</a></td>' +
       '</tr>';
   });
-  const canonical = '/social/activity?page=' + params.page + '&pageSize=' + params.pageSize;
+  const canonical = localize('/social/activity') + '?page=' + params.page + '&pageSize=' + params.pageSize;
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Social', href: '/social/activity' },
-    { label: 'Activity', href: '/social/activity' }
+    { label: workerI18nValue(safeLang, 'common.home', 'Home'), href: localize('/') },
+    { label: workerText(safeLang, 'social', 'Social'), href: localize('/social/activity') },
+    { label: workerText(safeLang, 'activity', 'Activity'), href: localize('/social/activity') }
   ];
-  const title = 'Latest Activity';
-  const description = 'Fresh social vote activity across profiles on Lotusia.';
+  const title = workerText(safeLang, 'title_latest_activity', 'Latest Activity');
+  const description = workerText(safeLang, 'desc_latest_activity', 'Fresh social vote activity across profiles on Lotusia, including sentiment, vote amount, and linked post details.');
   const jsonLd = seoJsonLd([
     seoBreadcrumbGraph(breadcrumbs),
     seoPageGraph(canonical, title, description, 'CollectionPage'),
     seoItemListGraph('Latest social votes', (payload.votes || []).slice(0, 10).map(function(v) {
       return {
         name: String(v.profileId || 'Unknown profile') + ' vote ' + String(v.sentiment || 'neutral'),
-        url: v.txid ? seoAbsoluteUrl('/explorer/tx/' + encodeURIComponent(v.txid)) : ''
+        url: v.txid ? seoAbsoluteUrl(localize('/explorer/tx/' + encodeURIComponent(v.txid))) : ''
       };
     }))
   ]);
-  const bodyInner = sectionHeader('chart', 'Vote Activity', 'Vote activity for all profiles across all platforms.') +
-    renderTable(['Transaction ID', 'First Seen', 'Profile', 'Vote', 'Post ID'], rows, 'No recent activity.', { withPagination: true }) +
-    paginationHtml('/social/activity', params.page, params.pageSize, payload.numPages);
-  const body = legacyExplorerLayout('latest', bodyInner);
+  const bodyInner = sectionHeader('chart', workerText(safeLang, 'vote_activity', 'Vote Activity'), workerText(safeLang, 'vote_activity_subtitle', 'Vote activity for all profiles across all platforms.')) +
+    renderTable([workerText(safeLang, 'tx_id', 'Transaction ID'), workerText(safeLang, 'first_seen', 'First Seen'), workerText(safeLang, 'profile', 'Profile'), workerText(safeLang, 'vote', 'Vote'), workerText(safeLang, 'post_id', 'Post ID')], rows, workerText(safeLang, 'no_recent_activity', 'No recent activity.'), { withPagination: true, lang: safeLang, tableKind: 'activity' }) +
+    paginationHtml(localize('/social/activity'), params.page, params.pageSize, payload.numPages, { lang: safeLang });
+  const body = legacyExplorerLayout('latest', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
     keywords: 'lotusia social activity, votes, profile sentiment, on-chain social',
-    jsonLd
+    jsonLd,
+    lang: safeLang
   });
 }
 
-async function renderTrendingPage() {
+async function renderTrendingPage(lang) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const rankValue = function(entity) {
     const raw = entity && (entity.ranking ?? entity.rate ?? entity.score ?? 0);
     const n = Number(raw);
@@ -69,7 +74,7 @@ async function renderTrendingPage() {
     const profileId = p.profileId || p.id || p.handle || '';
     const ranking = rankValue(p);
     return '<tr>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId, { lang: safeLang }) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums ' + rankToneClass(ranking) + '">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
   const lowRows = lowSeed.map(function(p) {
@@ -77,7 +82,7 @@ async function renderTrendingPage() {
     const profileId = p.profileId || p.id || p.handle || '';
     const ranking = rankValue(p);
     return '<tr>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId, { lang: safeLang }) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums ' + rankToneClass(ranking) + '">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
   let topPostSeed = Array.isArray(topPosts) ? topPosts : [];
@@ -114,14 +119,14 @@ async function renderTrendingPage() {
     const ranking = rankValue(p);
     return '<tr><td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="inline-flex items-center text-sky-500 dark:text-sky-400 hover:underline" target="_blank" rel="noopener noreferrer" href="https://x.com/' + esc(pid) + '/status/' + esc(post) + '">' + esc(pid + '/' + post) + iconSvg('external', 'ml-2 h-4 w-4 text-gray-400') + '</a></td><td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums ' + rankToneClass(ranking) + '">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
-  const canonical = '/social/trending';
+  const canonical = localize('/social/trending');
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Social', href: '/social/activity' },
-    { label: 'Trending', href: '/social/trending' }
+    { label: workerI18nValue(safeLang, 'common.home', 'Home'), href: localize('/') },
+    { label: workerText(safeLang, 'social', 'Social'), href: localize('/social/activity') },
+    { label: workerText(safeLang, 'trending', 'Trending'), href: localize('/social/trending') }
   ];
-  const title = 'Trending Profiles';
-  const description = 'Top ranked social profiles on Lotusia.';
+  const title = workerText(safeLang, 'title_trending_profiles', 'Trending Profiles');
+  const description = workerText(safeLang, 'desc_trending_profiles', 'Top and lowest ranked social profiles and posts on Lotusia, updated continuously from live ranking data.');
   const jsonLd = seoJsonLd([
     seoBreadcrumbGraph(breadcrumbs),
     seoPageGraph(canonical, title, description, 'CollectionPage'),
@@ -130,26 +135,29 @@ async function renderTrendingPage() {
       const id = p.profileId || p.id || p.handle || '';
       return {
         name: String(id || 'Unknown profile'),
-        url: id ? seoAbsoluteUrl('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(id)) : ''
+        url: id ? seoAbsoluteUrl(localize('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(id))) : ''
       };
     }))
   ]);
-  const bodyInner = sectionHeader('chart', 'Trending', 'Top and lowest ranked profiles and posts over today.') +
+  const bodyInner = sectionHeader('chart', workerText(safeLang, 'trending', 'Trending'), workerText(safeLang, 'trending_subtitle', 'Top and lowest ranked profiles and posts over today.')) +
     '<div class="grid md:grid-cols-2 gap-6 auto-rows-fr">' +
-    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Profiles</h2><div class="flex-1">' + renderTable(['Profile', 'Ranking'], topRows, 'No profile trend data.') + '</div></section>' +
-    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Profiles</h2><div class="flex-1">' + renderTable(['Profile', 'Ranking'], lowRows, 'No profile trend data.') + '</div></section>' +
-    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Posts</h2><div class="flex-1">' + renderTable(['Post', 'Ranking'], topPostRows, 'No post trend data.') + '</div></section>' +
-    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Posts</h2><div class="flex-1">' + renderTable(['Post', 'Ranking'], lowPostRows, 'No post trend data.') + '</div></section>' +
+    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">' + esc(workerText(safeLang, 'top_ranked_profiles', 'Top Ranked Profiles')) + '</h2><div class="flex-1">' + renderTable([workerText(safeLang, 'profile', 'Profile'), workerText(safeLang, 'ranking', 'Ranking')], topRows, workerText(safeLang, 'no_profile_trend_data', 'No profile trend data.'), { lang: safeLang, tableKind: 'profile-rank' }) + '</div></section>' +
+    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">' + esc(workerText(safeLang, 'lowest_ranked_profiles', 'Lowest Ranked Profiles')) + '</h2><div class="flex-1">' + renderTable([workerText(safeLang, 'profile', 'Profile'), workerText(safeLang, 'ranking', 'Ranking')], lowRows, workerText(safeLang, 'no_profile_trend_data', 'No profile trend data.'), { lang: safeLang, tableKind: 'profile-rank' }) + '</div></section>' +
+    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">' + esc(workerText(safeLang, 'top_ranked_posts', 'Top Ranked Posts')) + '</h2><div class="flex-1">' + renderTable([workerText(safeLang, 'post', 'Post'), workerText(safeLang, 'ranking', 'Ranking')], topPostRows, workerText(safeLang, 'no_post_trend_data', 'No post trend data.'), { lang: safeLang, tableKind: 'post-rank' }) + '</div></section>' +
+    '<section class="flex flex-col h-full"><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">' + esc(workerText(safeLang, 'lowest_ranked_posts', 'Lowest Ranked Posts')) + '</h2><div class="flex-1">' + renderTable([workerText(safeLang, 'post', 'Post'), workerText(safeLang, 'ranking', 'Ranking')], lowPostRows, workerText(safeLang, 'no_post_trend_data', 'No post trend data.'), { lang: safeLang, tableKind: 'post-rank' }) + '</div></section>' +
     '</div>';
-  const body = legacyExplorerLayout('trending', bodyInner);
+  const body = legacyExplorerLayout('trending', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
     keywords: 'lotusia trending, social ranking, top profiles, top posts, lowest ranked',
-    jsonLd
+    jsonLd,
+    lang: safeLang
   });
 }
 
-async function renderProfilesPage(url) {
+async function renderProfilesPage(url, lang) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const params = parsePageAndSize(url);
   const payload = await fetchSocialJson('/api/social/profiles', { page: params.page, pageSize: params.pageSize });
   const rankToneClass = function(value) {
@@ -161,41 +169,44 @@ async function renderProfilesPage(url) {
       const rank = ((params.page - 1) * params.pageSize) + idx + 1;
       return '<tr>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + rank + '</td>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(p.platform, p.id) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(p.platform, p.id, { lang: safeLang }) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums ' + rankToneClass(p.ranking) + '">' + esc(formatXpiFromSats(p.ranking)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteRatioPill(p.votesPositive, p.votesNegative) + '</td>' +
       '</tr>';
   });
-  const canonical = '/social/profiles?page=' + params.page + '&pageSize=' + params.pageSize;
+  const canonical = localize('/social/profiles') + '?page=' + params.page + '&pageSize=' + params.pageSize;
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Social', href: '/social/activity' },
-    { label: 'Profiles', href: '/social/profiles' }
+    { label: workerI18nValue(safeLang, 'common.home', 'Home'), href: localize('/') },
+    { label: workerText(safeLang, 'social', 'Social'), href: localize('/social/activity') },
+    { label: workerText(safeLang, 'profiles', 'Profiles'), href: localize('/social/profiles') }
   ];
-  const title = 'Social Profiles';
-  const description = 'Public social profile rankings on Lotusia.';
+  const title = workerText(safeLang, 'title_social_profiles', 'Social Profiles');
+  const description = workerText(safeLang, 'desc_social_profiles', 'Public social profile rankings on Lotusia with vote ratio, profile score, and direct links to profile activity pages.');
   const jsonLd = seoJsonLd([
     seoBreadcrumbGraph(breadcrumbs),
     seoPageGraph(canonical, title, description, 'CollectionPage'),
     seoItemListGraph('Social profiles', (payload.profiles || []).slice(0, 20).map(function(p) {
       return {
         name: String((p && p.id) || 'Unknown profile'),
-        url: p && p.id ? seoAbsoluteUrl('/social/' + encodeURIComponent(p.platform || 'twitter') + '/' + encodeURIComponent(p.id)) : ''
+        url: p && p.id ? seoAbsoluteUrl(localize('/social/' + encodeURIComponent(p.platform || 'twitter') + '/' + encodeURIComponent(p.id))) : ''
       };
     }))
   ]);
-  const bodyInner = sectionHeader('profile', 'Profiles', 'Browse profiles on Lotusia Social.') +
-    renderTable(['#', 'Profile', 'Ranking', 'Vote Ratio'], rows, 'No profiles found.', { withPagination: true }) +
-    paginationHtml('/social/profiles', params.page, params.pageSize, payload.numPages);
-  const body = legacyExplorerLayout('profiles', bodyInner);
+  const bodyInner = sectionHeader('profile', workerText(safeLang, 'profiles', 'Profiles'), workerText(safeLang, 'profiles_subtitle', 'Browse profiles on Lotusia Social.')) +
+    renderTable(['#', workerText(safeLang, 'profile', 'Profile'), workerText(safeLang, 'ranking', 'Ranking'), workerText(safeLang, 'vote_ratio', 'Vote Ratio')], rows, workerText(safeLang, 'no_profiles_found', 'No profiles found.'), { withPagination: true, lang: safeLang, tableKind: 'profiles' }) +
+    paginationHtml(localize('/social/profiles'), params.page, params.pageSize, payload.numPages, { lang: safeLang });
+  const body = legacyExplorerLayout('profiles', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
     keywords: 'lotusia social profiles, reputation ranking, vote ratio',
-    jsonLd
+    jsonLd,
+    lang: safeLang
   });
 }
 
-async function renderProfilePage(url, platform, profileId) {
+async function renderProfilePage(url, platform, profileId, lang) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const rankToneClass = function(value) {
     const n = Number(value || 0);
     if (!Number.isFinite(n) || n === 0) return 'text-gray-500 dark:text-gray-400';
@@ -223,12 +234,12 @@ async function renderProfilePage(url, platform, profileId) {
     primarySrc: avatarSrc
   });
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Social', href: '/social/activity' },
-    { label: platform.charAt(0).toUpperCase() + platform.slice(1), href: '/social/profiles' },
-    { label: profileId, href: '/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId) }
+    { label: workerI18nValue(safeLang, 'common.home', 'Home'), href: localize('/') },
+    { label: workerText(safeLang, 'social', 'Social'), href: localize('/social/activity') },
+    { label: platform.charAt(0).toUpperCase() + platform.slice(1), href: localize('/social/profiles') },
+    { label: profileId, href: localize('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId)) }
   ];
-  const canonicalPath = '/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId);
+  const canonicalPath = localize('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId));
   const profileTitle = profileId + ' on ' + platform;
   const description = 'View ' + profileId + ' social reputation, posts, and vote history on Lotusia.';
   const jsonLd = seoJsonLd([
@@ -251,7 +262,7 @@ async function renderProfilePage(url, platform, profileId) {
       '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteRatioPill(post.votesPositive, post.votesNegative) + '</td>' +
       '</tr>');
   const votesRows = (votes.votes || []).map(v => '<tr>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="' + localize('/explorer/tx/' + esc(v.txid)) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatUtc(v.timestamp)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteToneHtml(String(v.sentiment || 'neutral'), v.sats) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(v.sats)) + '</td>' +
@@ -264,36 +275,39 @@ async function renderProfilePage(url, platform, profileId) {
     profileAvatar +
     '<div>' +
     '<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">' + esc(profileId) + iconSvg('x', 'h-5 w-5 text-sky-500 dark:text-sky-400') + '</h1>' +
-    '<p class="text-base text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Live profile data (' + esc(platform) + ').</p>' +
+    '<p class="text-base text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">' + esc(workerText(safeLang, 'live_profile_data', 'Live profile data')) + ' (' + esc(platform) + ').</p>' +
     '</div></div>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
-    compactStatCard('Ranking', formatXpiFromSats(profile.ranking), 'Current profile ranking', 'chart', { valueClass: rankToneClass(profile.ranking) }) +
-    compactStatCard('Votes +', String(profile.votesPositive || 0), 'Positive votes', 'up') +
-    compactStatCard('Votes -', String(profile.votesNegative || 0), 'Negative votes', 'down') +
+    compactStatCard(workerText(safeLang, 'ranking', 'Ranking'), formatXpiFromSats(profile.ranking), workerText(safeLang, 'current_profile_ranking', 'Current profile ranking'), 'chart', { valueClass: rankToneClass(profile.ranking) }) +
+    compactStatCard(workerText(safeLang, 'votes_plus', 'Votes +'), String(profile.votesPositive || 0), workerText(safeLang, 'positive_votes', 'Positive votes'), 'up') +
+    compactStatCard(workerText(safeLang, 'votes_minus', 'Votes -'), String(profile.votesNegative || 0), workerText(safeLang, 'negative_votes', 'Negative votes'), 'down') +
     '</div>' +
     '</div>' +
-    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Posts</h2>' +
-    renderTable(['Post ID', 'Ranking', 'Vote Ratio'], postsRows, 'No posts yet.', { withPagination: true }) +
-    paginationHtml('/social/' + esc(platform) + '/' + esc(profileId), postsPage, postsPageSize, postsNumPages, {
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">' + esc(workerText(safeLang, 'posts', 'Posts')) + '</h2>' +
+    renderTable([workerText(safeLang, 'post_id', 'Post ID'), workerText(safeLang, 'ranking', 'Ranking'), workerText(safeLang, 'vote_ratio', 'Vote Ratio')], postsRows, workerText(safeLang, 'no_posts_yet', 'No posts yet.'), { withPagination: true, lang: safeLang, tableKind: 'posts' }) +
+    paginationHtml(localize('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId)), postsPage, postsPageSize, postsNumPages, {
       pageParam: 'postsPage',
       pageSizeParam: 'postsPageSize',
       groupId: 'posts',
-      extraParams: { votesPage: votesPage, votesPageSize: votesPageSize }
+      extraParams: { votesPage: votesPage, votesPageSize: votesPageSize },
+      lang: safeLang
     }) +
-    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">Votes</h2>' +
-    renderTable(['Transaction', 'Timestamp', 'Sentiment', 'Amount', 'Post ID'], votesRows, 'No votes yet.', { withPagination: true }) +
-    paginationHtml('/social/' + esc(platform) + '/' + esc(profileId), votesPage, votesPageSize, votesNumPages, {
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">' + esc(workerText(safeLang, 'votes', 'Votes')) + '</h2>' +
+    renderTable([workerText(safeLang, 'transaction', 'Transaction'), workerText(safeLang, 'timestamp', 'Timestamp'), workerText(safeLang, 'sentiment', 'Sentiment'), workerText(safeLang, 'amount', 'Amount'), workerText(safeLang, 'post_id', 'Post ID')], votesRows, workerText(safeLang, 'no_votes_yet', 'No votes yet.'), { withPagination: true, lang: safeLang, tableKind: 'votes' }) +
+    paginationHtml(localize('/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId)), votesPage, votesPageSize, votesNumPages, {
       pageParam: 'votesPage',
       pageSizeParam: 'votesPageSize',
       groupId: 'votes',
-      extraParams: { postsPage: postsPage, postsPageSize: postsPageSize }
+      extraParams: { postsPage: postsPage, postsPageSize: postsPageSize },
+      lang: safeLang
     });
-  const body = legacyExplorerLayout('profiles', bodyInner);
+  const body = legacyExplorerLayout('profiles', bodyInner, { lang: safeLang });
   return pageShell(canonicalPath, profileTitle, description, body, {
     breadcrumbs,
     keywords: 'lotusia social, ' + platform + ', ' + profileId + ', reputation, ranking, votes',
     ogImage: avatarSrc,
-    jsonLd: jsonLd
+    jsonLd: jsonLd,
+    lang: safeLang
   });
 }
 
@@ -305,6 +319,6 @@ function errorPage(pathname, message) {
 }
 
 function parseProfilePath(pathname) {
-  const m = pathname.match(/^\/social\/([^/]+)\/([^/]+)\/?$/);
+  const m = stripWorkerLangPrefix(pathname).match(/^\/social\/([^/]+)\/([^/]+)\/?$/);
   return m ? { platform: m[1], profileId: m[2] } : null;
 }

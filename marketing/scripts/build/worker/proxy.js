@@ -1,6 +1,41 @@
 'use strict';
 
 const SOCIAL_API_BASE = 'https://legacy.lotusia.org';
+const WORKER_LANGS = ['en', 'fr', 'es', 'it', 'de', 'ru', 'cn'];
+
+function detectWorkerLang(pathname) {
+  const p = String(pathname || '/');
+  const m = p.match(/^\/(fr|es|it|de|ru|cn)(?=\/|$)/);
+  return m ? m[1] : 'en';
+}
+
+function stripWorkerLangPrefix(pathname) {
+  const p = String(pathname || '/');
+  const out = p.replace(/^\/(fr|es|it|de|ru|cn)(?=\/|$)/, '');
+  return out || '/';
+}
+
+function withWorkerLangPrefix(lang, basePath) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const normalized = String(basePath || '/').startsWith('/') ? String(basePath || '/') : '/' + String(basePath || '/');
+  if (safeLang === 'en') return normalized;
+  return normalized === '/' ? '/' + safeLang : '/' + safeLang + normalized;
+}
+
+function workerI18nValue(lang, path, fallback) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const pick = function(obj, keyPath) {
+    return String(keyPath || '').split('.').reduce(function(acc, key) {
+      if (!acc || typeof acc !== 'object' || !(key in acc)) return undefined;
+      return acc[key];
+    }, obj);
+  };
+  const fromLang = pick(WORKER_I18N[safeLang], path);
+  if (fromLang !== undefined && fromLang !== null) return fromLang;
+  const fromEn = pick(WORKER_I18N.en, path);
+  if (fromEn !== undefined && fromEn !== null) return fromEn;
+  return fallback;
+}
 
 function withForwardedHostHeaders(headers) {
   const next = new Headers();

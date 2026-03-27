@@ -1,4 +1,20 @@
-function navHtml(pathname) {
+function navHtml(pathname, lang) {
+  const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const i18nNav = {
+    ecosystem: workerI18nValue(safeLang, 'nav.ecosystem', 'Ecosystem'),
+    tools: workerI18nValue(safeLang, 'nav.tools', 'Tools'),
+    roadmap: workerI18nValue(safeLang, 'nav.roadmap', 'Roadmap'),
+    faq: workerI18nValue(safeLang, 'nav.faq', 'FAQ'),
+    docs: workerI18nValue(safeLang, 'nav.docs', 'Docs'),
+    explorer: workerI18nValue(safeLang, 'nav.explorer', 'Explorer'),
+    social: workerText(safeLang, 'social', 'Social'),
+    more: workerI18nValue(safeLang, 'nav.more', 'More'),
+    founders: workerI18nValue(safeLang, 'nav.founders', 'Founders'),
+    beta: workerI18nValue(safeLang, 'nav.beta_services', 'Beta Services'),
+    blog: workerI18nValue(safeLang, 'nav.blog', 'Blog'),
+    language: workerI18nValue(safeLang, 'common.language', 'Language')
+  };
+  const localized = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const topNavClass = function(active) {
     return active
       ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
@@ -19,43 +35,52 @@ function navHtml(pathname) {
       ? 'block px-3 py-2 text-sm font-semibold text-primary bg-gray-50 dark:bg-gray-800 rounded-lg'
       : 'block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
   };
-  const isEcosystem = pathname === '/ecosystem';
-  const isTools = pathname === '/tools';
-  const isRoadmap = pathname === '/roadmap';
-  const isFaq = pathname === '/faq';
-  const isDocs = pathname === '/docs' || pathname.startsWith('/docs/');
-  const isFounders = pathname === '/founders';
-  const isBetaServices = pathname === '/beta-services';
-  const isBlog = pathname === '/blog' || pathname.startsWith('/blog/');
-  const isExplorer = pathname === '/explorer' || pathname.startsWith('/explorer/');
-  const isSocial = pathname === '/social' || pathname.startsWith('/social/');
+  const clean = stripWorkerLangPrefix(pathname || '/');
+  const isEcosystem = clean === '/ecosystem';
+  const isTools = clean === '/tools';
+  const isRoadmap = clean === '/roadmap';
+  const isFaq = clean === '/faq';
+  const isDocs = clean === '/docs' || clean.startsWith('/docs/');
+  const isFounders = clean === '/founders';
+  const isBetaServices = clean === '/beta-services';
+  const isBlog = clean === '/blog' || clean.startsWith('/blog/');
+  const isExplorer = clean === '/explorer' || clean.startsWith('/explorer/');
+  const isSocial = clean === '/social' || clean.startsWith('/social/');
   const isMore = isFounders || isBetaServices || isBlog;
+  const flagByLang = { en: '🇬🇧', fr: '🇫🇷', es: '🇪🇸', it: '🇮🇹', de: '🇩🇪', ru: '🇷🇺', cn: '🇨🇳' };
+  const langOptions = WORKER_LANGS.map(function(code) {
+    const label = workerI18nValue(code, 'lang_name', code.toUpperCase());
+    const href = withWorkerLangPrefix(code, clean);
+    const active = code === safeLang;
+    const cls = active
+      ? 'block px-3 py-2 text-sm text-primary font-semibold rounded-lg whitespace-nowrap'
+      : 'block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg whitespace-nowrap';
+    return '<a href="' + href + '" lang="' + workerI18nValue(code, 'html_lang', code) + '" class="' + cls + '">' + (flagByLang[code] || '🌐') + ' ' + label + ' (' + code.toUpperCase() + ')</a>';
+  }).join('');
   return '<header class="bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50">' +
     '<nav class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">' +
-    '<div class="lg:flex-1 flex items-center gap-1.5"><a href="/" class="flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"><img src="/assets/images/logo.png" alt="Lotusia" class="h-8 w-auto"></a></div>' +
+    '<div class="lg:flex-1 flex items-center gap-1.5"><a href="' + localized('/') + '" class="flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"><img src="/assets/images/logo.png" alt="Lotusia" class="h-8 w-auto"></a></div>' +
     '<div class="items-center gap-x-8 hidden lg:flex">' +
-    '<a href="/ecosystem" class="' + topNavClass(isEcosystem) + '">Ecosystem</a>' +
-    '<a href="/tools" class="' + topNavClass(isTools) + '">Tools</a>' +
-    '<a href="/roadmap" class="' + topNavClass(isRoadmap) + '">Roadmap</a>' +
-    '<a href="/faq" class="' + topNavClass(isFaq) + '">FAQ</a>' +
-    '<a href="/docs" class="' + topNavClass(isDocs) + '">Docs</a>' +
-    '<a href="/explorer/blocks" class="' + topNavClass(isExplorer) + '">Explorer</a>' +
-    '<a href="/social/activity" class="' + topNavClass(isSocial) + '">Social</a>' +
+    '<a href="' + localized('/ecosystem') + '" class="' + topNavClass(isEcosystem) + '">' + esc(i18nNav.ecosystem) + '</a>' +
+    '<a href="' + localized('/tools') + '" class="' + topNavClass(isTools) + '">' + esc(i18nNav.tools) + '</a>' +
+    '<a href="' + localized('/roadmap') + '" class="' + topNavClass(isRoadmap) + '">' + esc(i18nNav.roadmap) + '</a>' +
+    '<a href="' + localized('/faq') + '" class="' + topNavClass(isFaq) + '">' + esc(i18nNav.faq) + '</a>' +
+    '<a href="/docs" class="' + topNavClass(isDocs) + '">' + esc(i18nNav.docs) + '</a>' +
+    '<a href="' + localized('/explorer/blocks') + '" class="' + topNavClass(isExplorer) + '">' + esc(i18nNav.explorer) + '</a>' +
+    '<a href="' + localized('/social/activity') + '" class="' + topNavClass(isSocial) + '">' + esc(i18nNav.social) + '</a>' +
     '<div class="relative" data-dropdown>' +
-    '<button type="button" class="' + moreButtonClass(isMore) + '" data-dropdown-trigger aria-expanded="false">More <span class="text-xs">▾</span></button>' +
+    '<button type="button" class="' + moreButtonClass(isMore) + '" data-dropdown-trigger aria-expanded="false">' + esc(i18nNav.more) + ' <span class="text-xs">▾</span></button>' +
     '<div class="hidden absolute top-full right-0 mt-1 w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>' +
-    '<a href="/founders" class="' + dropdownItemClass(isFounders) + '">Founders</a>' +
-    '<a href="/beta-services" class="' + dropdownItemClass(isBetaServices) + '">Beta services</a>' +
-    '<a href="/blog" class="' + dropdownItemClass(isBlog) + '">Blog</a>' +
+    '<a href="' + localized('/founders') + '" class="' + dropdownItemClass(isFounders) + '">' + esc(i18nNav.founders) + '</a>' +
+    '<a href="' + localized('/beta-services') + '" class="' + dropdownItemClass(isBetaServices) + '">' + esc(i18nNav.beta) + '</a>' +
+    '<a href="/blog" class="' + dropdownItemClass(isBlog) + '">' + esc(i18nNav.blog) + '</a>' +
     '<a href="https://explorer.lotusia.org" target="_blank" rel="noopener noreferrer" class="' + dropdownItemClass(false) + '">Legacy Explorer</a>' +
     '<a href="https://legacy.lotusia.org/social/activity" target="_blank" rel="noopener noreferrer" class="' + dropdownItemClass(false) + '">Legacy Social</a>' +
     '</div></div></div>' +
     '<div class="flex items-center justify-end lg:flex-1 gap-1.5">' +
     '<div class="relative hidden lg:block" data-dropdown>' +
-    '<button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary whitespace-nowrap" data-dropdown-trigger aria-expanded="false">Language: 🇬🇧 EN <span class="text-xs">▾</span></button>' +
-    '<div class="hidden absolute top-full right-0 mt-1 w-44 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>' +
-    '<a href="/" class="block px-3 py-2 text-sm text-primary font-semibold rounded-lg whitespace-nowrap">🇬🇧 English (EN)</a>' +
-    '</div></div>' +
+    '<button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary whitespace-nowrap" data-dropdown-trigger aria-expanded="false">' + esc(i18nNav.language) + ': ' + (flagByLang[safeLang] || '🌐') + ' ' + safeLang.toUpperCase() + ' <span class="text-xs">▾</span></button>' +
+    '<div class="hidden absolute top-full right-0 mt-1 w-60 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>' + langOptions + '</div></div>' +
     '<a href="https://t.me/givelotus" target="_blank" class="hidden sm:inline-flex items-center justify-center rounded-full p-1.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800" title="Telegram">' +
     '<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' +
     '</a>' +
@@ -70,16 +95,16 @@ function navHtml(pathname) {
     '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>' +
     '</button></nav>' +
     '<div id="mobile-nav" class="hidden lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 space-y-1 max-h-[calc(100vh-var(--header-height))] overflow-y-auto overscroll-contain">' +
-    '<a href="/ecosystem" class="' + mobileItemClass(isEcosystem) + '">Ecosystem</a>' +
-    '<a href="/tools" class="' + mobileItemClass(isTools) + '">Tools</a>' +
-    '<a href="/roadmap" class="' + mobileItemClass(isRoadmap) + '">Roadmap</a>' +
-    '<a href="/faq" class="' + mobileItemClass(isFaq) + '">FAQ</a>' +
-    '<a href="/docs" class="' + mobileItemClass(isDocs) + '">Docs</a>' +
-    '<a href="/explorer/blocks" class="' + mobileItemClass(isExplorer) + '">Explorer</a>' +
-    '<a href="/social/activity" class="' + mobileItemClass(isSocial) + '">Social</a>' +
-    '<a href="/founders" class="' + mobileItemClass(isFounders) + '">Founders</a>' +
-    '<a href="/beta-services" class="' + mobileItemClass(isBetaServices) + '">Beta services</a>' +
-    '<a href="/blog" class="' + mobileItemClass(isBlog) + '">Blog</a>' +
+    '<a href="' + localized('/ecosystem') + '" class="' + mobileItemClass(isEcosystem) + '">' + esc(i18nNav.ecosystem) + '</a>' +
+    '<a href="' + localized('/tools') + '" class="' + mobileItemClass(isTools) + '">' + esc(i18nNav.tools) + '</a>' +
+    '<a href="' + localized('/roadmap') + '" class="' + mobileItemClass(isRoadmap) + '">' + esc(i18nNav.roadmap) + '</a>' +
+    '<a href="' + localized('/faq') + '" class="' + mobileItemClass(isFaq) + '">' + esc(i18nNav.faq) + '</a>' +
+    '<a href="/docs" class="' + mobileItemClass(isDocs) + '">' + esc(i18nNav.docs) + '</a>' +
+    '<a href="' + localized('/explorer/blocks') + '" class="' + mobileItemClass(isExplorer) + '">' + esc(i18nNav.explorer) + '</a>' +
+    '<a href="' + localized('/social/activity') + '" class="' + mobileItemClass(isSocial) + '">' + esc(i18nNav.social) + '</a>' +
+    '<a href="' + localized('/founders') + '" class="' + mobileItemClass(isFounders) + '">' + esc(i18nNav.founders) + '</a>' +
+    '<a href="' + localized('/beta-services') + '" class="' + mobileItemClass(isBetaServices) + '">' + esc(i18nNav.beta) + '</a>' +
+    '<a href="/blog" class="' + mobileItemClass(isBlog) + '">' + esc(i18nNav.blog) + '</a>' +
     '<a href="https://explorer.lotusia.org" target="_blank" rel="noopener noreferrer" class="' + mobileItemClass(false) + '">Legacy Explorer</a>' +
     '<a href="https://legacy.lotusia.org/social/activity" target="_blank" rel="noopener noreferrer" class="' + mobileItemClass(false) + '">Legacy Social</a>' +
     '</div></header>' +
@@ -88,26 +113,46 @@ function navHtml(pathname) {
 
 function pageShell(pathname, title, description, bodyHtml, opts) {
   const options = opts || {};
+  const lang = WORKER_LANGS.includes(options.lang) ? options.lang : detectWorkerLang(pathname);
+  const currentLocale = workerI18nValue(lang, 'locale', 'en_US');
+  const pathString = String(pathname || '/');
+  const queryIndex = pathString.indexOf('?');
+  const pathOnly = queryIndex >= 0 ? pathString.slice(0, queryIndex) : pathString;
+  const querySuffix = queryIndex >= 0 ? pathString.slice(queryIndex) : '';
+  const baseLocalizedPath = stripWorkerLangPrefix(pathOnly || '/');
+  const hreflangTags = WORKER_LANGS.map(function(code) {
+    const href = withWorkerLangPrefix(code, baseLocalizedPath) + querySuffix;
+    const hreflang = workerI18nValue(code, 'hreflang', code);
+    return '<link rel="alternate" hreflang="' + esc(hreflang) + '" href="https://lotusia.org' + esc(href) + '">';
+  }).join('');
+  const xDefaultHref = withWorkerLangPrefix('en', baseLocalizedPath) + querySuffix;
+  const xDefaultTag = '<link rel="alternate" hreflang="x-default" href="https://lotusia.org' + esc(xDefaultHref) + '">';
+  const ogLocaleAlternates = WORKER_LANGS
+    .filter(function(code) { return code !== lang; })
+    .map(function(code) {
+      return '<meta property="og:locale:alternate" content="' + esc(workerI18nValue(code, 'locale', 'en_US')) + '">';
+    }).join('');
   const cleanPathname = String(pathname || '/').split('?')[0] || '/';
-  const isExplorerOrSocial = cleanPathname === '/explorer' || cleanPathname.startsWith('/explorer/') || cleanPathname === '/social' || cleanPathname.startsWith('/social/');
+  const baseCleanPath = stripWorkerLangPrefix(cleanPathname);
+  const isExplorerOrSocial = baseCleanPath === '/explorer' || baseCleanPath.startsWith('/explorer/') || baseCleanPath === '/social' || baseCleanPath.startsWith('/social/');
   const shellContainerClass = isExplorerOrSocial
     ? 'mx-auto w-full px-3 sm:px-5 lg:px-8 2xl:px-12 max-w-[1800px] py-8 sm:py-10'
     : 'mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-10';
   const autoBreadcrumbs = function(path) {
-    const clean = String(path || '/').split('?')[0] || '/';
+    const clean = stripWorkerLangPrefix(String(path || '/').split('?')[0] || '/');
     const parts = clean.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
-    if (!parts.length) return [{ label: 'Home', href: '/' }];
+    if (!parts.length) return [{ label: workerI18nValue(lang, 'common.home', 'Home'), href: withWorkerLangPrefix(lang, '/') }];
     const toLabel = function(part) {
       const decoded = decodeURIComponent(String(part || ''));
       return decoded
         .replace(/[-_]+/g, ' ')
         .replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
     };
-    const items = [{ label: 'Home', href: '/' }];
+    const items = [{ label: workerI18nValue(lang, 'common.home', 'Home'), href: withWorkerLangPrefix(lang, '/') }];
     let acc = '';
     parts.forEach(function(part) {
       acc += '/' + encodeURIComponent(decodeURIComponent(part));
-      items.push({ label: toLabel(part), href: acc });
+      items.push({ label: toLabel(part), href: withWorkerLangPrefix(lang, acc) });
     });
     return items;
   };
@@ -130,7 +175,7 @@ function pageShell(pathname, title, description, bodyHtml, opts) {
   const keywords = options.keywords ? '<meta name="keywords" content="' + esc(options.keywords) + '">' : '';
   const ogImage = options.ogImage ? '<meta property="og:image" content="' + esc(options.ogImage) + '"><meta name="twitter:image" content="' + esc(options.ogImage) + '">' : '';
   const jsonLd = options.jsonLd ? '<script type="application/ld+json">' + options.jsonLd + '</script>' : '';
-  return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+  return '<!DOCTYPE html><html lang="' + esc(workerI18nValue(lang, 'html_lang', lang)) + '"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
     '<title>' + esc(title) + ' | Lotusia</title>' +
     '<meta name="description" content="' + esc(description) + '">' +
     keywords +
@@ -139,6 +184,8 @@ function pageShell(pathname, title, description, bodyHtml, opts) {
     '<meta property="og:title" content="' + esc(title) + '">' +
     '<meta property="og:description" content="' + esc(description) + '">' +
     '<meta property="og:type" content="website">' +
+    '<meta property="og:locale" content="' + esc(currentLocale) + '">' +
+    ogLocaleAlternates +
     '<meta property="og:url" content="https://lotusia.org' + esc(pathname) + '">' +
     '<meta property="og:site_name" content="Lotusia">' +
     ogImage +
@@ -146,12 +193,14 @@ function pageShell(pathname, title, description, bodyHtml, opts) {
     '<meta name="twitter:title" content="' + esc(title) + '">' +
     '<meta name="twitter:description" content="' + esc(description) + '">' +
     '<link rel="canonical" href="https://lotusia.org' + esc(pathname) + '">' +
+    hreflangTags +
+    xDefaultTag +
     '<link rel="icon" href="/assets/favicon.ico">' +
     '<link rel="stylesheet" href="/assets/css/main.css">' +
     jsonLd +
     '</head>' +
     '<body class="bg-background text-foreground min-h-screen">' +
-    navHtml(cleanPathname) +
+    navHtml(cleanPathname, lang) +
     '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="' + shellContainerClass + '">' +
     breadcrumbs +
     '<section>' +
@@ -168,19 +217,20 @@ function pageShell(pathname, title, description, bodyHtml, opts) {
 function tableHeaderCue(tableKind, options) {
   const opts = options || {};
   if (opts.hideCue) return '';
+  const lang = WORKER_LANGS.includes(opts.lang) ? opts.lang : 'en';
   const cueByKind = {
-    profiles: { title: 'Profiles Feed', subtitle: 'Rank and vote-ratio leaderboard' },
-    activity: { title: 'Vote Activity', subtitle: 'Recent cross-platform vote events' },
-    blocks: { title: 'Chain Head', subtitle: 'Latest confirmed block snapshots' },
-    blocktxs: { title: 'Block Transactions', subtitle: 'Transactions included in this block' },
-    posts: { title: 'Profile Posts', subtitle: 'Recent ranked posts for this profile' },
-    votes: { title: 'Profile Votes', subtitle: 'Recent votes tied to this profile' },
-    peers: { title: 'Network Peers', subtitle: 'Connected nodes and sync status' },
-    inputs: { title: 'Transaction Inputs', subtitle: 'Spend sources and amounts' },
-    outputs: { title: 'Transaction Outputs', subtitle: 'Destinations and amounts' },
-    'profile-rank': { title: 'Profile Rankings', subtitle: 'Rank snapshot by profile' },
-    'post-rank': { title: 'Post Rankings', subtitle: 'Rank snapshot by post' },
-    generic: { title: 'Dataset', subtitle: 'Structured records from worker APIs' }
+    profiles: { title: workerText(lang, 'profiles_feed', 'Profiles Feed'), subtitle: workerText(lang, 'profiles_feed_subtitle', 'Rank and vote-ratio leaderboard') },
+    activity: { title: workerText(lang, 'vote_activity', 'Vote Activity'), subtitle: workerText(lang, 'vote_activity_table_subtitle', 'Recent cross-platform vote events') },
+    blocks: { title: workerText(lang, 'chain_head', 'Chain Head'), subtitle: workerText(lang, 'chain_head_subtitle', 'Latest confirmed block snapshots') },
+    blocktxs: { title: workerText(lang, 'block_transactions', 'Block Transactions'), subtitle: workerText(lang, 'block_transactions_subtitle', 'Transactions included in this block') },
+    posts: { title: workerText(lang, 'profile_posts', 'Profile Posts'), subtitle: workerText(lang, 'profile_posts_subtitle', 'Recent ranked posts for this profile') },
+    votes: { title: workerText(lang, 'profile_votes', 'Profile Votes'), subtitle: workerText(lang, 'profile_votes_subtitle', 'Recent votes tied to this profile') },
+    peers: { title: workerText(lang, 'network_peers', 'Network Peers'), subtitle: workerText(lang, 'network_peers_subtitle', 'Connected nodes and sync status') },
+    inputs: { title: workerText(lang, 'transaction_inputs', 'Transaction Inputs'), subtitle: workerText(lang, 'transaction_inputs_subtitle', 'Spend sources and amounts') },
+    outputs: { title: workerText(lang, 'transaction_outputs', 'Transaction Outputs'), subtitle: workerText(lang, 'transaction_outputs_subtitle', 'Destinations and amounts') },
+    'profile-rank': { title: workerText(lang, 'profile_rankings', 'Profile Rankings'), subtitle: workerText(lang, 'profile_rankings_subtitle', 'Rank snapshot by profile') },
+    'post-rank': { title: workerText(lang, 'post_rankings', 'Post Rankings'), subtitle: workerText(lang, 'post_rankings_subtitle', 'Rank snapshot by post') },
+    generic: { title: workerText(lang, 'dataset', 'Dataset'), subtitle: workerText(lang, 'dataset_subtitle', 'Structured records from worker APIs') }
   };
   const cue = cueByKind[tableKind] || cueByKind.generic;
   const title = opts.cueTitle || cue.title;
@@ -209,7 +259,7 @@ function renderTable(headers, rows, emptyMessage, options) {
     'Input|Source|Amount': 'inputs',
     'Output|Destination|Amount': 'outputs'
   };
-  const tableKind = tableKindByKey[key] || 'generic';
+  const tableKind = String(opts.tableKind || tableKindByKey[key] || 'generic');
   const colgroupByTable = {
     '#|Profile|Ranking|Vote Ratio': ['8%', '42%', '24%', '26%'],
     'Transaction ID|First Seen|Profile|Vote|Post ID': ['18%', '21%', '25%', '14%', '22%'],
@@ -251,7 +301,20 @@ function renderTable(headers, rows, emptyMessage, options) {
     'Post': '56%',
     'Sentiment': '14%'
   };
-  const predefined = colgroupByTable[key] || null;
+  const colgroupByKind = {
+    profiles: colgroupByTable['#|Profile|Ranking|Vote Ratio'],
+    activity: colgroupByTable['Transaction ID|First Seen|Profile|Vote|Post ID'],
+    blocks: colgroupByTable['Height|Hash|Timestamp|Burned|Transactions|Size'],
+    blocktxs: colgroupByTable['Transaction ID|First Seen|Burned|Inputs|Outputs|Size'],
+    posts: colgroupByTable['Post ID|Ranking|Vote Ratio'],
+    votes: colgroupByTable['Transaction|Timestamp|Sentiment|Amount|Post ID'],
+    peers: colgroupByTable['Country|Address|Version|Blocks'],
+    'profile-rank': colgroupByTable['Profile|Ranking'],
+    'post-rank': colgroupByTable['Post|Ranking'],
+    inputs: colgroupByTable['Input|Source|Amount'],
+    outputs: colgroupByTable['Output|Destination|Amount']
+  };
+  const predefined = colgroupByKind[tableKind] || colgroupByTable[key] || null;
   const known = headers.reduce(function(sum, h, idx) {
     const raw = predefined ? predefined[idx] : defaultWidthByHeader[h];
     return raw ? sum + Number(raw.replace('%', '')) : sum;
@@ -329,15 +392,18 @@ function sideNavSection(title, iconName, items) {
     '<span>' + esc(title) + '</span></h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pb-1 lg:block lg:space-y-2 lg:pb-2 border-b border-gray-200/70 dark:border-gray-800/70">' + links + '</div></div>';
 }
 
-function legacyExplorerLayout(activeKey, contentHtml) {
-  const network = sideNavSection('Network', 'network', [
-    { label: 'Overview', href: '/explorer', active: activeKey === 'overview' },
-    { label: 'Blocks', href: '/explorer/blocks', active: activeKey === 'blocks' }
+function legacyExplorerLayout(activeKey, contentHtml, options) {
+  const opts = options || {};
+  const lang = WORKER_LANGS.includes(opts.lang) ? opts.lang : 'en';
+  const localize = function(path) { return withWorkerLangPrefix(lang, path); };
+  const network = sideNavSection(workerText(lang, 'network', 'Network'), 'network', [
+    { label: workerText(lang, 'overview', 'Overview'), href: localize('/explorer'), active: activeKey === 'overview' },
+    { label: workerText(lang, 'blocks', 'Blocks'), href: localize('/explorer/blocks'), active: activeKey === 'blocks' }
   ]);
-  const social = sideNavSection('Social Media', 'social', [
-    { label: 'Latest', href: '/social/activity', active: activeKey === 'latest' },
-    { label: 'Trending', href: '/social/trending', active: activeKey === 'trending' },
-    { label: 'Profiles', href: '/social/profiles', active: activeKey === 'profiles' }
+  const social = sideNavSection(workerText(lang, 'social_media', 'Social Media'), 'social', [
+    { label: workerText(lang, 'latest', 'Latest'), href: localize('/social/activity'), active: activeKey === 'latest' },
+    { label: workerText(lang, 'trending', 'Trending'), href: localize('/social/trending'), active: activeKey === 'trending' },
+    { label: workerText(lang, 'profiles', 'Profiles'), href: localize('/social/profiles'), active: activeKey === 'profiles' }
   ]);
   return '<div class="grid lg:grid-cols-[250px_1fr] gap-6 lg:gap-8">' +
     '<aside class="rounded-2xl border border-gray-200/90 dark:border-gray-700/70 bg-gray-50/80 dark:bg-gray-900/70 p-3 sm:p-4 lg:p-5 shadow-lg shadow-primary-950/10 dark:shadow-black/40 h-fit lg:sticky lg:top-[calc(var(--header-height)+2rem)]">' + network + social + '</aside>' +
