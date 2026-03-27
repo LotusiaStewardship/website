@@ -335,7 +335,9 @@ function makeNavVars(lang, alternates, pagePath) {
   const isFounders = normalized === '/founders';
   const isBetaServices = normalized === '/beta-services';
   const isBlog = normalized === '/blog' || normalized.startsWith('/blog/');
-  const isMore = isFounders || isBetaServices || isBlog;
+  const isExplorer = normalized === '/explorer' || normalized.startsWith('/explorer/');
+  const isSocial = normalized === '/social' || normalized.startsWith('/social/');
+  const isMore = isFounders || isBetaServices || isBlog || isExplorer || isSocial;
 
   const topNavClass = (active) => active
     ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
@@ -370,6 +372,8 @@ function makeNavVars(lang, alternates, pagePath) {
     nav_cls_founders:    dropdownItemClass(isFounders),
     nav_cls_beta_services: dropdownItemClass(isBetaServices),
     nav_cls_blog:        dropdownItemClass(isBlog),
+    nav_cls_explorer:    dropdownItemClass(isExplorer),
+    nav_cls_social:      dropdownItemClass(isSocial),
     nav_m_cls_ecosystem: mobileItemClass(isEcosystem),
     nav_m_cls_tools:     mobileItemClass(isTools),
     nav_m_cls_roadmap:   mobileItemClass(isRoadmap),
@@ -378,6 +382,8 @@ function makeNavVars(lang, alternates, pagePath) {
     nav_m_cls_founders:  mobileItemClass(isFounders),
     nav_m_cls_beta_services: mobileItemClass(isBetaServices),
     nav_m_cls_blog:      mobileItemClass(isBlog),
+    nav_m_cls_explorer:  mobileItemClass(isExplorer),
+    nav_m_cls_social:    mobileItemClass(isSocial),
     toggle_theme:        i.common.toggle_theme,
     footer_copyright:    i.common.copyright,
     footer_all_rights_reserved: i.common.all_rights_reserved,
@@ -390,6 +396,8 @@ function makeNavVars(lang, alternates, pagePath) {
     url_founders:        navRoute(lang, '/founders'),
     url_beta_services:   navRoute(lang, '/beta-services'),
     url_blog:            '/blog',
+    url_explorer:        '/explorer/blocks',
+    url_social:          '/social/activity',
     breadcrumb_home:     i.common.home,
     breadcrumb_blog:     i.nav.blog,
     lang_switcher:        langSwitcher(lang, alternates, false),
@@ -1249,6 +1257,7 @@ function navHtml(pathname) {
 }
 
 function pageShell(pathname, title, description, bodyHtml) {
+  const breadcrumbs = '<div class="text-xs text-gray-500 dark:text-gray-400 mb-5"><a href="/" class="hover:text-primary">Home</a> <span class="mx-1">/</span> <span>' + esc(pathname.replace(/^\\//, '') || 'home') + '</span></div>';
   return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
     '<title>' + esc(title) + ' | Lotusia</title>' +
     '<meta name="description" content="' + esc(description) + '">' +
@@ -1265,9 +1274,11 @@ function pageShell(pathname, title, description, bodyHtml) {
     '<link rel="canonical" href="https://lotusia.org' + esc(pathname) + '">' +
     '<link rel="icon" href="/assets/favicon.ico">' +
     '<link rel="stylesheet" href="/assets/css/main.css"></head>' +
-    '<body class="bg-background text-foreground min-h-screen">' +
+    '<body class="bg-gradient-to-b from-gray-50 via-white to-white dark:from-gray-950 dark:via-gray-950 dark:to-black text-foreground min-h-screen">' +
     navHtml(pathname) +
-    '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"><section class="py-10">' +
+    '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-10">' +
+    breadcrumbs +
+    '<section class="rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-900/60 shadow-sm p-5 sm:p-8">' +
     bodyHtml +
     '</section></div></main>' +
     '<footer class="relative"><div class="border-t border-gray-200 dark:border-gray-800"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3"><div class="lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3"></div><div class="mt-3 lg:mt-0 lg:order-2 flex items-center justify-center"></div><div class="flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1"><p class="text-gray-500 dark:text-gray-400 text-sm">Copyright &copy; Lotusia 2021-2026. All rights reserved.</p></div></div></div></footer>' +
@@ -1276,11 +1287,11 @@ function pageShell(pathname, title, description, bodyHtml) {
 }
 
 function renderTable(headers, rows, emptyMessage) {
-  const head = headers.map(h => '<th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">' + esc(h) + '</th>').join('');
+  const head = headers.map(h => '<th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">' + esc(h) + '</th>').join('');
   const body = rows.length
     ? rows.join('')
-    : '<tr><td class="px-3 py-3 text-sm text-gray-500" colspan="' + headers.length + '">' + esc(emptyMessage) + '</td></tr>';
-  return '<div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800"><table class="w-full"><thead><tr>' + head + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+    : '<tr><td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400" colspan="' + headers.length + '">' + esc(emptyMessage) + '</td></tr>';
+  return '<div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"><table class="w-full text-sm"><thead class="bg-gray-50 dark:bg-gray-950/60"><tr>' + head + '</tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-800">' + body + '</tbody></table></div>';
 }
 
 function parsePageAndSize(url) {
