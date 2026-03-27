@@ -1080,8 +1080,9 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
 fs.writeFileSync(path.join(DIST, '_redirects'), [
   '/explorer https://explorer.lotusia.org 301',
   '/explorer/* https://explorer.lotusia.org/:splat 301',
-  '/social https://legacy.lotusia.org/social 301',
-  '/social/* https://legacy.lotusia.org/social/:splat 301',
+  '/social https://legacy.lotusia.org/social/activity 301',
+  '/social/activity https://legacy.lotusia.org/social/activity 301',
+  '/social/* https://app.lotusia.org/social/:splat 301',
   '/api/* https://legacy.lotusia.org/api/:splat 200'
 ].join('\n') + '\n');
 
