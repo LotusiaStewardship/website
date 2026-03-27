@@ -11,6 +11,7 @@ const CONTENT   = path.join(ROOT, 'content');
 const ASSETS    = path.join(ROOT, 'assets');
 const I18N_DIR  = path.join(ROOT, 'i18n');
 const IMAGES_DIR = path.join(ASSETS, 'images');
+const SOCIAL_DIR = path.join(CONTENT, 'social');
 
 const SITE_URL = process.env.SITE_URL || 'https://lotusia.org';
 const LANGS    = ['en', 'fr', 'es', 'it', 'de', 'ru', 'cn'];
@@ -1020,6 +1021,16 @@ function buildDocs(sitemap) {
   }
 }
 
+function buildSocialPages(sitemap) {
+  const activityPath = '/social/activity';
+  const trendingPath = '/social/trending';
+  const profilesPath = '/social/profiles';
+  const lastmod = fileLastmod(path.join(SOCIAL_DIR, 'social-data.json')) || formatDateYMD(new Date());
+  setSitemapEntry(sitemap, activityPath, { en: activityPath }, lastmod);
+  setSitemapEntry(sitemap, trendingPath, { en: trendingPath }, lastmod);
+  setSitemapEntry(sitemap, profilesPath, { en: profilesPath }, lastmod);
+}
+
 // ── Sitemap ──────────────────────────────────────────────────────────────────
 function buildSitemap(sitemap) {
   const urls = [];
@@ -1068,6 +1079,7 @@ for (const lang of LANGS) {
 
 buildBlog(sitemap);
 buildDocs(sitemap);
+buildSocialPages(sitemap);
 
 // Copy assets
 fs.cpSync(ASSETS, path.join(DIST, 'assets'), { recursive: true });
@@ -1078,13 +1090,606 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
 
 // _redirects
 fs.writeFileSync(path.join(DIST, '_redirects'), [
-  '/explorer https://explorer.lotusia.org 301',
-  '/explorer/* https://explorer.lotusia.org/:splat 301',
-  '/social https://legacy.lotusia.org/social/activity 301',
-  '/social/activity https://legacy.lotusia.org/social/activity 301',
-  '/social/* https://app.lotusia.org/social/:splat 301',
-  '/api/* https://legacy.lotusia.org/api/:splat 200'
+  '/explorer /explorer/blocks 301'
 ].join('\n') + '\n');
+
+// _worker.js (Cloudflare Pages advanced mode) for host-preserving proxy routes
+fs.writeFileSync(path.join(DIST, '_worker.js'), `'use strict';
+
+const SOCIAL_API_BASE = 'https://legacy.lotusia.org';
+
+function withForwardedHostHeaders(headers) {
+  const next = new Headers();
+  for (const [key, value] of headers.entries()) {
+    if (key.toLowerCase() === 'host') continue;
+    next.set(key, value);
+  }
+  next.set('x-forwarded-host', 'lotusia.org');
+  next.set('x-forwarded-proto', 'https');
+  next.set('x-forwarded-port', '443');
+  return next;
+}
+
+async function proxy(request, targetBase) {
+  const incomingUrl = new URL(request.url);
+  const upstreamUrl = new URL(\`\${targetBase}\${incomingUrl.pathname}\${incomingUrl.search}\`);
+  const method = request.method || 'GET';
+  const headers = withForwardedHostHeaders(request.headers);
+  const upstreamRequest = new Request(upstreamUrl.toString(), {
+    method,
+    headers,
+    body: method === 'GET' || method === 'HEAD' ? undefined : request.body,
+    redirect: 'manual'
+  });
+  return fetch(upstreamRequest);
+}
+
+function withCors(response) {
+  const headers = new Headers(response.headers);
+  headers.set('access-control-allow-origin', '*');
+  headers.set('access-control-allow-methods', 'GET, HEAD, OPTIONS');
+  headers.set('access-control-allow-headers', 'Content-Type, Authorization');
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
+function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function num(value) {
+  const n = Number(value ?? 0);
+  return Number.isFinite(n) ? n : 0;
+}
+
+async function fetchSocialJson(pathname, query) {
+  return fetchLegacyJson(pathname, query);
+}
+
+async function fetchLegacyJson(pathname, query) {
+  const u = new URL(pathname, SOCIAL_API_BASE);
+  if (query) {
+    for (const [k, v] of Object.entries(query)) u.searchParams.set(k, String(v));
+  }
+  const res = await fetch(u.toString(), { redirect: 'manual' });
+  if (!res.ok) throw new Error('Legacy API ' + pathname + ' failed with ' + res.status);
+  return res.json();
+}
+
+function navHtml() {
+  return '<header class="bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50">' +
+    '<nav class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">' +
+    '<div class="lg:flex-1 flex items-center gap-1.5"><a href="/" class="flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"><img src="/assets/images/logo.png" alt="Lotusia" class="h-8 w-auto"></a></div>' +
+    '<div class="items-center gap-x-8 hidden lg:flex">' +
+    '<a href="/ecosystem" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Ecosystem</a>' +
+    '<a href="/tools" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Tools</a>' +
+    '<a href="/roadmap" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Roadmap</a>' +
+    '<a href="/faq" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">FAQ</a>' +
+    '<a href="/docs" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Docs</a>' +
+    '<a href="/social/activity" class="text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary">Social</a>' +
+    '</div></nav></header>';
+}
+
+function pageShell(pathname, title, description, bodyHtml) {
+  return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '<title>' + esc(title) + ' | Lotusia</title>' +
+    '<meta name="description" content="' + esc(description) + '">' +
+    '<meta name="robots" content="index, follow">' +
+    '<meta property="og:title" content="' + esc(title) + '">' +
+    '<meta property="og:description" content="' + esc(description) + '">' +
+    '<meta property="og:type" content="website">' +
+    '<meta property="og:url" content="https://lotusia.org' + esc(pathname) + '">' +
+    '<link rel="canonical" href="https://lotusia.org' + esc(pathname) + '">' +
+    '<link rel="icon" href="/assets/favicon.ico">' +
+    '<link rel="stylesheet" href="/assets/css/main.css"></head>' +
+    '<body class="bg-background text-foreground min-h-screen">' +
+    navHtml() +
+    '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">' +
+    bodyHtml +
+    '</div></main>' +
+    '<footer class="relative"><div class="border-t border-gray-200 dark:border-gray-800"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4">' +
+    '<p class="text-gray-500 dark:text-gray-400 text-sm text-center">Copyright &copy; Lotusia 2021-2026. All rights reserved.</p>' +
+    '</div></div></footer>' +
+    '</body></html>';
+}
+
+function renderTable(headers, rows, emptyMessage) {
+  const head = headers.map(h => '<th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">' + esc(h) + '</th>').join('');
+  const body = rows.length
+    ? rows.join('')
+    : '<tr><td class="px-3 py-3 text-sm text-gray-500" colspan="' + headers.length + '">' + esc(emptyMessage) + '</td></tr>';
+  return '<div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800"><table class="w-full"><thead><tr>' + head + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+}
+
+function parsePageAndSize(url) {
+  const pageRaw = Number(url.searchParams.get('page') || 1);
+  const pageSizeRaw = Number(url.searchParams.get('pageSize') || 10);
+  const page = Number.isFinite(pageRaw) && pageRaw > 0 ? Math.floor(pageRaw) : 1;
+  const pageSize = Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? Math.floor(pageSizeRaw) : 10;
+  return { page, pageSize };
+}
+
+function formatUtc(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n) || n <= 0) return '-';
+  const d = new Date((String(value).length > 11 ? n : n * 1000));
+  if (Number.isNaN(d.getTime())) return '-';
+  return d.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZone: 'UTC',
+    timeZoneName: 'short'
+  });
+}
+
+function formatXpiFromSats(sats) {
+  const n = Number(sats || 0);
+  if (!Number.isFinite(n)) return '0 XPI';
+  const xpi = n / 1000000;
+  const text = Number.isInteger(xpi) ? String(xpi) : xpi.toFixed(2);
+  return text + ' XPI';
+}
+
+function voteRatio(positive, negative) {
+  const p = num(positive);
+  const n = num(negative);
+  const total = p + n;
+  if (total <= 0) return '0%';
+  return ((p / total) * 100).toFixed(1) + '%';
+}
+
+function paginationHtml(basePath, page, pageSize, numPages) {
+  const safePage = Math.max(1, Math.min(page, Math.max(1, num(numPages) || 1)));
+  const totalPages = Math.max(1, num(numPages) || 1);
+  const mk = function(targetPage, targetSize) {
+    return basePath + '?page=' + targetPage + '&pageSize=' + targetSize;
+  };
+  const pageSizes = [10, 25, 50, 100];
+  const sizeLinks = pageSizes.map(function(size) {
+    const active = size === pageSize;
+    const cls = active
+      ? 'inline-flex items-center rounded border border-primary bg-primary/10 px-2 py-1 text-xs font-semibold text-primary'
+      : 'inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-2 py-1 text-xs text-gray-600 dark:text-gray-300 hover:border-primary hover:text-primary';
+    return '<a class="' + cls + '" href="' + mk(1, size) + '">' + size + '</a>';
+  }).join('');
+  const prevDisabled = safePage <= 1;
+  const nextDisabled = safePage >= totalPages;
+  const prevLink = prevDisabled
+    ? '<span class="inline-flex items-center rounded border border-gray-200 dark:border-gray-800 px-3 py-1.5 text-sm text-gray-400">Prev</span>'
+    : '<a class="inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary" href="' + mk(safePage - 1, pageSize) + '">Prev</a>';
+  const nextLink = nextDisabled
+    ? '<span class="inline-flex items-center rounded border border-gray-200 dark:border-gray-800 px-3 py-1.5 text-sm text-gray-400">Next</span>'
+    : '<a class="inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary" href="' + mk(safePage + 1, pageSize) + '">Next</a>';
+  return '<div class="mt-4 flex flex-wrap items-center justify-between gap-3">' +
+    '<div class="flex items-center gap-2"><span class="text-sm text-gray-500">Rows per page:</span>' + sizeLinks + '</div>' +
+    '<div class="flex items-center gap-2"><span class="text-sm text-gray-500">Page ' + safePage + ' of ' + totalPages + '</span>' + prevLink + nextLink + '</div>' +
+    '</div>';
+}
+
+function formatNumber(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n)) return '0';
+  return n.toLocaleString('en-US');
+}
+
+function formatBytes(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n)) return '-';
+  return formatNumber(n) + ' B';
+}
+
+function shortHash(value) {
+  const text = String(value || '');
+  if (text.length <= 18) return text;
+  return text.slice(0, 1) + '...' + text.slice(-16);
+}
+
+function parseExplorerBlockPath(pathname) {
+  const m = pathname.match(/^\\/explorer\\/block\\/([^/]+)\\/?$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function parseExplorerTxPath(pathname) {
+  const m = pathname.match(/^\\/explorer\\/tx\\/([^/]+)\\/?$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function parseExplorerAddressPath(pathname) {
+  const m = pathname.match(/^\\/explorer\\/address\\/([^/]+)\\/?$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+async function renderExplorerBlocksPage(url) {
+  const params = parsePageAndSize(url);
+  const payload = await fetchLegacyJson('/api/explorer/blocks', { page: params.page, pageSize: params.pageSize });
+  const blocks = payload.blocks || [];
+  const tipHeight = num(payload.tipHeight);
+  const numPages = tipHeight > 0 ? Math.ceil(tipHeight / params.pageSize) : 1;
+  const rows = blocks.map(block => {
+    const info = block.blockInfo || {};
+    const hash = info.hash || block.hash || '';
+    const height = info.height || block.height || 0;
+    const burn = info.numBurnedSats || block.sumBurnedSats || 0;
+    const txCount = info.numTxs || (block.txs ? block.txs.length : 0);
+    const size = info.blockSize || block.size || 0;
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(height)) + '</td>' +
+      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/block/' + esc(hash) + '">' + esc(shortHash(hash)) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(info.timestamp)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(txCount)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(size)) + '</td>' +
+      '</tr>';
+  });
+  const canonical = '/explorer/blocks?page=' + params.page + '&pageSize=' + params.pageSize;
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Blocks</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Latest blocks in the blockchain. Data is refreshed from legacy explorer APIs.</p>' +
+    renderTable(['Height', 'Hash', 'Timestamp', 'Burned', 'Transactions', 'Size'], rows, 'No blocks found.') +
+    paginationHtml('/explorer/blocks', params.page, params.pageSize, numPages);
+  return pageShell(canonical, 'Blocks', 'Latest blocks in the Lotusia blockchain.', body);
+}
+
+async function renderExplorerBlockDetailPage(url, hashOrHeight) {
+  const payload = await fetchLegacyJson('/api/explorer/block/' + encodeURIComponent(hashOrHeight));
+  const info = payload.blockInfo || {};
+  const txs = payload.txs || [];
+  const rows = txs.map(tx => {
+    const burn = tx.sumBurnedSats || 0;
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(tx.timeFirstSeen || info.timestamp)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(tx.size)) + '</td>' +
+      '</tr>';
+  });
+  const canonical = '/explorer/block/' + encodeURIComponent(hashOrHeight);
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Block Details</h1>' +
+    '<p class="text-sm text-gray-500 mb-6"><a class="text-primary hover:underline" href="/explorer/blocks">#' + esc(formatNumber(info.height || hashOrHeight)) + '</a> · ' + esc(shortHash(info.hash || hashOrHeight)) + '</p>' +
+    '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Timestamp</div><div class="text-lg font-semibold">' + esc(formatUtc(info.timestamp)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Block Subsidy</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(info.reward || 0)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Mined By</div><div class="text-sm font-semibold break-all"><a class="text-primary hover:underline" href="/explorer/address/' + esc(payload.minedBy || '') + '">' + esc(payload.minedBy || '-') + '</a></div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Block Size</div><div class="text-lg font-semibold">' + esc(formatBytes(info.blockSize)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Transactions</div><div class="text-lg font-semibold">' + esc(formatNumber(info.numTxs || txs.length)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Burned</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(info.numBurnedSats || 0)) + '</div></div>' +
+    '</div>' +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transactions</h2>' +
+    renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions in this block.');
+  return pageShell(canonical, 'Block ' + (info.hash || hashOrHeight), 'Detailed information about a Lotusia block.', body);
+}
+
+async function renderExplorerTxDetailPage(url, txid) {
+  const payload = await fetchLegacyJson('/api/explorer/tx/' + encodeURIComponent(txid));
+  const block = payload.block || {};
+  const inputs = payload.inputs || [];
+  const outputs = payload.outputs || [];
+  const inputsRows = inputs.map(function(input, idx) {
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">Input #' + (idx + 1) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(input.address || (input.isCoinbase ? 'Coinbase' : '-')) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(input.value || 0)) + '</td>' +
+      '</tr>';
+  });
+  const outputsRows = outputs.map(function(output, idx) {
+    const target = output.address
+      ? '<a class="text-primary hover:underline break-all" href="/explorer/address/' + esc(output.address) + '">' + esc(output.address) + '</a>'
+      : (output.rankOutput ? 'RANK script output' : '-');
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">Output #' + (idx + 1) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + target + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(output.value || 0)) + '</td>' +
+      '</tr>';
+  });
+  const canonical = '/explorer/tx/' + encodeURIComponent(txid);
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Transaction Details</h1>' +
+    '<p class="text-sm text-gray-500 mb-6">' + esc(shortHash(payload.txid || txid)) + (payload.isCoinbase ? ' · Coinbase' : '') + '</p>' +
+    '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Time First Seen</div><div class="text-lg font-semibold">' + esc(formatUtc(payload.timeFirstSeen)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Size</div><div class="text-lg font-semibold">' + esc(formatBytes(payload.size)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmations</div><div class="text-lg font-semibold">' + esc(formatNumber(payload.confirmations || 0)) + '</div></div>' +
+    '</div>' +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Block Information</h2>' +
+    '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Transaction Confirmed</div><div class="text-lg font-semibold">' + esc(formatUtc(block.timestamp)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmations</div><div class="text-lg font-semibold">' + esc(formatNumber(payload.confirmations || 0)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmed in Block</div><div class="text-sm font-semibold"><a class="text-primary hover:underline" href="/explorer/block/' + esc(block.hash || '') + '">' + esc(shortHash(block.hash || '')) + '</a></div></div>' +
+    '</div>' +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Inputs</h2>' +
+    renderTable(['Input', 'Source', 'Amount'], inputsRows, 'No inputs.') +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">Outputs</h2>' +
+    renderTable(['Output', 'Destination', 'Amount'], outputsRows, 'No outputs.');
+  return pageShell(canonical, 'Transaction ' + txid, 'Detailed information about a Lotusia transaction.', body);
+}
+
+async function renderExplorerAddressDetailPage(url, address) {
+  const params = parsePageAndSize(url);
+  const [details, balance] = await Promise.all([
+    fetchLegacyJson('/api/explorer/address/' + encodeURIComponent(address), { page: params.page, pageSize: params.pageSize }),
+    fetchLegacyJson('/api/explorer/address/' + encodeURIComponent(address) + '/balance')
+  ]);
+  const txs = (details.history && details.history.txs) || [];
+  const numPages = (details.history && details.history.numPages) || 1;
+  const rows = txs.map(tx => {
+    const burn = tx.sumBurnedSats || 0;
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc((tx.block && tx.block.timestamp) || tx.timeFirstSeen)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(tx.size)) + '</td>' +
+      '</tr>';
+  });
+  const canonical = '/explorer/address/' + encodeURIComponent(address) + '?page=' + params.page + '&pageSize=' + params.pageSize;
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Address Details</h1>' +
+    '<p class="text-sm text-gray-500 mb-6 break-all">' + esc(address) + '</p>' +
+    '<div class="grid sm:grid-cols-2 gap-4 mb-8">' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Balance</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(balance)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Last Seen</div><div class="text-lg font-semibold">' + esc(formatUtc(details.lastSeen)) + '</div></div>' +
+    '</div>' +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transaction History</h2>' +
+    renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions for this address.') +
+    paginationHtml('/explorer/address/' + encodeURIComponent(address), params.page, params.pageSize, numPages);
+  return pageShell(canonical, 'Address ' + address, 'Detailed information for a Lotusia address.', body);
+}
+
+function explorerErrorPage(pathname, message) {
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Explorer Unavailable</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Unable to load fresh explorer data for this route.</p>' +
+    '<div class="rounded-xl border border-red-300 bg-red-50 dark:bg-red-950/30 p-4 text-sm text-red-700 dark:text-red-300">' + esc(message) + '</div>';
+  return pageShell(pathname, 'Explorer Unavailable', 'Unable to load explorer data.', body);
+}
+
+async function renderActivityPage(url) {
+  const params = parsePageAndSize(url);
+  const payload = await fetchSocialJson('/api/social/activity', { page: params.page, pageSize: params.pageSize });
+  const rows = (payload.votes || []).map(v => {
+    const sentiment = String(v.sentiment || 'neutral');
+    const voteTone = sentiment === 'positive'
+      ? '<span class="text-green-600 dark:text-green-400">↑ ' + esc(formatXpiFromSats(v.sats)) + '</span>'
+      : sentiment === 'negative'
+      ? '<span class="text-red-600 dark:text-red-400">↓ ' + esc(formatXpiFromSats(v.sats)) + '</span>'
+      : '<span class="text-gray-700 dark:text-gray-200">○ 0 XPI</span>';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(v.firstSeen)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/social/' + esc(v.platform) + '/' + esc(v.profileId) + '">' + esc(v.profileId) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + voteTone + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" target="_blank" rel="noopener noreferrer" href="https://x.com/' + esc(v.profileId) + '/status/' + esc(v.postId) + '">' + esc(v.postId) + '</a></td>' +
+      '</tr>';
+  });
+  const canonical = '/social/activity?page=' + params.page + '&pageSize=' + params.pageSize;
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Latest Activity</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Vote activity for all profiles across all platforms, refreshed from Nitro API data.</p>' +
+    renderTable(['Transaction ID', 'First Seen', 'Profile', 'Vote', 'Post ID'], rows, 'No recent activity.') +
+    paginationHtml('/social/activity', params.page, params.pageSize, payload.numPages);
+  return pageShell(canonical, 'Latest Activity', 'Fresh social vote activity across profiles on Lotusia.', body);
+}
+
+async function renderTrendingPage() {
+  const [profilesPayload, topProfiles, lowProfiles, topPosts, lowPosts] = await Promise.all([
+    fetchSocialJson('/api/social/profiles', { page: 1, pageSize: 100 }),
+    fetchSocialJson('/api/social/stats/profiles/top-ranked/today').catch(() => []),
+    fetchSocialJson('/api/social/stats/profiles/lowest-ranked/today').catch(() => []),
+    fetchSocialJson('/api/social/stats/posts/top-ranked/today').catch(() => []),
+    fetchSocialJson('/api/social/stats/posts/lowest-ranked/today').catch(() => [])
+  ]);
+  const topSeed = Array.isArray(topProfiles) && topProfiles.length
+    ? topProfiles
+    : (profilesPayload.profiles || []).slice().sort((a, b) => num(b.ranking) - num(a.ranking)).slice(0, 10);
+  const topRows = topSeed.map(function(p) {
+    const platform = p.platform || p.provider || 'twitter';
+    const profileId = p.profileId || p.id || p.handle || '';
+    const ranking = p.ranking || p.rate || '0';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(profileId) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+  });
+  const lowRows = (Array.isArray(lowProfiles) ? lowProfiles : []).map(function(p) {
+    const platform = p.platform || p.provider || 'twitter';
+    const profileId = p.profileId || p.id || p.handle || '';
+    const ranking = p.ranking || p.rate || '0';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(profileId) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+  });
+  const topPostRows = (Array.isArray(topPosts) ? topPosts : []).map(function(p) {
+    const pid = p.profileId || p.profile || '';
+    const post = p.postId || (p.post && p.post.id) || '';
+    const ranking = p.ranking || p.rate || '0';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800"><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(pid + '/' + post) + '</td><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+  });
+  const lowPostRows = (Array.isArray(lowPosts) ? lowPosts : []).map(function(p) {
+    const pid = p.profileId || p.profile || '';
+    const post = p.postId || (p.post && p.post.id) || '';
+    const ranking = p.ranking || p.rate || '0';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800"><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(pid + '/' + post) + '</td><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+  });
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Trending</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Top and lowest ranked profiles and posts over today.</p>' +
+    '<div class="grid md:grid-cols-2 gap-6">' +
+    '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Profiles</h2>' + renderTable(['Profile', 'Ranking'], topRows, 'No profile trend data.') + '</section>' +
+    '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Profiles</h2>' + renderTable(['Profile', 'Ranking'], lowRows, 'No profile trend data.') + '</section>' +
+    '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Posts</h2>' + renderTable(['Post', 'Ranking'], topPostRows, 'No post trend data.') + '</section>' +
+    '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Posts</h2>' + renderTable(['Post', 'Ranking'], lowPostRows, 'No post trend data.') + '</section>' +
+    '</div>';
+  return pageShell('/social/trending', 'Trending Profiles', 'Top ranked social profiles on Lotusia.', body);
+}
+
+async function renderProfilesPage(url) {
+  const params = parsePageAndSize(url);
+  const payload = await fetchSocialJson('/api/social/profiles', { page: params.page, pageSize: params.pageSize });
+  const rows = (payload.profiles || []).map(function(p, idx) {
+      const rank = ((params.page - 1) * params.pageSize) + idx + 1;
+      const ratio = voteRatio(p.votesPositive, p.votesNegative);
+      return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + rank + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/social/' + esc(p.platform) + '/' + esc(p.id) + '">' + esc(p.id) + '</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(p.ranking)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-green-600 dark:text-green-400">' + esc(ratio) + ' Positive</td>' +
+      '</tr>';
+  });
+  const canonical = '/social/profiles?page=' + params.page + '&pageSize=' + params.pageSize;
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Profiles</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Browse profiles on Lotusia Social.</p>' +
+    renderTable(['#', 'Profile', 'Ranking', 'Vote Ratio'], rows, 'No profiles found.') +
+    paginationHtml('/social/profiles', params.page, params.pageSize, payload.numPages);
+  return pageShell(canonical, 'Social Profiles', 'Public social profile rankings on Lotusia.', body);
+}
+
+async function renderProfilePage(url, platform, profileId) {
+  const params = parsePageAndSize(url);
+  const [profile, posts, votes] = await Promise.all([
+    fetchSocialJson('/api/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId)),
+    fetchSocialJson('/api/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId) + '/posts', { page: params.page, pageSize: params.pageSize }),
+    fetchSocialJson('/api/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId) + '/votes', { page: params.page, pageSize: params.pageSize })
+  ]);
+
+  const postsRows = (posts.posts || []).map(post => '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(post.id) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(post.ranking)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-green-600 dark:text-green-400">' + esc(voteRatio(post.votesPositive, post.votesNegative)) + ' Positive</td>' +
+      '</tr>');
+  const votesRows = (votes.votes || []).map(v => '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(v.timestamp)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(v.sentiment || 'neutral') + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(v.sats)) + '</td>' +
+      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc((v.post && v.post.id) || '') + '</td>' +
+      '</tr>');
+  const profilePath = '/social/' + platform + '/' + profileId + '?page=' + params.page + '&pageSize=' + params.pageSize;
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">' + esc(profileId) + '</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Live profile data from Nitro API (' + esc(platform) + ').</p>' +
+    '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Ranking</div><div class="text-xl font-semibold">' + esc(formatXpiFromSats(profile.ranking)) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Votes +</div><div class="text-xl font-semibold">' + esc(profile.votesPositive) + '</div></div>' +
+    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Votes -</div><div class="text-xl font-semibold">' + esc(profile.votesNegative) + '</div></div>' +
+    '</div>' +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Posts</h2>' +
+    renderTable(['Post ID', 'Ranking', 'Vote Ratio'], postsRows, 'No posts yet.') +
+    paginationHtml('/social/' + esc(platform) + '/' + esc(profileId), params.page, params.pageSize, posts.numPages) +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">Votes</h2>' +
+    renderTable(['Transaction', 'Timestamp', 'Sentiment', 'Amount', 'Post ID'], votesRows, 'No votes yet.');
+  return pageShell(profilePath, profileId + ' on ' + platform, 'Social profile details for ' + profileId + ' on ' + platform + '.', body);
+}
+
+function errorPage(pathname, message) {
+  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Social Unavailable</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Unable to load fresh social data for this route.</p>' +
+    '<div class="rounded-xl border border-red-300 bg-red-50 dark:bg-red-950/30 p-4 text-sm text-red-700 dark:text-red-300">' + esc(message) + '</div>';
+  return pageShell(pathname, 'Social Unavailable', 'Unable to load social data.', body);
+}
+
+function parseProfilePath(pathname) {
+  const m = pathname.match(/^\\/social\\/([^/]+)\\/([^/]+)\\/?$/);
+  return m ? { platform: m[1], profileId: m[2] } : null;
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const path = url.pathname || '/';
+    const appStaticFiles = new Set([
+      '/manifest.webmanifest',
+      '/favicon.ico',
+      '/apple-touch-icon.png',
+      '/icon-192.png',
+      '/icon-512.png'
+    ]);
+
+    if (path === '/explorer') {
+      return Response.redirect('https://lotusia.org/explorer/blocks' + (url.search || ''), 301);
+    }
+    if (path === '/social') {
+      return Response.redirect('https://lotusia.org/social/activity' + (url.search || ''), 301);
+    }
+
+    try {
+      if (path === '/explorer/blocks') {
+        return new Response(await renderExplorerBlocksPage(url), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      const blockPath = parseExplorerBlockPath(path);
+      if (blockPath) {
+        return new Response(await renderExplorerBlockDetailPage(url, blockPath), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      const txPath = parseExplorerTxPath(path);
+      if (txPath) {
+        return new Response(await renderExplorerTxDetailPage(url, txPath), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      const addressPath = parseExplorerAddressPath(path);
+      if (addressPath) {
+        return new Response(await renderExplorerAddressDetailPage(url, addressPath), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      if (path === '/social/activity') {
+        return new Response(await renderActivityPage(url), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      if (path === '/social/trending') {
+        return new Response(await renderTrendingPage(), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      if (path === '/social/profiles') {
+        return new Response(await renderProfilesPage(url), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+      }
+      const profileRoute = parseProfilePath(path);
+      if (profileRoute) {
+        return new Response(await renderProfilePage(url, profileRoute.platform, profileRoute.profileId), {
+          status: 200,
+          headers: {
+            'content-type': 'text/html; charset=utf-8',
+            'cache-control': 'no-store'
+          }
+        });
+      }
+    } catch (err) {
+      if (path.startsWith('/explorer/')) {
+        return new Response(explorerErrorPage(path, err && err.message ? err.message : 'Unknown error'), {
+          status: 502,
+          headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' }
+        });
+      }
+      if (path.startsWith('/social/')) {
+        return new Response(errorPage(path, err && err.message ? err.message : 'Unknown error'), {
+          status: 502,
+          headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' }
+        });
+      }
+    }
+
+    // App social routes render HTML that references root-level Nuxt assets.
+    // These must be fetched from app host or the browser receives marketing HTML.
+    if (path.startsWith('/_nuxt/') || appStaticFiles.has(path)) {
+      const res = await proxy(request, 'https://app.lotusia.org');
+      return withCors(res);
+    }
+
+    // Nuxt runtime internals (payload/content/navigation) must come from app host.
+    if (path.startsWith('/api/_')) {
+      return proxy(request, 'https://app.lotusia.org');
+    }
+
+    if (path.startsWith('/api/')) {
+      return proxy(request, 'https://legacy.lotusia.org');
+    }
+
+    return env.ASSETS.fetch(request);
+  }
+};
+
+`);
 
 // sitemap.xml
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), buildSitemap(sitemap));
