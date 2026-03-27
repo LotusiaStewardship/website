@@ -1100,6 +1100,26 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
 fs.writeFileSync(path.join(DIST, '_redirects'), [
 ].join('\n') + '\n');
 
+// Tailwind safelist for runtime-generated worker HTML.
+fs.writeFileSync(path.join(DIST, '_worker-safelist.html'), `
+<div class="hidden">
+  text-left rtl:text-right px-4 py-3.5 text-gray-900 dark:text-white font-semibold text-sm
+  whitespace-nowrap px-4 py-4 text-gray-500 dark:text-gray-400
+  min-w-full table-fixed divide-y divide-gray-300 dark:divide-gray-700
+  rounded-md rounded-lg rounded-xl rounded-2xl border-l-2 border-primary-500
+  ring-1 ring-inset ring-gray-300 dark:ring-gray-700
+  bg-primary-500 hover:bg-primary-600 text-white dark:bg-primary-400 dark:text-gray-900
+  bg-green-50 text-green-600 dark:bg-green-400/10 dark:text-green-400
+  bg-lime-50 text-lime-600 dark:bg-lime-400/10 dark:text-lime-400
+  bg-red-50 text-red-600 dark:bg-red-400/10 dark:text-red-400
+  text-sky-500 dark:text-sky-400 text-primary-500 dark:text-primary-400
+  hover:text-primary-600 dark:hover:text-primary-300
+  sticky top-[calc(var(--header-height)+2rem)] tabular-nums
+  grid lg:grid-cols-[250px_1fr] gap-8 xl:grid-cols-3 sm:grid-cols-2
+  bg-background text-foreground min-h-screen
+</div>
+`.trim() + '\n');
+
 // _worker.js (Cloudflare Pages advanced mode) for host-preserving proxy routes
 fs.writeFileSync(path.join(DIST, '_worker.js'), `'use strict';
 
@@ -1273,11 +1293,11 @@ function pageShell(pathname, title, description, bodyHtml) {
     '<link rel="canonical" href="https://lotusia.org' + esc(pathname) + '">' +
     '<link rel="icon" href="/assets/favicon.ico">' +
     '<link rel="stylesheet" href="/assets/css/main.css"></head>' +
-    '<body class="bg-gradient-to-b from-gray-50 via-white to-white dark:from-gray-950 dark:via-gray-950 dark:to-black text-foreground min-h-screen">' +
+    '<body class="bg-background text-foreground min-h-screen">' +
     navHtml(pathname) +
     '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-10">' +
     breadcrumbs +
-    '<section class="rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-900/60 shadow-sm p-5 sm:p-8">' +
+    '<section>' +
     bodyHtml +
     '</section></div></main>' +
     '<footer class="relative"><div class="border-t border-gray-200 dark:border-gray-800"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3"><div class="lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3"></div><div class="mt-3 lg:mt-0 lg:order-2 flex items-center justify-center"></div><div class="flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1"><p class="text-gray-500 dark:text-gray-400 text-sm">Copyright &copy; Lotusia 2021-2026. All rights reserved.</p></div></div></div></footer>' +
@@ -1286,35 +1306,54 @@ function pageShell(pathname, title, description, bodyHtml) {
 }
 
 function renderTable(headers, rows, emptyMessage) {
-  const head = headers.map(h => '<th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">' + esc(h) + '</th>').join('');
+  const head = headers.map(h => '<th class="text-left rtl:text-right px-4 py-3.5 text-gray-900 dark:text-white font-semibold text-sm">' + esc(h) + '</th>').join('');
   const body = rows.length
     ? rows.join('')
     : '<tr><td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400" colspan="' + headers.length + '">' + esc(emptyMessage) + '</td></tr>';
-  return '<div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"><table class="w-full text-sm"><thead class="bg-gray-50 dark:bg-gray-950/60"><tr>' + head + '</tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-800">' + body + '</tbody></table></div>';
+  return '<div class="relative overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">' +
+    '<table class="min-w-full table-fixed divide-y divide-gray-300 dark:divide-gray-700">' +
+    '<thead><tr>' + head + '</tr></thead>' +
+    '<tbody class="divide-y divide-gray-200 dark:divide-gray-800">' + body + '</tbody></table></div>';
 }
 
-function sideNavSection(title, items) {
+function iconSvg(name, cls) {
+  if (name === 'network') return '<svg viewBox="0 0 24 24" class="' + cls + '" fill="currentColor"><path d="M4 3h7v7H4V3zm9 0h7v7h-7V3zM4 14h7v7H4v-7zm15 0h-6v2h4v3h-4v2h6v-7z"/></svg>';
+  if (name === 'social') return '<svg viewBox="0 0 24 24" class="' + cls + '" fill="currentColor"><path d="M16 11a4 4 0 1 0-3.999-4A4 4 0 0 0 16 11zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm8 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zM8 13c-.29 0-.62.02-.97.05C5.5 13.2 2 13.97 2 16v3h4v-2c0-1.16.66-2.18 2-3.02V13z"/></svg>';
+  if (name === 'chart') return '<svg viewBox="0 0 24 24" class="' + cls + '" fill="currentColor"><path d="M3 3h2v16h16v2H3V3zm6 10 3-3 3 2 4-5 2 1-5 7-3-2-3 3-1-1z"/></svg>';
+  if (name === 'profile') return '<svg viewBox="0 0 24 24" class="' + cls + '" fill="currentColor"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.42 0-8 2.01-8 4.5V21h16v-2.5c0-2.49-3.58-4.5-8-4.5z"/></svg>';
+  if (name === 'x') return '<svg viewBox="0 0 24 24" class="' + cls + '" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.5L6.2 22H3l7.2-8.3L1 2h6.3l4.4 5.9L18.9 2z"/></svg>';
+  if (name === 'up') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="m10 4 6 6h-4v6H8v-6H4l6-6z"/></svg>';
+  if (name === 'down') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="M10 16 4 10h4V4h4v6h4l-6 6z"/></svg>';
+  if (name === 'minus') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="M4 9h12v2H4z"/></svg>';
+  if (name === 'external') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="M11 3h6v6h-2V6.41l-7.29 7.3-1.42-1.42 7.3-7.29H11V3z"/><path d="M5 5h4v2H7v8h8v-2h2v4H5V5z"/></svg>';
+  if (name === 'prev') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="m12.7 4.3-1.4 1.4L7 10l4.3 4.3 1.4-1.4L9.8 10z"/></svg>';
+  if (name === 'next') return '<svg viewBox="0 0 20 20" class="' + cls + '" fill="currentColor"><path d="m7.3 15.7 1.4-1.4L13 10 8.7 5.7 7.3 7.1 10.2 10z"/></svg>';
+  return '<span class="' + cls + '"></span>';
+}
+
+function sideNavSection(title, iconName, items) {
   const links = items.map(i => {
     const cls = i.active
-      ? 'block rounded-lg px-3 py-2 text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-      : 'block rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800';
-    return '<a href="' + i.href + '" class="' + cls + '">' + esc(i.label) + '</a>';
+      ? 'group flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 border-l-2 border-primary-500'
+      : 'group flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent';
+    return '<a href="' + i.href + '" class="' + cls + '"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>' + esc(i.label) + '</a>';
   }).join('');
-  return '<div class="mb-6"><h3 class="px-3 mb-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 font-semibold">' + esc(title) + '</h3><div class="space-y-1">' + links + '</div></div>';
+  return '<div class="mb-6"><h3 class="px-3 mb-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 font-semibold flex items-center gap-2">' +
+    iconSvg(iconName, 'h-4 w-4') + esc(title) + '</h3><div class="space-y-1">' + links + '</div></div>';
 }
 
 function legacyExplorerLayout(activeKey, contentHtml) {
-  const network = sideNavSection('Network', [
+  const network = sideNavSection('Network', 'network', [
     { label: 'Overview', href: '/explorer', active: activeKey === 'overview' },
     { label: 'Blocks', href: '/explorer/blocks', active: activeKey === 'blocks' }
   ]);
-  const social = sideNavSection('Social Media', [
+  const social = sideNavSection('Social Media', 'social', [
     { label: 'Latest', href: '/social/activity', active: activeKey === 'latest' },
     { label: 'Trending', href: '/social/trending', active: activeKey === 'trending' },
     { label: 'Profiles', href: '/social/profiles', active: activeKey === 'profiles' }
   ]);
-  return '<div class="grid lg:grid-cols-[220px_1fr] gap-6 lg:gap-8">' +
-    '<aside class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 h-fit">' + network + social + '</aside>' +
+  return '<div class="grid lg:grid-cols-[250px_1fr] gap-8">' +
+    '<aside class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 h-fit sticky top-[calc(var(--header-height)+2rem)]">' + network + social + '</aside>' +
     '<section>' + contentHtml + '</section>' +
     '</div>';
 }
@@ -1327,10 +1366,11 @@ function parsePageAndSize(url) {
   return { page, pageSize };
 }
 
-function compactStatCard(label, value, hint) {
-  return '<div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">' +
-    '<div class="text-xs text-gray-500 dark:text-gray-400 mb-1">' + esc(label) + '</div>' +
-    '<div class="text-lg font-semibold text-gray-900 dark:text-white">' + esc(value) + '</div>' +
+function compactStatCard(label, value, hint, icon) {
+  return '<div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 transition-colors hover:border-primary-200 dark:hover:border-primary-800">' +
+    '<div class="flex items-start justify-between gap-3 mb-2"><div class="text-xs text-gray-500 dark:text-gray-400">' + esc(label) + '</div>' +
+    '<span class="inline-flex items-center justify-center rounded-lg bg-primary-50 dark:bg-primary-950/30 text-primary-600 dark:text-primary-300 h-8 w-8">' + iconSvg(icon || 'chart', 'h-4 w-4') + '</span></div>' +
+    '<div class="text-2xl font-bold tabular-nums text-gray-900 dark:text-white">' + esc(value) + '</div>' +
     (hint ? '<div class="text-xs text-gray-500 dark:text-gray-400 mt-1">' + esc(hint) + '</div>' : '') +
     '</div>';
 }
@@ -1369,31 +1409,73 @@ function voteRatio(positive, negative) {
   return ((p / total) * 100).toFixed(1) + '%';
 }
 
+function voteRatioPill(positive, negative) {
+  const ratioText = voteRatio(positive, negative);
+  const ratioValue = num(ratioText.replace('%', ''));
+  const cls = ratioValue >= 90
+    ? 'bg-green-50 text-green-600 dark:bg-green-400/10 dark:text-green-400'
+    : ratioValue >= 50
+    ? 'bg-lime-50 text-lime-600 dark:bg-lime-400/10 dark:text-lime-400'
+    : 'bg-red-50 text-red-600 dark:bg-red-400/10 dark:text-red-400';
+  return '<span class="inline-flex items-center rounded-md text-sm font-medium px-2 py-1 ' + cls + '">' + esc(ratioText) + ' Positive</span>';
+}
+
+function sectionHeader(icon, title, subtitle, badgeHtml) {
+  return '<div class="mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">' +
+    '<div class="flex items-start gap-3">' +
+    '<span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 dark:bg-primary-950/30 text-primary-600 dark:text-primary-300">' + iconSvg(icon, 'h-6 w-6') + '</span>' +
+    '<div><div class="flex items-center gap-2"><h1 class="text-2xl font-bold text-gray-900 dark:text-white">' + esc(title) + '</h1>' + (badgeHtml || '') + '</div>' +
+    '<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">' + esc(subtitle) + '</p></div></div></div>';
+}
+
+function profileCellHtml(platform, profileId) {
+  const handle = String(profileId || '');
+  const initial = handle ? handle.charAt(0).toUpperCase() : '?';
+  return '<div class="flex items-center gap-2">' +
+    '<span class="inline-flex items-center justify-center rounded-full h-8 w-8 bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300 text-xs font-bold">' + esc(initial) + '</span>' +
+    '<a class="font-semibold text-sm text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(handle) + '</a>' +
+    iconSvg('x', 'h-4 w-4 text-sky-500 dark:text-sky-400') +
+    '</div>';
+}
+
+function voteToneHtml(sentiment, sats) {
+  if (sentiment === 'positive') return '<span class="flex items-center gap-1 text-green-500 dark:text-green-400">' + iconSvg('up', 'h-4 w-4') + esc(formatXpiFromSats(sats)) + '</span>';
+  if (sentiment === 'negative') return '<span class="flex items-center gap-1 text-red-500 dark:text-red-400">' + iconSvg('down', 'h-4 w-4') + esc(formatXpiFromSats(sats)) + '</span>';
+  return '<span class="flex items-center gap-1 text-gray-500 dark:text-gray-400">' + iconSvg('minus', 'h-4 w-4') + '0 XPI</span>';
+}
+
 function paginationHtml(basePath, page, pageSize, numPages) {
   const safePage = Math.max(1, Math.min(page, Math.max(1, num(numPages) || 1)));
   const totalPages = Math.max(1, num(numPages) || 1);
   const mk = function(targetPage, targetSize) {
     return basePath + '?page=' + targetPage + '&pageSize=' + targetSize;
   };
-  const pageSizes = [10, 25, 50, 100];
-  const sizeLinks = pageSizes.map(function(size) {
-    const active = size === pageSize;
-    const cls = active
-      ? 'inline-flex items-center rounded border border-primary bg-primary/10 px-2 py-1 text-xs font-semibold text-primary'
-      : 'inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-2 py-1 text-xs text-gray-600 dark:text-gray-300 hover:border-primary hover:text-primary';
-    return '<a class="' + cls + '" href="' + mk(1, size) + '">' + size + '</a>';
+  const pageSizes = [10, 20, 30, 40];
+  const selectOptions = pageSizes.map(function(size) {
+    return '<option value="' + size + '"' + (size === pageSize ? ' selected' : '') + '>' + size + '</option>';
   }).join('');
+  const selectControl = '<div class="relative w-20"><select onchange="window.location.href=\\'' + basePath + '?page=1&pageSize=\\'+this.value" class="relative block w-full appearance-none rounded-md border-0 py-1.5 pr-8 pl-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500">' + selectOptions + '</select></div>';
   const prevDisabled = safePage <= 1;
   const nextDisabled = safePage >= totalPages;
+  const windowStart = Math.max(1, Math.min(safePage - 2, totalPages - 4));
+  const windowEnd = Math.min(totalPages, windowStart + 4);
+  const pageButtons = [];
+  for (let p = windowStart; p <= windowEnd; p += 1) {
+    if (p === safePage) pageButtons.push('<span class="inline-flex items-center justify-center min-w-[2rem] px-2 py-1.5 text-sm rounded-md bg-primary-500 text-white dark:bg-primary-400 dark:text-gray-900">' + p + '</span>');
+    else pageButtons.push('<a href="' + mk(p, pageSize) + '" class="inline-flex items-center justify-center min-w-[2rem] px-2 py-1.5 text-sm rounded-md ring-1 ring-inset ring-gray-300 dark:ring-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200">' + p + '</a>');
+  }
+  const endCaps = (windowStart > 1 ? '<a href="' + mk(1, pageSize) + '" class="inline-flex items-center justify-center min-w-[2rem] px-2 py-1.5 text-sm rounded-md ring-1 ring-inset ring-gray-300 dark:ring-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200">1</a><span class="px-1 text-gray-400">…</span>' : '') +
+    pageButtons.join('') +
+    (windowEnd < totalPages ? '<span class="px-1 text-gray-400">…</span><a href="' + mk(totalPages, pageSize) + '" class="inline-flex items-center justify-center min-w-[2rem] px-2 py-1.5 text-sm rounded-md ring-1 ring-inset ring-gray-300 dark:ring-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200">' + totalPages + '</a>' : '');
   const prevLink = prevDisabled
-    ? '<span class="inline-flex items-center rounded border border-gray-200 dark:border-gray-800 px-3 py-1.5 text-sm text-gray-400">Prev</span>'
-    : '<a class="inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary" href="' + mk(safePage - 1, pageSize) + '">Prev</a>';
+    ? '<span class="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-800">' + iconSvg('prev', 'h-4 w-4') + '</span>'
+    : '<a class="inline-flex items-center justify-center rounded-md p-1.5 text-gray-700 dark:text-gray-200 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 bg-white dark:bg-gray-900" href="' + mk(safePage - 1, pageSize) + '">' + iconSvg('prev', 'h-4 w-4') + '</a>';
   const nextLink = nextDisabled
-    ? '<span class="inline-flex items-center rounded border border-gray-200 dark:border-gray-800 px-3 py-1.5 text-sm text-gray-400">Next</span>'
-    : '<a class="inline-flex items-center rounded border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary" href="' + mk(safePage + 1, pageSize) + '">Next</a>';
-  return '<div class="mt-4 flex flex-wrap items-center justify-between gap-3">' +
-    '<div class="flex items-center gap-2"><span class="text-sm text-gray-500">Rows per page:</span>' + sizeLinks + '</div>' +
-    '<div class="flex items-center gap-2"><span class="text-sm text-gray-500">Page ' + safePage + ' of ' + totalPages + '</span>' + prevLink + nextLink + '</div>' +
+    ? '<span class="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-800">' + iconSvg('next', 'h-4 w-4') + '</span>'
+    : '<a class="inline-flex items-center justify-center rounded-md p-1.5 text-gray-700 dark:text-gray-200 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 bg-white dark:bg-gray-900" href="' + mk(safePage + 1, pageSize) + '">' + iconSvg('next', 'h-4 w-4') + '</a>';
+  return '<div class="mt-4 flex items-center justify-between px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">' +
+    '<div class="flex items-center gap-2"><span class="text-sm text-gray-700 dark:text-gray-200">Rows per page:</span>' + selectControl + '</div>' +
+    '<div class="flex items-center gap-3"><span class="text-sm text-gray-700 dark:text-gray-200">Page ' + safePage + ' of ' + totalPages + '</span><div class="flex items-center -space-x-px">' + prevLink + endCaps + nextLink + '</div></div>' +
     '</div>';
 }
 
@@ -1443,18 +1525,17 @@ async function renderExplorerBlocksPage(url) {
     const burn = info.numBurnedSats || block.sumBurnedSats || 0;
     const txCount = info.numTxs || (block.txs ? block.txs.length : 0);
     const size = info.blockSize || block.size || 0;
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(height)) + '</td>' +
-      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/block/' + esc(hash) + '">' + esc(shortHash(hash)) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(info.timestamp)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(txCount)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(size)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber(height)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/block/' + esc(hash) + '">' + esc(shortHash(hash)) + '</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatUtc(info.timestamp)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber(txCount)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatBytes(size)) + '</td>' +
       '</tr>';
   });
   const canonical = '/explorer/blocks?page=' + params.page + '&pageSize=' + params.pageSize;
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Blocks</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Latest blocks in the blockchain. This information is refreshed every 5 seconds.</p>' +
+  const bodyInner = sectionHeader('network', 'Blocks', 'Latest blocks in the blockchain. Refreshed every 5 seconds.') +
     renderTable(['Height', 'Hash', 'Timestamp', 'Burned', 'Transactions', 'Size'], rows, 'No blocks found.') +
     paginationHtml('/explorer/blocks', params.page, params.pageSize, numPages);
   const body = legacyExplorerLayout('blocks', bodyInner);
@@ -1474,11 +1555,11 @@ async function renderExplorerOverviewPage() {
     const addr = p.addr || '-';
     const version = p.subver || '-';
     const blocks = p.synced_headers ?? p.synced_blocks ?? '-';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(country) + '</td>' +
-      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(addr) + '</td>' +
-      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(version) + '</td>' +
-      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(blocks)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(country) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(addr) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(version) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber(blocks)) + '</td>' +
       '</tr>';
   });
   const tip = num(chainInfo.tipHeight || chainInfo.blocks || 0);
@@ -1488,15 +1569,15 @@ async function renderExplorerOverviewPage() {
   const diffText = num(mining.difficulty || 0) > 0 ? num(mining.difficulty).toFixed(1) : '-';
   const blockTime = num(mining.target || 0) > 0 ? (num(mining.target) / 60).toFixed(1) + ' minutes' : '-';
   const cards = '<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">' +
-    compactStatCard('Connections', formatNumber(peers.length), 'Number of Lotus nodes connected to the Explorer') +
-    compactStatCard('Blocks', formatNumber(tip), 'Total number of blocks in the blockchain') +
-    compactStatCard('Pending Transactions', formatNumber(pending), 'Number of transactions waiting to be confirmed') +
-    compactStatCard('Hashrate', hashrateText, 'Approximately how many hashes are being computed per second') +
-    compactStatCard('Difficulty', diffText, 'Difficulty of the most recent block') +
-    compactStatCard('Avg. Block Time', blockTime, 'Calculated from latest chain target') +
+    compactStatCard('Connections', formatNumber(peers.length), 'Number of Lotus nodes connected to the Explorer', 'network') +
+    compactStatCard('Blocks', formatNumber(tip), 'Total number of blocks in the blockchain', 'network') +
+    compactStatCard('Pending Transactions', formatNumber(pending), 'Transactions waiting to be confirmed', 'chart') +
+    compactStatCard('Hashrate', hashrateText, 'Estimated hashes computed per second', 'chart') +
+    compactStatCard('Difficulty', diffText, 'Difficulty of the most recent block', 'chart') +
+    compactStatCard('Avg. Block Time', blockTime, 'Calculated from latest chain target', 'chart') +
     '</div>';
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Overview</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Up-to-date information about the Lotusia blockchain network. This information is refreshed every 5 seconds.</p>' +
+  const mainnetBadge = '<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-400/10 text-green-600 dark:text-green-400 text-xs font-medium px-2.5 py-0.5">Mainnet</span>';
+  const bodyInner = sectionHeader('network', 'Network', 'Up-to-date information about the Lotusia blockchain network.', mainnetBadge) +
     cards +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Peer Info</h2>' +
     '<p class="text-gray-600 dark:text-gray-300 mb-4">List of Lotus nodes connected to the Explorer.</p>' +
@@ -1511,25 +1592,25 @@ async function renderExplorerBlockDetailPage(url, hashOrHeight) {
   const txs = payload.txs || [];
   const rows = txs.map(tx => {
     const burn = tx.sumBurnedSats || 0;
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(tx.timeFirstSeen || info.timestamp)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(tx.size)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatUtc(tx.timeFirstSeen || info.timestamp)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatBytes(tx.size)) + '</td>' +
       '</tr>';
   });
   const canonical = '/explorer/block/' + encodeURIComponent(hashOrHeight);
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Block Details</h1>' +
-    '<p class="text-sm text-gray-500 mb-6"><a class="text-primary hover:underline" href="/explorer/blocks">#' + esc(formatNumber(info.height || hashOrHeight)) + '</a> · ' + esc(shortHash(info.hash || hashOrHeight)) + '</p>' +
+  const bodyInner = sectionHeader('network', 'Block Details', 'Detailed block metrics and transactions.', '<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-400/10 text-green-600 dark:text-green-400 text-xs font-medium px-2.5 py-0.5">Mainnet</span>') +
+    '<p class="text-sm text-gray-500 mb-6"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/blocks">#' + esc(formatNumber(info.height || hashOrHeight)) + '</a> · ' + esc(shortHash(info.hash || hashOrHeight)) + '</p>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Timestamp</div><div class="text-lg font-semibold">' + esc(formatUtc(info.timestamp)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Block Subsidy</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(info.reward || 0)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Mined By</div><div class="text-sm font-semibold break-all"><a class="text-primary hover:underline" href="/explorer/address/' + esc(payload.minedBy || '') + '">' + esc(payload.minedBy || '-') + '</a></div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Block Size</div><div class="text-lg font-semibold">' + esc(formatBytes(info.blockSize)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Transactions</div><div class="text-lg font-semibold">' + esc(formatNumber(info.numTxs || txs.length)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Burned</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(info.numBurnedSats || 0)) + '</div></div>' +
+    compactStatCard('Timestamp', formatUtc(info.timestamp), 'UTC', 'chart') +
+    compactStatCard('Block Subsidy', formatXpiFromSats(info.reward || 0), 'New coins minted', 'chart') +
+    compactStatCard('Mined By', payload.minedBy || '-', 'Miner address', 'profile') +
+    compactStatCard('Block Size', formatBytes(info.blockSize), 'Serialized bytes', 'network') +
+    compactStatCard('Transactions', formatNumber(info.numTxs || txs.length), 'Transactions in this block', 'network') +
+    compactStatCard('Burned', formatXpiFromSats(info.numBurnedSats || 0), 'Total burned in block', 'down') +
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transactions</h2>' +
     renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions in this block.');
@@ -1543,35 +1624,37 @@ async function renderExplorerTxDetailPage(url, txid) {
   const inputs = payload.inputs || [];
   const outputs = payload.outputs || [];
   const inputsRows = inputs.map(function(input, idx) {
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">Input #' + (idx + 1) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(input.address || (input.isCoinbase ? 'Coinbase' : '-')) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(input.value || 0)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">Input #' + (idx + 1) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(input.address || (input.isCoinbase ? 'Coinbase' : '-')) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(input.value || 0)) + '</td>' +
       '</tr>';
   });
   const outputsRows = outputs.map(function(output, idx) {
     const target = output.address
-      ? '<a class="text-primary hover:underline break-all" href="/explorer/address/' + esc(output.address) + '">' + esc(output.address) + '</a>'
+      ? '<a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 break-all" href="/explorer/address/' + esc(output.address) + '">' + esc(output.address) + '</a>'
       : (output.rankOutput ? 'RANK script output' : '-');
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">Output #' + (idx + 1) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + target + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(output.value || 0)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">Output #' + (idx + 1) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + target + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(output.value || 0)) + '</td>' +
       '</tr>';
   });
   const canonical = '/explorer/tx/' + encodeURIComponent(txid);
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Transaction Details</h1>' +
-    '<p class="text-sm text-gray-500 mb-6">' + esc(shortHash(payload.txid || txid)) + (payload.isCoinbase ? ' · Coinbase' : '') + '</p>' +
+  const statusBadge = '<span class="inline-flex rounded-full bg-green-50 dark:bg-green-400/10 text-green-600 dark:text-green-400 px-2.5 py-0.5 text-xs font-medium">Confirmed</span>' +
+    (payload.isCoinbase ? ' <span class="inline-flex rounded-full bg-primary-50 dark:bg-primary-900/40 text-primary-600 dark:text-primary-300 px-2.5 py-0.5 text-xs font-medium">Coinbase</span>' : '');
+  const bodyInner = sectionHeader('chart', 'Transaction Details', 'Inputs, outputs, and block confirmation details.', statusBadge) +
+    '<p class="text-sm text-gray-500 mb-6">' + esc(shortHash(payload.txid || txid)) + '</p>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Time First Seen</div><div class="text-lg font-semibold">' + esc(formatUtc(payload.timeFirstSeen)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Size</div><div class="text-lg font-semibold">' + esc(formatBytes(payload.size)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmations</div><div class="text-lg font-semibold">' + esc(formatNumber(payload.confirmations || 0)) + '</div></div>' +
+    compactStatCard('Time First Seen', formatUtc(payload.timeFirstSeen), 'When this tx first appeared', 'chart') +
+    compactStatCard('Size', formatBytes(payload.size), 'Raw transaction size', 'network') +
+    compactStatCard('Confirmations', formatNumber(payload.confirmations || 0), 'Current block confirmations', 'up') +
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Block Information</h2>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Transaction Confirmed</div><div class="text-lg font-semibold">' + esc(formatUtc(block.timestamp)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmations</div><div class="text-lg font-semibold">' + esc(formatNumber(payload.confirmations || 0)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Confirmed in Block</div><div class="text-sm font-semibold"><a class="text-primary hover:underline" href="/explorer/block/' + esc(block.hash || '') + '">' + esc(shortHash(block.hash || '')) + '</a></div></div>' +
+    compactStatCard('Transaction Confirmed', formatUtc(block.timestamp), 'Confirmation timestamp', 'up') +
+    compactStatCard('Confirmations', formatNumber(payload.confirmations || 0), 'Network confirmations', 'up') +
+    compactStatCard('Confirmed in Block', shortHash(block.hash || ''), 'View full block details', 'network') +
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Inputs</h2>' +
     renderTable(['Input', 'Source', 'Amount'], inputsRows, 'No inputs.') +
@@ -1591,21 +1674,21 @@ async function renderExplorerAddressDetailPage(url, address) {
   const numPages = (details.history && details.history.numPages) || 1;
   const rows = txs.map(tx => {
     const burn = tx.sumBurnedSats || 0;
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc((tx.block && tx.block.timestamp) || tx.timeFirstSeen)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(burn)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatBytes(tx.size)) + '</td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(tx.txid) + '">' + esc(shortHash(tx.txid)) + '</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatUtc((tx.block && tx.block.timestamp) || tx.timeFirstSeen)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(burn)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber((tx.inputs || []).length)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatNumber((tx.outputs || []).length)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatBytes(tx.size)) + '</td>' +
       '</tr>';
   });
   const canonical = '/explorer/address/' + encodeURIComponent(address) + '?page=' + params.page + '&pageSize=' + params.pageSize;
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Address Details</h1>' +
+  const bodyInner = sectionHeader('profile', 'Address Details', 'Address balance and transaction history on Lotusia mainnet.') +
     '<p class="text-sm text-gray-500 mb-6 break-all">' + esc(address) + '</p>' +
     '<div class="grid sm:grid-cols-2 gap-4 mb-8">' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Balance</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(balance)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Last Seen</div><div class="text-lg font-semibold">' + esc(formatUtc(details.lastSeen)) + '</div></div>' +
+    compactStatCard('Balance', formatXpiFromSats(balance), 'Current wallet balance', 'up') +
+    compactStatCard('Last Seen', formatUtc(details.lastSeen), 'Last activity timestamp', 'chart') +
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transaction History</h2>' +
     renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions for this address.') +
@@ -1625,23 +1708,16 @@ async function renderActivityPage(url) {
   const params = parsePageAndSize(url);
   const payload = await fetchSocialJson('/api/social/activity', { page: params.page, pageSize: params.pageSize });
   const rows = (payload.votes || []).map(v => {
-    const sentiment = String(v.sentiment || 'neutral');
-    const voteTone = sentiment === 'positive'
-      ? '<span class="text-green-600 dark:text-green-400">↑ ' + esc(formatXpiFromSats(v.sats)) + '</span>'
-      : sentiment === 'negative'
-      ? '<span class="text-red-600 dark:text-red-400">↓ ' + esc(formatXpiFromSats(v.sats)) + '</span>'
-      : '<span class="text-gray-700 dark:text-gray-200">○ 0 XPI</span>';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(v.firstSeen)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/social/' + esc(v.platform) + '/' + esc(v.profileId) + '">' + esc(v.profileId) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + voteTone + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" target="_blank" rel="noopener noreferrer" href="https://x.com/' + esc(v.profileId) + '/status/' + esc(v.postId) + '">' + esc(v.postId) + '</a></td>' +
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatUtc(v.firstSeen)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(v.platform || 'twitter', v.profileId || '') + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteToneHtml(String(v.sentiment || 'neutral'), v.sats) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400"><a class="inline-flex items-center text-sky-500 dark:text-sky-400 hover:underline" target="_blank" rel="noopener noreferrer" href="https://x.com/' + esc(v.profileId) + '/status/' + esc(v.postId) + '">' + esc(v.postId) + iconSvg('external', 'ml-1 h-3.5 w-3.5 text-gray-400') + '</a></td>' +
       '</tr>';
   });
   const canonical = '/social/activity?page=' + params.page + '&pageSize=' + params.pageSize;
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Latest Activity</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Vote activity for all profiles across all platforms, refreshed from Nitro API data.</p>' +
+  const bodyInner = sectionHeader('chart', 'Vote Activity', 'Vote activity for all profiles across all platforms.') +
     renderTable(['Transaction ID', 'First Seen', 'Profile', 'Vote', 'Post ID'], rows, 'No recent activity.') +
     paginationHtml('/social/activity', params.page, params.pageSize, payload.numPages);
   const body = legacyExplorerLayout('latest', bodyInner);
@@ -1663,32 +1739,31 @@ async function renderTrendingPage() {
     const platform = p.platform || p.provider || 'twitter';
     const profileId = p.profileId || p.id || p.handle || '';
     const ranking = p.ranking || p.rate || '0';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(profileId) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
   const lowRows = (Array.isArray(lowProfiles) ? lowProfiles : []).map(function(p) {
     const platform = p.platform || p.provider || 'twitter';
     const profileId = p.profileId || p.id || p.handle || '';
     const ranking = p.ranking || p.rate || '0';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm"><a class="text-primary hover:underline" href="/social/' + esc(platform) + '/' + esc(profileId) + '">' + esc(profileId) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+    return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(platform, profileId) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
   const topPostRows = (Array.isArray(topPosts) ? topPosts : []).map(function(p) {
     const pid = p.profileId || p.profile || '';
     const post = p.postId || (p.post && p.post.id) || '';
     const ranking = p.ranking || p.rate || '0';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800"><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(pid + '/' + post) + '</td><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+    return '<tr><td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(pid + '/' + post) + '</td><td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
   const lowPostRows = (Array.isArray(lowPosts) ? lowPosts : []).map(function(p) {
     const pid = p.profileId || p.profile || '';
     const post = p.postId || (p.post && p.post.id) || '';
     const ranking = p.ranking || p.rate || '0';
-    return '<tr class="border-b border-gray-200 dark:border-gray-800"><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(pid + '/' + post) + '</td><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
+    return '<tr><td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(pid + '/' + post) + '</td><td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Trending</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Top and lowest ranked profiles and posts over today.</p>' +
+  const bodyInner = sectionHeader('chart', 'Trending', 'Top and lowest ranked profiles and posts over today.') +
     '<div class="grid md:grid-cols-2 gap-6">' +
     '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Profiles</h2>' + renderTable(['Profile', 'Ranking'], topRows, 'No profile trend data.') + '</section>' +
     '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Profiles</h2>' + renderTable(['Profile', 'Ranking'], lowRows, 'No profile trend data.') + '</section>' +
@@ -1704,17 +1779,15 @@ async function renderProfilesPage(url) {
   const payload = await fetchSocialJson('/api/social/profiles', { page: params.page, pageSize: params.pageSize });
   const rows = (payload.profiles || []).map(function(p, idx) {
       const rank = ((params.page - 1) * params.pageSize) + idx + 1;
-      const ratio = voteRatio(p.votesPositive, p.votesNegative);
-      return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + rank + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/social/' + esc(p.platform) + '/' + esc(p.id) + '">' + esc(p.id) + '</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(p.ranking)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-green-600 dark:text-green-400">' + esc(ratio) + ' Positive</td>' +
+      return '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + rank + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + profileCellHtml(p.platform, p.id) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(p.ranking)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteRatioPill(p.votesPositive, p.votesNegative) + '</td>' +
       '</tr>';
   });
   const canonical = '/social/profiles?page=' + params.page + '&pageSize=' + params.pageSize;
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Profiles</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Browse profiles on Lotusia Social.</p>' +
+  const bodyInner = sectionHeader('profile', 'Profiles', 'Browse profiles on Lotusia Social.') +
     renderTable(['#', 'Profile', 'Ranking', 'Vote Ratio'], rows, 'No profiles found.') +
     paginationHtml('/social/profiles', params.page, params.pageSize, payload.numPages);
   const body = legacyExplorerLayout('profiles', bodyInner);
@@ -1729,25 +1802,24 @@ async function renderProfilePage(url, platform, profileId) {
     fetchSocialJson('/api/social/' + encodeURIComponent(platform) + '/' + encodeURIComponent(profileId) + '/votes', { page: params.page, pageSize: params.pageSize })
   ]);
 
-  const postsRows = (posts.posts || []).map(post => '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(post.id) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(post.ranking)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-green-600 dark:text-green-400">' + esc(voteRatio(post.votesPositive, post.votesNegative)) + ' Positive</td>' +
+  const postsRows = (posts.posts || []).map(post => '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(post.id) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(post.ranking)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteRatioPill(post.votesPositive, post.votesNegative) + '</td>' +
       '</tr>');
-  const votesRows = (votes.votes || []).map(v => '<tr class="border-b border-gray-200 dark:border-gray-800">' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200"><a class="text-primary hover:underline" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatUtc(v.timestamp)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(v.sentiment || 'neutral') + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(v.sats)) + '</td>' +
-      '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc((v.post && v.post.id) || '') + '</td>' +
+  const votesRows = (votes.votes || []).map(v => '<tr>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="/explorer/tx/' + esc(v.txid) + '">' + esc((v.txid || '').slice(0, 12)) + '...</a></td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatUtc(v.timestamp)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + voteToneHtml(String(v.sentiment || 'neutral'), v.sats) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(v.sats)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-400">' + esc((v.post && v.post.id) || '') + '</td>' +
       '</tr>');
   const profilePath = '/social/' + platform + '/' + profileId + '?page=' + params.page + '&pageSize=' + params.pageSize;
-  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">' + esc(profileId) + '</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Live profile data from Nitro API (' + esc(platform) + ').</p>' +
+  const bodyInner = sectionHeader('profile', profileId, 'Live profile data from Nitro API (' + esc(platform) + ').') +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Ranking</div><div class="text-xl font-semibold">' + esc(formatXpiFromSats(profile.ranking)) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Votes +</div><div class="text-xl font-semibold">' + esc(profile.votesPositive) + '</div></div>' +
-    '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Votes -</div><div class="text-xl font-semibold">' + esc(profile.votesNegative) + '</div></div>' +
+    compactStatCard('Ranking', formatXpiFromSats(profile.ranking), 'Current profile ranking', 'chart') +
+    compactStatCard('Votes +', String(profile.votesPositive || 0), 'Positive votes', 'up') +
+    compactStatCard('Votes -', String(profile.votesNegative || 0), 'Negative votes', 'down') +
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Posts</h2>' +
     renderTable(['Post ID', 'Ranking', 'Vote Ratio'], postsRows, 'No posts yet.') +
