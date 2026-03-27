@@ -40,6 +40,14 @@ SITE_URL=https://lotusia.org npm run build
 npx wrangler pages deploy dist/ --project-name=lotusia-marketing --branch=main
 ```
 
+Matthew quick deploy script:
+
+```bash
+cd marketing
+export CLOUDFLARE_API_TOKEN="cfat_xxx"
+./scripts/deploy_matthew.sh
+```
+
 ## GitHub Actions CI/CD
 
 Workflow: `.github/workflows/marketing-pages.yml`
