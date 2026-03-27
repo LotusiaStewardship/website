@@ -29,7 +29,15 @@ async function renderExplorerBlocksPage(url, lang) {
     { label: workerText(safeLang, 'explorer', 'Explorer'), href: localize('/explorer') },
     { label: workerText(safeLang, 'blocks', 'Blocks'), href: localize('/explorer/blocks') }
   ];
-  const title = workerText(safeLang, 'blocks', 'Blocks');
+  const title = workerText(safeLang, 'explorer', 'Explorer') + ' - ' + workerText(safeLang, 'blocks', 'Blocks');
+  const keywords = workerI18nValue(safeLang, 'seo.explorer_blocks_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'explorer', 'Explorer'),
+    workerText(safeLang, 'blocks', 'Blocks'),
+    workerText(safeLang, 'timestamp', 'Timestamp'),
+    workerText(safeLang, 'transactions', 'Transactions'),
+    workerText(safeLang, 'size', 'Size')
+  ].join(', '));
   const description = workerText(safeLang, 'desc_latest_blocks', 'Latest confirmed blocks in the Lotusia blockchain with timestamps, burn totals, transaction counts, and block size metrics.');
   const jsonLd = seoJsonLd([
     seoBreadcrumbGraph(breadcrumbs),
@@ -50,7 +58,7 @@ async function renderExplorerBlocksPage(url, lang) {
   const body = legacyExplorerLayout('blocks', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia explorer blocks, latest blocks, blockchain height',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -109,7 +117,15 @@ async function renderExplorerOverviewPage(lang) {
     { label: workerI18nValue(safeLang, 'common.home', 'Home'), href: localize('/') },
     { label: workerText(safeLang, 'explorer', 'Explorer'), href: localize('/explorer') }
   ];
-  const title = workerText(safeLang, 'overview', 'Overview');
+  const title = workerText(safeLang, 'explorer', 'Explorer') + ' - ' + workerText(safeLang, 'overview', 'Overview');
+  const keywords = workerI18nValue(safeLang, 'seo.explorer_overview_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'explorer', 'Explorer'),
+    workerText(safeLang, 'overview', 'Overview'),
+    workerText(safeLang, 'hashrate', 'Hashrate'),
+    workerText(safeLang, 'difficulty', 'Difficulty'),
+    workerText(safeLang, 'connections', 'Connections')
+  ].join(', '));
   const description = workerText(safeLang, 'desc_network_overview', 'Network overview for the Lotusia explorer covering peers, hashrate, difficulty, pending transactions, and chain health metrics.');
   const jsonLd = seoJsonLd([
     seoBreadcrumbGraph(breadcrumbs),
@@ -123,7 +139,7 @@ async function renderExplorerOverviewPage(lang) {
   const body = legacyExplorerLayout('overview', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia explorer overview, hashrate, difficulty, peers, mempool',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -131,6 +147,14 @@ async function renderExplorerOverviewPage(lang) {
 
 async function renderExplorerBlockDetailPage(url, hashOrHeight, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.explorer_blocks_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'block_details', 'Block Details'),
+    workerText(safeLang, 'transactions', 'Transactions'),
+    workerText(safeLang, 'block_subsidy', 'Block Subsidy'),
+    workerText(safeLang, 'size', 'Size'),
+    workerText(safeLang, 'burned', 'Burned')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const payload = await fetchLegacyJson('/api/explorer/block/' + encodeURIComponent(hashOrHeight));
   const info = payload.blockInfo || {};
@@ -187,7 +211,7 @@ async function renderExplorerBlockDetailPage(url, hashOrHeight, lang) {
   const body = legacyExplorerLayout('blocks', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia block detail, block transactions, block subsidy, block size',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -195,6 +219,13 @@ async function renderExplorerBlockDetailPage(url, hashOrHeight, lang) {
 
 async function renderExplorerTxDetailPage(url, txid, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.explorer_blocks_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'transaction_details', 'Transaction Details'),
+    workerText(safeLang, 'inputs', 'Inputs'),
+    workerText(safeLang, 'outputs', 'Outputs'),
+    workerText(safeLang, 'confirmed', 'Confirmed')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const payload = await fetchLegacyJson('/api/explorer/tx/' + encodeURIComponent(txid));
   const block = payload.block || {};
@@ -255,7 +286,7 @@ async function renderExplorerTxDetailPage(url, txid, lang) {
   const body = legacyExplorerLayout('blocks', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia transaction detail, tx inputs, tx outputs, confirmations',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -263,6 +294,13 @@ async function renderExplorerTxDetailPage(url, txid, lang) {
 
 async function renderExplorerAddressDetailPage(url, address, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.explorer_blocks_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'address_details', 'Address Details'),
+    workerText(safeLang, 'balance', 'Balance'),
+    workerText(safeLang, 'transaction_history', 'Transaction History'),
+    workerText(safeLang, 'transactions', 'Transactions')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const params = parsePageAndSize(url);
   const [details, balance] = await Promise.all([
@@ -307,7 +345,7 @@ async function renderExplorerAddressDetailPage(url, address, lang) {
   const body = legacyExplorerLayout('blocks', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia address detail, wallet balance, address transactions',
+    keywords,
     jsonLd,
     lang: safeLang
   });

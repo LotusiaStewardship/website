@@ -57,14 +57,38 @@ function makeBlogDocsBuilders(ctx) {
   function buildMetaTitle(rawTitle, maxLen) {
     const text = String(rawTitle || '').replace(/\s+/g, ' ').trim();
     if (!text) return 'Lotusia';
-    if (text.length <= maxLen) return text;
-    return text.slice(0, maxLen - 1).trimEnd() + '…';
+    if (text.length > maxLen) return text.slice(0, maxLen - 1).trimEnd() + '…';
+    if (text.length < 25) {
+      const expanded = `${text} - Lotusia Documentation`;
+      return expanded.length <= maxLen ? expanded : text;
+    }
+    return text;
+  }
+
+  function buildKeywords(base, extras) {
+    const items = [];
+    const pushMany = function(values) {
+      for (const value of values) {
+        const token = String(value || '')
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}+ ]+/gu, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (!token || items.includes(token)) continue;
+        items.push(token);
+      }
+    };
+    pushMany(['lotusia', 'lotusia blockchain', 'xpi', 'lotusia stewardship']);
+    pushMany(String(base || '').split(/[\s,|/-]+/));
+    pushMany(extras || []);
+    return items.slice(0, 18).join(', ');
   }
 
   function buildBlog(sitemap) {
     const blogDir = path.join(CONTENT, 'blog');
     const files = fs.readdirSync(blogDir).filter(f => f.endsWith('.md')).sort().reverse();
     const en = I18N.en;
+    const enSeo = en.seo || {};
     const posts = [];
 
     const alternatesForBlog = { en: '/blog' };
@@ -98,6 +122,7 @@ function makeBlogDocsBuilders(ctx) {
         title: meta.title || slug,
         meta_title: metaTitle,
         description: metaDescription,
+        keywords: String(enSeo.blog_keywords || buildKeywords(meta.title || slug, ['blog', 'updates', 'ecosystem', 'release notes', 'technical article'])),
         slug,
         og_image: ogImage,
         date: dateStr,
@@ -157,6 +182,7 @@ function makeBlogDocsBuilders(ctx) {
       meta_title: 'Lotusia Blog Updates',
       og_title: en.pages.blog.og_title,
       description: clampText(en.pages.blog.description, 90, 160, 'Latest Lotusia ecosystem updates, releases, and technical insights from the Stewardship team.'),
+      keywords: String(enSeo.blog_keywords || buildKeywords('lotusia blog updates', ['blockchain news', 'ecosystem updates', 'product releases', 'protocol notes'])),
       og_image: '/assets/images/blog_0.jpg',
       hero_title: en.pages.blog.title,
       hero_description: en.pages.blog.description,
@@ -174,6 +200,7 @@ function makeBlogDocsBuilders(ctx) {
   }
 
   function buildDocs(sitemap) {
+    const enSeo = (I18N.en && I18N.en.seo) || {};
     const docsRoot = path.join(CONTENT, 'docs');
     const allDocs = [];
     const groups = {};
@@ -264,6 +291,7 @@ function makeBlogDocsBuilders(ctx) {
         title: doc.title,
         meta_title: metaTitle,
         description: metaDescription,
+        keywords: String(enSeo.docs_keywords || buildKeywords(doc.title, [doc.group, 'documentation', 'technical reference', 'developer guide', 'lotusia docs'])),
         og_image: '/assets/images/logo.png',
         sidebar: buildSidebar(doc.path),
         body: doc.body,

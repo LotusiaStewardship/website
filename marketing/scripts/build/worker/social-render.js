@@ -1,5 +1,13 @@
 async function renderActivityPage(url, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.social_activity_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'social', 'Social'),
+    workerText(safeLang, 'activity', 'Activity'),
+    workerText(safeLang, 'votes', 'Votes'),
+    workerText(safeLang, 'profile', 'Profile'),
+    workerText(safeLang, 'ranking', 'Ranking')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const params = parsePageAndSize(url);
   const payload = await fetchSocialJson('/api/social/activity', { page: params.page, pageSize: params.pageSize });
@@ -36,7 +44,7 @@ async function renderActivityPage(url, lang) {
   const body = legacyExplorerLayout('latest', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia social activity, votes, profile sentiment, on-chain social',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -44,6 +52,14 @@ async function renderActivityPage(url, lang) {
 
 async function renderTrendingPage(lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.social_trending_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'social', 'Social'),
+    workerText(safeLang, 'trending', 'Trending'),
+    workerText(safeLang, 'top_ranked_profiles', 'Top Ranked Profiles'),
+    workerText(safeLang, 'lowest_ranked_profiles', 'Lowest Ranked Profiles'),
+    workerText(safeLang, 'top_ranked_posts', 'Top Ranked Posts')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const rankValue = function(entity) {
     const raw = entity && (entity.ranking ?? entity.rate ?? entity.score ?? 0);
@@ -149,7 +165,7 @@ async function renderTrendingPage(lang) {
   const body = legacyExplorerLayout('trending', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia trending, social ranking, top profiles, top posts, lowest ranked',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -157,6 +173,13 @@ async function renderTrendingPage(lang) {
 
 async function renderProfilesPage(url, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.social_profiles_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'social', 'Social'),
+    workerText(safeLang, 'profiles', 'Profiles'),
+    workerText(safeLang, 'ranking', 'Ranking'),
+    workerText(safeLang, 'vote_ratio', 'Vote Ratio')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const params = parsePageAndSize(url);
   const payload = await fetchSocialJson('/api/social/profiles', { page: params.page, pageSize: params.pageSize });
@@ -198,7 +221,7 @@ async function renderProfilesPage(url, lang) {
   const body = legacyExplorerLayout('profiles', bodyInner, { lang: safeLang });
   return pageShell(canonical, title, description, body, {
     breadcrumbs,
-    keywords: 'lotusia social profiles, reputation ranking, vote ratio',
+    keywords,
     jsonLd,
     lang: safeLang
   });
@@ -206,6 +229,15 @@ async function renderProfilesPage(url, lang) {
 
 async function renderProfilePage(url, platform, profileId, lang) {
   const safeLang = WORKER_LANGS.includes(lang) ? lang : 'en';
+  const keywords = workerI18nValue(safeLang, 'seo.social_profiles_keywords', [
+    'Lotusia',
+    workerText(safeLang, 'social', 'Social'),
+    platform,
+    profileId,
+    workerText(safeLang, 'ranking', 'Ranking'),
+    workerText(safeLang, 'votes', 'Votes'),
+    workerText(safeLang, 'posts', 'Posts')
+  ].join(', '));
   const localize = function(path) { return withWorkerLangPrefix(safeLang, path); };
   const rankToneClass = function(value) {
     const n = Number(value || 0);
@@ -304,7 +336,7 @@ async function renderProfilePage(url, platform, profileId, lang) {
   const body = legacyExplorerLayout('profiles', bodyInner, { lang: safeLang });
   return pageShell(canonicalPath, profileTitle, description, body, {
     breadcrumbs,
-    keywords: 'lotusia social, ' + platform + ', ' + profileId + ', reputation, ranking, votes',
+    keywords,
     ogImage: avatarSrc,
     jsonLd: jsonLd,
     lang: safeLang

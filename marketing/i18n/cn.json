@@ -29,6 +29,22 @@
     "learn_more": "了解更多",
     "technical_docs": "技术文档"
   },
+  "seo": {
+    "home_keywords": "lotusia, lotusia 区块链, xpi, stewardship, 社区, 治理",
+    "ecosystem_keywords": "lotusia 生态系统, stewardship, 国库, 公民参与, 治理, 公共产品",
+    "tools_keywords": "lotusia 工具, 公共产品, 钱包, sdk, 矿工, 开源",
+    "founders_keywords": "lotusia 创始人, 区块链领导团队, stewardship 团队, 伦理化工作量证明",
+    "roadmap_keywords": "lotusia 路线图, 协议里程碑, 生态目标, 区块链升级",
+    "faq_keywords": "lotusia 常见问题, lotus 货币, 治理, 钱包, 区块链帮助",
+    "blog_keywords": "lotusia 博客, 生态更新, 协议发布, 区块链新闻",
+    "beta_services_keywords": "lotusia 测试版服务, 测试工具, 生态测试产品",
+    "docs_keywords": "lotusia 文档, 技术文档, 区块链规范, 开发者指南",
+    "explorer_overview_keywords": "lotusia 浏览器, 网络概览, 算力, 难度, 节点, 内存池",
+    "explorer_blocks_keywords": "lotusia 区块, 区块高度, 区块时间戳, 交易数量, 区块大小",
+    "social_activity_keywords": "lotusia 社交活动, 投票, 情绪, 声誉事件",
+    "social_trending_keywords": "lotusia 热门趋势, 顶级资料, 顶级帖子, 最低排名",
+    "social_profiles_keywords": "lotusia 社交资料, 声誉排名, 投票比例, 排行榜"
+  },
   "pages": {
     "index": {
       "title": "欢迎来到 Lotusia",

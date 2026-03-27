@@ -29,6 +29,22 @@
     "learn_more": "Saber más",
     "technical_docs": "Documentación técnica"
   },
+  "seo": {
+    "home_keywords": "lotusia, blockchain lotusia, xpi, stewardship, comunidad, gobernanza",
+    "ecosystem_keywords": "ecosistema lotusia, stewardship, tesoreria, ciudadania, gobernanza, bienes publicos",
+    "tools_keywords": "herramientas lotusia, bienes publicos, cartera, sdk, minero, codigo abierto",
+    "founders_keywords": "fundadores de lotusia, liderazgo blockchain, equipo stewardship, prueba de trabajo etica",
+    "roadmap_keywords": "hoja de ruta lotusia, hitos del protocolo, objetivos del ecosistema, actualizaciones blockchain",
+    "faq_keywords": "faq lotusia, moneda lotus, gobernanza, cartera, ayuda blockchain",
+    "blog_keywords": "blog lotusia, novedades del ecosistema, lanzamientos del protocolo, noticias blockchain",
+    "beta_services_keywords": "servicios beta lotusia, herramientas de prueba, productos beta del ecosistema",
+    "docs_keywords": "documentacion lotusia, documentacion tecnica, especificaciones blockchain, guias para desarrolladores",
+    "explorer_overview_keywords": "explorador lotusia, resumen de red, hashrate, dificultad, pares, mempool",
+    "explorer_blocks_keywords": "bloques lotusia, altura blockchain, marca de tiempo de bloque, cantidad de transacciones, tamano de bloque",
+    "social_activity_keywords": "actividad social lotusia, votos, sentimiento, eventos de reputacion",
+    "social_trending_keywords": "tendencias lotusia, perfiles destacados, publicaciones destacadas, ranking mas bajo",
+    "social_profiles_keywords": "perfiles sociales lotusia, ranking de reputacion, proporcion de votos, clasificacion"
+  },
   "pages": {
     "index": {
       "title": "Bienvenido a Lotusia",

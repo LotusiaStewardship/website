@@ -29,6 +29,22 @@
     "learn_more": "Подробнее",
     "technical_docs": "Техническая документация"
   },
+  "seo": {
+    "home_keywords": "lotusia, блокчейн lotusia, xpi, stewardship, сообщество, управление",
+    "ecosystem_keywords": "экосистема lotusia, stewardship, казначейство, гражданское сообщество, управление, общественные блага",
+    "tools_keywords": "инструменты lotusia, общественные блага, кошелек, sdk, майнер, open source",
+    "founders_keywords": "основатели lotusia, блокчейн руководство, команда stewardship, этичный proof of work",
+    "roadmap_keywords": "дорожная карта lotusia, этапы протокола, цели экосистемы, обновления блокчейна",
+    "faq_keywords": "faq lotusia, валюта lotus, управление, кошелек, помощь по блокчейну",
+    "blog_keywords": "блог lotusia, обновления экосистемы, релизы протокола, новости блокчейна",
+    "beta_services_keywords": "бета сервисы lotusia, тестовые инструменты, бета продукты экосистемы",
+    "docs_keywords": "документация lotusia, техническая документация, спецификации блокчейна, руководства разработчика",
+    "explorer_overview_keywords": "обозреватель lotusia, обзор сети, хешрейт, сложность, пиры, mempool",
+    "explorer_blocks_keywords": "блоки lotusia, высота блокчейна, метка времени блока, число транзакций, размер блока",
+    "social_activity_keywords": "социальная активность lotusia, голоса, тональность, события репутации",
+    "social_trending_keywords": "тренды lotusia, лучшие профили, лучшие посты, самые низкие рейтинги",
+    "social_profiles_keywords": "социальные профили lotusia, рейтинг репутации, соотношение голосов, таблица лидеров"
+  },
   "pages": {
     "index": {
       "title": "Добро пожаловать в Lotusia",

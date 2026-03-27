@@ -29,6 +29,22 @@
     "learn_more": "Learn More",
     "technical_docs": "Technical Docs"
   },
+  "seo": {
+    "home_keywords": "lotusia, lotusia blockchain, xpi, stewardship, community, governance",
+    "ecosystem_keywords": "lotusia ecosystem, stewardship, treasury, citizenry, governance, public goods",
+    "tools_keywords": "lotusia tools, public goods, wallet, sdk, miner, open source blockchain tools",
+    "founders_keywords": "lotusia founders, blockchain leadership, stewardship team, ethical proof of work",
+    "roadmap_keywords": "lotusia roadmap, protocol milestones, ecosystem goals, blockchain upgrades",
+    "faq_keywords": "lotusia faq, lotus currency, governance, wallet, blockchain help",
+    "blog_keywords": "lotusia blog, ecosystem updates, protocol releases, blockchain news",
+    "beta_services_keywords": "lotusia beta services, testing tools, ecosystem beta products",
+    "docs_keywords": "lotusia documentation, technical docs, blockchain specifications, developer guides",
+    "explorer_overview_keywords": "lotusia explorer, network overview, hashrate, difficulty, peers, mempool",
+    "explorer_blocks_keywords": "lotusia blocks, blockchain height, block timestamp, transaction count, block size",
+    "social_activity_keywords": "lotusia social activity, votes, sentiment, reputation events",
+    "social_trending_keywords": "lotusia trending, top profiles, top posts, lowest ranked",
+    "social_profiles_keywords": "lotusia social profiles, reputation ranking, vote ratio, leaderboard"
+  },
   "pages": {
     "index": {
       "title": "Welcome to Lotusia",
@@ -37,26 +53,26 @@
       "hero_title": "Restoring Humanity to Society"
     },
     "ecosystem": {
-      "title": "Ecosystem",
+      "title": "Lotusia Ecosystem Overview",
       "og_title": "Ecosystem - Lotusia",
       "description": "Three pillars working together - Stewardship guides, Treasury secures, Citizenry creates value",
       "hero_title": "Three Pillars, One Vision"
     },
     "tools": {
-      "title": "Public Goods",
+      "title": "Lotusia Public Goods and Tools",
       "og_title": "Public Goods - Lotusia",
       "description": "Open-source software and infrastructure built for the Lotusia ecosystem",
       "hero_title": "Public Goods"
     },
     "founders": {
-      "title": "Founders",
+      "title": "Lotusia Founders and Leadership",
       "og_title": "Founders - Lotusia",
       "description": "Meet the founders and core leadership of Lotusia, and learn how they are building an ethical, resilient blockchain ecosystem."
     },
     "roadmap": {
-      "title": "Roadmap",
+      "title": "Lotusia Roadmap and Milestones",
       "og_title": "Roadmap | Lotusia",
-      "description": "Outlined below are the Stewardship's goals and milestones for future epochs.",
+      "description": "Explore the Lotusia roadmap, including stewardship priorities, protocol milestones, and ecosystem delivery goals for upcoming epochs.",
       "hero_title": "Roadmap"
     },
     "faq": {
@@ -71,7 +87,7 @@
       "description": "Get the latest updates from the Lotusia ecosystem."
     },
     "beta_services": {
-      "title": "Beta Services",
+      "title": "Lotusia Beta Services and Tools",
       "og_title": "Beta Services - Lotusia",
       "description": "Access currently beta-defined services in the Lotusia ecosystem and explore tools that are actively being tested and improved.",
       "hero_title": "Beta Services",

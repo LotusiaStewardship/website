@@ -134,6 +134,30 @@ function makeLandingBuilders(ctx) {
     return map[label] || label;
   }
 
+  function buildKeywords(base, extras) {
+    const items = [];
+    const pushMany = function(values) {
+      for (const value of values) {
+        const token = String(value || '')
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}+ ]+/gu, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (!token || items.includes(token)) continue;
+        items.push(token);
+      }
+    };
+    pushMany(['lotusia', 'lotusia blockchain', 'xpi', 'lotusia stewardship']);
+    pushMany(String(base || '').split(/[\s,|/-]+/));
+    pushMany(extras || []);
+    return items.slice(0, 18).join(', ');
+  }
+
+  function seoKeywords(i18n, key, fallback) {
+    const value = i18n && i18n.seo && i18n.seo[key];
+    return String(value || fallback || '');
+  }
+
   function renderLinks(links, lang, opts = {}) {
     if (!links?.length) return '';
     const i18n = I18N[lang];
@@ -240,6 +264,7 @@ function makeLandingBuilders(ctx) {
 
     const pageTitle = pi.og_title || data.ogTitle || data.title || '';
     const title = pi.title || pageTitle;
+    const seoKey = pageType === 'index' ? 'home_keywords' : `${pageType}_keywords`;
     const heroTitle = pi.hero_title || data.hero?.title || data.title || '';
     const heroDesc = pi.hero_description || pi.description || data.hero?.description || data.description || '';
     const description = pi.description || data.description || '';
@@ -276,6 +301,12 @@ function makeLandingBuilders(ctx) {
       title,
       og_title: pageTitle,
       description,
+      keywords: seoKeywords(i18n, seoKey, buildKeywords(`${title} ${description}`, [
+        i18n.nav.ecosystem,
+        i18n.nav.tools,
+        i18n.nav.roadmap,
+        i18n.nav.faq
+      ])),
       og_image: ogImg,
       hero_block: heroBlock,
       sections: renderSections(sections, pageType, lang),
@@ -331,6 +362,11 @@ function makeLandingBuilders(ctx) {
       title,
       og_title: pi.og_title || data.ogTitle || 'Roadmap',
       description,
+      keywords: seoKeywords(i18n, 'roadmap_keywords', buildKeywords(`${title} ${description}`, [
+        i18n.nav.roadmap,
+        i18n.pages.ecosystem && i18n.pages.ecosystem.title,
+        i18n.pages.tools && i18n.pages.tools.title
+      ])),
       og_image: '/assets/images/roadmap_0.jpg',
       hero_block: `<div class="py-8 sm:py-16 lg:py-24"><div class="flex flex-col gap-8 sm:gap-y-16"><div class="flex flex-col items-center text-center"><h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">${heroTitle}</h1><p class="mt-4 text-lg text-gray-500 dark:text-gray-400">${heroDesc}</p></div></div></div>`,
       sections: sectionsHtml,
@@ -389,6 +425,11 @@ function makeLandingBuilders(ctx) {
       title,
       og_title: pi.og_title || data.ogTitle || 'FAQ',
       description,
+      keywords: seoKeywords(i18n, 'faq_keywords', buildKeywords(`${title} ${description}`, [
+        i18n.nav.faq,
+        i18n.pages.docs && i18n.pages.docs.title,
+        i18n.pages.ecosystem && i18n.pages.ecosystem.title
+      ])),
       og_image: '/assets/images/turtles_hero.jpeg',
       hero_block: `<div class="py-8 sm:py-16 lg:py-24"><div class="flex flex-col gap-8 sm:gap-y-16"><div class="flex flex-col items-center text-center"><h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">${heroTitle}</h1><p class="mt-4 text-lg text-gray-500 dark:text-gray-400">${heroDesc}</p><div class="mt-8 flex flex-wrap gap-x-3 gap-y-1.5 justify-center">${renderLinks(data.links, lang)}</div></div></div></div>`,
       sections: sectionsHtml,
