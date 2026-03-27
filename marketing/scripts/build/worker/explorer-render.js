@@ -10,13 +10,14 @@ async function renderExplorerBlocksPage(url, lang) {
     const info = block.blockInfo || {};
     const hash = info.hash || block.hash || '';
     const height = info.height || block.height || 0;
-    const burn = info.numBurnedSats || block.sumBurnedSats || 0;
-    const txCount = info.numTxs || (block.txs ? block.txs.length : 0);
-    const size = info.blockSize || block.size || 0;
+    const burn = num(info.numBurnedSats ?? block.sumBurnedSats ?? 0);
+    const txCount = num(info.numTxs ?? block.numTxs ?? (block.txs ? block.txs.length : 0));
+    const size = num(info.blockSize ?? block.blockSize ?? block.size ?? 0);
+    const timestamp = info.timestamp ?? block.timestamp ?? info.timeFirstSeen ?? block.timeFirstSeen ?? 0;
     return '<tr>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatNumber(height)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm"><a class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300" href="' + localize('/explorer/block/' + encodeURIComponent(hash)) + '">' + esc(shortHash(hash)) + '</a></td>' +
-      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatUtc(info.timestamp)) + '</td>' +
+      '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatUtc(timestamp)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatXpiFromSats(burn)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatNumber(txCount)) + '</td>' +
       '<td class="whitespace-nowrap px-4 py-4 text-sm leading-6 tabular-nums text-gray-500 dark:text-gray-400">' + esc(formatBytes(size)) + '</td>' +
