@@ -1165,48 +1165,113 @@ async function fetchLegacyJson(pathname, query) {
 }
 
 function navHtml(pathname) {
-  const isSocial = pathname === '/social' || pathname.startsWith('/social/');
+  const topNavClass = function(active) {
+    return active
+      ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
+      : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  };
+  const moreButtonClass = function(active) {
+    return active
+      ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary'
+      : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  };
+  const dropdownItemClass = function(active) {
+    return active
+      ? 'block px-3 py-2 text-sm text-primary font-semibold bg-gray-50 dark:bg-gray-800 rounded-lg'
+      : 'block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+  };
+  const mobileItemClass = function(active) {
+    return active
+      ? 'block px-3 py-2 text-sm font-semibold text-primary bg-gray-50 dark:bg-gray-800 rounded-lg'
+      : 'block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+  };
+  const isEcosystem = pathname === '/ecosystem';
+  const isTools = pathname === '/tools';
+  const isRoadmap = pathname === '/roadmap';
+  const isFaq = pathname === '/faq';
+  const isDocs = pathname === '/docs' || pathname.startsWith('/docs/');
+  const isFounders = pathname === '/founders';
+  const isBetaServices = pathname === '/beta-services';
+  const isBlog = pathname === '/blog' || pathname.startsWith('/blog/');
   const isExplorer = pathname === '/explorer' || pathname.startsWith('/explorer/');
-  const socialCls = isSocial
-    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
-    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
-  const explorerCls = isExplorer
-    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
-    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  const isSocial = pathname === '/social' || pathname.startsWith('/social/');
+  const isMore = isFounders || isBetaServices || isBlog || isExplorer || isSocial;
   return '<header class="bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50">' +
     '<nav class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">' +
     '<div class="lg:flex-1 flex items-center gap-1.5"><a href="/" class="flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"><img src="/assets/images/logo.png" alt="Lotusia" class="h-8 w-auto"></a></div>' +
     '<div class="items-center gap-x-8 hidden lg:flex">' +
-    '<a href="/ecosystem" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Ecosystem</a>' +
-    '<a href="/tools" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Tools</a>' +
-    '<a href="/roadmap" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Roadmap</a>' +
-    '<a href="/faq" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">FAQ</a>' +
-    '<a href="/docs" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Docs</a>' +
-    '<a href="/explorer/blocks" class="' + explorerCls + '">Explorer</a>' +
-    '<a href="/social/activity" class="' + socialCls + '">Social</a>' +
-    '</div></nav></header>';
+    '<a href="/ecosystem" class="' + topNavClass(isEcosystem) + '">Ecosystem</a>' +
+    '<a href="/tools" class="' + topNavClass(isTools) + '">Tools</a>' +
+    '<a href="/roadmap" class="' + topNavClass(isRoadmap) + '">Roadmap</a>' +
+    '<a href="/faq" class="' + topNavClass(isFaq) + '">FAQ</a>' +
+    '<a href="/docs" class="' + topNavClass(isDocs) + '">Docs</a>' +
+    '<div class="relative" data-dropdown>' +
+    '<button type="button" class="' + moreButtonClass(isMore) + '" data-dropdown-trigger aria-expanded="false">More <span class="text-xs">▾</span></button>' +
+    '<div class="hidden absolute top-full right-0 mt-1 w-52 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>' +
+    '<a href="/founders" class="' + dropdownItemClass(isFounders) + '">Founders</a>' +
+    '<a href="/beta-services" class="' + dropdownItemClass(isBetaServices) + '">Beta services</a>' +
+    '<a href="/blog" class="' + dropdownItemClass(isBlog) + '">Blog</a>' +
+    '<a href="/explorer/blocks" class="' + dropdownItemClass(isExplorer) + '">Explorer</a>' +
+    '<a href="/social/activity" class="' + dropdownItemClass(isSocial) + '">Social</a>' +
+    '</div></div></div>' +
+    '<div class="flex items-center justify-end lg:flex-1 gap-1.5">' +
+    '<div class="relative hidden lg:block" data-dropdown>' +
+    '<button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary whitespace-nowrap" data-dropdown-trigger aria-expanded="false">Language: 🇬🇧 EN <span class="text-xs">▾</span></button>' +
+    '<div class="hidden absolute top-full right-0 mt-1 w-44 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>' +
+    '<a href="/" class="block px-3 py-2 text-sm text-primary font-semibold rounded-lg whitespace-nowrap">🇬🇧 English (EN)</a>' +
+    '</div></div>' +
+    '<a href="https://t.me/givelotus" target="_blank" class="inline-flex items-center justify-center rounded-full p-1.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800" title="Telegram">' +
+    '<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' +
+    '</a>' +
+    '<a href="https://github.com/LotusiaStewardship" target="_blank" class="inline-flex items-center justify-center rounded-full p-1.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800" title="GitHub">' +
+    '<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>' +
+    '</a>' +
+    '<button onclick="var d=document.documentElement;d.classList.toggle(\\'dark\\');localStorage.setItem(\\'theme\\',d.classList.contains(\\'dark\\')?\\'dark\\':\\'light\\')" class="relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200 dark:bg-gray-700 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" title="Toggle dark mode">' +
+    '<span class="pointer-events-none relative inline-block rounded-full bg-white dark:bg-gray-900 shadow h-3 w-3 transform transition-transform translate-x-0 dark:translate-x-3"></span>' +
+    '</button>' +
+    '</div>' +
+    '<button class="lg:hidden inline-flex items-center justify-center rounded-full p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800" onclick="document.getElementById(\\'mobile-nav\\').classList.toggle(\\'hidden\\')">' +
+    '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>' +
+    '</button></nav>' +
+    '<div id="mobile-nav" class="hidden lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 space-y-1">' +
+    '<a href="/ecosystem" class="' + mobileItemClass(isEcosystem) + '">Ecosystem</a>' +
+    '<a href="/tools" class="' + mobileItemClass(isTools) + '">Tools</a>' +
+    '<a href="/roadmap" class="' + mobileItemClass(isRoadmap) + '">Roadmap</a>' +
+    '<a href="/faq" class="' + mobileItemClass(isFaq) + '">FAQ</a>' +
+    '<a href="/docs" class="' + mobileItemClass(isDocs) + '">Docs</a>' +
+    '<a href="/founders" class="' + mobileItemClass(isFounders) + '">Founders</a>' +
+    '<a href="/beta-services" class="' + mobileItemClass(isBetaServices) + '">Beta services</a>' +
+    '<a href="/blog" class="' + mobileItemClass(isBlog) + '">Blog</a>' +
+    '<a href="/explorer/blocks" class="' + mobileItemClass(isExplorer) + '">Explorer</a>' +
+    '<a href="/social/activity" class="' + mobileItemClass(isSocial) + '">Social</a>' +
+    '</div></header>' +
+    '<script>(function(){const d=Array.from(document.querySelectorAll(\\'[data-dropdown]\\'));if(!d.length)return;const c=(e)=>{const m=e.querySelector(\\'[data-dropdown-menu]\\');const t=e.querySelector(\\'[data-dropdown-trigger]\\');if(!m||!t)return;m.classList.add(\\'hidden\\');t.setAttribute(\\'aria-expanded\\',\\'false\\');};const o=(e)=>{const m=e.querySelector(\\'[data-dropdown-menu]\\');const t=e.querySelector(\\'[data-dropdown-trigger]\\');if(!m||!t)return;m.classList.remove(\\'hidden\\');t.setAttribute(\\'aria-expanded\\',\\'true\\');};d.forEach((e)=>{const t=e.querySelector(\\'[data-dropdown-trigger]\\');let x=null;if(!t)return;const s=()=>{clearTimeout(x);x=setTimeout(()=>c(e),140);};const k=()=>{clearTimeout(x);};e.addEventListener(\\'mouseenter\\',()=>{k();o(e);});e.addEventListener(\\'mouseleave\\',s);e.addEventListener(\\'focusin\\',()=>{k();o(e);});e.addEventListener(\\'focusout\\',()=>{if(!e.contains(document.activeElement))s();});t.addEventListener(\\'click\\',(a)=>{a.preventDefault();k();const p=t.getAttribute(\\'aria-expanded\\')===\\'true\\';d.forEach((y)=>{if(y!==e)c(y);});if(p)c(e);else o(e);});});document.addEventListener(\\'click\\',(e)=>{d.forEach((x)=>{if(!x.contains(e.target))c(x);});});})();</script>';
 }
 
 function pageShell(pathname, title, description, bodyHtml) {
   return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
     '<title>' + esc(title) + ' | Lotusia</title>' +
     '<meta name="description" content="' + esc(description) + '">' +
-    '<meta name="robots" content="index, follow">' +
+    '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">' +
+    '<meta name="author" content="Lotusia Stewardship">' +
     '<meta property="og:title" content="' + esc(title) + '">' +
     '<meta property="og:description" content="' + esc(description) + '">' +
     '<meta property="og:type" content="website">' +
     '<meta property="og:url" content="https://lotusia.org' + esc(pathname) + '">' +
+    '<meta property="og:site_name" content="Lotusia">' +
+    '<meta name="twitter:card" content="summary_large_image">' +
+    '<meta name="twitter:title" content="' + esc(title) + '">' +
+    '<meta name="twitter:description" content="' + esc(description) + '">' +
     '<link rel="canonical" href="https://lotusia.org' + esc(pathname) + '">' +
     '<link rel="icon" href="/assets/favicon.ico">' +
     '<link rel="stylesheet" href="/assets/css/main.css"></head>' +
     '<body class="bg-background text-foreground min-h-screen">' +
     navHtml(pathname) +
-    '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">' +
+    '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"><section class="py-10">' +
     bodyHtml +
-    '</div></main>' +
-    '<footer class="relative"><div class="border-t border-gray-200 dark:border-gray-800"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4">' +
-    '<p class="text-gray-500 dark:text-gray-400 text-sm text-center">Copyright &copy; Lotusia 2021-2026. All rights reserved.</p>' +
-    '</div></div></footer>' +
+    '</section></div></main>' +
+    '<footer class="relative"><div class="border-t border-gray-200 dark:border-gray-800"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3"><div class="lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3"></div><div class="mt-3 lg:mt-0 lg:order-2 flex items-center justify-center"></div><div class="flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1"><p class="text-gray-500 dark:text-gray-400 text-sm">Copyright &copy; Lotusia 2021-2026. All rights reserved.</p></div></div></div></footer>' +
+    '<script>(function(){var t=localStorage.getItem(\\'theme\\');if(t===\\'dark\\'||(t===null&&window.matchMedia(\\'(prefers-color-scheme:dark)\\').matches)){document.documentElement.classList.add(\\'dark\\');}})();</script>' +
     '</body></html>';
 }
 
