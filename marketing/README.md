@@ -48,6 +48,20 @@ export CLOUDFLARE_API_TOKEN="cfat_xxx"
 ./scripts/deploy_matthew.sh
 ```
 
+Optional apex/www cutover via Cloudflare API (destructive):
+
+```bash
+cd marketing
+export CLOUDFLARE_API_TOKEN="cfat_xxx"
+CUTOVER_APEX=1 CONFIRM_CUTOVER=YES ./scripts/deploy_matthew.sh
+```
+
+Preview only (no API writes):
+
+```bash
+DRY_RUN=1 CUTOVER_APEX=1 CONFIRM_CUTOVER=YES ./scripts/deploy_matthew.sh
+```
+
 ## GitHub Actions CI/CD
 
 Workflow: `.github/workflows/marketing-pages.yml`
