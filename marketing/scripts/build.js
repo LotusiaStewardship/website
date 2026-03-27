@@ -1098,7 +1098,6 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
 
 // _redirects
 fs.writeFileSync(path.join(DIST, '_redirects'), [
-  '/explorer /explorer/blocks 301'
 ].join('\n') + '\n');
 
 // _worker.js (Cloudflare Pages advanced mode) for host-preserving proxy routes
@@ -1294,12 +1293,46 @@ function renderTable(headers, rows, emptyMessage) {
   return '<div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"><table class="w-full text-sm"><thead class="bg-gray-50 dark:bg-gray-950/60"><tr>' + head + '</tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-800">' + body + '</tbody></table></div>';
 }
 
+function sideNavSection(title, items) {
+  const links = items.map(i => {
+    const cls = i.active
+      ? 'block rounded-lg px-3 py-2 text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+      : 'block rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800';
+    return '<a href="' + i.href + '" class="' + cls + '">' + esc(i.label) + '</a>';
+  }).join('');
+  return '<div class="mb-6"><h3 class="px-3 mb-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 font-semibold">' + esc(title) + '</h3><div class="space-y-1">' + links + '</div></div>';
+}
+
+function legacyExplorerLayout(activeKey, contentHtml) {
+  const network = sideNavSection('Network', [
+    { label: 'Overview', href: '/explorer', active: activeKey === 'overview' },
+    { label: 'Blocks', href: '/explorer/blocks', active: activeKey === 'blocks' }
+  ]);
+  const social = sideNavSection('Social Media', [
+    { label: 'Latest', href: '/social/activity', active: activeKey === 'latest' },
+    { label: 'Trending', href: '/social/trending', active: activeKey === 'trending' },
+    { label: 'Profiles', href: '/social/profiles', active: activeKey === 'profiles' }
+  ]);
+  return '<div class="grid lg:grid-cols-[220px_1fr] gap-6 lg:gap-8">' +
+    '<aside class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 h-fit">' + network + social + '</aside>' +
+    '<section>' + contentHtml + '</section>' +
+    '</div>';
+}
+
 function parsePageAndSize(url) {
   const pageRaw = Number(url.searchParams.get('page') || 1);
   const pageSizeRaw = Number(url.searchParams.get('pageSize') || 10);
   const page = Number.isFinite(pageRaw) && pageRaw > 0 ? Math.floor(pageRaw) : 1;
   const pageSize = Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? Math.floor(pageSizeRaw) : 10;
   return { page, pageSize };
+}
+
+function compactStatCard(label, value, hint) {
+  return '<div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">' +
+    '<div class="text-xs text-gray-500 dark:text-gray-400 mb-1">' + esc(label) + '</div>' +
+    '<div class="text-lg font-semibold text-gray-900 dark:text-white">' + esc(value) + '</div>' +
+    (hint ? '<div class="text-xs text-gray-500 dark:text-gray-400 mt-1">' + esc(hint) + '</div>' : '') +
+    '</div>';
 }
 
 function formatUtc(value) {
@@ -1420,11 +1453,56 @@ async function renderExplorerBlocksPage(url) {
       '</tr>';
   });
   const canonical = '/explorer/blocks?page=' + params.page + '&pageSize=' + params.pageSize;
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Blocks</h1>' +
-    '<p class="text-gray-600 dark:text-gray-300 mb-6">Latest blocks in the blockchain. Data is refreshed from legacy explorer APIs.</p>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Blocks</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Latest blocks in the blockchain. This information is refreshed every 5 seconds.</p>' +
     renderTable(['Height', 'Hash', 'Timestamp', 'Burned', 'Transactions', 'Size'], rows, 'No blocks found.') +
     paginationHtml('/explorer/blocks', params.page, params.pageSize, numPages);
+  const body = legacyExplorerLayout('blocks', bodyInner);
   return pageShell(canonical, 'Blocks', 'Latest blocks in the Lotusia blockchain.', body);
+}
+
+async function renderExplorerOverviewPage() {
+  const [overview, chainInfo, mempool] = await Promise.all([
+    fetchLegacyJson('/api/explorer/overview'),
+    fetchLegacyJson('/api/explorer/chain-info').catch(() => ({})),
+    fetchLegacyJson('/api/explorer/mempool').catch(() => [])
+  ]);
+  const mining = overview.mininginfo || {};
+  const peers = overview.peerinfo || [];
+  const peerRows = peers.slice(0, 15).map(p => {
+    const country = (p.geoip && p.geoip.countryCode) || '-';
+    const addr = p.addr || '-';
+    const version = p.subver || '-';
+    const blocks = p.synced_headers ?? p.synced_blocks ?? '-';
+    return '<tr class="border-b border-gray-200 dark:border-gray-800">' +
+      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(country) + '</td>' +
+      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(addr) + '</td>' +
+      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(version) + '</td>' +
+      '<td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">' + esc(formatNumber(blocks)) + '</td>' +
+      '</tr>';
+  });
+  const tip = num(chainInfo.tipHeight || chainInfo.blocks || 0);
+  const pending = Array.isArray(mempool) ? mempool.length : 0;
+  const hashrate = num(mining.networkhashps || 0);
+  const hashrateText = hashrate > 0 ? (hashrate / 1e9).toFixed(1) + ' GH/s' : '-';
+  const diffText = num(mining.difficulty || 0) > 0 ? num(mining.difficulty).toFixed(1) : '-';
+  const blockTime = num(mining.target || 0) > 0 ? (num(mining.target) / 60).toFixed(1) + ' minutes' : '-';
+  const cards = '<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">' +
+    compactStatCard('Connections', formatNumber(peers.length), 'Number of Lotus nodes connected to the Explorer') +
+    compactStatCard('Blocks', formatNumber(tip), 'Total number of blocks in the blockchain') +
+    compactStatCard('Pending Transactions', formatNumber(pending), 'Number of transactions waiting to be confirmed') +
+    compactStatCard('Hashrate', hashrateText, 'Approximately how many hashes are being computed per second') +
+    compactStatCard('Difficulty', diffText, 'Difficulty of the most recent block') +
+    compactStatCard('Avg. Block Time', blockTime, 'Calculated from latest chain target') +
+    '</div>';
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Overview</h1>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-6">Up-to-date information about the Lotusia blockchain network. This information is refreshed every 5 seconds.</p>' +
+    cards +
+    '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Peer Info</h2>' +
+    '<p class="text-gray-600 dark:text-gray-300 mb-4">List of Lotus nodes connected to the Explorer.</p>' +
+    renderTable(['Country', 'Address', 'Version', 'Blocks'], peerRows, 'No peer data available.');
+  const body = legacyExplorerLayout('overview', bodyInner);
+  return pageShell('/explorer', 'Overview', 'Network overview for the Lotusia explorer.', body);
 }
 
 async function renderExplorerBlockDetailPage(url, hashOrHeight) {
@@ -1443,7 +1521,7 @@ async function renderExplorerBlockDetailPage(url, hashOrHeight) {
       '</tr>';
   });
   const canonical = '/explorer/block/' + encodeURIComponent(hashOrHeight);
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Block Details</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Block Details</h1>' +
     '<p class="text-sm text-gray-500 mb-6"><a class="text-primary hover:underline" href="/explorer/blocks">#' + esc(formatNumber(info.height || hashOrHeight)) + '</a> · ' + esc(shortHash(info.hash || hashOrHeight)) + '</p>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
     '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Timestamp</div><div class="text-lg font-semibold">' + esc(formatUtc(info.timestamp)) + '</div></div>' +
@@ -1455,6 +1533,7 @@ async function renderExplorerBlockDetailPage(url, hashOrHeight) {
     '</div>' +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transactions</h2>' +
     renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions in this block.');
+  const body = legacyExplorerLayout('blocks', bodyInner);
   return pageShell(canonical, 'Block ' + (info.hash || hashOrHeight), 'Detailed information about a Lotusia block.', body);
 }
 
@@ -1481,7 +1560,7 @@ async function renderExplorerTxDetailPage(url, txid) {
       '</tr>';
   });
   const canonical = '/explorer/tx/' + encodeURIComponent(txid);
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Transaction Details</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Transaction Details</h1>' +
     '<p class="text-sm text-gray-500 mb-6">' + esc(shortHash(payload.txid || txid)) + (payload.isCoinbase ? ' · Coinbase' : '') + '</p>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
     '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Time First Seen</div><div class="text-lg font-semibold">' + esc(formatUtc(payload.timeFirstSeen)) + '</div></div>' +
@@ -1498,6 +1577,7 @@ async function renderExplorerTxDetailPage(url, txid) {
     renderTable(['Input', 'Source', 'Amount'], inputsRows, 'No inputs.') +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">Outputs</h2>' +
     renderTable(['Output', 'Destination', 'Amount'], outputsRows, 'No outputs.');
+  const body = legacyExplorerLayout('blocks', bodyInner);
   return pageShell(canonical, 'Transaction ' + txid, 'Detailed information about a Lotusia transaction.', body);
 }
 
@@ -1521,7 +1601,7 @@ async function renderExplorerAddressDetailPage(url, address) {
       '</tr>';
   });
   const canonical = '/explorer/address/' + encodeURIComponent(address) + '?page=' + params.page + '&pageSize=' + params.pageSize;
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Address Details</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Address Details</h1>' +
     '<p class="text-sm text-gray-500 mb-6 break-all">' + esc(address) + '</p>' +
     '<div class="grid sm:grid-cols-2 gap-4 mb-8">' +
     '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Balance</div><div class="text-lg font-semibold">' + esc(formatXpiFromSats(balance)) + '</div></div>' +
@@ -1530,6 +1610,7 @@ async function renderExplorerAddressDetailPage(url, address) {
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Transaction History</h2>' +
     renderTable(['Transaction ID', 'First Seen', 'Burned', 'Inputs', 'Outputs', 'Size'], rows, 'No transactions for this address.') +
     paginationHtml('/explorer/address/' + encodeURIComponent(address), params.page, params.pageSize, numPages);
+  const body = legacyExplorerLayout('blocks', bodyInner);
   return pageShell(canonical, 'Address ' + address, 'Detailed information for a Lotusia address.', body);
 }
 
@@ -1559,10 +1640,11 @@ async function renderActivityPage(url) {
       '</tr>';
   });
   const canonical = '/social/activity?page=' + params.page + '&pageSize=' + params.pageSize;
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Latest Activity</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Latest Activity</h1>' +
     '<p class="text-gray-600 dark:text-gray-300 mb-6">Vote activity for all profiles across all platforms, refreshed from Nitro API data.</p>' +
     renderTable(['Transaction ID', 'First Seen', 'Profile', 'Vote', 'Post ID'], rows, 'No recent activity.') +
     paginationHtml('/social/activity', params.page, params.pageSize, payload.numPages);
+  const body = legacyExplorerLayout('latest', bodyInner);
   return pageShell(canonical, 'Latest Activity', 'Fresh social vote activity across profiles on Lotusia.', body);
 }
 
@@ -1605,7 +1687,7 @@ async function renderTrendingPage() {
     const ranking = p.ranking || p.rate || '0';
     return '<tr class="border-b border-gray-200 dark:border-gray-800"><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(pid + '/' + post) + '</td><td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc(formatXpiFromSats(ranking)) + '</td></tr>';
   });
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Trending</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Trending</h1>' +
     '<p class="text-gray-600 dark:text-gray-300 mb-6">Top and lowest ranked profiles and posts over today.</p>' +
     '<div class="grid md:grid-cols-2 gap-6">' +
     '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Profiles</h2>' + renderTable(['Profile', 'Ranking'], topRows, 'No profile trend data.') + '</section>' +
@@ -1613,6 +1695,7 @@ async function renderTrendingPage() {
     '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Top Ranked Posts</h2>' + renderTable(['Post', 'Ranking'], topPostRows, 'No post trend data.') + '</section>' +
     '<section><h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Lowest Ranked Posts</h2>' + renderTable(['Post', 'Ranking'], lowPostRows, 'No post trend data.') + '</section>' +
     '</div>';
+  const body = legacyExplorerLayout('trending', bodyInner);
   return pageShell('/social/trending', 'Trending Profiles', 'Top ranked social profiles on Lotusia.', body);
 }
 
@@ -1630,10 +1713,11 @@ async function renderProfilesPage(url) {
       '</tr>';
   });
   const canonical = '/social/profiles?page=' + params.page + '&pageSize=' + params.pageSize;
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Profiles</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Profiles</h1>' +
     '<p class="text-gray-600 dark:text-gray-300 mb-6">Browse profiles on Lotusia Social.</p>' +
     renderTable(['#', 'Profile', 'Ranking', 'Vote Ratio'], rows, 'No profiles found.') +
     paginationHtml('/social/profiles', params.page, params.pageSize, payload.numPages);
+  const body = legacyExplorerLayout('profiles', bodyInner);
   return pageShell(canonical, 'Social Profiles', 'Public social profile rankings on Lotusia.', body);
 }
 
@@ -1658,7 +1742,7 @@ async function renderProfilePage(url, platform, profileId) {
       '<td class="px-3 py-2 text-sm text-gray-700 dark:text-gray-200">' + esc((v.post && v.post.id) || '') + '</td>' +
       '</tr>');
   const profilePath = '/social/' + platform + '/' + profileId + '?page=' + params.page + '&pageSize=' + params.pageSize;
-  const body = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">' + esc(profileId) + '</h1>' +
+  const bodyInner = '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">' + esc(profileId) + '</h1>' +
     '<p class="text-gray-600 dark:text-gray-300 mb-6">Live profile data from Nitro API (' + esc(platform) + ').</p>' +
     '<div class="grid sm:grid-cols-3 gap-4 mb-8">' +
     '<div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4"><div class="text-xs text-gray-500">Ranking</div><div class="text-xl font-semibold">' + esc(formatXpiFromSats(profile.ranking)) + '</div></div>' +
@@ -1670,6 +1754,7 @@ async function renderProfilePage(url, platform, profileId) {
     paginationHtml('/social/' + esc(platform) + '/' + esc(profileId), params.page, params.pageSize, posts.numPages) +
     '<h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">Votes</h2>' +
     renderTable(['Transaction', 'Timestamp', 'Sentiment', 'Amount', 'Post ID'], votesRows, 'No votes yet.');
+  const body = legacyExplorerLayout('profiles', bodyInner);
   return pageShell(profilePath, profileId + ' on ' + platform, 'Social profile details for ' + profileId + ' on ' + platform + '.', body);
 }
 
@@ -1697,8 +1782,8 @@ export default {
       '/icon-512.png'
     ]);
 
-    if (path === '/explorer') {
-      return Response.redirect('https://lotusia.org/explorer/blocks' + (url.search || ''), 301);
+    if (path === '/explorer' || path === '/explorer/') {
+      return new Response(await renderExplorerOverviewPage(), { status: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
     }
     if (path === '/social') {
       return Response.redirect('https://lotusia.org/social/activity' + (url.search || ''), 301);
