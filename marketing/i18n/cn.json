@@ -798,6 +798,13 @@
       "og_title": "博客 - Lotusia",
       "description": "获取 Lotusia 生态系统的最新动态。"
     },
+    "beta_services": {
+      "title": "测试版服务",
+      "og_title": "测试版服务 - Lotusia",
+      "description": "访问 Lotusia 生态系统中当前定义为测试版的服务。",
+      "hero_title": "测试版服务",
+      "hero_description": "在一个页面中访问当前的测试版服务。"
+    },
     "docs": {
       "title": "文档",
       "og_title": "文档 - Lotusia",

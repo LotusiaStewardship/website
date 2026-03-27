@@ -1,0 +1,34 @@
+title: Beta Services
+description: Early access services for the Lotusia ecosystem.
+ogTitle: Beta Services - Lotusia
+navigation.icon: i-heroicons-beaker-solid
+to: /beta-services
+hero:
+  title: Beta Services
+  description: Access currently beta-defined Lotusia services from a single page.
+  links:
+    - label: Open Lotus Wallet (Beta)
+      to: https://app.lotusia.org
+      target: _blank
+      color: primary
+    - label: Social Activity (Beta)
+      to: https://app.lotusia.org/social/activity
+      target: _blank
+      color: primary
+sections:
+  - title: Lotus Wallet (Beta)
+    headline: App Services
+    description: The beta wallet application currently served on app.lotusia.org.
+    links:
+      - label: Open app.lotusia.org
+        to: https://app.lotusia.org
+        target: _blank
+        color: primary
+  - title: Social Activity (Beta)
+    headline: Social Services
+    description: Live social activity feed currently available from the app host.
+    links:
+      - label: Open /social/activity
+        to: https://app.lotusia.org/social/activity
+        target: _blank
+        color: primary

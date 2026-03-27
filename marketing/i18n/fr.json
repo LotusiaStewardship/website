@@ -448,6 +448,13 @@
       "og_title": "Blog - Lotusia",
       "description": "Les dernières actualités de l'écosystème Lotusia."
     },
+    "beta_services": {
+      "title": "Services bêta",
+      "og_title": "Services bêta - Lotusia",
+      "description": "Accédez aux services actuellement en phase bêta dans l'écosystème Lotusia.",
+      "hero_title": "Services bêta",
+      "hero_description": "Accédez aux services bêta actuels depuis une page unique."
+    },
     "docs": {
       "title": "Documentation",
       "og_title": "Documentation - Lotusia",

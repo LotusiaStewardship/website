@@ -69,6 +69,13 @@
       "og_title": "Blog - Lotusia",
       "description": "Get the latest updates from the Lotusia ecosystem."
     },
+    "beta_services": {
+      "title": "Beta Services",
+      "og_title": "Beta Services - Lotusia",
+      "description": "Access currently beta-defined services in the Lotusia ecosystem.",
+      "hero_title": "Beta Services",
+      "hero_description": "Access currently beta-defined services from a single page."
+    },
     "docs": {
       "title": "Docs",
       "og_title": "Documentation - Lotusia",

@@ -16,7 +16,7 @@ const SITE_URL = process.env.SITE_URL || 'https://lotusia.org';
 const LANGS    = ['en', 'fr', 'es', 'it', 'de', 'ru', 'cn'];
 
 // ── Localised routes: only these pages are duplicated per language ──────────
-const LOCALIZED_ROUTES = new Set(['/', '/ecosystem', '/tools', '/roadmap', '/faq', '/founders']);
+const LOCALIZED_ROUTES = new Set(['/', '/ecosystem', '/tools', '/roadmap', '/faq', '/founders', '/beta-services']);
 
 // ── Load every template once ────────────────────────────────────────────────
 const headerTmpl = fs.readFileSync(path.join(TEMPLATES, 'partials/header.html'), 'utf8');
@@ -354,6 +354,7 @@ function makePageMeta(lang, pagePath, alternates) {
   return {
     html_lang:     i.html_lang || lang,
     og_locale:     i.locale    || 'en_US',
+    site_url:      SITE_URL,
     canonical_url: abs(pagePath),
     hreflang_tags: hreflangTags(alternates),
     path:          pagePath,
@@ -1013,6 +1014,7 @@ for (const lang of LANGS) {
   buildLanding('ecosystem.yml', '/ecosystem','ecosystem', lang, sitemap);
   buildLanding('tools.yml',     '/tools',    'tools',    lang, sitemap);
   buildLanding('founders.yml',  '/founders', 'founders', lang, sitemap);
+  buildLanding('beta-services.yml', '/beta-services', 'beta_services', lang, sitemap);
   buildRoadmap(lang, sitemap);
   buildFaq(lang, sitemap);
 }

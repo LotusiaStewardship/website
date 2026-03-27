@@ -605,6 +605,13 @@
       "og_title": "Blog - Lotusia",
       "description": "Últimas novedades del ecosistema Lotusia."
     },
+    "beta_services": {
+      "title": "Servicios beta",
+      "og_title": "Servicios beta - Lotusia",
+      "description": "Accede a los servicios actualmente definidos como beta en el ecosistema Lotusia.",
+      "hero_title": "Servicios beta",
+      "hero_description": "Accede a los servicios beta actuales desde una sola página."
+    },
     "docs": {
       "title": "Documentación",
       "og_title": "Documentación - Lotusia",

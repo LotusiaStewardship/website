@@ -610,6 +610,13 @@
       "og_title": "Блог - Lotusia",
       "description": "Последние обновления экосистемы Lotusia."
     },
+    "beta_services": {
+      "title": "Бета-сервисы",
+      "og_title": "Бета-сервисы - Lotusia",
+      "description": "Доступ к сервисам экосистемы Lotusia, которые сейчас находятся в бета-режиме.",
+      "hero_title": "Бета-сервисы",
+      "hero_description": "Доступ к текущим бета-сервисам с одной страницы."
+    },
     "docs": {
       "title": "Документация",
       "og_title": "Документация - Lotusia",
