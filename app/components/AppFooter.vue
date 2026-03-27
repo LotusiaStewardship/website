@@ -101,7 +101,17 @@ function onSubmit() {
     </template>
 
     <template #right>
-
+      <div class="flex gap-4 text-sm text-gray-500 dark:text-gray-400">
+        <NuxtLink to="/founders" class="hover:text-gray-700 dark:hover:text-gray-200">
+          Founders
+        </NuxtLink>
+        <NuxtLink to="/ecosystem" class="hover:text-gray-700 dark:hover:text-gray-200">
+          Ecosystem
+        </NuxtLink>
+        <a href="https://github.com/LotusiaStewardship" target="_blank" rel="noopener" class="hover:text-gray-700 dark:hover:text-gray-200">
+          GitHub
+        </a>
+      </div>
     </template>
   </UFooter>
 </template>

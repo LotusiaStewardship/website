@@ -1,0 +1,62 @@
+{
+  "body": {
+    "backgroundColor": "rgb(255, 255, 255)",
+    "borderRadius": "0px",
+    "color": "rgb(55, 65, 81)",
+    "fontFamily": "\"DM Sans\", \"DM Sans Fallback: Arial\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "24px",
+    "margin": "0px",
+    "padding": "0px"
+  },
+  "footer": {
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "borderRadius": "0px",
+    "color": "rgb(55, 65, 81)",
+    "fontFamily": "\"DM Sans\", \"DM Sans Fallback: Arial\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "24px",
+    "margin": "0px",
+    "padding": "0px"
+  },
+  "h1": {
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "borderRadius": "0px",
+    "color": "rgb(17, 24, 39)",
+    "fontFamily": "\"DM Sans\", \"DM Sans Fallback: Arial\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "fontSize": "48px",
+    "fontWeight": "700",
+    "letterSpacing": "-1.2px",
+    "lineHeight": "48px",
+    "margin": "0px",
+    "padding": "0px"
+  },
+  "header": {
+    "backgroundColor": "rgba(255, 255, 255, 0.75)",
+    "borderRadius": "0px",
+    "color": "rgb(55, 65, 81)",
+    "fontFamily": "\"DM Sans\", \"DM Sans Fallback: Arial\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "24px",
+    "margin": "0px 0px -1px",
+    "padding": "0px"
+  },
+  "nav_link": {
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "borderRadius": "0px",
+    "color": "rgb(55, 65, 81)",
+    "fontFamily": "\"DM Sans\", \"DM Sans Fallback: Arial\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "fontSize": "14px",
+    "fontWeight": "600",
+    "letterSpacing": "normal",
+    "lineHeight": "24px",
+    "margin": "0px",
+    "padding": "0px"
+  }
+}

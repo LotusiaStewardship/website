@@ -16,6 +16,12 @@ useSeoMeta({
   ogDescription: page.value.description,
   ogImage: page.value.hero.image
 })
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://lotusia.org/' }
+  ]
+})
 </script>
 
 <template>

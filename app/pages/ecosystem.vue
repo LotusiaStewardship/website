@@ -11,6 +11,10 @@ useSeoMeta({
   ogDescription: page.value.description,
   ogImage: page.value.hero.image.light
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://lotusia.org/ecosystem' }]
+})
 </script>
 
 <template>
