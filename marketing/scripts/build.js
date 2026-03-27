@@ -319,8 +319,36 @@ function langSwitcher(currentLang, alternates, mobile = false) {
 }
 
 // ── Nav vars (injected into every header/footer render) ───────────────────────
-function makeNavVars(lang, alternates) {
+function makeNavVars(lang, alternates, pagePath) {
   const i = I18N[lang];
+  const normalized = (() => {
+    const p = pagePath || '/';
+    const withoutPrefix = p.replace(/^\/(fr|es|it|de|ru|cn)(?=\/|$)/, '');
+    return withoutPrefix || '/';
+  })();
+  const isEcosystem = normalized === '/ecosystem';
+  const isTools = normalized === '/tools';
+  const isRoadmap = normalized === '/roadmap';
+  const isFaq = normalized === '/faq';
+  const isDocs = normalized === '/docs' || normalized.startsWith('/docs/');
+  const isFounders = normalized === '/founders';
+  const isBetaServices = normalized === '/beta-services';
+  const isBlog = normalized === '/blog' || normalized.startsWith('/blog/');
+  const isMore = isFounders || isBetaServices || isBlog;
+
+  const topNavClass = (active) => active
+    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
+    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  const moreButtonClass = (active) => active
+    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary'
+    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  const dropdownItemClass = (active) => active
+    ? 'block px-3 py-2 text-sm text-primary font-semibold bg-gray-50 dark:bg-gray-800 rounded-lg'
+    : 'block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+  const mobileItemClass = (active) => active
+    ? 'block px-3 py-2 text-sm font-semibold text-primary bg-gray-50 dark:bg-gray-800 rounded-lg'
+    : 'block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg';
+
   return {
     nav_ecosystem:       i.nav.ecosystem,
     nav_tools:           i.nav.tools,
@@ -331,6 +359,24 @@ function makeNavVars(lang, alternates) {
     nav_blog:            i.nav.blog,
     nav_more:            i.nav.more,
     nav_explorer:        i.nav.explorer,
+    nav_beta_services:   i.nav.beta_services,
+    nav_cls_ecosystem:   topNavClass(isEcosystem),
+    nav_cls_tools:       topNavClass(isTools),
+    nav_cls_roadmap:     topNavClass(isRoadmap),
+    nav_cls_faq:         topNavClass(isFaq),
+    nav_cls_docs:        topNavClass(isDocs),
+    nav_cls_more:        moreButtonClass(isMore),
+    nav_cls_founders:    dropdownItemClass(isFounders),
+    nav_cls_beta_services: dropdownItemClass(isBetaServices),
+    nav_cls_blog:        dropdownItemClass(isBlog),
+    nav_m_cls_ecosystem: mobileItemClass(isEcosystem),
+    nav_m_cls_tools:     mobileItemClass(isTools),
+    nav_m_cls_roadmap:   mobileItemClass(isRoadmap),
+    nav_m_cls_faq:       mobileItemClass(isFaq),
+    nav_m_cls_docs:      mobileItemClass(isDocs),
+    nav_m_cls_founders:  mobileItemClass(isFounders),
+    nav_m_cls_beta_services: mobileItemClass(isBetaServices),
+    nav_m_cls_blog:      mobileItemClass(isBlog),
     toggle_theme:        i.common.toggle_theme,
     footer_copyright:    i.common.copyright,
     footer_all_rights_reserved: i.common.all_rights_reserved,
@@ -341,6 +387,7 @@ function makeNavVars(lang, alternates) {
     url_faq:             navRoute(lang, '/faq'),
     url_docs:            '/docs',
     url_founders:        navRoute(lang, '/founders'),
+    url_beta_services:   navRoute(lang, '/beta-services'),
     url_blog:            '/blog',
     breadcrumb_home:     i.common.home,
     breadcrumb_blog:     i.nav.blog,
@@ -358,7 +405,7 @@ function makePageMeta(lang, pagePath, alternates) {
     canonical_url: abs(pagePath),
     hreflang_tags: hreflangTags(alternates),
     path:          pagePath,
-    ...makeNavVars(lang, alternates)
+    ...makeNavVars(lang, alternates, pagePath)
   };
 }
 

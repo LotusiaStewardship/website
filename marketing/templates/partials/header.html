@@ -6,16 +6,17 @@
             </a>
         </div>
         <div class="items-center gap-x-8 hidden lg:flex">
-            <a href="{{url_ecosystem}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_ecosystem}}</a>
-            <a href="{{url_tools}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_tools}}</a>
-            <a href="{{url_roadmap}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_roadmap}}</a>
-            <a href="{{url_faq}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_faq}}</a>
-            <a href="{{url_docs}}" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">{{nav_docs}}</a>
+            <a href="{{url_ecosystem}}" class="{{nav_cls_ecosystem}}">{{nav_ecosystem}}</a>
+            <a href="{{url_tools}}" class="{{nav_cls_tools}}">{{nav_tools}}</a>
+            <a href="{{url_roadmap}}" class="{{nav_cls_roadmap}}">{{nav_roadmap}}</a>
+            <a href="{{url_faq}}" class="{{nav_cls_faq}}">{{nav_faq}}</a>
+            <a href="{{url_docs}}" class="{{nav_cls_docs}}">{{nav_docs}}</a>
             <div class="relative" data-dropdown>
-                <button type="button" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary" data-dropdown-trigger aria-expanded="false">{{nav_more}} <span class="text-xs">▾</span></button>
+                <button type="button" class="{{nav_cls_more}}" data-dropdown-trigger aria-expanded="false">{{nav_more}} <span class="text-xs">▾</span></button>
                 <div class="hidden absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg p-2 z-50" data-dropdown-menu>
-                    <a href="{{url_founders}}" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_founders}}</a>
-                    <a href="{{url_blog}}" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_blog}}</a>
+                    <a href="{{url_founders}}" class="{{nav_cls_founders}}">{{nav_founders}}</a>
+                    <a href="{{url_beta_services}}" class="{{nav_cls_beta_services}}">{{nav_beta_services}}</a>
+                    <a href="{{url_blog}}" class="{{nav_cls_blog}}">{{nav_blog}}</a>
                     <a href="https://explorer.lotusia.org" target="_blank" class="block px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_explorer}}</a>
                 </div>
             </div>
@@ -37,13 +38,14 @@
         </button>
     </nav>
     <div id="mobile-nav" class="hidden lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 space-y-1">
-        <a href="{{url_ecosystem}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_ecosystem}}</a>
-        <a href="{{url_tools}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_tools}}</a>
-        <a href="{{url_roadmap}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_roadmap}}</a>
-        <a href="{{url_faq}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_faq}}</a>
-        <a href="{{url_docs}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_docs}}</a>
-        <a href="{{url_founders}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_founders}}</a>
-        <a href="{{url_blog}}" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_blog}}</a>
+        <a href="{{url_ecosystem}}" class="{{nav_m_cls_ecosystem}}">{{nav_ecosystem}}</a>
+        <a href="{{url_tools}}" class="{{nav_m_cls_tools}}">{{nav_tools}}</a>
+        <a href="{{url_roadmap}}" class="{{nav_m_cls_roadmap}}">{{nav_roadmap}}</a>
+        <a href="{{url_faq}}" class="{{nav_m_cls_faq}}">{{nav_faq}}</a>
+        <a href="{{url_docs}}" class="{{nav_m_cls_docs}}">{{nav_docs}}</a>
+        <a href="{{url_founders}}" class="{{nav_m_cls_founders}}">{{nav_founders}}</a>
+        <a href="{{url_beta_services}}" class="{{nav_m_cls_beta_services}}">{{nav_beta_services}}</a>
+        <a href="{{url_blog}}" class="{{nav_m_cls_blog}}">{{nav_blog}}</a>
         <a href="https://explorer.lotusia.org" target="_blank" class="block px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">{{nav_explorer}}</a>
         {{lang_switcher_mobile}}
     </div>

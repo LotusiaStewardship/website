@@ -12,7 +12,7 @@ hero:
       target: _blank
       color: primary
     - label: Social Activity (Beta)
-      to: https://app.lotusia.org/social/activity
+      to: https://legacy.lotusia.org/social/activity
       target: _blank
       color: primary
 sections:
@@ -26,9 +26,9 @@ sections:
         color: primary
   - title: Social Activity (Beta)
     headline: Social Services
-    description: Live social activity feed currently available from the app host.
+    description: Live social activity feed currently available from the legacy host.
     links:
       - label: Open /social/activity
-        to: https://app.lotusia.org/social/activity
+        to: https://legacy.lotusia.org/social/activity
         target: _blank
         color: primary
