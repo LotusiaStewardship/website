@@ -12,6 +12,12 @@ export default defineEventHandler((event) => {
   const url = getRequestURL(event)
   const pathname = url.pathname || '/'
 
+  // Legacy profile links should route through the new apex host,
+  // which then applies the social host split rules.
+  if (pathname === '/social/twitter' || pathname.startsWith('/social/twitter/')) {
+    return sendRedirect(event, `https://lotusia.org${pathname}${url.search || ''}`, 301)
+  }
+
   const redirectBases = [
     '/',
     '/ecosystem',
