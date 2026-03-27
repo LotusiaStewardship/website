@@ -6,6 +6,7 @@
     "deploy": "npm run build && npx wrangler pages deploy dist/ --project-name=lotusia-marketing"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "js-yaml": "^4.1.0",
     "marked": "^15.0.0"
   },

@@ -103,6 +103,43 @@
   .specs-table th { @apply text-left py-3 px-4 border-b-2 border-gray-200 dark:border-gray-700 font-semibold text-gray-900 dark:text-white; }
   .specs-table td { @apply py-3 px-4 border-b border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300; }
   .specs-table tr:last-child td { @apply border-b-0; }
+
+  /* Worker tables: prevent page-level horizontal scroll on narrow screens */
+  @media (max-width: 639px) {
+    html, body { overflow-x: clip; }
+    .table-responsive { overflow-x: clip; }
+    .table-responsive table { min-width: 100%; width: 100%; table-layout: fixed; }
+    .table-responsive th, .table-responsive td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .table-responsive a { max-width: 100%; }
+
+    /* Keep stat cards stable without text bleeding */
+    .grid > div[class*="rounded-2xl"] { min-width: 0; }
+
+    /* Activity: hide first-seen and post-id */
+    .table-kind-activity th:nth-child(2), .table-kind-activity td:nth-child(2),
+    .table-kind-activity th:nth-child(5), .table-kind-activity td:nth-child(5) { display: none; }
+
+    /* Blocks: keep height/hash/txs only */
+    .table-kind-blocks th:nth-child(3), .table-kind-blocks td:nth-child(3),
+    .table-kind-blocks th:nth-child(4), .table-kind-blocks td:nth-child(4),
+    .table-kind-blocks th:nth-child(6), .table-kind-blocks td:nth-child(6) { display: none; }
+
+    /* Block tx list: keep txid/burned/inputs/outputs */
+    .table-kind-blocktxs th:nth-child(2), .table-kind-blocktxs td:nth-child(2),
+    .table-kind-blocktxs th:nth-child(6), .table-kind-blocktxs td:nth-child(6) { display: none; }
+
+    /* Votes on profile: keep tx/sentiment/amount */
+    .table-kind-votes th:nth-child(2), .table-kind-votes td:nth-child(2),
+    .table-kind-votes th:nth-child(5), .table-kind-votes td:nth-child(5) { display: none; }
+
+    /* Peer table: keep address + blocks */
+    .table-kind-peers th:nth-child(1), .table-kind-peers td:nth-child(1),
+    .table-kind-peers th:nth-child(3), .table-kind-peers td:nth-child(3) { display: none; }
+  }
 }
 
 /* === Iconify Icon Classes (extracted from lotusia.org) === */
