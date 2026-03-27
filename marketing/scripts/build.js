@@ -1164,7 +1164,15 @@ async function fetchLegacyJson(pathname, query) {
   return res.json();
 }
 
-function navHtml() {
+function navHtml(pathname) {
+  const isSocial = pathname === '/social' || pathname.startsWith('/social/');
+  const isExplorer = pathname === '/explorer' || pathname.startsWith('/explorer/');
+  const socialCls = isSocial
+    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
+    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
+  const explorerCls = isExplorer
+    ? 'text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary'
+    : 'text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary';
   return '<header class="bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50">' +
     '<nav class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">' +
     '<div class="lg:flex-1 flex items-center gap-1.5"><a href="/" class="flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"><img src="/assets/images/logo.png" alt="Lotusia" class="h-8 w-auto"></a></div>' +
@@ -1174,7 +1182,8 @@ function navHtml() {
     '<a href="/roadmap" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Roadmap</a>' +
     '<a href="/faq" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">FAQ</a>' +
     '<a href="/docs" class="text-sm/6 font-semibold flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-primary">Docs</a>' +
-    '<a href="/social/activity" class="text-sm/6 font-semibold flex items-center gap-1 text-primary underline underline-offset-4 decoration-primary">Social</a>' +
+    '<a href="/explorer/blocks" class="' + explorerCls + '">Explorer</a>' +
+    '<a href="/social/activity" class="' + socialCls + '">Social</a>' +
     '</div></nav></header>';
 }
 
@@ -1191,7 +1200,7 @@ function pageShell(pathname, title, description, bodyHtml) {
     '<link rel="icon" href="/assets/favicon.ico">' +
     '<link rel="stylesheet" href="/assets/css/main.css"></head>' +
     '<body class="bg-background text-foreground min-h-screen">' +
-    navHtml() +
+    navHtml(pathname) +
     '<main class="min-h-[calc(100vh-var(--header-height))]"><div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">' +
     bodyHtml +
     '</div></main>' +
