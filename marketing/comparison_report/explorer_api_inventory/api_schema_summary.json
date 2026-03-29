@@ -1,0 +1,426 @@
+[
+  {
+    "endpoint": "/api/getbestblockhash",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getbestblockhash",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getblock",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [
+      "hash"
+    ],
+    "sample_url": "https://explorer.lotusia.org/api/getblock?hash=00000000008c7db50b4032a296a1e83ae3cd71805a7b64bea84031a677f0c2b7",
+    "sample_schema": {
+      "hash": "string",
+      "confirmations": "integer",
+      "size": "integer",
+      "height": "integer",
+      "version": "integer",
+      "versionHex": "string",
+      "merkleroot": "string",
+      "tx": {
+        "type": "array",
+        "items": "string"
+      },
+      "time": "integer",
+      "mediantime": "integer",
+      "nonce": "string",
+      "bits": "string",
+      "difficulty": "string",
+      "chainwork": "string",
+      "nTx": "integer",
+      "epochblockhash": "string",
+      "extendedmetadatahash": "string",
+      "extendedmetadata": {
+        "type": "array",
+        "items": "unknown"
+      },
+      "previousblockhash": "string",
+      "nextblockhash": "string"
+    }
+  },
+  {
+    "endpoint": "/api/getblockchaininfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getblockchaininfo",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getblockcount",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getblockcount",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getblockhash",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [
+      "index"
+    ],
+    "sample_url": "https://explorer.lotusia.org/api/getblockhash?index=1259491",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getchaintips",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getchaintips",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getconnectioncount",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getconnectioncount",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getdifficulty",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getdifficulty",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getinfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getinfo",
+    "sample_schema": {
+      "message": "string",
+      "code": "integer",
+      "name": "string"
+    }
+  },
+  {
+    "endpoint": "/api/getmempoolinfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getmempoolinfo",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getmininginfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getmininginfo",
+    "sample_schema": {
+      "blocks": "integer",
+      "difficulty": "string",
+      "networkhashps": "string",
+      "pooledtx": "integer",
+      "chain": "string",
+      "warnings": "string"
+    }
+  },
+  {
+    "endpoint": "/api/getnetworkinfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getnetworkinfo",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getpeerinfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getpeerinfo",
+    "sample_schema": {
+      "type": "array",
+      "items": {
+        "id": "integer",
+        "addr": "string",
+        "addrbind": "string",
+        "addrlocal": "string",
+        "addr_relay_enabled": "boolean",
+        "network": "string",
+        "services": "string",
+        "servicesnames": {
+          "type": "array",
+          "items": "string"
+        },
+        "relaytxes": "boolean",
+        "lastsend": "integer",
+        "lastrecv": "integer",
+        "last_transaction": "integer",
+        "last_proof": "integer",
+        "last_block": "integer",
+        "bytessent": "integer",
+        "bytesrecv": "integer",
+        "conntime": "integer",
+        "timeoffset": "integer",
+        "pingtime": "number",
+        "minping": "number",
+        "version": "integer",
+        "subver": "string",
+        "inbound": "boolean",
+        "bip152_hb_to": "boolean",
+        "bip152_hb_from": "boolean",
+        "startingheight": "integer",
+        "synced_headers": "integer",
+        "synced_blocks": "integer",
+        "inflight": {
+          "type": "array",
+          "items": "unknown"
+        },
+        "addr_processed": "integer",
+        "addr_rate_limited": "integer",
+        "permissions": {
+          "type": "array",
+          "items": "unknown"
+        },
+        "minfeefilter": "number",
+        "bytessent_per_msg": {
+          "addrv2": "integer",
+          "cmpctblock": "integer",
+          "feefilter": "integer",
+          "getdata": "integer",
+          "getheaders": "integer",
+          "headers": "integer",
+          "inv": "integer",
+          "ping": "integer",
+          "pong": "integer",
+          "sendaddrv2": "integer",
+          "sendcmpct": "integer",
+          "sendheaders": "integer",
+          "tx": "integer",
+          "verack": "integer",
+          "version": "integer"
+        },
+        "bytesrecv_per_msg": {
+          "addr": "integer",
+          "addrv2": "integer",
+          "feefilter": "integer",
+          "getaddr": "integer",
+          "getdata": "integer",
+          "getheaders": "integer",
+          "headers": "integer",
+          "inv": "integer",
+          "ping": "integer",
+          "pong": "integer",
+          "sendaddrv2": "integer",
+          "sendcmpct": "integer",
+          "sendheaders": "integer",
+          "tx": "integer",
+          "verack": "integer",
+          "version": "integer"
+        },
+        "connection_type": "string"
+      }
+    }
+  },
+  {
+    "endpoint": "/api/getrawmempool",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/getrawmempool",
+    "sample_schema": "non-json"
+  },
+  {
+    "endpoint": "/api/getrawtransaction",
+    "hits": 2,
+    "statuses": [
+      200
+    ],
+    "query_keys": [
+      "decrypt",
+      "txid"
+    ],
+    "sample_url": "https://explorer.lotusia.org/api/getrawtransaction?txid=1d1e3e29793af4d54bef8050298395e5ccad0a2b9a22ed47ebe6c3c5382fb883&decrypt=1",
+    "sample_schema": {
+      "txid": "string",
+      "hash": "string",
+      "version": "integer",
+      "size": "integer",
+      "locktime": "integer",
+      "vin": {
+        "type": "array",
+        "items": {
+          "coinbase": "string",
+          "sequence": "integer"
+        }
+      },
+      "vout": {
+        "type": "array",
+        "items": {
+          "value": "integer",
+          "n": "integer",
+          "scriptPubKey": {
+            "asm": "string",
+            "hex": "string",
+            "type": "string"
+          }
+        }
+      },
+      "hex": "string",
+      "blockhash": "string",
+      "confirmations": "integer",
+      "time": "integer",
+      "blocktime": "integer"
+    }
+  },
+  {
+    "endpoint": "/api/gettxoutsetinfo",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [],
+    "sample_url": "https://explorer.lotusia.org/api/gettxoutsetinfo",
+    "sample_schema": {
+      "height": "integer",
+      "bestblock": "string",
+      "transactions": "integer",
+      "txouts": "integer",
+      "bogosize": "integer",
+      "hash_serialized": "string",
+      "disk_size": "integer",
+      "total_amount": "string"
+    }
+  },
+  {
+    "endpoint": "/ext/getaddresstxsajax/:id",
+    "hits": 4,
+    "statuses": [
+      200
+    ],
+    "query_keys": [
+      "_",
+      "columns[0][data]",
+      "columns[0][orderable]",
+      "columns[0][search][regex]",
+      "columns[0][searchable]",
+      "columns[1][data]",
+      "columns[1][orderable]",
+      "columns[1][search][regex]",
+      "columns[1][searchable]",
+      "columns[2][data]",
+      "columns[2][orderable]",
+      "columns[2][search][regex]",
+      "columns[2][searchable]",
+      "columns[3][data]",
+      "columns[3][orderable]",
+      "columns[3][search][regex]",
+      "columns[3][searchable]",
+      "columns[4][data]",
+      "columns[4][orderable]",
+      "columns[4][search][regex]",
+      "columns[4][searchable]",
+      "draw",
+      "length",
+      "search[regex]",
+      "start"
+    ],
+    "sample_url": "https://explorer.lotusia.org/ext/getaddresstxsajax/lotus_16PSJJfo6CiBc4PoXSJVJ3WmwFCjZr4GMV4JjG43u?draw=1&columns%5B0%5D%5Bdata%5D=0&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=1&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=2&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=3&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=false&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=4&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&start=0&length=50&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1774800645830",
+    "sample_schema": {
+      "draw": "integer",
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": "string"
+        }
+      },
+      "recordsTotal": "integer",
+      "recordsFiltered": "integer"
+    }
+  },
+  {
+    "endpoint": "/ext/getlastblocksajax",
+    "hits": 1,
+    "statuses": [
+      200
+    ],
+    "query_keys": [
+      "_",
+      "columns[0][data]",
+      "columns[0][orderable]",
+      "columns[0][search][regex]",
+      "columns[0][searchable]",
+      "columns[1][data]",
+      "columns[1][orderable]",
+      "columns[1][search][regex]",
+      "columns[1][searchable]",
+      "columns[2][data]",
+      "columns[2][orderable]",
+      "columns[2][search][regex]",
+      "columns[2][searchable]",
+      "columns[3][data]",
+      "columns[3][orderable]",
+      "columns[3][search][regex]",
+      "columns[3][searchable]",
+      "columns[4][data]",
+      "columns[4][orderable]",
+      "columns[4][search][regex]",
+      "columns[4][searchable]",
+      "columns[5][data]",
+      "columns[5][orderable]",
+      "columns[5][search][regex]",
+      "columns[5][searchable]",
+      "draw",
+      "length",
+      "search[regex]",
+      "start"
+    ],
+    "sample_url": "https://explorer.lotusia.org/ext/getlastblocksajax?draw=1&columns%5B0%5D%5Bdata%5D=0&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=1&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=2&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=3&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=false&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=4&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=5&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=false&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1774800637416",
+    "sample_schema": {
+      "draw": "integer",
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": "integer"
+        }
+      },
+      "recordsTotal": "integer",
+      "recordsFiltered": "integer"
+    }
+  }
+]

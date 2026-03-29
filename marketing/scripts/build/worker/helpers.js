@@ -211,11 +211,11 @@ async function cachedAvatarResponse(url, platform, profileId) {
     ? 'https://unavatar.io/x/' + encodeURIComponent(profileId)
     : 'https://www.gravatar.com/avatar/' + encodeURIComponent(profileId) + '?s=96&d=identicon&r=g';
   try {
-    const res = await fetch(upstream, { cf: { cacheEverything: true, cacheTtl: 86400 } });
+    const res = await fetch(upstream, { cf: { cacheEverything: true, cacheTtl: 691200 } });
     const contentType = res.headers.get('content-type') || '';
     if (res.ok && contentType.includes('image')) {
       const headers = new Headers(res.headers);
-      headers.set('cache-control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=43200');
+      headers.set('cache-control', 'public, max-age=691200, s-maxage=691200, stale-while-revalidate=345600');
       headers.set('access-control-allow-origin', '*');
       headers.set('x-avatar-fallback', '0');
       headers.set('x-avatar-cached-at', String(Date.now()));
@@ -232,7 +232,7 @@ async function cachedAvatarResponse(url, platform, profileId) {
       status: 404,
       headers: {
         'content-type': 'text/plain; charset=utf-8',
-        'cache-control': 'public, max-age=10, s-maxage=10, stale-while-revalidate=10',
+        'cache-control': 'public, max-age=80, s-maxage=80, stale-while-revalidate=80',
         'access-control-allow-origin': '*',
         'x-avatar-fallback': '1',
         'x-avatar-cached-at': String(Date.now())
@@ -247,7 +247,7 @@ async function cachedAvatarResponse(url, platform, profileId) {
     status: 200,
     headers: {
       'content-type': 'image/svg+xml; charset=utf-8',
-      'cache-control': 'public, max-age=10, s-maxage=10, stale-while-revalidate=10',
+      'cache-control': 'public, max-age=80, s-maxage=80, stale-while-revalidate=80',
       'access-control-allow-origin': '*',
       'x-avatar-fallback': '1',
       'x-avatar-cached-at': String(Date.now())

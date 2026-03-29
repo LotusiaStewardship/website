@@ -1,27 +1,27 @@
 const HTML_CACHE_RULES = {
-  '/explorer': 15,
-  '/explorer/blocks': 15,
-  '/explorer/block': 30,
-  '/explorer/tx': 45,
-  '/explorer/address': 30,
-  '/social/activity': 15,
-  '/social/trending': 30,
-  '/social/profiles': 20,
-  '/social/profile': 30
+  '/explorer': 120,
+  '/explorer/blocks': 120,
+  '/explorer/block': 240,
+  '/explorer/tx': 360,
+  '/explorer/address': 240,
+  '/social/activity': 120,
+  '/social/trending': 240,
+  '/social/profiles': 160,
+  '/social/profile': 240
 };
 
 const PROXY_CACHE_RULES = {
-  nuxtAssets: 86400,
-  appStatic: 3600
+  nuxtAssets: 691200,
+  appStatic: 28800
 };
 
 const STATIC_CACHE_RULES = {
-  html: 1800,
-  xml: 900,
-  text: 900,
-  json: 900,
-  media: 86400,
-  hashedAssets: 604800
+  html: 14400,
+  xml: 7200,
+  text: 7200,
+  json: 7200,
+  media: 691200,
+  hashedAssets: 4838400
 };
 
 function htmlCacheTtlForPath(strippedPath) {

@@ -133,7 +133,7 @@ async function lookupGeoIp(ip) {
   }
   try {
     const res = await fetch('https://ipwho.is/' + encodeURIComponent(safeIp) + '?fields=success,country,country_code', {
-      cf: { cacheEverything: true, cacheTtl: 86400 }
+      cf: { cacheEverything: true, cacheTtl: 691200 }
     });
     if (!res.ok) throw new Error('geoip ' + res.status);
     const payload = await res.json();
@@ -145,7 +145,7 @@ async function lookupGeoIp(ip) {
       status: 200,
       headers: {
         'content-type': 'application/json; charset=utf-8',
-        'cache-control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400'
+        'cache-control': 'public, max-age=691200, s-maxage=691200, stale-while-revalidate=691200'
       }
     });
     await cache.put(cacheKey, response.clone());
