@@ -26,6 +26,10 @@ const links = [
     to: '/docs'
   },
   {
+    label: 'Founders',
+    to: '/founders'
+  },
+  {
     label: 'More',
     children: [
       {

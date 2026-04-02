@@ -1,0 +1,1854 @@
+{
+  "tree": {
+    "bodyClasses": "",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/logo.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "block",
+                      "h": 48,
+                      "layout": "items-center",
+                      "tag": "div",
+                      "w": 170
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 48,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 170
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 48,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 370
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/ecosystem",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Ecosystem",
+                      "w": 74
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 74
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/tools",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Tools",
+                      "w": 35
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 35
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/roadmap",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Roadmap",
+                      "w": 64
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 64
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/faq",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1 text-primary",
+                      "tag": "a",
+                      "text": "FAQ",
+                      "w": 27
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 27
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/docs",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Docs",
+                      "w": 34
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "w-5 h-5 flex-shrink-0",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                              "tag": "button",
+                              "text": "More",
+                              "w": 58
+                            }
+                          ],
+                          "display": "inline-flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "inline-flex w-full",
+                          "tag": "div",
+                          "w": 58
+                        }
+                      ],
+                      "display": "block",
+                      "h": 25,
+                      "layout": "relative",
+                      "tag": "div",
+                      "w": 58
+                    },
+                    {
+                      "display": "none",
+                      "h": 0,
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 25,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 58
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 25,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "ul",
+              "w": 452
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-primary-500",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-gray-400",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        }
+                      ],
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                },
+                {
+                  "children": [
+                    {
+                      "display": "inline-block",
+                      "h": 0,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 0
+                    }
+                  ],
+                  "display": "none",
+                  "h": 0,
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 text-gray-700 inline-flex items-center lg:hidden",
+                  "tag": "button",
+                  "w": 0
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 370
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "light",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h1",
+                          "text": "FAQ",
+                          "w": 89
+                        },
+                        {
+                          "display": "block",
+                          "h": 28,
+                          "layout": "mt-4 text-lg text-gray-500",
+                          "tag": "p",
+                          "text": "Lotusia, explained",
+                          "w": 148
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "Technical Docs",
+                                  "w": 99
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 36,
+                              "href": "/docs",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-gray-700 bg-gray-50 inline-flex items-center",
+                              "tag": "a",
+                              "w": 151
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 36,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5 justify-center",
+                          "tag": "div",
+                          "w": 151
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "column",
+                      "flexWrap": "nowrap",
+                      "h": 160,
+                      "layout": "text-center flex flex-col items-center",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "column",
+                  "flexWrap": "nowrap",
+                  "h": 160,
+                  "layout": "gap-8 sm:gap-y-16 flex flex-col",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 352,
+              "layout": "py-8 sm:py-16 lg:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "I'm new to Lotusia. How can I become a Citizen?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Anybody that has Lotus is a Citizen.",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 133,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How can I get Lotus?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The best way to get Lotus is to be given Lotus. If you join our Telegram communi...",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "href": "https://burnlotus.org/#guide",
+                                      "layout": "flex items-center gap-1.5 text-gray-500",
+                                      "tag": "a",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "lg:space-y-1.5",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 24,
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "Can I buy Lotus from an exchange?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Currently, only the Exbitron exchange lists the Lotus ($XPI) / $USDT trade pair....",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-block",
+                                      "h": 13,
+                                      "tag": "span",
+                                      "w": 13
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "The Stewardship does not advise buying Lotus with your money. It is far better t...",
+                                  "w": 829
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 28,
+                              "layout": "pb-2 flex flex-wrap gap-x-3 gap-y-1.5 items-center",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 185,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "When did the Lotus blockchain launch?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The first block of the Lotus blockchain was mined on June 21, 2021 at 3:31 UTC",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "href": "https://explorer.lotusia.org/block/00000000090ac785b348fc296a84ec2e45ee5fed25419a8557d868152c880049",
+                                      "layout": "flex items-center gap-1.5 text-gray-500",
+                                      "tag": "a",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "lg:space-y-1.5",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 24,
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 157,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "Is there a Lotus whitepaper?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Yes, it is under active development. It will be linked on the home page in the near future.",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 133,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What is the 6-month upgrade schedule?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 88,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The Lotus blockchain undergoes a scheduled upgrade twice per calendar year, begi...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What determines consensus in the Lotusia Ecosystem?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 88,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Contrary to the existing model of representative government, the Stewardship is ...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "Who is Mrs. Turtle?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Mrs. Turtle is our gracious Telegram bot. She helps our Telegram community give ...",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "href": "https://github.com/LotusiaStewardship/lotus-bot",
+                                      "layout": "flex items-center gap-1.5 text-gray-500",
+                                      "tag": "a",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "lg:space-y-1.5",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 24,
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How is the Stewardship funding transparent?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The Lotus blockchain is a distributed public ledger. The ledger contains a recor...",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "inline-block",
+                                      "h": 13,
+                                      "tag": "span",
+                                      "w": 13
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "The Block Explorer provides a convenient way to review financial activity of the Stewardship.",
+                                  "w": 607
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 28,
+                              "layout": "pb-2 flex flex-wrap gap-x-3 gap-y-1.5 items-center",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 185,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "Can anybody know how much Lotus I have or how much I give to other people?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Possibly. The distributed public ledger does not contain a list of real-world id...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 157,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What is a Lotus address?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Think of a Lotus address like a bank account number. Other people can use this n...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 157,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How many Lotus addresses can I have?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "As many as you want! The Lotus addresses are generated using cryptographic softw...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 133,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How can the Citizenry elect a new Stewardship?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 88,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The Lotus blockchain software is a public good, therefore any party is free to c...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "I work on a project that helps to build society, and I think Lotus can help me. ...",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 64,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Yes! The Stewardship is always open to apportion Lotus currency to projects that...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 157,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How can I apply to be a Turtle of the Stewardship?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "There is currently no formal process for inducting new Turtles. Please check the...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 133,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What is the currency issuance mechanism?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 112,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "Lotus is issued by the Treasury. The Treasury consists of Miners that perform Pr...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 205,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What makes the Lotus currency economically viable?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 112,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "More well-known cryptocurrencies like Bitcoin have proven to not be economically...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 205,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "How does Lotus compare to a fiat currency like the U.S. Dollar?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 40,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "There are some similarities between Lotus and the U.S. Dollar, however there are...",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 312,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 312,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 312,
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 445,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 29,
+                              "tag": "div",
+                              "text": "What is \"voluntary destructive use\" and how does it work?",
+                              "w": 1216
+                            },
+                            {
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "wrap",
+                              "h": 88,
+                              "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                              "tag": "div",
+                              "text": "The term describes a mechanism by which Lotus can be removed permanently from ci...",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 181,
+                          "layout": "pb-16",
+                          "tag": "div",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 84,
+                                      "layout": "flex-1",
+                                      "tag": "div",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 84,
+                                  "layout": "flex flex-col lg:flex-row items-start gap-6",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 149,
+                              "layout": "relative border-b border-gray-200 py-8 mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 29,
+                                  "tag": "div",
+                                  "text": "What are the technical specifications of the Lotus blockchain?",
+                                  "w": 1216
+                                },
+                                {
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 88,
+                                  "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                                  "tag": "div",
+                                  "text": "The Lotus blockchain is a Bitcoin ABC fork with several unique characteristics. ...",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "tag": "span",
+                                      "text": "Technical specifications are organized by category in the tables below.",
+                                      "w": 468
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 28,
+                                  "layout": "pb-2 flex flex-wrap gap-x-3 gap-y-1.5 items-center",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 209,
+                              "layout": "pb-16",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 29,
+                                  "tag": "div",
+                                  "text": "What is the genesis block of the Lotus blockchain?",
+                                  "w": 1216
+                                },
+                                {
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 40,
+                                  "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                                  "tag": "div",
+                                  "text": "See the Genesis Block table for complete technical details.",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 133,
+                              "layout": "pb-16",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 29,
+                                  "tag": "div",
+                                  "text": "What address formats does Lotus support?",
+                                  "w": 1216
+                                },
+                                {
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 64,
+                                  "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                                  "tag": "div",
+                                  "text": "Lotus supports multiple address formats for compatibility. The native format use...",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 157,
+                              "layout": "pb-16",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 29,
+                                  "tag": "div",
+                                  "text": "Does Lotus support Taproot?",
+                                  "w": 1216
+                                },
+                                {
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 88,
+                                  "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                                  "tag": "div",
+                                  "text": "Yes, Lotus implements Taproot with modifications specific to the Lotus protocol....",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 181,
+                              "layout": "pb-16",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 29,
+                                  "tag": "div",
+                                  "text": "How does the 6-month upgrade schedule work technically?",
+                                  "w": 1216
+                                },
+                                {
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "wrap",
+                                  "h": 88,
+                                  "layout": "py-2 flex flex-wrap gap-x-3 gap-y-1.5",
+                                  "tag": "div",
+                                  "text": "Protocol upgrades are scheduled around the summer and winter solstices and are n...",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 181,
+                              "layout": "pb-16",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Network Configuration",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 390,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 390,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 434,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Blockchain Parameters",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 390,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 390,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 434,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Monetary Policy",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 292,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 292,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 336,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Address Formats",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 292,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 292,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 336,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Script & Cryptography",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 438,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 438,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 482,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "text-xl font-semibold mb-4 text-gray-900",
+                                  "tag": "h3",
+                                  "text": "Genesis Block",
+                                  "w": 1216
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "table",
+                                      "h": 341,
+                                      "tag": "table",
+                                      "w": 1216
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 341,
+                                  "layout": "relative overflow-x-auto",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 385,
+                              "layout": "mb-12",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "block",
+                          "h": 3879,
+                          "layout": "py-16",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 7442,
+                      "layout": "mt-8 pb-24",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "block",
+                  "h": 7474,
+                  "layout": "lg:col-span-10",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 7474,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 40,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl",
+                          "tag": "h2",
+                          "text": "Still have questions?",
+                          "w": 1216
+                        },
+                        {
+                          "display": "block",
+                          "h": 32,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Join us in our Telegram group! We are happy to answer all of your questions.",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "tag": "span",
+                                  "text": "Telegram",
+                                  "w": 69
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "flex-shrink-0 h-6 w-6",
+                                  "tag": "span",
+                                  "w": 24
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 44,
+                              "href": "https://t.me/givelotus/",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-base gap-x-2.5 px-3.5 py-2.5 text-white bg-purple-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 131
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 44,
+                          "layout": "mt-10 flex items-center gap-x-6 justify-center",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 180,
+                      "layout": "text-center",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "column",
+                  "flexWrap": "nowrap",
+                  "h": 180,
+                  "layout": "flex flex-col gap-16 sm:gap-y-24",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 180,
+              "layout": "relative mb-24 sm:mb-32",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 8006,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 8006,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 48,
+          "tag": "a",
+          "text": "",
+          "w": 170
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 48,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        },
+        {
+          "display": "none",
+          "h": 0,
+          "tag": "button",
+          "text": "",
+          "w": 0
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 352,
+          "tag": "div",
+          "text": "FAQLotusia, explainedTechnical Docs",
+          "w": 1216
+        },
+        {
+          "display": "grid",
+          "h": 7474,
+          "tag": "div",
+          "text": "I'm new to Lotusia. How can I become a C",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 180,
+          "tag": "div",
+          "text": "Still have questions?Join us in our Tele",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 8006,
+      "tag": "div",
+      "text": "FAQLotusia, explainedTechnical DocsI'm new to Lotusia. How c",
+      "w": 1280
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 160,
+          "tag": "div",
+          "text": "FAQLotusia, explainedTechnical Docs",
+          "w": 1216
+        }
+      ],
+      "className": "py-8 sm:py-16 lg:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 352,
+      "tag": "div",
+      "text": "FAQLotusia, explainedTechnical Docs",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 7474,
+          "tag": "div",
+          "text": "I'm new to Lotusia. How can I become a C",
+          "w": 1216
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 7474,
+      "tag": "div",
+      "text": "I'm new to Lotusia. How can I become a Citizen?Anybody that",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 180,
+          "tag": "div",
+          "text": "Still have questions?Join us in our Tele",
+          "w": 1216
+        }
+      ],
+      "className": "relative mb-24 sm:mb-32",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 180,
+      "tag": "div",
+      "text": "Still have questions?Join us in our Telegram group! We are h",
+      "w": 1216
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All righ",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+      "w": 596
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "generatedAt": 1774616415,
+  "results": [
+    {
+      "label": "explorer-overview",
+      "legacy": {
+        "url": "https://legacy.lotusia.org/explorer",
+        "title": "Overview | Lotusia Explorer",
+        "h1": "Overview",
+        "cards": 0,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/explorer-overview-legacy.png"
+      },
+      "new": {
+        "url": "https://lotusia.org/explorer",
+        "title": "Overview | Lotusia",
+        "h1": "Network",
+        "cards": 10,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/explorer-overview-new.png"
+      }
+    },
+    {
+      "label": "explorer-blocks",
+      "legacy": {
+        "url": "https://legacy.lotusia.org/explorer/blocks",
+        "title": "Blocks | Lotusia Explorer",
+        "h1": "Blocks",
+        "cards": 0,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/explorer-blocks-legacy.png"
+      },
+      "new": {
+        "url": "https://lotusia.org/explorer/blocks",
+        "title": "Blocks | Lotusia",
+        "h1": "Blocks",
+        "cards": 4,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/explorer-blocks-new.png"
+      }
+    },
+    {
+      "label": "social-activity",
+      "legacy": {
+        "url": "https://legacy.lotusia.org/social/activity",
+        "title": "Latest Activity | Lotusia Explorer",
+        "h1": "Latest Activity",
+        "cards": 0,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/social-activity-legacy.png"
+      },
+      "new": {
+        "url": "https://lotusia.org/social/activity",
+        "title": "Latest Activity | Lotusia",
+        "h1": "Vote Activity",
+        "cards": 4,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/social-activity-new.png"
+      }
+    },
+    {
+      "label": "social-profiles",
+      "legacy": {
+        "url": "https://legacy.lotusia.org/social/profiles",
+        "title": "Profiles | Lotusia Explorer",
+        "h1": "",
+        "cards": 0,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/social-profiles-legacy.png"
+      },
+      "new": {
+        "url": "https://lotusia.org/social/profiles",
+        "title": "Social Profiles | Lotusia",
+        "h1": "Profiles",
+        "cards": 4,
+        "tables": 1,
+        "screenshot": "comparison_report/worker_ui_verify/social-profiles-new.png"
+      }
+    },
+    {
+      "label": "social-profile",
+      "legacy": {
+        "url": "https://legacy.lotusia.org/social/twitter/crazhfty",
+        "title": "Page not found",
+        "h1": "Server Error",
+        "cards": 0,
+        "tables": 0,
+        "screenshot": "comparison_report/worker_ui_verify/social-profile-legacy.png"
+      },
+      "new": {
+        "url": "https://lotusia.org/social/twitter/crazhfty",
+        "title": "crazhfty on twitter | Lotusia",
+        "h1": "crazhfty",
+        "cards": 8,
+        "tables": 2,
+        "screenshot": "comparison_report/worker_ui_verify/social-profile-new.png"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1458 @@
+{
+  "tree": {
+    "bodyClasses": "bg-background text-foreground min-h-screen",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "alt": "Lotusia",
+                      "src": "/assets/images/logo.png",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 113
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 377
+            },
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/ecosystem",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Ecosystem",
+                  "w": 74
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/tools",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Tools",
+                  "w": 35
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/roadmap",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Roadmap",
+                  "w": 64
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/faq",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "FAQ",
+                  "w": 27
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/docs",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Docs",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 16,
+                          "layout": "text-xs",
+                          "tag": "span",
+                          "text": "\u25be",
+                          "w": 6
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                      "tag": "button",
+                      "text": "More",
+                      "w": 44
+                    },
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "/founders",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Founders",
+                          "w": 0
+                        },
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "/blog",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Blog",
+                          "w": 0
+                        },
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "https://explorer.lotusia.org",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Explorer",
+                          "w": 0
+                        }
+                      ],
+                      "display": "none",
+                      "h": 0,
+                      "layout": "hidden absolute mt-2 w-44 bg-white border border-gray-200 rounded-xl",
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "block",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "div",
+                  "w": 44
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 24,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "div",
+              "w": 438
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "tag": "svg"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "inline-flex items-center justify-center rounded-full text-gray-700",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "tag": "svg"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "inline-flex items-center justify-center rounded-full text-gray-700",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 377
+            },
+            {
+              "children": [
+                {
+                  "tag": "svg"
+                }
+              ],
+              "display": "none",
+              "h": 0,
+              "layout": "lg:hidden inline-flex items-center justify-center rounded-full text-gray-700",
+              "tag": "button",
+              "w": 0
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "nav",
+          "w": 1280
+        },
+        {
+          "children": [
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/ecosystem",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Ecosystem",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/tools",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Tools",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/roadmap",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Roadmap",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/faq",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "FAQ",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/docs",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Docs",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/founders",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Founders",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/blog",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Blog",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "https://explorer.lotusia.org",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Explorer",
+              "w": 0
+            }
+          ],
+          "display": "none",
+          "h": 0,
+          "layout": "hidden lg:hidden border-t border-gray-200 bg-white",
+          "tag": "div",
+          "w": 0
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 32,
+                              "href": "/docs",
+                              "layout": "block px-3 py-1.5 text-sm font-semibold text-primary mb-3",
+                              "tag": "a",
+                              "text": "Introduction",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "Guides",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/guides/mining",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Mining Lotus",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/guides/running",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Running Node",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/guides/tipping-bot",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Tipping Lotus",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs / Bitcoin Cash",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2018-nov-upgrade",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2018 November 15 Network Upgrade Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-05-15-schnorr",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-MAY-15 Schnorr Signature specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-05-15-segwit-recovery",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-MAY-15 Segwit Recovery Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-05-15-upgrade",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-MAY-15 Network Upgrade Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-11-15-minimaldata",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-NOV-15 minimal push and minimal number encoding rules",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-11-15-schnorrmultisig",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-NOV-15 Schnorr OP_CHECKMULTISIG specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2019-11-15-upgrade",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2019-NOV-15 Network Upgrade Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/Bitcoin Cash/2020-05-15-op_reversebytes",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "OP_REVERSEBYTES",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/2020-05-15-sigchecks",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2020-MAY-15 script SigChecks counting and limiting specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2020-05-15-upgrade",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2020-MAY-15 Network Upgrade Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2020-11-15-asert",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "ASERT Difficulty Adjustment Algorithm (aserti3-2d)",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/2020-11-15-upgrade",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2020-NOV-15 Network Upgrade Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/block",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Block Spec for Bitcoin Cash \u26a0\ufe0f out of date \u26a0\ufe0f",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/cashaddr",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Address format for Bitcoin Cash",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/JSON-RPC",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "BCH JSON RPC Specification \u26a0\ufe0f out of date \u26a0\ufe0f",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/may-2018-hardfork",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "May 2018 Hardfork Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/may-2018-reenabled-opcodes",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Restore disabled script opcodes, May 2018",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/nov-13-hardfork-spec",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "November 13th Bitcoin Cash Hardfork Technical Details",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/op_checkdatasig",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "OP_CHECKDATASIG and OP_CHECKDATASIGVERIFY Specification",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/op_return-prefix-guideline",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Lokad 4-byte prefix guideline for OP_RETURN on Bitcoin Cash",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/Bitcoin Cash/replay-protected-sighash",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "BUIP-HF Digest for replay protected signature verification across hard forks",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/Bitcoin Cash/transaction",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Transaction Spec for Bitcoin Cash \u26a0\ufe0f out of date \u26a0\ufe0f",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/Bitcoin Cash/uahf-technical-spec",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "UAHF Technical Specification",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 44,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs / script / examples",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/examples/taproot-atomic-swaps",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Atomic Swaps",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/script/examples/taproot-lightning",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Lightning Network Channels",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/script/examples/taproot-moderation",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Moderated Comments",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/script/examples/taproot-multisig",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Multi-Signature Governance",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/examples/taproot-nfts",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: NFTs with State",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/examples/taproot-single-key",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Single-Key Spending",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/examples/taproot-timelock",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Time-Locked Voting",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/script/examples/taproot-vaults",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot: Vaults and Cold Storage",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 53,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs / script",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/intro",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Introduction",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/script/taproot",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Taproot",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs / SigHash",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/SigHash/bitcoin-cash",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "SigHash BCH (BIP143 variant)",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/SigHash/lotus",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "SigHash Lotus",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs / upgrades",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/upgrades/genesis",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Genesis",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/upgrades/exodus",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Exodus",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 68,
+                                  "href": "/docs/specs/upgrades/2022-06-21-5040xpow-epoch-hash",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "2022-06-21 \u2014 5040xPoW Epoch Block Hash specification",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-[0.6rem] text-gray-400",
+                                      "tag": "span",
+                                      "text": "\u25b8",
+                                      "w": 6
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 28,
+                                  "layout": "text-xs font-bold text-primary-500 px-3 py-1.5 flex items-center gap-1",
+                                  "tag": "summary",
+                                  "text": "specs",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/addresses",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Address Format",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/blockheader",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Block Header",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "href": "/docs/specs/difficulty-adjustment",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "ASERT Difficulty Adjustment Algorithm (aserti3-2d)",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/subsidy",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Block Reward",
+                                  "w": 218
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "href": "/docs/specs/txid",
+                                  "layout": "block px-3 py-1 text-sm text-gray-600 rounded-lg",
+                                  "tag": "a",
+                                  "text": "Transaction IDs",
+                                  "w": 218
+                                }
+                              ],
+                              "display": "block",
+                              "h": 37,
+                              "layout": "mb-2 border-t border-gray-200 pt-2",
+                              "tag": "details",
+                              "w": 218
+                            }
+                          ],
+                          "display": "block",
+                          "h": 374,
+                          "layout": "text-sm overflow-y-auto",
+                          "tag": "nav",
+                          "w": 218
+                        }
+                      ],
+                      "display": "block",
+                      "h": 470,
+                      "layout": "mt-8 pb-24 sticky",
+                      "tag": "div",
+                      "w": 218
+                    }
+                  ],
+                  "display": "block",
+                  "h": 635,
+                  "layout": "lg:col-span-2 hidden lg:block",
+                  "tag": "div",
+                  "w": 218
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 40,
+                                      "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                                      "tag": "h1",
+                                      "text": "Introduction",
+                                      "w": 221
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 40,
+                                  "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                                  "tag": "div",
+                                  "w": 717
+                                }
+                              ],
+                              "display": "block",
+                              "h": 40,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 717
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row items-start gap-6",
+                          "tag": "div",
+                          "w": 717
+                        }
+                      ],
+                      "display": "block",
+                      "h": 105,
+                      "layout": "relative border-b border-gray-200 py-8",
+                      "tag": "div",
+                      "w": 717
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "alt": "",
+                                  "src": "/assets/images/preview-dark.png",
+                                  "tag": "img"
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 28,
+                                  "tag": "p",
+                                  "text": "This is the home of the Lotus technical documentation",
+                                  "w": 717
+                                }
+                              ],
+                              "display": "block",
+                              "h": 386,
+                              "tag": "div",
+                              "w": 717
+                            }
+                          ],
+                          "display": "block",
+                          "h": 386,
+                          "layout": "max-w-none",
+                          "tag": "article",
+                          "w": 717
+                        }
+                      ],
+                      "display": "block",
+                      "h": 498,
+                      "layout": "mt-8 pb-24 max-w-none",
+                      "tag": "div",
+                      "w": 717
+                    }
+                  ],
+                  "display": "block",
+                  "h": 635,
+                  "layout": "lg:col-span-6",
+                  "tag": "div",
+                  "w": 717
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "inline",
+                              "h": 16,
+                              "href": "/",
+                              "tag": "a",
+                              "text": "Home",
+                              "w": 33
+                            },
+                            {
+                              "display": "inline",
+                              "h": 16,
+                              "tag": "span",
+                              "text": "Docs",
+                              "w": 28
+                            }
+                          ],
+                          "display": "block",
+                          "h": 16,
+                          "layout": "text-xs text-gray-500 mb-4",
+                          "tag": "nav",
+                          "text": "/",
+                          "w": 186
+                        }
+                      ],
+                      "display": "block",
+                      "h": 96,
+                      "layout": "sticky bg-background/75 px-4 lg:py-8 text-sm",
+                      "tag": "nav",
+                      "w": 218
+                    }
+                  ],
+                  "display": "block",
+                  "h": 635,
+                  "layout": "lg:col-span-2 lg:order-last hidden lg:block",
+                  "tag": "div",
+                  "w": 218
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 635,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 635,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 674,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 113
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 377
+    },
+    {
+      "childCount": 6,
+      "children": [
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Ecosystem",
+          "w": 74
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Tools",
+          "w": 35
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Roadmap",
+          "w": 64
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "FAQ",
+          "w": 27
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Docs",
+          "w": 34
+        },
+        {
+          "display": "block",
+          "h": 24,
+          "tag": "div",
+          "text": "More \u25be",
+          "w": 44
+        }
+      ],
+      "className": "items-center gap-x-8 hidden lg:flex",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 24,
+      "tag": "div",
+      "text": "Ecosystem Tools Roadmap",
+      "w": 438
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 377
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 635,
+          "tag": "div",
+          "text": "I",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 635,
+      "tag": "div",
+      "text": "Introduction",
+      "w": 1280
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 635,
+          "tag": "div",
+          "text": "Introduction",
+          "w": 218
+        },
+        {
+          "display": "block",
+          "h": 635,
+          "tag": "div",
+          "text": "",
+          "w": 717
+        },
+        {
+          "display": "block",
+          "h": 635,
+          "tag": "div",
+          "text": "Home / Docs",
+          "w": 218
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 635,
+      "tag": "div",
+      "text": "Introduction \u25b8 Guides",
+      "w": 1216
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "block",
+          "h": 358,
+          "tag": "img",
+          "text": "",
+          "w": 717
+        },
+        {
+          "display": "block",
+          "h": 28,
+          "tag": "p",
+          "text": "This is the home of the Lotus technical",
+          "w": 717
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 386,
+      "tag": "div",
+      "text": "This is the home of the Lotus technical documentation",
+      "w": 717
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All right",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights r",
+      "w": 596
+    }
+  ]
+}

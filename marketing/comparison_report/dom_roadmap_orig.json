@@ -1,0 +1,1786 @@
+{
+  "tree": {
+    "bodyClasses": "",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/logo.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "block",
+                      "h": 48,
+                      "layout": "items-center",
+                      "tag": "div",
+                      "w": 170
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 48,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 170
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 48,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 370
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/ecosystem",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Ecosystem",
+                      "w": 74
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 74
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/tools",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Tools",
+                      "w": 35
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 35
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/roadmap",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1 text-primary",
+                      "tag": "a",
+                      "text": "Roadmap",
+                      "w": 64
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 64
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/faq",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "FAQ",
+                      "w": 27
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 27
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/docs",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Docs",
+                      "w": 34
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "w-5 h-5 flex-shrink-0",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                              "tag": "button",
+                              "text": "More",
+                              "w": 58
+                            }
+                          ],
+                          "display": "inline-flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "inline-flex w-full",
+                          "tag": "div",
+                          "w": 58
+                        }
+                      ],
+                      "display": "block",
+                      "h": 25,
+                      "layout": "relative",
+                      "tag": "div",
+                      "w": 58
+                    },
+                    {
+                      "display": "none",
+                      "h": 0,
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 25,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 58
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 25,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "ul",
+              "w": 452
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-primary-500",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-gray-400",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        }
+                      ],
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                },
+                {
+                  "children": [
+                    {
+                      "display": "inline-block",
+                      "h": 0,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 0
+                    }
+                  ],
+                  "display": "none",
+                  "h": 0,
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 text-gray-700 inline-flex items-center lg:hidden",
+                  "tag": "button",
+                  "w": 0
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 370
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "light",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h1",
+                          "text": "Roadmap",
+                          "w": 214
+                        },
+                        {
+                          "display": "block",
+                          "h": 28,
+                          "layout": "mt-4 text-lg text-gray-500",
+                          "tag": "p",
+                          "text": "Outlined below are the Stewardship's goals for the current and upcoming Epoch. P...",
+                          "w": 1094
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "column",
+                      "flexWrap": "nowrap",
+                      "h": 92,
+                      "layout": "text-center flex flex-col items-center",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "column",
+                  "flexWrap": "nowrap",
+                  "h": 92,
+                  "layout": "gap-8 sm:gap-y-16 flex flex-col",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 284,
+              "layout": "py-8 sm:py-16 lg:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5",
+                          "tag": "div",
+                          "text": "Summer 2025 - Winter 2025",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 40,
+                                      "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                                      "tag": "h1",
+                                      "text": "1st Samuel Epoch (Current)",
+                                      "w": 455
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 40,
+                                  "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 40,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row items-start gap-6",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 141,
+                      "layout": "relative border-b border-gray-200 py-8",
+                      "tag": "div",
+                      "w": 1216
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotusia Chrome Extension",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 90,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Chrome extension to implement a decentralized, community-moderated reputation sy...",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 92,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 335
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 354,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 383
+                                }
+                              ],
+                              "display": "block",
+                              "h": 355,
+                              "layout": "rounded-xl bg-white relative border-b border-l border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotusia Dashboard",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "A dashboard to aggregate data from the Lotusia ecosystem and track ecosystem growth",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 76,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 335
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 293,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 383
+                                }
+                              ],
+                              "display": "block",
+                              "h": 355,
+                              "layout": "rounded-xl bg-white relative border-b border-l border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "More to come...",
+                                      "w": 336
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 90,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "As of May 28 2025, we're working on a lot of exciting things, and will update th...",
+                                      "w": 336
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 0,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 336
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 182,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 384
+                                }
+                              ],
+                              "display": "block",
+                              "h": 355,
+                              "layout": "rounded-xl bg-white relative",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "grid",
+                          "gridCols": "384px 384px 384px",
+                          "h": 355,
+                          "layout": "grid grid-cols-1 sm:grid-cols-2 gap-8",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 451,
+                      "layout": "mt-8 pb-24",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "block",
+                  "h": 624,
+                  "layout": "lg:col-span-10",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 624,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5",
+                          "tag": "div",
+                          "text": "Winter 2024 - Summer 2025",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 40,
+                                      "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                                      "tag": "h1",
+                                      "text": "Ruth Epoch",
+                                      "w": 193
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 40,
+                                  "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 40,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row items-start gap-6",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 141,
+                      "layout": "relative border-b border-gray-200 py-8",
+                      "tag": "div",
+                      "w": 1216
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotus Mining Pool",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 23,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "A mining pool for the Lotus blockchain",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 168,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 347,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 435,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "RANK Protocol Backend (beta)",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Build the backend for the Lotusia extension, implementing the RANK protocol",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 136,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 337,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 435,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotusia Chrome Extension (beta)",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 68,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "A decentralized, community-moderated reputation system for social media, powered by Lotus",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 208,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 432,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 435,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotus/Solana Bridge",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "A liquidity bridge between the Lotus and Solana blockchains",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 132,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 333,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 336,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "grid",
+                          "gridCols": "384px 384px 384px",
+                          "h": 803,
+                          "layout": "grid grid-cols-1 sm:grid-cols-2 gap-8",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 899,
+                      "layout": "mt-8 pb-24",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "block",
+                  "h": 1072,
+                  "layout": "lg:col-span-10",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 1072,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5",
+                          "tag": "div",
+                          "text": "Summer 2024 - Winter 2024",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 40,
+                                      "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                                      "tag": "h1",
+                                      "text": "Judges Epoch",
+                                      "w": 235
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 40,
+                                  "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 40,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row items-start gap-6",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 141,
+                      "layout": "relative border-b border-gray-200 py-8",
+                      "tag": "div",
+                      "w": 1216
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Core Infrastructure",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 23,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Fortify the Stewardship's core infrastructure",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 132,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 335
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 327,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 383
+                                }
+                              ],
+                              "display": "block",
+                              "h": 386,
+                              "layout": "rounded-xl bg-white relative border-b border-l border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Organization",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 23,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Formalizing Stewardship operations",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 132,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 335
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 327,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 383
+                                }
+                              ],
+                              "display": "block",
+                              "h": 386,
+                              "layout": "rounded-xl bg-white relative border-b border-l border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotus Vase",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Revitalization and enhancement of the flagship mobile wallet for growing the Lotus Citizenry",
+                                      "w": 335
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 168,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 335
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 385,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 383
+                                }
+                              ],
+                              "display": "block",
+                              "h": 386,
+                              "layout": "rounded-xl bg-white relative border-b border-l border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 336
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotusia Website",
+                                      "w": 336
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Landing page for Lotusia and communication hub for the Stewardship",
+                                      "w": 336
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 76,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 336
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 293,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 384
+                                }
+                              ],
+                              "display": "block",
+                              "h": 293,
+                              "layout": "rounded-xl bg-white",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "grid",
+                          "gridCols": "384px 384px 384px",
+                          "h": 711,
+                          "layout": "grid grid-cols-1 sm:grid-cols-2 gap-8",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 807,
+                      "layout": "mt-8 pb-24",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "block",
+                  "h": 980,
+                  "layout": "lg:col-span-10",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 980,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5",
+                          "tag": "div",
+                          "text": "Winter 2023 - Summer 2024",
+                          "w": 1216
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 40,
+                                      "layout": "text-3xl sm:text-4xl font-bold text-gray-900",
+                                      "tag": "h1",
+                                      "text": "Joshua Epoch",
+                                      "w": 234
+                                    }
+                                  ],
+                                  "display": "flex",
+                                  "flexDir": "row",
+                                  "flexWrap": "nowrap",
+                                  "h": 40,
+                                  "layout": "flex flex-col lg:flex-row lg:items-center lg:justify-between",
+                                  "tag": "div",
+                                  "w": 1216
+                                }
+                              ],
+                              "display": "block",
+                              "h": 40,
+                              "layout": "flex-1",
+                              "tag": "div",
+                              "w": 1216
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 40,
+                          "layout": "flex flex-col lg:flex-row items-start gap-6",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 141,
+                      "layout": "relative border-b border-gray-200 py-8",
+                      "tag": "div",
+                      "w": 1216
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Lotusia Website",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 45,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Landing page for Lotusia and communication hub for the Stewardship",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 132,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 333,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 390,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 40,
+                                      "layout": "mb-6 flex",
+                                      "tag": "div",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "flex",
+                                      "flexDir": "row",
+                                      "flexWrap": "nowrap",
+                                      "h": 24,
+                                      "layout": "text-gray-900 text-base font-semibold flex items-center gap-1.5",
+                                      "tag": "p",
+                                      "text": "Network Upgrade for Judges Epoch",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 23,
+                                      "layout": "text-[15px] text-gray-500 mt-1",
+                                      "tag": "p",
+                                      "text": "Summer 2024 solstice",
+                                      "w": 333
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 208,
+                                      "layout": "mt-2 pb-0",
+                                      "tag": "div",
+                                      "w": 333
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 387,
+                                  "layout": "flex-1 px-4 py-5 sm:p-6",
+                                  "tag": "div",
+                                  "w": 381
+                                }
+                              ],
+                              "display": "block",
+                              "h": 390,
+                              "layout": "rounded-xl bg-white relative border-2 border-purple-400",
+                              "tag": "div",
+                              "w": 384
+                            }
+                          ],
+                          "display": "grid",
+                          "gridCols": "384px 384px 384px",
+                          "h": 390,
+                          "layout": "grid grid-cols-1 sm:grid-cols-2 gap-8",
+                          "tag": "div",
+                          "w": 1216
+                        }
+                      ],
+                      "display": "block",
+                      "h": 486,
+                      "layout": "mt-8 pb-24",
+                      "tag": "div",
+                      "w": 1216
+                    }
+                  ],
+                  "display": "block",
+                  "h": 659,
+                  "layout": "lg:col-span-10",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "grid",
+              "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+              "h": 659,
+              "layout": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 3617,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 3617,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 48,
+          "tag": "a",
+          "text": "",
+          "w": 170
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 48,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        },
+        {
+          "display": "none",
+          "h": 0,
+          "tag": "button",
+          "text": "",
+          "w": 0
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 5,
+      "children": [
+        {
+          "display": "block",
+          "h": 284,
+          "tag": "div",
+          "text": "RoadmapOutlined below are the Stewardshi",
+          "w": 1216
+        },
+        {
+          "display": "grid",
+          "h": 624,
+          "tag": "div",
+          "text": "Summer 2025 - Winter 20251st Samuel Epoc",
+          "w": 1216
+        },
+        {
+          "display": "grid",
+          "h": 1072,
+          "tag": "div",
+          "text": "Winter 2024 - Summer 2025Ruth EpochLotus",
+          "w": 1216
+        },
+        {
+          "display": "grid",
+          "h": 980,
+          "tag": "div",
+          "text": "Summer 2024 - Winter 2024Judges EpochCor",
+          "w": 1216
+        },
+        {
+          "display": "grid",
+          "h": 659,
+          "tag": "div",
+          "text": "Winter 2023 - Summer 2024Joshua EpochLot",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 3617,
+      "tag": "div",
+      "text": "RoadmapOutlined below are the Stewardship's goals for the cu",
+      "w": 1280
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 92,
+          "tag": "div",
+          "text": "RoadmapOutlined below are the Stewardshi",
+          "w": 1216
+        }
+      ],
+      "className": "py-8 sm:py-16 lg:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 284,
+      "tag": "div",
+      "text": "RoadmapOutlined below are the Stewardship's goals for the cu",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 624,
+          "tag": "div",
+          "text": "Summer 2025 - Winter 20251st Samuel Epoc",
+          "w": 1216
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 624,
+      "tag": "div",
+      "text": "Summer 2025 - Winter 20251st Samuel Epoch (Current)Lotusia C",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 1072,
+          "tag": "div",
+          "text": "Winter 2024 - Summer 2025Ruth EpochLotus",
+          "w": 1216
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 1072,
+      "tag": "div",
+      "text": "Winter 2024 - Summer 2025Ruth EpochLotus Mining PoolA mining",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 980,
+          "tag": "div",
+          "text": "Summer 2024 - Winter 2024Judges EpochCor",
+          "w": 1216
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 980,
+      "tag": "div",
+      "text": "Summer 2024 - Winter 2024Judges EpochCore InfrastructureFort",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 659,
+          "tag": "div",
+          "text": "Winter 2023 - Summer 2024Joshua EpochLot",
+          "w": 1216
+        }
+      ],
+      "className": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+      "display": "grid",
+      "flexDir": "column",
+      "gridCols": "92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px 92.8px",
+      "h": 659,
+      "tag": "div",
+      "text": "Winter 2023 - Summer 2024Joshua EpochLotusia WebsiteLanding",
+      "w": 1216
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All righ",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+      "w": 596
+    }
+  ]
+}

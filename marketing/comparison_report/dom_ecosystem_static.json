@@ -1,0 +1,1816 @@
+{
+  "tree": {
+    "bodyClasses": "bg-background text-foreground min-h-screen",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "alt": "Lotusia",
+                      "src": "/assets/images/logo.png",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 113
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 377
+            },
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/ecosystem",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Ecosystem",
+                  "w": 74
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/tools",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Tools",
+                  "w": 35
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/roadmap",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Roadmap",
+                  "w": 64
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/faq",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "FAQ",
+                  "w": 27
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 24,
+                  "href": "/docs",
+                  "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                  "tag": "a",
+                  "text": "Docs",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 16,
+                          "layout": "text-xs",
+                          "tag": "span",
+                          "text": "\u25be",
+                          "w": 6
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1 text-gray-700",
+                      "tag": "button",
+                      "text": "More",
+                      "w": 44
+                    },
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "/founders",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Founders",
+                          "w": 0
+                        },
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "/blog",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Blog",
+                          "w": 0
+                        },
+                        {
+                          "display": "block",
+                          "h": 0,
+                          "href": "https://explorer.lotusia.org",
+                          "layout": "block px-3 py-2 text-sm text-gray-700 rounded-lg",
+                          "tag": "a",
+                          "text": "Explorer",
+                          "w": 0
+                        }
+                      ],
+                      "display": "none",
+                      "h": 0,
+                      "layout": "hidden absolute mt-2 w-44 bg-white border border-gray-200 rounded-xl",
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "block",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "div",
+                  "w": 44
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 24,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "div",
+              "w": 438
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "tag": "svg"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "inline-flex items-center justify-center rounded-full text-gray-700",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "tag": "svg"
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "inline-flex items-center justify-center rounded-full text-gray-700",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 377
+            },
+            {
+              "children": [
+                {
+                  "tag": "svg"
+                }
+              ],
+              "display": "none",
+              "h": 0,
+              "layout": "lg:hidden inline-flex items-center justify-center rounded-full text-gray-700",
+              "tag": "button",
+              "w": 0
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "nav",
+          "w": 1280
+        },
+        {
+          "children": [
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/ecosystem",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Ecosystem",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/tools",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Tools",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/roadmap",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Roadmap",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/faq",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "FAQ",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/docs",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Docs",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/founders",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Founders",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "/blog",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Blog",
+              "w": 0
+            },
+            {
+              "display": "block",
+              "h": 0,
+              "href": "https://explorer.lotusia.org",
+              "layout": "block px-3 py-2 text-sm font-semibold text-gray-700 rounded-lg",
+              "tag": "a",
+              "text": "Explorer",
+              "w": 0
+            }
+          ],
+          "display": "none",
+          "h": 0,
+          "layout": "hidden lg:hidden border-t border-gray-200 bg-white",
+          "tag": "div",
+          "w": 0
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "inline",
+                  "h": 18,
+                  "href": "/",
+                  "tag": "a",
+                  "text": "Home",
+                  "w": 38
+                },
+                {
+                  "display": "inline",
+                  "h": 18,
+                  "tag": "span",
+                  "text": "Ecosystem - Lotusia",
+                  "w": 132
+                }
+              ],
+              "display": "block",
+              "h": 36,
+              "layout": "pt-4 text-sm text-gray-500",
+              "tag": "div",
+              "text": "/",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 144,
+                          "layout": "text-5xl font-bold text-gray-900 sm:text-7xl",
+                          "tag": "h1",
+                          "text": "Three Pillars, One Vision",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 56,
+                          "layout": "mt-6 text-lg text-gray-600",
+                          "tag": "p",
+                          "text": "Stewardship guides our path, Treasury secures our future, Citizenry creates our value",
+                          "w": 544
+                        },
+                        {
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 0,
+                          "layout": "mt-10 flex flex-wrap gap-x-6 gap-y-3",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 264,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "Three Pillars, One Vision",
+                          "src": "/assets/images/ecosystem_0_0.jpg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 307,
+                      "layout": "flex justify-center",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 307,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 435,
+              "layout": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 28,
+                          "layout": "text-base/7 font-semibold text-primary",
+                          "tag": "p",
+                          "text": "The Turtles of Lotusia",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Stewardship",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Our core leadership team\u2014the Turtles\u2014guides Lotusia with unwavering commitment t...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Truth",
+                                      "w": 41
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Question everything\u2014including ourselves\u2014to keep truth at the center",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Integrity",
+                                      "w": 66
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Take responsibility for our words, actions, and their outcomes",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Leadership",
+                                      "w": 86
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Lead with patience and understanding toward the common good",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Pragmatism",
+                                      "w": 93
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Fix what's broken instead of accepting the status quo",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 280,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 532,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 28,
+                              "layout": "text-gray-600 mb-3",
+                              "tag": "p",
+                              "text": "\"I like to burn electricity for Lotus because I like to burn Lotus.\"",
+                              "w": 494
+                            },
+                            {
+                              "children": [
+                                {
+                                  "alt": "Alexandre Guillioud",
+                                  "src": "/assets/images/alexandre_guillioud.jpeg",
+                                  "tag": "img"
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "font-semibold text-gray-900 text-sm",
+                                      "tag": "div",
+                                      "text": "Alexandre Guillioud",
+                                      "w": 190
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-xs text-gray-500",
+                                      "tag": "div",
+                                      "text": "Hash Turtle - Blockchain Architect",
+                                      "w": 190
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 36,
+                                  "tag": "div",
+                                  "w": 190
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 40,
+                              "layout": "flex items-center gap-3",
+                              "tag": "div",
+                              "w": 494
+                            }
+                          ],
+                          "display": "block",
+                          "h": 130,
+                          "layout": "rounded-xl bg-gray-100/50 border border-gray-200/50 mb-4",
+                          "tag": "div",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 56,
+                              "layout": "text-gray-600 mb-3",
+                              "tag": "p",
+                              "text": "\"Don't hoard tokens; hoard and foster human relationships. Lotus is a multi-generational project.\"",
+                              "w": 494
+                            },
+                            {
+                              "children": [
+                                {
+                                  "alt": "Matthew Urgero",
+                                  "src": "/assets/images/matthew_urgero.jpeg",
+                                  "tag": "img"
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "font-semibold text-gray-900 text-sm",
+                                      "tag": "div",
+                                      "text": "Matthew Urgero",
+                                      "w": 229
+                                    },
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "text-xs text-gray-500",
+                                      "tag": "div",
+                                      "text": "Faithful Turtle - Architect and Operations",
+                                      "w": 229
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 36,
+                                  "tag": "div",
+                                  "w": 229
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 40,
+                              "layout": "flex items-center gap-3",
+                              "tag": "div",
+                              "w": 494
+                            }
+                          ],
+                          "display": "block",
+                          "h": 158,
+                          "layout": "rounded-xl bg-gray-100/50 border border-gray-200/50 mb-4",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "grid",
+                      "gridCols": "544px",
+                      "h": 351,
+                      "layout": "grid grid-cols-1 gap-8",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 532,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 724,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Citizenry",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Every person who gives or receives Lotus is part of our citizenry\u2014the heart of o...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Open to All",
+                                      "w": 85
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Anyone can become a citizen\u2014no barriers, no gatekeepers",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Culture of Giving",
+                                      "w": 129
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Generosity and authentic connections are what make Lotusia possible",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Growth Through Understanding",
+                                      "w": 243
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "We grow together by learning from each other and building understanding",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 236,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 460,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "Citizenry",
+                          "src": "/assets/images/ecosystem_1_2.jpg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 384,
+                      "layout": "flex justify-center",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 460,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 652,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Treasury & Miners",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Our global network of miners secures the Lotus network and creates new currency....",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Network Security",
+                                      "w": 134
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Miners run computers that maintain the Lotus network and keep all transactions secure",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Currency Creation",
+                                      "w": 143
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Electricity is converted into new Lotus through secure cryptographic processes",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Community Consensus",
+                                      "w": 180
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Miners signal their support for Stewardship decisions, creating alignment across the ecosystem",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 16,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 16
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Funding Growth",
+                                      "w": 123
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Half of all new Lotus goes directly to Stewardship for community development",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 352,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 576,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "children": [
+                        {
+                          "alt": "Treasury & Miners",
+                          "src": "/assets/images/ecosystem_2_0.jpg",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 0,
+                      "layout": "flex justify-center",
+                      "tag": "div",
+                      "w": 544
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 576,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 768,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 2615,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 2615,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 113
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 377
+    },
+    {
+      "childCount": 6,
+      "children": [
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Ecosystem",
+          "w": 74
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Tools",
+          "w": 35
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Roadmap",
+          "w": 64
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "FAQ",
+          "w": 27
+        },
+        {
+          "display": "flex",
+          "h": 24,
+          "tag": "a",
+          "text": "Docs",
+          "w": 34
+        },
+        {
+          "display": "block",
+          "h": 24,
+          "tag": "div",
+          "text": "More \u25be",
+          "w": 44
+        }
+      ],
+      "className": "items-center gap-x-8 hidden lg:flex",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 24,
+      "tag": "div",
+      "text": "Ecosystem Tools Roadmap",
+      "w": 438
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 377
+    },
+    {
+      "childCount": 5,
+      "children": [
+        {
+          "display": "block",
+          "h": 36,
+          "tag": "div",
+          "text": "Home / Ecosystem - Lotusia",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 435,
+          "tag": "div",
+          "text": "Three Pillars, One VisionStewardship gui",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 724,
+          "tag": "div",
+          "text": "The Turtles o",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 652,
+          "tag": "div",
+          "text": "Ci",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 768,
+          "tag": "div",
+          "text": "Tr",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 2615,
+      "tag": "div",
+      "text": "Home / Ecosystem - Lotusia Three Pillars, O",
+      "w": 1280
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "inline",
+          "h": 18,
+          "tag": "a",
+          "text": "Home",
+          "w": 38
+        },
+        {
+          "display": "inline",
+          "h": 18,
+          "tag": "span",
+          "text": "Ecosystem - Lotusia",
+          "w": 132
+        }
+      ],
+      "className": "pt-4 text-sm text-gray-500",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 36,
+      "tag": "div",
+      "text": "Home / Ecosystem - Lotusia",
+      "w": 1216
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 307,
+          "tag": "div",
+          "text": "Three Pillars, One VisionStewardship gui",
+          "w": 1216
+        }
+      ],
+      "className": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 435,
+      "tag": "div",
+      "text": "Three Pillars, One VisionStewardship guides our path, Treasu",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 144,
+          "tag": "h1",
+          "text": "Three Pillars, One Vision",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 56,
+          "tag": "p",
+          "text": "Stewardship guides our path, Treasury se",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 0,
+          "tag": "div",
+          "text": "",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 264,
+      "tag": "div",
+      "text": "Three Pillars, One VisionStewardship guides our path, Treasu",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 307,
+          "tag": "img",
+          "text": "",
+          "w": 448
+        }
+      ],
+      "className": "flex justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 307,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 532,
+          "tag": "div",
+          "text": "The Turtles of Lotus",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 724,
+      "tag": "div",
+      "text": "The Turtles of Lotusia",
+      "w": 1216
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "block",
+          "h": 28,
+          "tag": "p",
+          "text": "The Turtles of Lotusia",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Stewardship",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "Our core leadership team\u2014the Turtles\u2014gui",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 280,
+          "tag": "dl",
+          "text": "TruthQuestion everything\u2014including ourse",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 532,
+      "tag": "div",
+      "text": "The Turtles of Lotusia Stewardship",
+      "w": 544
+    },
+    {
+      "childCount": 2,
+      "children": [
+        {
+          "display": "block",
+          "h": 130,
+          "tag": "div",
+          "text": "\"I like to burn electricity for Lotus be",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 158,
+          "tag": "div",
+          "text": "\"Don't hoard tokens; hoard and foster hu",
+          "w": 544
+        }
+      ],
+      "className": "grid grid-cols-1 gap-8",
+      "display": "grid",
+      "flexDir": "row",
+      "gridCols": "544px",
+      "h": 351,
+      "tag": "div",
+      "text": "\"I like to burn electricity for Lotus because I like to burn",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 460,
+          "tag": "div",
+          "text": "Citizenry",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 652,
+      "tag": "div",
+      "text": "Citizenry Ev",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Citizenry",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "Every person who gives or receives Lotus",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 236,
+          "tag": "dl",
+          "text": "Open to AllAnyone can become a citizen\u2014n",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 460,
+      "tag": "div",
+      "text": "Citizenry Every person who g",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 384,
+          "tag": "img",
+          "text": "",
+          "w": 384
+        }
+      ],
+      "className": "flex justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 384,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 576,
+          "tag": "div",
+          "text": "Treasury",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 768,
+      "tag": "div",
+      "text": "Treasury & Miners",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Treasury & Miners",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "Our global network of miners secures the",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 352,
+          "tag": "dl",
+          "text": "Network SecurityMiners run computers tha",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 576,
+      "tag": "div",
+      "text": "Treasury & Miners Our global",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 0,
+          "tag": "img",
+          "text": "",
+          "w": 384
+        }
+      ],
+      "className": "flex justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 544
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All right",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights r",
+      "w": 596
+    }
+  ]
+}

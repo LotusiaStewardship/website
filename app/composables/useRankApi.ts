@@ -11,7 +11,6 @@ import type {
   RankActivityResult,
   WalletSummaryResult
 } from '~/types'
-import { RANK_API_URL } from '~/utils/constants'
 
 type VoterDetails = {
   ranking: string
@@ -87,11 +86,24 @@ type ProfilePostsAPI = {
 }
 
 export const useRankApi = () => {
+  const config = useRuntimeConfig()
+  const rankApiUrl = config.public.rankApiUrl || process.env.NUXT_URL_RANK || ''
+
+  function buildRankUrl(path: string) {
+    if (!rankApiUrl) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Missing rank API base URL'
+      })
+    }
+    return `${rankApiUrl}${path}`
+  }
+
   const getProfiles = async (
     page: number = 1,
     pageSize: number = 10
   ): Promise<ProfilesAPI> => {
-    const url = `${RANK_API_URL}/profiles/${page}/${pageSize}`
+    const url = buildRankUrl(`/profiles/${page}/${pageSize}`)
     const response = await fetch(url)
     return (await response.json()) as ProfilesAPI
   }
@@ -109,7 +121,7 @@ export const useRankApi = () => {
     page: number = 1,
     pageSize: number = 10
   ): Promise<ProfilePostsAPI> => {
-    const url = `${RANK_API_URL}/${platform}/${profileId}/posts/${page}/${pageSize}`
+    const url = buildRankUrl(`/${platform}/${profileId}/posts/${page}/${pageSize}`)
     const response = await fetch(url)
     return (await response.json()) as ProfilePostsAPI
   }
@@ -123,7 +135,7 @@ export const useRankApi = () => {
     page: number = 1,
     pageSize: number = 10
   ): Promise<VoteActivity> => {
-    const url = `${RANK_API_URL}/votes/${page}/${pageSize}`
+    const url = buildRankUrl(`/votes/${page}/${pageSize}`)
     const response = await fetch(url)
     return (await response.json()) as VoteActivity
   }
@@ -131,7 +143,7 @@ export const useRankApi = () => {
   const getTopRankedProfiles = async (
     timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/profiles/top-ranked/${timespan}`
+    const url = buildRankUrl(`/stats/profiles/top-ranked/${timespan}`)
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
@@ -139,7 +151,7 @@ export const useRankApi = () => {
   const getLowestRankedProfiles = async (
     timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/profiles/lowest-ranked/${timespan}`
+    const url = buildRankUrl(`/stats/profiles/lowest-ranked/${timespan}`)
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
@@ -147,7 +159,7 @@ export const useRankApi = () => {
   const getTopRankedPosts = async (
     timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/posts/top-ranked/${timespan}`
+    const url = buildRankUrl(`/stats/posts/top-ranked/${timespan}`)
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
@@ -155,7 +167,7 @@ export const useRankApi = () => {
   const getLowestRankedPosts = async (
     timespan: Timespan = 'today'
   ): Promise<APIResponse[]> => {
-    const url = `${RANK_API_URL}/stats/posts/lowest-ranked/${timespan}`
+    const url = buildRankUrl(`/stats/posts/lowest-ranked/${timespan}`)
     const response = await fetch(url)
     return (await response.json()) as APIResponse[]
   }
@@ -164,7 +176,7 @@ export const useRankApi = () => {
     platform: ScriptChunkPlatformUTF8,
     profileId: string
   ): Promise<ProfileData> => {
-    const url = `${RANK_API_URL}/${platform}/${profileId}`
+    const url = buildRankUrl(`/${platform}/${profileId}`)
     const response = await fetch(url)
     return (await response.json()) as ProfileData
   }
@@ -175,7 +187,7 @@ export const useRankApi = () => {
     page: number = 1,
     pageSize: number = 10
   ): Promise<ProfileVoteActivity> => {
-    const url = `${RANK_API_URL}/txs/${platform}/${profileId}/${page}/${pageSize}`
+    const url = buildRankUrl(`/txs/${platform}/${profileId}/${page}/${pageSize}`)
     const response = await fetch(url)
     return (await response.json()) as ProfileVoteActivity
   }
@@ -185,7 +197,7 @@ export const useRankApi = () => {
     profileId: string,
     postId: string
   ): Promise<PostAPI> => {
-    const url = `${RANK_API_URL}/${platform}/${profileId}/${postId}`
+    const url = buildRankUrl(`/${platform}/${profileId}/${postId}`)
     const response = await fetch(url)
     return (await response.json()) as PostAPI
   }
@@ -195,9 +207,9 @@ export const useRankApi = () => {
     startTime?: string,
     endTime?: string
   ): Promise<WalletActivity[]> => {
-    const url = `${RANK_API_URL}/wallet/${scriptPayload}${
+    const url = buildRankUrl(`/wallet/${scriptPayload}${
       startTime ? `/${startTime}` : ''
-    }${endTime ? `/${endTime}` : ''}`
+    }${endTime ? `/${endTime}` : ''}`)
     const response = await fetch(url)
     return await response.json()
   }
@@ -207,22 +219,22 @@ export const useRankApi = () => {
     startTime?: Timespan,
     endTime?: Timespan
   ): Promise<WalletActivitySummary> => {
-    const url = `${RANK_API_URL}/wallet/summary/${scriptPayload}${
+    const url = buildRankUrl(`/wallet/summary/${scriptPayload}${
       startTime ? `/${startTime}` : ''
-    }${endTime ? `/${endTime}` : ''}`
+    }${endTime ? `/${endTime}` : ''}`)
     const response = await fetch(url)
     return await response.json()
   }
 
   const getWeeklyWalletActivity = async (): Promise<RankActivityResult[]> => {
-    const url = `${RANK_API_URL}/charts/wallet/activity/week`
+    const url = buildRankUrl('/charts/wallet/activity/week')
     const response = await fetch(url)
     return await response.json()
   }
 
   const getMonthlyWalletActivity = async (): Promise<RankActivityResult[]> => {
     try {
-      const url = `${RANK_API_URL}/charts/wallet/activity/month`
+      const url = buildRankUrl('/charts/wallet/activity/month')
       const response = await fetch(url)
 
       if (!response.ok) {
@@ -271,7 +283,7 @@ export const useRankApi = () => {
     RankActivityResult[]
   > => {
     try {
-      const url = `${RANK_API_URL}/charts/wallet/activity/quarter`
+      const url = buildRankUrl('/charts/wallet/activity/quarter')
       const response = await fetch(url)
 
       if (!response.ok) {
@@ -318,7 +330,7 @@ export const useRankApi = () => {
 
   const getWeeklyWalletSummary = async (): Promise<WalletSummaryResult> => {
     try {
-      const url = `${RANK_API_URL}/charts/wallet/summary/week`
+      const url = buildRankUrl('/charts/wallet/summary/week')
       const response = await fetch(url)
 
       if (!response.ok) {
@@ -361,7 +373,7 @@ export const useRankApi = () => {
 
   const getMonthlyWalletSummary = async (): Promise<WalletSummaryResult> => {
     try {
-      const url = `${RANK_API_URL}/charts/wallet/summary/month`
+      const url = buildRankUrl('/charts/wallet/summary/month')
       const response = await fetch(url)
 
       if (!response.ok) {
@@ -403,7 +415,7 @@ export const useRankApi = () => {
 
   const getQuarterlyWalletSummary = async (): Promise<WalletSummaryResult> => {
     try {
-      const url = `${RANK_API_URL}/charts/wallet/summary/quarter`
+      const url = buildRankUrl('/charts/wallet/summary/quarter')
       const response = await fetch(url)
 
       if (!response.ok) {
@@ -446,7 +458,7 @@ export const useRankApi = () => {
   // Search for profiles across platforms
   const searchProfiles = async (query: string): Promise<ProfileAPI[]> => {
     if (!query || query.trim().length < 2) return []
-    const url = `${RANK_API_URL}/search/profile/${query}`
+    const url = buildRankUrl(`/search/profile/${query}`)
     try {
       const response = await fetch(url)
       return (await response.json()) as ProfileAPI[]

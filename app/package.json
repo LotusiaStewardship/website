@@ -20,6 +20,7 @@
     "@nuxt/fonts": "^0.6.1",
     "@nuxt/image": "^1.6.0",
     "@nuxt/ui-pro": "^1.2.0",
+    "@nuxtjs/sitemap": "^8.0.5",
     "@unovis/vue": "^1.5.2",
     "@vueuse/nuxt": "^10.9.0",
     "chronik-client": "0.19.0",

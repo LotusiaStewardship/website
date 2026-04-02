@@ -1,0 +1,2137 @@
+{
+  "tree": {
+    "bodyClasses": "",
+    "footer": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+                  "tag": "div",
+                  "w": 596
+                },
+                {
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 0,
+                  "layout": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+                  "tag": "div",
+                  "w": 0
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "text-gray-500 text-sm",
+                      "tag": "p",
+                      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+                      "w": 330
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 20,
+                  "layout": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+                  "tag": "div",
+                  "w": 596
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 52,
+              "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3",
+              "tag": "div",
+              "w": 1280
+            }
+          ],
+          "display": "block",
+          "h": 53,
+          "layout": "border-t border-gray-200",
+          "tag": "div",
+          "w": 1405
+        }
+      ],
+      "display": "block",
+      "h": 53,
+      "layout": "relative",
+      "tag": "footer",
+      "w": 1405
+    },
+    "header": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "alt": "",
+                          "src": "/_ipx/_/img/logo.png",
+                          "tag": "img"
+                        }
+                      ],
+                      "display": "block",
+                      "h": 48,
+                      "layout": "items-center",
+                      "tag": "div",
+                      "w": 170
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 48,
+                  "href": "/",
+                  "layout": "flex-shrink-0 font-bold text-xl text-gray-900 flex items-end gap-1.5",
+                  "tag": "a",
+                  "w": 170
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 48,
+              "layout": "lg:flex-1 flex items-center gap-1.5",
+              "tag": "div",
+              "w": 370
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/ecosystem",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Ecosystem",
+                      "w": 74
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 74
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/tools",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Tools",
+                      "w": 35
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 35
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/roadmap",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Roadmap",
+                      "w": 64
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 64
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/faq",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "FAQ",
+                      "w": 27
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 27
+                },
+                {
+                  "children": [
+                    {
+                      "display": "flex",
+                      "flexDir": "row",
+                      "flexWrap": "nowrap",
+                      "h": 24,
+                      "href": "/docs",
+                      "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                      "tag": "a",
+                      "text": "Docs",
+                      "w": 34
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 24,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 34
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "w-5 h-5 flex-shrink-0",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 24,
+                              "layout": "text-sm/6 font-semibold flex items-center gap-1",
+                              "tag": "button",
+                              "text": "More",
+                              "w": 58
+                            }
+                          ],
+                          "display": "inline-flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 24,
+                          "layout": "inline-flex w-full",
+                          "tag": "div",
+                          "w": 58
+                        }
+                      ],
+                      "display": "block",
+                      "h": 25,
+                      "layout": "relative",
+                      "tag": "div",
+                      "w": 58
+                    },
+                    {
+                      "display": "none",
+                      "h": 0,
+                      "tag": "div",
+                      "w": 0
+                    }
+                  ],
+                  "display": "list-item",
+                  "h": 25,
+                  "layout": "relative",
+                  "tag": "li",
+                  "w": 58
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 25,
+              "layout": "items-center gap-x-8 hidden lg:flex",
+              "tag": "ul",
+              "w": 452
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://t.me/givelotus",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "display": "block",
+                      "h": 20,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 20
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 32,
+                  "href": "https://github.com/LotusiaStewardship",
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 text-gray-700 inline-flex items-center",
+                  "tag": "a",
+                  "w": 32
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-primary-500",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        },
+                        {
+                          "children": [
+                            {
+                              "display": "block",
+                              "h": 8,
+                              "layout": "h-2 w-2 text-gray-400",
+                              "tag": "span",
+                              "w": 8
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 12,
+                          "layout": "absolute h-full w-full flex items-center justify-center",
+                          "tag": "span",
+                          "w": 12
+                        }
+                      ],
+                      "display": "block",
+                      "h": 12,
+                      "layout": "relative inline-block rounded-full bg-white h-3 w-3",
+                      "tag": "span",
+                      "w": 12
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "row",
+                  "flexWrap": "nowrap",
+                  "h": 16,
+                  "layout": "relative inline-flex flex-shrink-0 border-2 border-transparent h-4 w-7 rounded-full bg-gray-200",
+                  "tag": "button",
+                  "w": 28
+                },
+                {
+                  "children": [
+                    {
+                      "display": "inline-block",
+                      "h": 0,
+                      "layout": "flex-shrink-0 h-5 w-5",
+                      "tag": "span",
+                      "w": 0
+                    }
+                  ],
+                  "display": "none",
+                  "h": 0,
+                  "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-2 text-gray-700 inline-flex items-center lg:hidden",
+                  "tag": "button",
+                  "w": 0
+                }
+              ],
+              "display": "flex",
+              "flexDir": "row",
+              "flexWrap": "nowrap",
+              "h": 32,
+              "layout": "flex items-center justify-end lg:flex-1 gap-1.5",
+              "tag": "div",
+              "w": 370
+            }
+          ],
+          "display": "flex",
+          "flexDir": "row",
+          "flexWrap": "nowrap",
+          "h": 64,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 65,
+      "layout": "bg-background/75 border-b border-gray-200 sticky",
+      "tag": "header",
+      "w": 1405
+    },
+    "htmlClasses": "light",
+    "main": {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 216,
+                          "layout": "text-5xl font-bold text-gray-900 sm:text-7xl",
+                          "tag": "h1",
+                          "text": "Restoring Humanity to Society",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 56,
+                          "layout": "mt-6 text-lg text-gray-600",
+                          "tag": "p",
+                          "text": "Lotusia was founded to foster human relationships, build reciprocal culture, and...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "tag": "span",
+                                  "text": "Get Started",
+                                  "w": 88
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "flex-shrink-0 h-6 w-6",
+                                  "tag": "span",
+                                  "w": 24
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 44,
+                              "href": "/tools",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-base gap-x-2.5 px-3.5 py-2.5 text-white bg-purple-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 150
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "tag": "span",
+                                  "text": "Learn More",
+                                  "w": 84
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "flex-shrink-0 h-6 w-6",
+                                  "tag": "span",
+                                  "w": 24
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 44,
+                              "href": "/faq",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-base gap-x-2.5 px-3.5 py-2.5 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 146
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 44,
+                          "layout": "mt-10 flex flex-wrap gap-x-6 gap-y-3",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 380,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_hero.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 380,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 508,
+              "layout": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "What Is Lotus?",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "The Lotusia economy is denominated in the Lotus currency. Lotus combines the bes...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Debt-free",
+                                      "w": 77
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Lotus is issued through Proof-of-Work mining (electricity)",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Inflationary",
+                                      "w": 88
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "No arbitrary issuance cap (unlike Bitcoin), therefore no reason to hoard it",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Abundant",
+                                      "w": 77
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Issuance of new Lotus is adjusted to demand of the Lotusia economy",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Stabilizing",
+                                      "w": 79
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Lotus is removed from circulation through voluntary destructive use to stabilize volatility",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 328,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 552,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_1.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 552,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 744,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "The Power of Giving",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 192,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Reciprocity is the core of all human relationships, whether personal or professi...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 49,
+                                      "tag": "span",
+                                      "text": "\"I tell you, use worldly wealth to gain friends for yourselves, so that when it ...",
+                                      "w": 509
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 56,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Luke 16:9",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 80,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 133,
+                                      "tag": "span",
+                                      "text": "\"Do not store up for yourselves treasures on earth, where moths and vermin destr...",
+                                      "w": 490
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 140,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Matthew 6:19-21",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 164,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 260,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 548,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_2.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 548,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 740,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Ecosystem Alignment",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 192,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "Societies of the world are suffering from high levels of corruption and poverty ...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Value proposition",
+                                      "w": 136
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "The Stewardship must propose its plan to produce value for Lotusia prior to receiving funding",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Funding transparency",
+                                      "w": 170
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Currency issued to and spent by the Stewardship is untamperable public record",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Voluntary association",
+                                      "w": 168
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "The Citizenry can dismiss the existing Stewardship and immediately elect a new S...",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 260,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 548,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_3.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 548,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 740,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 96,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Public Goods for the Ecosystem",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "The Lotusia Stewardship develops and maintains open-source tools, libraries, and...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Open Source",
+                                      "w": 100
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "All Stewardship software is open source, auditable, and community-maintained",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Permissionless",
+                                      "w": 115
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Anyone can use these tools without restriction",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 52,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Extensible",
+                                      "w": 80
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Build your own applications on top of the Stewardship's infrastructure",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 236,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 508,
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_4.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 512,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 704,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 48,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl",
+                          "tag": "h2",
+                          "text": "Worldwide Impact",
+                          "w": 544
+                        },
+                        {
+                          "display": "block",
+                          "h": 128,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "The Lotus blockchain, due to its interconnected digital nature, is lightning fas...",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Permissionless",
+                                      "w": 115
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "Everyone is free to join and leave the network at will and give Lotus to anybody...",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Versatile",
+                                      "w": 68
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 72,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "The programmable nature of the blockchain provides extensive capabilities to mee...",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 100,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Adaptable",
+                                      "w": 80
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 72,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "A 6-month regular upgrade schedule of the blockchain software ensures the perfor...",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 100,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "display": "block",
+                                      "h": 20,
+                                      "layout": "absolute h-5 w-5 text-primary",
+                                      "tag": "span",
+                                      "w": 20
+                                    },
+                                    {
+                                      "display": "inline",
+                                      "h": 21,
+                                      "tag": "span",
+                                      "text": "Scalable",
+                                      "w": 65
+                                    }
+                                  ],
+                                  "display": "block",
+                                  "h": 28,
+                                  "layout": "font-semibold text-gray-900",
+                                  "tag": "dt",
+                                  "w": 512
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 48,
+                                  "layout": "text-gray-500",
+                                  "tag": "dd",
+                                  "text": "The Lotus blockchain is based on Bitcoin ABC software, making it highly scalable",
+                                  "w": 512
+                                }
+                              ],
+                              "display": "block",
+                              "h": 76,
+                              "layout": "relative",
+                              "tag": "div",
+                              "w": 544
+                            }
+                          ],
+                          "display": "block",
+                          "h": 400,
+                          "layout": "mt-6",
+                          "tag": "dl",
+                          "w": 544
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "tag": "span",
+                                  "text": "What is Bitcoin ABC?",
+                                  "w": 138
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 20,
+                                  "layout": "flex-shrink-0 h-5 w-5",
+                                  "tag": "span",
+                                  "w": 20
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 32,
+                              "href": "https://bitcoinabc.org",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-sm gap-x-1.5 px-2.5 py-1.5 text-gray-700 bg-gray-50 inline-flex items-center",
+                              "tag": "a",
+                              "w": 184
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "wrap",
+                          "h": 32,
+                          "layout": "mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
+                          "tag": "div",
+                          "w": 544
+                        }
+                      ],
+                      "display": "block",
+                      "h": 688,
+                      "layout": "lg:order-last",
+                      "tag": "div",
+                      "w": 544
+                    },
+                    {
+                      "alt": "",
+                      "src": "/_ipx/_/img/turtles_5.jpeg",
+                      "tag": "img"
+                    }
+                  ],
+                  "display": "grid",
+                  "gridCols": "544px 544px",
+                  "h": 688,
+                  "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl gap-16 sm:gap-y-24 grid lg:grid-cols-2 lg:items-center",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 880,
+              "layout": "py-16 sm:py-24",
+              "tag": "div",
+              "w": 1216
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "display": "block",
+                          "h": 40,
+                          "layout": "text-3xl font-bold text-gray-900 sm:text-4xl",
+                          "tag": "h2",
+                          "text": "Society Needs Humanity",
+                          "w": 1152
+                        },
+                        {
+                          "display": "block",
+                          "h": 64,
+                          "layout": "mt-6 text-lg/8 text-gray-600",
+                          "tag": "p",
+                          "text": "It takes all of us making small, positive changes in our daily interactions with...",
+                          "w": 1152
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "tag": "span",
+                                  "text": "Get Started",
+                                  "w": 88
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "flex-shrink-0 h-6 w-6",
+                                  "tag": "span",
+                                  "w": 24
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 44,
+                              "href": "/tools",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-base gap-x-2.5 px-3.5 py-2.5 text-white bg-purple-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 150
+                            },
+                            {
+                              "children": [
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "tag": "span",
+                                  "text": "Learn More",
+                                  "w": 84
+                                },
+                                {
+                                  "display": "block",
+                                  "h": 24,
+                                  "layout": "flex-shrink-0 h-6 w-6",
+                                  "tag": "span",
+                                  "w": 24
+                                }
+                              ],
+                              "display": "flex",
+                              "flexDir": "row",
+                              "flexWrap": "nowrap",
+                              "h": 44,
+                              "href": "/faq",
+                              "layout": "flex-shrink-0 font-medium rounded-full text-base gap-x-2.5 px-3.5 py-2.5 text-white bg-primary-500 inline-flex items-center",
+                              "tag": "a",
+                              "w": 146
+                            }
+                          ],
+                          "display": "flex",
+                          "flexDir": "row",
+                          "flexWrap": "nowrap",
+                          "h": 44,
+                          "layout": "mt-10 flex items-center gap-x-6 justify-center",
+                          "tag": "div",
+                          "w": 1152
+                        }
+                      ],
+                      "display": "block",
+                      "h": 212,
+                      "layout": "text-center",
+                      "tag": "div",
+                      "w": 1152
+                    }
+                  ],
+                  "display": "flex",
+                  "flexDir": "column",
+                  "flexWrap": "nowrap",
+                  "h": 468,
+                  "layout": "flex flex-col gap-16 sm:gap-y-24 sm:p-6 py-24 sm:py-32 px-6 lg:px-8",
+                  "tag": "div",
+                  "w": 1216
+                }
+              ],
+              "display": "block",
+              "h": 468,
+              "layout": "relative",
+              "tag": "div",
+              "w": 1216
+            }
+          ],
+          "display": "block",
+          "h": 4784,
+          "layout": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+          "tag": "div",
+          "w": 1280
+        }
+      ],
+      "display": "block",
+      "h": 4784,
+      "layout": "min-h-[calc(100vh-var(--header-height))]",
+      "tag": "main",
+      "w": 1405
+    }
+  },
+  "sections": [
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 48,
+          "tag": "a",
+          "text": "",
+          "w": 170
+        }
+      ],
+      "className": "lg:flex-1 flex items-center gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 48,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "a",
+          "text": "",
+          "w": 32
+        },
+        {
+          "display": "flex",
+          "h": 16,
+          "tag": "button",
+          "text": "",
+          "w": 28
+        },
+        {
+          "display": "none",
+          "h": 0,
+          "tag": "button",
+          "text": "",
+          "w": 0
+        }
+      ],
+      "className": "flex items-center justify-end lg:flex-1 gap-1.5",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 32,
+      "tag": "div",
+      "text": "",
+      "w": 370
+    },
+    {
+      "childCount": 7,
+      "children": [
+        {
+          "display": "block",
+          "h": 508,
+          "tag": "div",
+          "text": "Restoring Humanity to SocietyLotusia was",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 744,
+          "tag": "div",
+          "text": "What Is Lotus?The Lotusia economy is den",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 740,
+          "tag": "div",
+          "text": "The Power of GivingReciprocity is the co",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 740,
+          "tag": "div",
+          "text": "Ecosystem AlignmentSocieties of the worl",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 704,
+          "tag": "div",
+          "text": "Public Goods for the EcosystemThe Lotusi",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 880,
+          "tag": "div",
+          "text": "Worldwide ImpactThe Lotus blockchain, du",
+          "w": 1216
+        },
+        {
+          "display": "block",
+          "h": 468,
+          "tag": "div",
+          "text": "Society Needs HumanityIt takes all of us",
+          "w": 1216
+        }
+      ],
+      "className": "mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 4784,
+      "tag": "div",
+      "text": "Restoring Humanity to SocietyLotusia was founded to foster h",
+      "w": 1280
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 380,
+          "tag": "div",
+          "text": "Restoring Humanity to SocietyLotusia was",
+          "w": 1216
+        }
+      ],
+      "className": "md:py-40 relative py-16 sm:py-16 lg:py-16",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 508,
+      "tag": "div",
+      "text": "Restoring Humanity to SocietyLotusia was founded to foster h",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 216,
+          "tag": "h1",
+          "text": "Restoring Humanity to Society",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 56,
+          "tag": "p",
+          "text": "Lotusia was founded to foster human rela",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 44,
+          "tag": "div",
+          "text": "Get StartedLearn More",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 380,
+      "tag": "div",
+      "text": "Restoring Humanity to SocietyLotusia was founded to foster h",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 552,
+          "tag": "div",
+          "text": "What Is Lotus?The Lotusia economy is den",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 744,
+      "tag": "div",
+      "text": "What Is Lotus?The Lotusia economy is denominated in the Lotu",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "What Is Lotus?",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "The Lotusia economy is denominated in th",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 328,
+          "tag": "dl",
+          "text": "Debt-freeLotus is issued through Proof-o",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 552,
+      "tag": "div",
+      "text": "What Is Lotus?The Lotusia economy is denominated in the Lotu",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 548,
+          "tag": "div",
+          "text": "The Power of GivingReciprocity is the co",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 740,
+      "tag": "div",
+      "text": "The Power of GivingReciprocity is the core of all human rela",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "The Power of Giving",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 192,
+          "tag": "p",
+          "text": "Reciprocity is the core of all human rel",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 260,
+          "tag": "dl",
+          "text": "\"I tell you, use worldly wealth to gain",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 548,
+      "tag": "div",
+      "text": "The Power of GivingReciprocity is the core of all human rela",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 548,
+          "tag": "div",
+          "text": "Ecosystem AlignmentSocieties of the worl",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 740,
+      "tag": "div",
+      "text": "Ecosystem AlignmentSocieties of the world are suffering from",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Ecosystem Alignment",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 192,
+          "tag": "p",
+          "text": "Societies of the world are suffering fro",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 260,
+          "tag": "dl",
+          "text": "Value propositionThe Stewardship must pr",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 548,
+      "tag": "div",
+      "text": "Ecosystem AlignmentSocieties of the world are suffering from",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 512,
+          "tag": "div",
+          "text": "Public Goods for the EcosystemThe Lotusi",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 704,
+      "tag": "div",
+      "text": "Public Goods for the EcosystemThe Lotusia Stewardship develo",
+      "w": 1216
+    },
+    {
+      "childCount": 3,
+      "children": [
+        {
+          "display": "block",
+          "h": 96,
+          "tag": "h2",
+          "text": "Public Goods for the Ecosystem",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "The Lotusia Stewardship develops and mai",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 236,
+          "tag": "dl",
+          "text": "Open SourceAll Stewardship software is o",
+          "w": 544
+        }
+      ],
+      "className": "",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 508,
+      "tag": "div",
+      "text": "Public Goods for the EcosystemThe Lotusia Stewardship develo",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "grid",
+          "h": 688,
+          "tag": "div",
+          "text": "Worldwide ImpactThe Lotus blockchain, du",
+          "w": 1216
+        }
+      ],
+      "className": "py-16 sm:py-24",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 880,
+      "tag": "div",
+      "text": "Worldwide ImpactThe Lotus blockchain, due to its interconnec",
+      "w": 1216
+    },
+    {
+      "childCount": 4,
+      "children": [
+        {
+          "display": "block",
+          "h": 48,
+          "tag": "h2",
+          "text": "Worldwide Impact",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 128,
+          "tag": "p",
+          "text": "The Lotus blockchain, due to its interco",
+          "w": 544
+        },
+        {
+          "display": "block",
+          "h": 400,
+          "tag": "dl",
+          "text": "PermissionlessEveryone is free to join a",
+          "w": 544
+        },
+        {
+          "display": "flex",
+          "h": 32,
+          "tag": "div",
+          "text": "What is Bitcoin ABC?",
+          "w": 544
+        }
+      ],
+      "className": "lg:order-last",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 688,
+      "tag": "div",
+      "text": "Worldwide ImpactThe Lotus blockchain, due to its interconnec",
+      "w": 544
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "flex",
+          "h": 468,
+          "tag": "div",
+          "text": "Society Needs HumanityIt takes all of us",
+          "w": 1216
+        }
+      ],
+      "className": "relative",
+      "display": "block",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 468,
+      "tag": "div",
+      "text": "Society Needs HumanityIt takes all of us making small, posit",
+      "w": 1216
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 596
+    },
+    {
+      "childCount": 0,
+      "children": [],
+      "className": "mt-3 lg:mt-0 lg:order-2 flex items-center justify-center",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 0,
+      "tag": "div",
+      "text": "",
+      "w": 0
+    },
+    {
+      "childCount": 1,
+      "children": [
+        {
+          "display": "block",
+          "h": 20,
+          "tag": "p",
+          "text": "Copyright \u00a9 Lotusia 2021-2026. All righ",
+          "w": 330
+        }
+      ],
+      "className": "flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1",
+      "display": "flex",
+      "flexDir": "row",
+      "gridCols": "none",
+      "h": 20,
+      "tag": "div",
+      "text": "Copyright \u00a9 Lotusia 2021-2026. All rights reserved.",
+      "w": 596
+    }
+  ]
+}

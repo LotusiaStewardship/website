@@ -19,6 +19,10 @@ useSeoMeta({
   ogImage: page.value.ogImage
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: 'https://lotusia.org/blog' }]
+})
+
 /*
 defineOgImage({
   component: 'Saas',

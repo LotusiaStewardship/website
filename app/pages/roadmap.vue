@@ -17,6 +17,10 @@ useSeoMeta({
   ogImage: page.value.hero.ogImage
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: 'https://lotusia.org/roadmap' }]
+})
+
 const newStatusObject = (
   planned: string,
   ongoing: string,
