@@ -1,10 +1,7 @@
-import { Bitcore } from 'lotus-sdk'
-import { ScriptProcessor, type TransactionOutputRANK } from 'lotus-sdk/lib/rank'
+import { BufferUtil, Script } from 'xpi-ts/lib/bitcore'
+import { ScriptProcessor, type TransactionOutputRANK } from 'xpi-ts/lib/rank'
 import type { Tx, TxInput, TxOutput } from 'chronik-client'
-import { useChronikApi } from '@/composables/useChronikApi'
 import { getAddressFromScript } from '@/utils/address'
-
-const { getBlockchainInfo, getTransaction } = useChronikApi()
 
 type ExplorerTxInput = TxInput & {
   address: string
@@ -22,23 +19,24 @@ type ExplorerTx = Tx & {
   sumBurnedSats: string
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const txid = getRouterParam(event, 'txid')
   if (!txid) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing txid'
+      statusMessage: 'Missing txid',
     })
   }
-  const tx = await getTransaction(txid)
+  const { $chronik } = useNitroApp()
+  const tx = await $chronik.getTransaction(txid)
   if (!tx) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Transaction not found'
+      statusMessage: 'Transaction not found',
     })
   }
 
-  const blockchainInfo = await getBlockchainInfo()
+  const blockchainInfo = await $chronik.getBlockchainInfo()
   const confirmations = tx.block
     ? blockchainInfo.tipHeight - tx.block.height + 1
     : -1
@@ -47,17 +45,21 @@ export default defineEventHandler(async (event) => {
     if (!input.outputScript) {
       return input
     }
-    const script = Bitcore.Script.fromHex(input.outputScript)
+    const script = Script.fromHex(input.outputScript)
 
     // P2PKH/P2TR/P2SH outputs
-    if (script.isPayToPublicKeyHash() || script.isPayToScriptHash() || script.isPayToTaproot()) {
+    if (
+      script.isPublicKeyHashOut() ||
+      script.isScriptHashOut() ||
+      script.isTaprootOut()
+    ) {
       const address = getAddressFromScript(script).toXAddress()
       if (!address) {
         return input
       }
       return {
         ...input,
-        address
+        address,
       } as ExplorerTxInput
     }
     // return the input as is
@@ -66,8 +68,8 @@ export default defineEventHandler(async (event) => {
 
   let sumBurnedSats = 0
   const txOutputs = tx.outputs.map((output: TxOutput) => {
-    const scriptBuf = Buffer.from(output.outputScript, 'hex')
-    const script = Bitcore.Script.fromBuffer(scriptBuf)
+    const scriptBuf = BufferUtil.from(output.outputScript, 'hex')
+    const script = Script.fromBuffer(scriptBuf)
     // OP_RETURN outputs
     if (script.isDataOut()) {
       // TODO: we can add more LOKAD checks here
@@ -78,19 +80,23 @@ export default defineEventHandler(async (event) => {
       if (rankOutput) {
         return {
           ...output,
-          rankOutput
+          rankOutput,
         } as ExplorerTxOutput
       }
     }
     // P2PKH/P2TR/P2SH outputs
-    if (script.isPayToPublicKeyHash() || script.isPayToScriptHash() || script.isPayToTaproot()) {
+    if (
+      script.isPublicKeyHashOut() ||
+      script.isScriptHashOut() ||
+      script.isTaprootOut()
+    ) {
       const address = getAddressFromScript(script).toXAddress()
       if (!address) {
         return output
       }
       return {
         ...output,
-        address
+        address,
       } as ExplorerTxOutput
     }
     // if we get here, the output is not a rank output or an address output
@@ -103,6 +109,6 @@ export default defineEventHandler(async (event) => {
     confirmations,
     inputs: txInputs,
     outputs: txOutputs,
-    sumBurnedSats: sumBurnedSats.toString()
+    sumBurnedSats: sumBurnedSats.toString(),
   } as ExplorerTx
 })

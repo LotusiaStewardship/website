@@ -1,13 +1,12 @@
 import { NODE_GEOIP_URL } from '~/utils/constants'
-import { useNodeRpc } from '~/composables/useNodeRpc'
 import type { GeoIPResponse } from '~/utils/types'
 import type * as RPC from '~/utils/rpc'
 
-const { getPeerInfo, getMiningInfo } = useNodeRpc()
 const runtimeCache = new Map<string, GeoIPResponse>()
 
 export default defineEventHandler(async () => {
-  const peerInfo = await getPeerInfo()
+  const { $rpc } = useNitroApp()
+  const peerInfo = await $rpc.getPeerInfo()
   const peers: RPC.PeerInfo[] = []
   for (const peer of peerInfo) {
     // only match IPv4 addresses
@@ -15,7 +14,11 @@ export default defineEventHandler(async () => {
       continue
     }
     // skip private IP addresses
-    if (peer.addr.match(/^10\./) || peer.addr.match(/^172\.16\./) || peer.addr.match(/^192\.168\./)) {
+    if (
+      peer.addr.match(/^10\./) ||
+      peer.addr.match(/^172\.16\./) ||
+      peer.addr.match(/^192\.168\./)
+    ) {
       continue
     }
     const ip = peer.addr.split(':')[0]
@@ -23,25 +26,25 @@ export default defineEventHandler(async () => {
       peers.push({
         ...peer,
         addr: ip,
-        geoip: runtimeCache.get(ip)!.data
+        geoip: runtimeCache.get(ip)!.data,
       })
       continue
     }
     const response = await fetch(`${NODE_GEOIP_URL}/${ip}`)
-    const json = await response.json() as GeoIPResponse
+    const json = (await response.json()) as GeoIPResponse
     // console.log('GeoIP response for IP', ip, json)
     if (json.success) {
       runtimeCache.set(ip, json)
       peers.push({
         ...peer,
         addr: ip,
-        geoip: json.data
+        geoip: json.data,
       })
     }
   }
-  const miningInfo = await getMiningInfo()
+  const miningInfo = await $rpc.getMiningInfo()
   return {
     mininginfo: miningInfo,
-    peerinfo: peers
+    peerinfo: peers,
   }
 })
