@@ -1,22 +1,19 @@
-import { Bitcore } from 'lotus-sdk'
-import { useChronikApi } from '@/composables/useChronikApi'
+import { Script } from 'xpi-ts/lib/bitcore'
 import { getSumBurnedSats } from '~/utils/transaction'
 import {
   EXPLORER_TABLE_MAX_ROWS,
   NetworkCharacter,
-  Network
+  Network,
 } from '~/utils/constants'
 
-const { getTxHistoryPage } = useChronikApi()
-
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const address = getRouterParam(event, 'address')
   const { page, pageSize } = getQuery(event)
 
   if (!address) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing address'
+      statusMessage: 'Missing address',
     })
   }
 
@@ -25,31 +22,32 @@ export default defineEventHandler(async (event) => {
   if (networkChar !== NetworkCharacter) {
     throw createError({
       statusCode: 400,
-      statusMessage: `Address is not a ${Network} address`
+      statusMessage: `Address is not a ${Network} address`,
     })
   }
 
-  const script = Bitcore.Script.fromAddress(address)
+  const script = Script.fromAddress(address)
   const scriptType = script.getType()
   const scriptPayload = script.getData().toString('hex')
   if (!scriptType || !scriptPayload) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid address'
+      statusMessage: 'Invalid address',
     })
   }
 
   const pageNum = Number(page) || 1
   const pageSizeNum = Number(pageSize) || 10
 
-  const history = await getTxHistoryPage(
+  const { $chronik } = useNitroApp()
+  const history = await $chronik.getTxHistoryPage(
     scriptType,
     scriptPayload,
     // Chronik tx history page is 0-indexed, but we want to show the user a 1-indexed page
     pageNum > 0 ? pageNum - 1 : 0,
     pageSizeNum > EXPLORER_TABLE_MAX_ROWS
       ? EXPLORER_TABLE_MAX_ROWS
-      : pageSizeNum
+      : pageSizeNum,
   )
 
   // find the address last seen time
@@ -61,13 +59,13 @@ export default defineEventHandler(async (event) => {
   }
   const txs = history.txs.map(tx => ({
     ...tx,
-    sumBurnedSats: getSumBurnedSats(tx).toString()
+    sumBurnedSats: getSumBurnedSats(tx).toString(),
   }))
 
   return {
     lastSeen,
     // TODO: Add this back when we have a way to calculate the total burned sats for an address
     // numBurnedSats: txs.reduce((acc, tx) => acc + BigInt(tx.sumBurnedSats), BigInt(0)).toString(),
-    history: { txs, numPages: history.numPages }
+    history: { txs, numPages: history.numPages },
   }
 })

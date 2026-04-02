@@ -1,15 +1,12 @@
-import { Bitcore } from 'lotus-sdk'
-import { useChronikApi } from '@/composables/useChronikApi'
+import { Bitcore } from 'xpi-ts'
 
-const { getUtxos } = useChronikApi()
-
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const address = getRouterParam(event, 'address')
 
   if (!address) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing address'
+      statusMessage: 'Missing address',
     })
   }
 
@@ -19,12 +16,13 @@ export default defineEventHandler(async (event) => {
   if (!scriptType || !scriptPayload) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid address'
+      statusMessage: 'Invalid address',
     })
   }
 
+  const { $chronik } = useNitroApp()
   // fetch utxos and calculate balance
-  const utxos = await getUtxos(scriptType, scriptPayload)
+  const utxos = await $chronik.getUtxos(scriptType, scriptPayload)
   const balance = utxos
     .reduce((acc, utxo) => acc + Number(utxo.value), 0)
     .toString()
