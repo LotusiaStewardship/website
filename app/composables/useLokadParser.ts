@@ -1,4 +1,4 @@
-import { Bitcore } from 'lotus-sdk'
+import { Script } from 'xpi-ts/lib/bitcore'
 
 type ParsedScript = {
   type: 'rank'
@@ -9,7 +9,7 @@ export const useLokadParser = () => {
   const scripts: Map<string, ParsedScript> = new Map()
 
   const getLokadPrefix = (outputScript: string) => {
-    const script = Bitcore.Script.fromHex(outputScript)
+    const script = Script.fromHex(outputScript)
     if (!script.isDataOut()) {
       return null
     }

@@ -1,19 +1,21 @@
-import type { ScriptChunkPlatformUTF8 } from 'lotus-sdk/lib/rank'
+import type { ScriptChunkPlatformUTF8 } from 'xpi-ts/lib/rank'
 import {
   getProfileAvatar,
   getProfileInitials,
-  getProfileColor
+  getProfileColor,
 } from '~/utils/avatar'
 
 /**
- * Composable for handling profile avatars with caching
+ * Composable for managing profile avatars with caching and loading states.
+ *
+ * Provides methods to fetch avatar URLs, track loading status, and preload avatars.
+ * Uses local caching to avoid repeated API requests for the same profile.
  */
 export function useAvatars() {
   // Cache for avatar URLs to avoid repeated requests
   const avatarCache = ref<Record<string, string>>({})
   // Cache for loading states
   const loadingAvatars = ref<Record<string, boolean>>({})
-
   /**
    * Get an avatar URL for a profile, with caching
    *
@@ -30,7 +32,7 @@ export function useAvatars() {
         src: avatarCache.value[cacheKey],
         loading: false,
         initials: getProfileInitials(profileId),
-        color: getProfileColor(profileId)
+        color: getProfileColor(profileId),
       }
     }
 
@@ -50,7 +52,7 @@ export function useAvatars() {
         src: avatarUrl,
         loading: false,
         initials: getProfileInitials(profileId),
-        color: getProfileColor(profileId)
+        color: getProfileColor(profileId),
       }
     } catch (error) {
       console.error('Error fetching avatar:', error)
@@ -61,7 +63,7 @@ export function useAvatars() {
         src: null,
         loading: false,
         initials: getProfileInitials(profileId),
-        color: getProfileColor(profileId)
+        color: getProfileColor(profileId),
       }
     }
   }
@@ -75,7 +77,7 @@ export function useAvatars() {
    */
   function isAvatarLoading(
     platform: ScriptChunkPlatformUTF8,
-    profileId: string
+    profileId: string,
   ) {
     const cacheKey = `${platform}:${profileId}`
     return loadingAvatars.value[cacheKey] || false
@@ -87,9 +89,9 @@ export function useAvatars() {
    * @param profiles Array of profile objects with platform and profileId
    */
   async function preloadAvatars(
-    profiles: Array<{ platform: string, profileId: string }>
+    profiles: Array<{ platform: string; profileId: string }>,
   ) {
-    profiles.forEach((profile) => {
+    profiles.forEach(profile => {
       getAvatar(profile.platform, profile.profileId)
     })
   }
@@ -101,6 +103,6 @@ export function useAvatars() {
     // functions
     getAvatar,
     isAvatarLoading,
-    preloadAvatars
+    preloadAvatars,
   }
 }

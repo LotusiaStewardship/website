@@ -1,4 +1,4 @@
-import type { Bitcore } from 'lotus-sdk'
+import type { Bitcore } from 'xpi-ts'
 
 enum BIP44CoinType {
   default = 10605,
