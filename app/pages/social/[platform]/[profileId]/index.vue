@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ScriptChunkPlatformUTF8 } from 'lotus-sdk'
+import type { ScriptChunkPlatformUTF8 } from 'xpi-ts/lib/lokad'
 import { PlatformIcon, PlatformURL } from '~/utils/constants'
 import { toPercentColor, truncateTxid, formatTimestamp, toUppercaseFirstLetter, toMinifiedPercent, toMinifiedStatCount, getRankingColor } from '~/utils/functions'
 

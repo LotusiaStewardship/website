@@ -2,7 +2,7 @@ import type { ProfileAPI, PostAPI } from 'xpi-ts/lib/rank/api'
 import type {
   ScriptChunkPlatformUTF8,
   ScriptChunkSentimentUTF8
-} from 'lotus-sdk/lib/rank'
+} from 'xpi-ts/lib/lokad'
 import type {
   APIResponse,
   WalletActivity,

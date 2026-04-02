@@ -1,4 +1,4 @@
-import { Bitcore } from 'lotus-sdk'
+import { Bitcore } from 'xpi-ts'
 import type { Tx } from 'chronik-client'
 
 /**
@@ -23,7 +23,7 @@ export function calcSumBurnedSats(tx: Tx): bigint {
  * @returns The Bitcore `Script`
  */
 export function getScriptFromAddress(
-  address: string | Bitcore.Address
+  address: string | Bitcore.Address,
 ): Bitcore.Script {
   try {
     return Bitcore.Script.fromAddress(address)

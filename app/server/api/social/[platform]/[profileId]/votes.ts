@@ -1,7 +1,7 @@
 import {
   PlatformConfiguration,
   type ScriptChunkPlatformUTF8,
-} from 'lotus-sdk/lib/rank'
+} from 'xpi-ts/lib/lokad'
 
 export default defineEventHandler(async event => {
   const { platform: platformParam, profileId } = getRouterParams(event)
