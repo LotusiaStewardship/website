@@ -1,4 +1,4 @@
-import type { ProfileAPI, PostAPI } from 'lotus-sdk'
+import type { ProfileAPI, PostAPI } from 'xpi-ts/lib/rank/api'
 import type {
   ScriptChunkPlatformUTF8,
   ScriptChunkSentimentUTF8

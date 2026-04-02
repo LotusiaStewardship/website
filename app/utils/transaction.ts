@@ -1,6 +1,6 @@
 import type { Tx } from 'chronik-client'
 
-function getSumBurnedSats(tx: Tx): bigint {
+export function getSumBurnedSats(tx: Tx): bigint {
   return tx.outputs.reduce((acc, output) => {
     const value = BigInt(output.value)
     // 0x6a = OP_RETURN
@@ -9,8 +9,4 @@ function getSumBurnedSats(tx: Tx): bigint {
     }
     return acc
   }, BigInt(0))
-}
-
-export {
-  getSumBurnedSats
 }
