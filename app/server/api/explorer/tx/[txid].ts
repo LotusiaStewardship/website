@@ -19,12 +19,12 @@ type ExplorerTx = Tx & {
   sumBurnedSats: string
 }
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const txid = getRouterParam(event, 'txid')
   if (!txid) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing txid',
+      statusMessage: 'Missing txid'
     })
   }
   const { $chronik } = useNitroApp()
@@ -32,7 +32,7 @@ export default defineEventHandler(async event => {
   if (!tx) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Transaction not found',
+      statusMessage: 'Transaction not found'
     })
   }
 
@@ -49,9 +49,9 @@ export default defineEventHandler(async event => {
 
     // P2PKH/P2TR/P2SH outputs
     if (
-      script.isPublicKeyHashOut() ||
-      script.isScriptHashOut() ||
-      script.isTaprootOut()
+      script.isPublicKeyHashOut()
+      || script.isScriptHashOut()
+      || script.isTaprootOut()
     ) {
       const address = getAddressFromScript(script).toXAddress()
       if (!address) {
@@ -59,7 +59,7 @@ export default defineEventHandler(async event => {
       }
       return {
         ...input,
-        address,
+        address
       } as ExplorerTxInput
     }
     // return the input as is
@@ -80,15 +80,15 @@ export default defineEventHandler(async event => {
       if (rankOutput) {
         return {
           ...output,
-          rankOutput,
+          rankOutput
         } as ExplorerTxOutput
       }
     }
     // P2PKH/P2TR/P2SH outputs
     if (
-      script.isPublicKeyHashOut() ||
-      script.isScriptHashOut() ||
-      script.isTaprootOut()
+      script.isPublicKeyHashOut()
+      || script.isScriptHashOut()
+      || script.isTaprootOut()
     ) {
       const address = getAddressFromScript(script).toXAddress()
       if (!address) {
@@ -96,7 +96,7 @@ export default defineEventHandler(async event => {
       }
       return {
         ...output,
-        address,
+        address
       } as ExplorerTxOutput
     }
     // if we get here, the output is not a rank output or an address output
@@ -109,6 +109,6 @@ export default defineEventHandler(async event => {
     confirmations,
     inputs: txInputs,
     outputs: txOutputs,
-    sumBurnedSats: sumBurnedSats.toString(),
+    sumBurnedSats: sumBurnedSats.toString()
   } as ExplorerTx
 })

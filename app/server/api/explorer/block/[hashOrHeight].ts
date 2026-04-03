@@ -7,13 +7,13 @@ type ExplorerBlock = Block & {
   minedBy: string
 }
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   // const t0 = performance.now()
   const hashOrHeight = getRouterParam(event, 'hashOrHeight')
   if (!hashOrHeight) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing hashOrHeight',
+      statusMessage: 'Missing hashOrHeight'
     })
   }
   try {
@@ -22,7 +22,7 @@ export default defineEventHandler(async event => {
     if (!block) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Block not found',
+        statusMessage: 'Block not found'
       })
     }
     /** height 0 is genesis block */
@@ -36,7 +36,7 @@ export default defineEventHandler(async event => {
     for await (const tx of toAsyncIterable(block.txs)) {
       txs.push({
         ...tx,
-        sumBurnedSats: getSumBurnedSats(tx).toString(),
+        sumBurnedSats: getSumBurnedSats(tx).toString()
       })
     }
     block.txs = txs
@@ -46,13 +46,13 @@ export default defineEventHandler(async event => {
 
     return {
       ...block,
-      minedBy: minedByAddress.toXAddress(),
+      minedBy: minedByAddress.toXAddress()
     } as ExplorerBlock
   } catch (error) {
     console.error(error)
     throw createError({
       statusCode: 404,
-      statusMessage: 'Block not found',
+      statusMessage: 'Block not found'
     })
   }
 })

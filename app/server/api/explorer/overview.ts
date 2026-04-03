@@ -15,9 +15,9 @@ export default defineEventHandler(async () => {
     }
     // skip private IP addresses
     if (
-      peer.addr.match(/^10\./) ||
-      peer.addr.match(/^172\.16\./) ||
-      peer.addr.match(/^192\.168\./)
+      peer.addr.match(/^10\./)
+      || peer.addr.match(/^172\.16\./)
+      || peer.addr.match(/^192\.168\./)
     ) {
       continue
     }
@@ -26,7 +26,7 @@ export default defineEventHandler(async () => {
       peers.push({
         ...peer,
         addr: ip,
-        geoip: runtimeCache.get(ip)!.data,
+        geoip: runtimeCache.get(ip)!.data
       })
       continue
     }
@@ -38,13 +38,13 @@ export default defineEventHandler(async () => {
       peers.push({
         ...peer,
         addr: ip,
-        geoip: json.data,
+        geoip: json.data
       })
     }
   }
   const miningInfo = await $rpc.getMiningInfo()
   return {
     mininginfo: miningInfo,
-    peerinfo: peers,
+    peerinfo: peers
   }
 })

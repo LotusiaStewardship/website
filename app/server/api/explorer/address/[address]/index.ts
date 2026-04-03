@@ -3,17 +3,17 @@ import { getSumBurnedSats } from '~/utils/transaction'
 import {
   EXPLORER_TABLE_MAX_ROWS,
   NetworkCharacter,
-  Network,
+  Network
 } from '~/utils/constants'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const address = getRouterParam(event, 'address')
   const { page, pageSize } = getQuery(event)
 
   if (!address) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing address',
+      statusMessage: 'Missing address'
     })
   }
 
@@ -22,7 +22,7 @@ export default defineEventHandler(async event => {
   if (networkChar !== NetworkCharacter) {
     throw createError({
       statusCode: 400,
-      statusMessage: `Address is not a ${Network} address`,
+      statusMessage: `Address is not a ${Network} address`
     })
   }
 
@@ -32,7 +32,7 @@ export default defineEventHandler(async event => {
   if (!scriptType || !scriptPayload) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid address',
+      statusMessage: 'Invalid address'
     })
   }
 
@@ -47,7 +47,7 @@ export default defineEventHandler(async event => {
     pageNum > 0 ? pageNum - 1 : 0,
     pageSizeNum > EXPLORER_TABLE_MAX_ROWS
       ? EXPLORER_TABLE_MAX_ROWS
-      : pageSizeNum,
+      : pageSizeNum
   )
 
   // find the address last seen time
@@ -59,13 +59,13 @@ export default defineEventHandler(async event => {
   }
   const txs = history.txs.map(tx => ({
     ...tx,
-    sumBurnedSats: getSumBurnedSats(tx).toString(),
+    sumBurnedSats: getSumBurnedSats(tx).toString()
   }))
 
   return {
     lastSeen,
     // TODO: Add this back when we have a way to calculate the total burned sats for an address
     // numBurnedSats: txs.reduce((acc, tx) => acc + BigInt(tx.sumBurnedSats), BigInt(0)).toString(),
-    history: { txs, numPages: history.numPages },
+    history: { txs, numPages: history.numPages }
   }
 })
