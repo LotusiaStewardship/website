@@ -1,12 +1,12 @@
 import { Bitcore } from 'xpi-ts'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const address = getRouterParam(event, 'address')
 
   if (!address) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing address',
+      statusMessage: 'Missing address'
     })
   }
 
@@ -16,7 +16,7 @@ export default defineEventHandler(async event => {
   if (!scriptType || !scriptPayload) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid address',
+      statusMessage: 'Invalid address'
     })
   }
 

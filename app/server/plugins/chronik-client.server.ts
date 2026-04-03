@@ -6,12 +6,12 @@ import type {
   BlockchainInfo,
   ScriptType,
   TxHistoryPage,
-  Utxo,
+  Utxo
 } from 'chronik-client'
 import { CHRONIK_API_URL } from '~/utils/constants'
 
-export default defineNitroPlugin(nitroApp => {
-  const client = new ChronikClient(CHRONIK_API_URL as string)
+export default defineNitroPlugin((nitroApp) => {
+  const client = new ChronikClient(CHRONIK_API_URL)
 
   const getBlockchainInfo = async (): Promise<BlockchainInfo> => {
     try {
@@ -31,7 +31,7 @@ export default defineNitroPlugin(nitroApp => {
 
   const getBlockRange = async (
     startHeight: number,
-    endHeight: number,
+    endHeight: number
   ): Promise<BlockInfo[]> => {
     try {
       return await client.blocks(startHeight, endHeight)
@@ -50,7 +50,7 @@ export default defineNitroPlugin(nitroApp => {
 
   const getUtxos = async (
     scriptType: ScriptType,
-    scriptPayload: string,
+    scriptPayload: string
   ): Promise<Utxo[]> => {
     try {
       const scriptEndpoint = client.script(scriptType, scriptPayload)
@@ -65,7 +65,7 @@ export default defineNitroPlugin(nitroApp => {
     scriptType: ScriptType,
     scriptPayload: string,
     page: number,
-    pageSize: number,
+    pageSize: number
   ): Promise<TxHistoryPage> => {
     try {
       const scriptEndpoint = client.script(scriptType, scriptPayload)
@@ -83,7 +83,7 @@ export default defineNitroPlugin(nitroApp => {
     getBlockRange,
     getTransaction,
     getUtxos,
-    getTxHistoryPage,
+    getTxHistoryPage
   }
 })
 

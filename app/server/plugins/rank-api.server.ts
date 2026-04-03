@@ -2,7 +2,7 @@ import type { ProfileAPI, PostAPI } from 'xpi-ts/lib/rank/api'
 import type {
   ScriptChunkPlatformUTF8,
   ScriptChunkSentimentUTF8
-} from 'lotus-sdk/lib/rank'
+} from 'xpi-ts/lib/lokad'
 import type {
   APIResponse,
   WalletActivity,
@@ -463,11 +463,11 @@ declare module 'nitropack' {
         platform: ScriptChunkPlatformUTF8,
         profileId: string,
         page?: number,
-        pageSize?: number
+        pageSize?: number,
       ) => Promise<ProfilePostsAPI>
       getVoteActivity: (
         page?: number,
-        pageSize?: number
+        pageSize?: number,
       ) => Promise<VoteActivity>
       getTopRankedProfiles: (timespan?: Timespan) => Promise<APIResponse[]>
       getLowestRankedProfiles: (timespan?: Timespan) => Promise<APIResponse[]>
@@ -475,28 +475,28 @@ declare module 'nitropack' {
       getLowestRankedPosts: (timespan?: Timespan) => Promise<APIResponse[]>
       getProfileRanking: (
         platform: ScriptChunkPlatformUTF8,
-        profileId: string
+        profileId: string,
       ) => Promise<ProfileData>
       getProfileRankTransactions: (
         platform: ScriptChunkPlatformUTF8,
         profileId: string,
         page?: number,
-        pageSize?: number
+        pageSize?: number,
       ) => Promise<ProfileVoteActivity>
       getPostRanking: (
         platform: ScriptChunkPlatformUTF8,
         profileId: string,
-        postId: string
+        postId: string,
       ) => Promise<PostAPI>
       getWalletActivity: (
         scriptPayload: string,
         startTime?: string,
-        endTime?: string
+        endTime?: string,
       ) => Promise<WalletActivity[]>
       getWalletActivitySummary: (
         scriptPayload: string,
         startTime?: Timespan,
-        endTime?: Timespan
+        endTime?: Timespan,
       ) => Promise<WalletActivitySummary>
       getWeeklyWalletActivity: () => Promise<RankActivityResult[]>
       getMonthlyWalletActivity: () => Promise<RankActivityResult[]>

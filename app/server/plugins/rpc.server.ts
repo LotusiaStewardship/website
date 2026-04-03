@@ -1,6 +1,6 @@
 import { LotusRPC } from '~/utils/constants'
 
-type NetworkInfo = {
+interface NetworkInfo {
   subversion: string
   localrelay: boolean
   connections: number
@@ -8,7 +8,7 @@ type NetworkInfo = {
   warnings: string
 }
 
-type MiningInfo = {
+interface MiningInfo {
   blocks: number
   difficulty: number
   networkhashps: number
@@ -17,7 +17,7 @@ type MiningInfo = {
   warnings: string
 }
 
-type MempoolInfo = {
+interface MempoolInfo {
   loaded: boolean
   size: number
   bytes: number
@@ -28,7 +28,7 @@ type MempoolInfo = {
   unbroadcastcount: number
 }
 
-type PeerInfo = {
+interface PeerInfo {
   addr: string
   services: string
   servicesnames: Array<string>
@@ -56,7 +56,7 @@ type PeerInfo = {
   }
 }
 
-type BlockStats = {
+interface BlockStats {
   avgfee: number
   avgfeerate: number
   avgtxsize: number
@@ -84,7 +84,7 @@ type BlockStats = {
   utxo_size_inc: number
 }
 
-type BlockInfo = {
+interface BlockInfo {
   hash: string
   confirmations: number
   size: number
@@ -97,13 +97,13 @@ type BlockInfo = {
   nextblockhash: string
 }
 
-type TransactionInput = {
+interface TransactionInput {
   txid: string
   vout: number
   coinbase?: string
 }
 
-type TransactionOutput = {
+interface TransactionOutput {
   value: number
   scriptPubKey: {
     addresses: Array<string>
@@ -112,7 +112,7 @@ type TransactionOutput = {
   }
 }
 
-type RawTransaction = {
+interface RawTransaction {
   txid: string
   size: number
   vin: TransactionInput[]
